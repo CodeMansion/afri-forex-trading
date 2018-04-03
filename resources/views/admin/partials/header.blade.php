@@ -394,10 +394,7 @@
                                         <a href="page_user_lock_1.html">
                                             <i class="icon-lock"></i> Lock Screen </a>
                                     </li>
-                                    <li>
-                                        <a href="page_user_login_1.html">
-                                            <i class="icon-key"></i> Log Out </a>
-                                    </li>
+                                    <li><a href="{{ url('/logout') }}"><i class="icon-key"></i> Log Out </a></li>
                                 </ul>
                             </li>
                             <!-- END USER LOGIN DROPDOWN -->

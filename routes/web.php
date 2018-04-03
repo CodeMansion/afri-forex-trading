@@ -10,9 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {return view('auth.login');});
 
 Route::group(['middleware'=>['auth']], function(){
-    Route::get('/', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
+    Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
 });
 
 Auth::routes();
