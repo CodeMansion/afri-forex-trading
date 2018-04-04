@@ -15,6 +15,9 @@ class CreatePackageTypesTable extends Migration
     {
         Schema::create('package_types', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('slug', 190)->unique();
+            $table->string('name', 50)->unique();
+            $table->decimal('percentage',10,2);
             $table->timestamps();
         });
     }

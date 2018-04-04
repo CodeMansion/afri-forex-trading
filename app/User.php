@@ -26,4 +26,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function find($id, $field = null){
+        if($field){
+            return self::where($field, '=', $id)->firstOrFail();
+        }
+        return self::where('id', '=', $id)->firstOrFail();
+    }
 }

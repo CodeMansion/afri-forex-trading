@@ -14,7 +14,14 @@ class CreateUserProfilesTable extends Migration
     public function up()
     {
         Schema::create('user_profiles', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
+            $table->string('slug', 190)->unique();
+            $table->string('full_name', 90)->unique();
+            $table->string('email',100)->unique();
+            $table->string('telephone');
+            $table->integer('country_id');
+            $table->integer('state_id');
             $table->timestamps();
         });
     }

@@ -14,8 +14,18 @@ class CreateInvestmentsTable extends Migration
     public function up()
     {
         Schema::create('investments', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
+            $table->string('slug', 190)->unique();
+            $table->integer('user_id')->unsigned()->index();
+            $table->integer('package_id')->unsigned()->index();
+            $table->integer('package_type_id')->unsigned()->index();
+            $table->integer('status')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('package_id')->references('id')->on('packages');
+            $table->foreign('package_type_id')->references('id')->on('package_types');
         });
     }
 
