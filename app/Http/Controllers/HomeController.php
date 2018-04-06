@@ -14,6 +14,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        if(\Auth::user()->is_admin) {
+            return view('admin.dashboard');
+        }
+
+        return view('members.dashboard');
+    }
+
+
+    public function registerIndex()
+    {
+        return view('register');
     }
 }
