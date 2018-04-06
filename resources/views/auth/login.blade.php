@@ -25,6 +25,11 @@
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Password</label>
             <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" /> 
+            @if ($errors->has('password'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('password') }}</strong>
+                </span>
+            @endif
         </div>
         <div class="form-actions">
             <button type="submit" class="btn green uppercase">Login</button>
@@ -35,7 +40,7 @@
             <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
         </div>
         <div class="create-account">
-            <p><a href="javascript:;" id="register-btn" class="uppercase">Create an account</a></p>
+            <p><a href="{{ URL::route('register') }}" id="register-btn" class="uppercase">Create an account</a></p>
         </div>
     </form>
     <form class="forget-form" action="#" method="POST">

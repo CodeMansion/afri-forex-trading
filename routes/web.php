@@ -55,6 +55,7 @@ Route::group(['middleware'=>['auth']], function(){
 
 Auth::routes();
 
+Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerIndex"]);
 Route::get('/logout', function () {
     auth()->logout();
     return redirect('/login');
