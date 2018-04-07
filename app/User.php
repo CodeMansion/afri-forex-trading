@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'full_name', 'username','country_id','state_id','upline_id','telephone','email', 'password',
     ];
 
     /**
@@ -32,5 +32,9 @@ class User extends Authenticatable
             return self::where($field, '=', $id)->firstOrFail();
         }
         return self::where('id', '=', $id)->firstOrFail();
+    }
+    
+    public function UserProfile(){
+        return $this->belongsTo('App\UserProfile','user_id');
     }
 }
