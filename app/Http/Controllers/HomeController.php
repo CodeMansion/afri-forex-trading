@@ -7,6 +7,8 @@ use App\User;
 use App\UserProfile;
 use App\UserDownline;
 use App\Mail\ConfirmRegistration;
+use DB;
+use Validator;
 
 class HomeController extends Controller
 {
@@ -31,11 +33,19 @@ class HomeController extends Controller
         return view('register');
     }
     
+    public function ref($ref){
+        $referral = User::whereSlug($ref)->first();
+        if(!$referral){
+            return redirect()->route('register');
+        }
+        return view('register',compact('referral'));
+    }
+    
     protected function validator(array $data)
 	{		
 		$custom_msg = [
 			'user_id' 		=> 'Upline is Required',
-			'ful_name'      => 'Fullname is Required',
+			'full_name'      => 'Fullname is Required',
 			'username'      => 'Username is Required',
 			'email'         => 'Email is Required',
 			'telephone'     => 'Telephone Number is Required',
@@ -47,10 +57,10 @@ class HomeController extends Controller
 		
 		return Validator::make($data, [
 			'upline_id'		=> 'bail|required',
-			'ful_name'      => 'bail|required|string|max:255',
+			'full_name'      => 'bail|required|string|max:255',
 			'username'      => 'bail|required|string|max:100',
 			'email'         => 'bail|required|string|email|max:255|unique:users',
-			'telephone'     => 'bail|required|string|telephone|max:15|unique:users',
+			'telephone'     => 'bail|required|string|max:15',
 			'country_id'    => 'bail|required|string',
 			'state_id'    	=> 'bail|required|string',
 			'password'      => 'bail|required|string|min:6|confirmed',
@@ -58,7 +68,7 @@ class HomeController extends Controller
 		
     }
     
-    public function store()
+    public function store(Request $request)
     {
         $data = $request->except('_except');
         if(isset($data) && $data['req'] == 'register_new_user') {
@@ -71,29 +81,34 @@ class HomeController extends Controller
                         'type' => 'false'
                     ];
                 }
-                $user = User::create([
-                    'slug'          => bin2hex(random_bytes(64)),
-                    'full_name'     => $data['full_name'],
-                    'username'      => $data['username'],  
-                    'email'         => $data['email'],
-                    'password'      => bcrypt($data['password']),
-                ]);		
+                $referral = User::whereUsername($data['upline_id'])->first();
+                if(!$referral){
+                    $referral = 1;
+                }
+                $user                   = new User();
+                $user->slug             = bin2hex(random_bytes(64));
+                $user->full_name        = $data['full_name'];
+                $user->username         = $data['username'];
+                $user->email            = $data['email'];
+                $user->password         = bcrypt($data['password']);
+                $user->save();
                 
-                $profile = UserProfile::create([
-                    'user_id'       => $user->id,
-                    'slug'          => bin2hex(random_bytes(64)),
-                    'full_name'     => $data['full_name'], 
-                    'email'         => $data['email'],
-                    'telephone'     => $data['telephone'],
-                    'country_id'    => $data['country_id'],
-                    'state_id'      => $data['state_id'],
-                ]);	
+                $profile                = new UserProfile();
+                $profile->user_id       = $user->id;
+                $profile->slug          = bin2hex(random_bytes(64));
+                $profile->full_name     = $data['full_name'];
+                $profile->email         = $data['email'];
+                $profile->telephone     = $data['telephone'];
+                $profile->country_id    = $data['country_id'];
+                $profile->state_id      = $data['state_id'];
+                $profile->save();
                 
-                $downline = UserDownline::create([
-                    'upline_id' 	=> ($data['upline_id']) ? $data['upline_id'] : 1,
-                    'downline_id' 	=> $user->id,
-                ]);
-                \Mail::to($user->email)->send(new ConfirmRegistration($user));
+                $downline               = new UserDownline();
+                $downline->upline_id 	= ($referral) ? $referral : 1;
+                $downline->downline_id 	= $user->id;
+                $downline->save();
+                
+                //\Mail::to($user->email)->send(new ConfirmRegistration($user));
                 $ip = $_SERVER['REMOTE_ADDR'];
                 activity_logs($user->id, $ip, "User Registered");
 

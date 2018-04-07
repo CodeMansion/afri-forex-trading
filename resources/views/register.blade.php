@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title','Registration')
 @section('content')
 <div class="logo">
     <a href="index.html"><img src="../assets/pages/img/logo-big.png" alt="" /> </a>
@@ -10,12 +10,13 @@
         <form action="#" method="#"class="form-horizontal">
             <center><h3 class="form-title font-green">User Registration Form</h3></center>
             <div class="form-body">
-                <div class="form-group">
+                <div class="form-group">                    
+                    <div id="errors"></div>
                     <label class="col-md-3 control-label">Sponsor
                         <span class="required" aria-required="true"> * </span>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Username of Your Referral" name="upline_id" id="upline_id">
+                        <input type="text" class="form-control" placeholder="Username of Your Referral" name="upline_id" id="upline_id" value="<?php if(isset($referral)): ?> {{ $referral->username }} <?php else: ?>Afri-Forex<?php endif ?>" disabled>
                     </div>
                 </div>
                 <div class="form-group">
@@ -81,10 +82,10 @@
                     <div class="col-md-6">
                         <select class="form-control" name="country_id" id="country_id">
                             <option value="">Select...</option>
-                            <option value="Category 1">Nigeria</option>
-                            <option value="Category 2">United States</option>
-                            <option value="Category 3">South Africa</option>
-                            <option value="Category 4">Saudi Arabia</option>
+                            <option value="1">Nigeria</option>
+                            <option value="2">United States</option>
+                            <option value="3">South Africa</option>
+                            <option value="4">Saudi Arabia</option>
                         </select>
                     </div>
                 </div>
@@ -95,10 +96,10 @@
                     <div class="col-md-6">
                         <select class="form-control" name="state_id" id="state_id">
                             <option value="">Select...</option>
-                            <option value="Category 1">Nigeria</option>
-                            <option value="Category 2">United States</option>
-                            <option value="Category 3">South Africa</option>
-                            <option value="Category 4">Saudi Arabia</option>
+                            <option value="1">Nigeria</option>
+                            <option value="2">United States</option>
+                            <option value="3">South Africa</option>
+                            <option value="4">Saudi Arabia</option>
                         </select>
                     </div>
                 </div>
@@ -133,7 +134,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-offset-3 col-md-9">
-                        <button type="submit" class="btn green">Submit</button>
+                        <button type="button" id="register_user" class="btn green">Submit</button>
                         <button type="button" class="btn default">Cancel</button>
                     </div>
                 </div>
@@ -144,4 +145,9 @@
 <!-- END FORM-->
 @endsection
 @section('javascript')
+    <script>
+        var TOKEN = "{{csrf_token()}}";
+        var REGISTER_URL = "{{URL::route('register.store')}}";
+    </script>
+    <script src="{{ asset('assets/pages/members/register.js') }}" type="text/javascript"></script>
 @endsection
