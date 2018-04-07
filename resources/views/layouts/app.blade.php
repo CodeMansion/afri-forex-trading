@@ -23,8 +23,7 @@
     </head>
     <body class="login">
         
-        @yield('content')
-               
+        @yield('content') 
         <script src="{{ asset('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/js.cookie.min.js') }}" type="text/javascript"></script>
@@ -45,7 +44,8 @@
                     $("#close").hide();
                 });
             });
-        </script>
+        </script>        
+        @yield('javascript') 
     </body>
 </html>
     
