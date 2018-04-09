@@ -16,14 +16,18 @@ class CreateUserProfilesTable extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
+            $table->integer('user_id')->unsigned()->index();
             $table->string('slug', 190)->unique();
-            $table->string('full_name', 90)->unique();
+            $table->string('full_name', 90);
             $table->string('email',100)->unique();
             $table->string('telephone');
             $table->integer('country_id');
             $table->integer('state_id');
             $table->timestamps();
+            
+            $table->foreign('user_id')->references('id')->on('users');
         });
+        
     }
 
     /**
