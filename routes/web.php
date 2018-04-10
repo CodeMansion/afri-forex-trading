@@ -11,12 +11,12 @@
 |
 */
 
-Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
 
+//Route::get('/', function () {return view('auth.login');});
 Route::group(['middleware'=>['auth']], function(){
     Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
-    // Route::get('/', function () {return view('auth.login');});
-
+    Route::get('/packages',["as" => "packages", "uses"  => "HomeController@package"]);
+    Route::post('/subscribe',["as" => "subscribe", "uses"  => "SubscriptionController@store"]);
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
         //-- ROLES AND PERMISSION --//
@@ -31,6 +31,32 @@ Route::group(['middleware'=>['auth']], function(){
 
     //----- PLATFORM MANAGEMENT ----//
     Route::group(['prefix' => 'platforms'], function () {
+        Route::get('/', ["as"=>"platforms.index", "uses"=>"PlatformController@index"]);
+        Route::post('/store',["as"=>"platforms.add",'uses'=> 'PlatformController@store']);
+        Route::post('/update',["as"=>"platforms.update",'uses'=> 'PlatformController@update']);
+        Route::get('/delete/{id?}',["as"=>"platforms.delete",'uses'=> 'PlatformController@destroy']);
+        Route::post('/get-details', ["as"=>"platforms.editInfo", "uses"=>"PlatformController@getEditInfo"]);
+        Route::get('/activate/{id?}', ["as"=>"platforms.activate", "uses"=>"PlatformController@activate"]);
+    });
+    
+    //----- PACKAGE MANAGEMENT ----//
+    Route::group(['prefix' => 'packages'], function () {
+        Route::get('/', ["as"=>"packages.index", "uses"=>"PackageController@index"]);
+        Route::post('/store',["as"=>"packages.add",'uses'=> 'PackageController@store']);
+        Route::post('/update',["as"=>"packages.update",'uses'=> 'PackageController@update']);
+        Route::get('/delete/{id?}',["as"=>"packages.delete",'uses'=> 'PackageController@destroy']);
+        Route::post('/get-details', ["as"=>"packages.editInfo", "uses"=>"PackageController@getEditInfo"]);
+        Route::get('/activate', ["as"=>"packages.activate", "uses"=>"PackageController@activate"]);
+    });
+    
+    //----- PACKAGETYPE MANAGEMENT ----//
+    Route::group(['prefix' => 'packagetypes'], function () {
+        Route::get('/', ["as"=>"packagetypes.index", "uses"=>"PackageTypeController@index"]);
+        Route::post('/store',["as"=>"packagetypes.add",'uses'=> 'PackageTypeController@store']);
+        Route::post('/update',["as"=>"packagetypes.update",'uses'=> 'PackageTypeController@update']);
+        Route::get('/delete/{id?}',["as"=>"packagetypes.delete",'uses'=> 'PackageTypeController@destroy']);
+        Route::post('/get-details', ["as"=>"packagetypes.editInfo", "uses"=>"PackageTypeController@getEditInfo"]);
+        Route::get('/activate', ["as"=>"packagetypes.activate", "uses"=>"PackageTypeController@activate"]);
     });
 
     //----- USERS MANAGEMENT ----//
@@ -54,9 +80,11 @@ Route::group(['middleware'=>['auth']], function(){
     });
 });
 
-//Auth::routes();
+$this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
+$this->post('login', 'Auth\LoginController@login')->name('login');
 Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerIndex"]);
 Route::get('/registration/{id?}', ["as"=>"register.ref", "uses"=>"HomeController@ref"]);
+Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
 Route::get('/logout', function () {
     auth()->logout();
     return redirect('/login');

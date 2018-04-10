@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Platform;
 
 class PlatformController extends Controller
 {
@@ -13,7 +14,8 @@ class PlatformController extends Controller
      */
     public function index()
     {
-        //
+        $data['platforms'] = Platform::all();
+        return view('admin.platforms.index')->with($data);
     }
 
     /**
@@ -34,7 +36,31 @@ class PlatformController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        if(isset($data) && $data['req'] == 'add_platform') {
+            \DB::beginTransaction();
+            try {
+                    Platform::insert([
+                            'slug' => bin2hex(random_bytes(64)),
+                            'name' => $data['name'],
+                            'is_multiple' => $data['is_multiple'],
+                    ]);
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                    activity_logs(auth()->user()->id, $ip, "Added Platform");
+                \DB::commit();
+                return $response = [
+                    'msg' => "Platform Addedd Successfully.",
+                    'type' => "true"
+                ];
+
+            } catch(Exception $e) {
+                \DB::rollback();
+                return $response = [
+                    'msg' => "Internal Server Error",
+                    'type' => "false"
+                ];
+            }
+        }
     }
 
     /**
@@ -46,6 +72,42 @@ class PlatformController extends Controller
     public function show($id)
     {
         //
+    }
+    
+    public function activate($id)
+    {
+        \DB::beginTransaction();
+            try {
+                    $platform = Platform::find($id);
+                    if($platform->is_active == 1){
+                        $plaform->is_active = 0;
+                        $platform->save();
+                        $ip = $_SERVER['REMOTE_ADDR'];
+                        activity_logs(auth()->user()->id, $ip, "De-Activate Platform");
+                        \DB::commit();
+                        return $response = [
+                            'msg' => "Platform De-activated Successfully.",
+                            'type' => "true"
+                        ];
+                    }else{
+                        $platform->is_active = 1;
+                        $platform->save();
+                        $ip = $_SERVER['REMOTE_ADDR'];
+                        activity_logs(auth()->user()->id, $ip, "Activate Platform");
+                        \DB::commit();
+                        return $response = [
+                            'msg' => "Platform Activated Successfully.",
+                            'type' => "true"
+                        ];
+                    }
+
+            } catch(Exception $e) {
+                \DB::rollback();
+                return $response = [
+                    'msg' => "Internal Server Error",
+                    'type' => "false"
+                ];
+            }
     }
 
     /**
@@ -66,9 +128,32 @@ class PlatformController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        if(isset($data) && $data['req'] == 'add_platform') {
+            \DB::beginTransaction();
+            try {
+                    $platform = Platform::find($data['platform_id']);
+                    $platform->name = $data['name'];
+                    $platform->is_multiple = $data['is_multiple'];
+                    $plaform->save();
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                    activity_logs(auth()->user()->id, $ip, "Update Platform");
+                \DB::commit();
+                return $response = [
+                    'msg' => "Platform Updated Successfully.",
+                    'type' => "true"
+                ];
+
+            } catch(Exception $e) {
+                \DB::rollback();
+                return $response = [
+                    'msg' => "Internal Server Error",
+                    'type' => "false"
+                ];
+            }
+        }
     }
 
     /**
@@ -79,6 +164,7 @@ class PlatformController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $platform = Platform::find($id);
+        $plaform->delete();
     }
 }

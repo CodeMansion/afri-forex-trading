@@ -13,7 +13,8 @@ class PackageTypeController extends Controller
      */
     public function index()
     {
-        //
+        $data['packagetypes'] = PackageType::all();
+        return view('admin.packagetypes.index')->with($data);
     }
 
     /**

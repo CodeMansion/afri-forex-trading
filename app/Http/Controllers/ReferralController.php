@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Referral;
 use Illuminate\Http\Request;
-use App\Package;
 
-class PackageController extends Controller
+class ReferralController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $data['packages'] = Package::all();
-        return view('admin.package.index')->with($data);
+        //
     }
 
     /**
@@ -42,10 +41,10 @@ class PackageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Referral  $referral
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Referral $referral)
     {
         //
     }
@@ -53,10 +52,10 @@ class PackageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Referral  $referral
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Referral $referral)
     {
         //
     }
@@ -65,10 +64,10 @@ class PackageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Referral  $referral
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Referral $referral)
     {
         //
     }
@@ -76,10 +75,10 @@ class PackageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Referral  $referral
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Referral $referral)
     {
         //
     }
