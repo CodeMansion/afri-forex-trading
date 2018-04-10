@@ -14,7 +14,7 @@
 
 Route::group(['middleware'=>['auth']], function(){
     Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
-    Route::get('/', function () {return view('auth.login');});
+    //Route::get('/', function () {return view('auth.login');});
 
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
