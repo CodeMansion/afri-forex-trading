@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <link rel="shortcut icon" href="{{ asset('images/elect-ng-logo.png') }}" type="image/png" />
 
-        <title>AfriMarket | Login Page</title>
+        <title>AfriMarket | @yield('title')</title>
         
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
@@ -23,8 +23,7 @@
     </head>
     <body class="login">
         
-        @yield('content')
-               
+        @yield('content') 
         <script src="{{ asset('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/js.cookie.min.js') }}" type="text/javascript"></script>
@@ -45,7 +44,8 @@
                     $("#close").hide();
                 });
             });
-        </script>
+        </script>        
+        @yield('javascript') 
     </body>
 </html>
     
