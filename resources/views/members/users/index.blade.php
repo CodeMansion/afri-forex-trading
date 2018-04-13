@@ -17,7 +17,7 @@
                     <div class="col-md-3">
                         <ul class="list-unstyled profile-nav">
                             <li>
-                                <img src="../assets/pages/media/profile/people19.png" class="img-responsive pic-bordered" alt="">
+                                <img src="{{ asset('assets/pages/media/profile/people19.png') }}" class="img-responsive pic-bordered" alt="">
                                 <a href="javascript:;" class="profile-edit"> </a>
                             </li>
                         </ul>
@@ -27,9 +27,9 @@
                     <div class="col-md-9">
                         <div class="row">
                             <div class="col-md-8 profile-info">
-                                <h1 class="font-green sbold uppercase">John Doe</h1>
-                                <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
-                                    </p>
+                                <h1 class="font-green sbold uppercase">{{ auth()->user()->full_name }}</h1>
+                                {{-- <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
+                                </p> --}}
                             </div>
                         </div>
                         <!--end row-->
@@ -102,27 +102,41 @@
                             <div id="tab_1-1" class="tab-pane active">
                                 <form role="form" action="#">
                                     <div class="form-group">
-                                        <label class="control-label">First Name</label>
-                                        <input type="text" placeholder="John" class="form-control"> </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Last Name</label>
-                                        <input type="text" placeholder="Doe" class="form-control"> </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Mobile Number</label>
-                                        <input type="text" placeholder="+1 646 580 DEMO (6284)" class="form-control"> </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Interests</label>
-                                        <input type="text" placeholder="Design, Web etc." class="form-control"> </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Occupation</label>
-                                        <input type="text" placeholder="Web Developer" class="form-control"> </div>
-                                    <div class="form-group">
-                                        <label class="control-label">About</label>
-                                        <textarea class="form-control" rows="3" placeholder="We are KeenThemes!!!"></textarea>
+                                        <label class="control-label">FullName</label>
+                                        <input type="text" value="{{ auth()->user()->full_name }}" placeholder="John" class="form-control"> 
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Website Url</label>
-                                        <input type="text" placeholder="http://www.mywebsite.com" class="form-control"> </div>
+                                        <label class="control-label">Username</label>
+                                        <input type="text" value="{{ auth()->user()->username }}" placeholder="John" class="form-control"> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Email</label>
+                                        <input type="text" value="{{ auth()->user()->email }}" placeholder="John" class="form-control"> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Mobile Number</label>
+                                        <input type="text" value="{{ auth()->user()->telephone }}" placeholder="+1 646 580 DEMO (6284)" class="form-control"> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Country</label>
+                                        <select class="form-control" name="country_id" id="country_id">
+                                            <option value="">Select...</option>
+                                            <option value="1">Nigeria</option>
+                                            <option value="2">United States</option>
+                                            <option value="3">South Africa</option>
+                                            <option value="4">Saudi Arabia</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">State</label>
+                                        <select class="form-control" name="country_id" id="country_id">
+                                            <option value="">Select...</option>
+                                            <option value="1">Nigeria</option>
+                                            <option value="2">United States</option>
+                                            <option value="3">South Africa</option>
+                                            <option value="4">Saudi Arabia</option>
+                                        </select>
+                                    </div>
                                     <div class="margiv-top-10">
                                         <a href="javascript:;" class="btn green"> Save Changes </a>
                                         <a href="javascript:;" class="btn default"> Cancel </a>

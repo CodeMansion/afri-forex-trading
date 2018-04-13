@@ -17,7 +17,7 @@ class UserController extends Controller
             $data['users'] = User::all();
             return view('admin.users.index')->with($data);
         }
-        return view('members.user_profile');
+        return view('members.users.index');
     }
 
     public function getEditInfo(Request $request)
@@ -42,10 +42,10 @@ class UserController extends Controller
                         $ip = $_SERVER['REMOTE_ADDR'];
                         activity_logs(auth()->user()->id, $ip, "De-Activate User");
                         \DB::commit();
-                        return $response = [
+                        return response()->json([
                             'msg' => "User De-activated Successfully.",
                             'type' => "true"
-                        ];
+                        ]);
                     }else{
                         $user->is_active = 1;
                         $user->save();
@@ -96,7 +96,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        if(\Auth::user()->is_admin) {
+            $data['users'] = User::all();
+            return view('admin.users.show')->with($data);
+        }
     }
 
     /**

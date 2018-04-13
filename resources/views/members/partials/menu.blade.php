@@ -2,7 +2,7 @@
     <div class="page-sidebar navbar-collapse collapse">            
         <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
             <li class="nav-item start active open">
-                <a href="javascript:;" class="nav-link nav-toggle">
+                <a href="{{ URL::route('dashboard') }}" class="nav-link nav-toggle">
                     <i class="icon-home"></i>
                     <span class="title">Dashboard</span>
                     <span class="selected"></span>
@@ -10,7 +10,14 @@
                 </a>
             </li>
             <li class="nav-item  ">
-                <a href="javascript:;" class="nav-link nav-toggle">
+                <a href="{{ URL::route('users.index') }}" class="nav-link nav-toggle">
+                    <i class="icon-bulb"></i>
+                    <span class="title">User Profile</span>
+                    <span class="arrow"></span>
+                </a>
+            </li>
+            <li class="nav-item  ">
+                <a href="{{ URL::route('platforms.index') }}" class="nav-link nav-toggle">
                     <i class="icon-diamond"></i>
                     <span class="title">Platforms</span>
                     <span class="arrow"></span>
@@ -35,14 +42,7 @@
                     <i class="icon-settings"></i>
                     <span class="title">Disputes</span>
                 </a>
-            </li>
-            <li class="nav-item  ">
-                <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-bulb"></i>
-                    <span class="title">Members</span>
-                    <span class="arrow"></span>
-                </a>
-            </li>
+            </li>            
             <li class="nav-item  ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>

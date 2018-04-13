@@ -1,7 +1,7 @@
 @extends('admin.partials.app')
 
 @section('content')
-    <h1 class="page-title"> Admin Pcakages <small>statistics, charts, recent events and reports</small> </h1>
+    <h1 class="page-title"> Admin Packages <small>statistics, charts, recent events and reports</small> </h1>
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
@@ -9,7 +9,7 @@
                 <a href="{{ URL::route('dashboard') }} ">Home</a>
                 <i class="fa fa-angle-right"></i>
             </li>
-            <li><span>Dashboard</span></li>
+            <li><span>Packages</span></li>
         </ul>
     </div>
     <div class="clearfix"></div>

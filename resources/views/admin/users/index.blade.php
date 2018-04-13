@@ -65,19 +65,17 @@
                                                     <td>{{ $user->username}}</td>
                                                     <td></td>
                                                     <td>
-                                                        @if($user->is_active == true)
-                                                                <a href="#" data-href="{{ URL::route('users.activate', $user->id) }}" id="remarks{{$index}}" class="label label-success btn-sm"><i class="fa fa-minus-square-o"></i>Active</a>
+                                                        @if($user->is_active == 1)
+                                                                <a href="#" data-href="{{ URL::route('users.activate', $user->id) }}" id="deactivate{{$index}}" class="label label-success btn-sm"><i class="fa fa-minus-square-o"></i>Active</a>
                                                         @else
-                                                            <a href="#" data-href="{{ URL::route('users.activate', $user->id) }}" id="remarks{{$index}}" class="label label-danger btn-sm"><i class="fa fa-minus-square-o"></i>Not Active</a>
+                                                            <a href="#" data-href="{{ URL::route('users.activate', $user->id) }}" id="activate{{$index}}" class="label label-danger btn-sm"><i class="fa fa-minus-square-o"></i>Not Active</a>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         <div class="btn-group">
                                                             <button class="btn btn-xs green dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-expanded="false"> Actions<i class="fa fa-angle-down"></i></button>
                                                             <ul class="dropdown-menu pull-left" role="menu">
-                                                                <input type="hidden" id="user_id{{$index}}" value="{{$user->slug}}">
-                                                                <li><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i></a></li>
-                                                                <li><a data-href="{{ URL::route('users.delete',$user->slug)}}" id="btn_user_delete{{$index}}"><i class="fa fa-trash"></i></a></li>
+                                                                <li><a href="{{ URL::route('users.show',$user->id) }}"><i class="icon-note"></i>View Details</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>

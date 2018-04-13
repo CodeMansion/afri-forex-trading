@@ -12,4 +12,16 @@ class Investment extends Model
         }
         return self::where('id', '=', $id)->firstOrFail();
     }
+
+    public function User(){
+        return $this->belongsTo('App\User','user_id');
+    }
+
+    public function Package(){
+        return $this->belongsTo('App\Package','package_id');
+    }
+
+    public function PackageType(){
+        return $this->belongsTo('App\PackageType','package_type_id');
+    }
 }

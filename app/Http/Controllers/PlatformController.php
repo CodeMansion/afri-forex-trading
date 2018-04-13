@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Platform;
+use App\Subscription;
+use App\Referral;
+use App\Investment;
 
 class PlatformController extends Controller
 {
@@ -14,8 +17,14 @@ class PlatformController extends Controller
      */
     public function index()
     {
-        $data['platforms'] = Platform::all();
-        return view('admin.platforms.index')->with($data);
+        if(\Auth::user()->is_admin) {
+            $data['platforms'] = Platform::all();
+            return view('admin.platforms.index')->with($data);
+        }
+        $params['subscription'] = Subscription::whereUserId(auth()->user()->id)->first();
+        $params['investment'] = Investment::whereUserId(auth()->user()->id)->first();
+        $params['referral'] = Referral::whereUserId(auth()->user()->id)->first();
+        return view('members.platforms.index')->with($params);
     }
 
 
@@ -82,7 +91,14 @@ class PlatformController extends Controller
      */
     public function show($id)
     {
-        //
+        $params['platform'] = Platform::where('slug',$id)->first();
+        if($params['platform']->is_multiple == 0){            
+            $params['subscriptions'] = Subscription::all();
+            $params['referrals']  = Referral::all();
+        }else{
+            $params['investments'] = Investment::all();
+        }
+        return view('admin.platforms.show')->with($params);
     }
     
     public function activate($id)
