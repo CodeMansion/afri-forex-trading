@@ -35,7 +35,7 @@ class User extends Authenticatable
     }
     
     public function Profile(){
-        return $this->belongsTo('App\UserProfile','user_id');
+        return $this->hasOne('App\UserProfile','user_id');
     }
 
     public function isA($field) {

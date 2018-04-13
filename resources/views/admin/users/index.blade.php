@@ -63,7 +63,7 @@
                                                     <td>{{ $user->full_name}} </td>
                                                     <td>{{ $user->email}} </td>
                                                     <td>{{ $user->username}}</td>
-                                                    <td></td>
+                                                    <td>{{ $user->Profile->telephone}}</td>
                                                     <td>
                                                         @if($user->is_active == 1)
                                                                 <a href="#" data-href="{{ URL::route('users.activate', $user->id) }}" id="deactivate{{$index}}" class="label label-success btn-sm"><i class="fa fa-minus-square-o"></i>Active</a>

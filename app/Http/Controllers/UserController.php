@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {        
         if(\Auth::user()->is_admin) {
-            $data['users'] = User::all();
+            $data['users'] = User::all()->except(1);
             return view('admin.users.index')->with($data);
         }
         return view('members.users.index');

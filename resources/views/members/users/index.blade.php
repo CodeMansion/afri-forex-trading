@@ -115,7 +115,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Mobile Number</label>
-                                        <input type="text" value="{{ auth()->user()->telephone }}" placeholder="+1 646 580 DEMO (6284)" class="form-control"> 
+                                        <input type="text" value="{{ auth()->user()->Profile->telephone }}" placeholder="+1 646 580 DEMO (6284)" class="form-control"> 
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Country</label>
