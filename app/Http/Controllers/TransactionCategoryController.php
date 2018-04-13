@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TransactionCategory;
 
 class TransactionCategoryController extends Controller
 {
@@ -13,7 +14,8 @@ class TransactionCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data['tracnsactioncategories'] = TransactionCategory::all();
+        return view('admin.transactioncategories.index')->with($data);
     }
 
     /**

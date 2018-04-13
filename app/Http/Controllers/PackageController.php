@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Package;
+use App\Platform;
 class PackageController extends Controller
 {
     /**
@@ -13,9 +14,22 @@ class PackageController extends Controller
      */
     public function index()
     {
-        //
+        $data['packages'] = Package::all();
+        $data['platforms'] = Platform::whereIsActive(true)->get();
+        return view('admin.packages.index')->with($data);
     }
 
+
+    public function getEditInfo(Request $request)
+    {
+        try {
+            $params['package'] = Package::find($request->package_id, 'slug');
+            $params['platforms'] = Platform::whereIsActive(true)->get();
+            return view('admin.packages.partials._packages_details_')->with($params);
+        } catch (Exception $e) {
+            return false;
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -34,7 +48,33 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        if (isset($data) && $data['req'] == 'add_package') {
+            \DB::beginTransaction();
+            try {
+                Package::insert([
+                    'slug' => bin2hex(random_bytes(64)),
+                    'platform_id' => $data['platform_id'],
+                    'name' => $data['name'],
+                    'investment_amount' => $data['investment_amount'],
+                    'monthly_charge' => $data['monthly_charge'],
+                ]);
+                $ip = $_SERVER['REMOTE_ADDR'];
+                activity_logs(auth()->user()->id, $ip, "Added Package");
+                \DB::commit();
+                return $response = [
+                    'msg' => "Package Addedd Successfully.",
+                    'type' => "true"
+                ];
+
+            } catch (Exception $e) {
+                \DB::rollback();
+                return $response = [
+                    'msg' => "Internal Server Error",
+                    'type' => "false"
+                ];
+            }
+        }
     }
 
     /**
@@ -47,7 +87,7 @@ class PackageController extends Controller
     {
         //
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -66,9 +106,34 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        if (isset($data) && $data['req'] == 'update_package') {
+            \DB::beginTransaction();
+            try {
+                $package = Package::find($data['package_id'], 'slug');
+                $package->name = $data['name'];
+                $package->platform_id = $data['platform_id'];
+                $package->investment_amount = $data['investment_amount'];
+                $package->monthly_charge = $data['monthly_charge'];
+                $package->save();
+                $ip = $_SERVER['REMOTE_ADDR'];
+                activity_logs(auth()->user()->id, $ip, "Update Package");
+                \DB::commit();
+                return $response = [
+                    'msg' => "Package Updated Successfully.",
+                    'type' => "true"
+                ];
+
+            } catch (Exception $e) {
+                \DB::rollback();
+                return $response = [
+                    'msg' => "Internal Server Error",
+                    'type' => "false"
+                ];
+            }
+        }
     }
 
     /**
@@ -77,8 +142,30 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $data = $request->except('_token');
+        if ($data) {
+            if ($data['req'] == 'package_delete') {
+                try {
+                    $package = Package::find($id, 'slug');
+                    $package->delete();
+
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                    activity_logs(auth()->user()->id, $ip, "Delete Package");
+
+                    return $response = [
+                        'msg' => 'Deleted successfully',
+                        'type' => 'true'
+                    ];
+
+                } catch (Exception $e) {
+                    return $response = [
+                        'msg' => "Internal Server Error",
+                        'type' => "false"
+                    ];
+                }
+            }
+        }
     }
 }

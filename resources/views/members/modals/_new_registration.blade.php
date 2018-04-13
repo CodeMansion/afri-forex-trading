@@ -1,4 +1,4 @@
-<div class="modal fade" id="demo_modal_green-meadow" style="display: none;">
+<div id="new-platform" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content c-square">
             <div class="modal-header">

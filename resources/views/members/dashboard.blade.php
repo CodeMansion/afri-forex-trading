@@ -123,7 +123,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
-                                    <button id="sample_editable_1_new" class="btn sbold green"> Add New
+                                    <button data-toggle="modal" data-target="#new-platform" title="Add" class="btn sbold green"> Add New
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
@@ -312,6 +312,8 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
+    @include('members.modals.platform')
 </div>
                             <!-- END EXAMPLE TABLE PORTLET-->
 @endsection
@@ -319,11 +321,20 @@
     @include('members.modals._new_registration')
 @endsection
 @section('extra_script')
+    <script>
+        var subscription_count = "{{ $subscription }}";
+        var investment_count   = "{{ $investment }}";
+        var referral_count  = "{{ $referrals }}";
+        var TOKEN = "{{csrf_token()}}";
+        var PLATFORM_URL = "{{URL::route('package')}}";
+        var SUBSCRIBE = "{{URL::route('subscribe')}}";
+    </script>
     <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/flot/jquery.flot.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/flot/jquery.flot.pie.min.js') }}" type="text/javascript"></script>
     <!-- <script src="{{ asset('assets/pages/scripts/charts-flotcharts.min.js') }}" type="text/javascript"></script> -->
 @endsection
 @section('after_script')
+    <script src="{{ asset('assets/pages/members/script.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pages/dashboard_chart.js') }}" type="text/javascript"></script>
 @endsection
