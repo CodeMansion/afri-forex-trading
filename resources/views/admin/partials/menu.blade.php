@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li class="nav-item  ">
-                <a href="javascript:;" class="nav-link nav-toggle">
+                <a href="{{ URL::route('users.index')}}" class="nav-link nav-toggle">
                     <i class="icon-bulb"></i>
                     <span class="title">Members</span>
                     <span class="arrow"></span>

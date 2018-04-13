@@ -11,7 +11,7 @@
 |
 */
 
-Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
+
 
 Route::group(['middleware'=>['auth']], function(){
     Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
@@ -31,10 +31,12 @@ Route::group(['middleware'=>['auth']], function(){
 
     //----- PLATFORM MANAGEMENT ----//
     Route::group(['prefix' => 'platforms'], function () {
+        Route::get('/daily-signal-index',['as' => 'dailySignalIndex',"uses" =>'SubscriptionController@dailySignalIndex']);
     });
 
     //----- USERS MANAGEMENT ----//
     Route::group(['prefix' => 'users'], function () {
+        Route::get('users',['as' => 'users.index',"uses" =>'UserController@index']);
     });
 
     //---- BULK MESSAGING MANAGEMENT ----//
@@ -54,9 +56,10 @@ Route::group(['middleware'=>['auth']], function(){
     });
 });
 
-//Auth::routes();
+Auth::routes();
 Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerIndex"]);
 Route::get('/registration/{id?}', ["as"=>"register.ref", "uses"=>"HomeController@ref"]);
+Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
 Route::get('/logout', function () {
     auth()->logout();
     return redirect('/login');
