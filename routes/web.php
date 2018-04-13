@@ -11,6 +11,8 @@
 |
 */
 
+
+// Route::get('/', function () {return redirect()->route('login');});
 Route::group(['middleware'=>['auth']], function(){
     Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
@@ -30,6 +32,7 @@ Route::group(['middleware'=>['auth']], function(){
 
     //----- PLATFORM MANAGEMENT ----//
     Route::group(['prefix' => 'platforms'], function () {
+        Route::get('/daily-signal-index',['as' => 'dailySignalIndex',"uses" =>'SubscriptionController@dailySignalIndex']);
         Route::get('/', ["as"=>"platforms.index", "uses"=>"PlatformController@index"]);
         Route::post('/store',["as"=>"platforms.add",'uses'=> 'PlatformController@store']);
         Route::post('/update',["as"=>"platforms.update",'uses'=> 'PlatformController@update']);

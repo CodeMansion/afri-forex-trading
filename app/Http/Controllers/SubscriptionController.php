@@ -16,9 +16,9 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function dailySignalIndex()
     {
-        //
+        return view('members.daily_signal');
     }
 
     /**

@@ -12,9 +12,12 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $data['users'] = User::all();
-        return view('admin.users.index')->with($data);
+    {        
+        if(\Auth::user()->is_admin) {
+            $data['users'] = User::all();
+            return view('admin.users.index')->with($data);
+        }
+        return view('members.user_profile');
     }
 
     public function getEditInfo(Request $request)
