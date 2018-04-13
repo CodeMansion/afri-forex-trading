@@ -12,4 +12,12 @@ class Role extends Model
         }
         return self::where('id', '=', $id)->firstOrFail();
     }
+
+    public function permissions(){
+    	return $this->belongsToMany(Permission::class);
+    }
+
+    public function givePermissionTo(Permission $permission){
+    	return $this->permissions()->save($permission);
+    }
 }

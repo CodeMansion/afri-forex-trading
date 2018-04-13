@@ -37,4 +37,46 @@ class User extends Authenticatable
     public function UserProfile(){
         return $this->belongsTo('App\UserProfile','user_id');
     }
+
+    public function isA($field) {
+        $roles = \DB::table("role_user")->where([
+            'user_id' => $this->id,
+        ])->get();
+
+        foreach($roles as $role) {
+            $check = Role::find($role->role_id);
+            if(isset($check) && $check->name == $field){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasRole($role){
+        if(is_string($role)){
+            return $this->roles->contains('name', $role);
+        }
+
+        foreach($role as $r){
+            if($this->hasRole($r->name)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function assignRole($id){
+        $roleID = Role::where([
+            'id' => $id,
+        ])->firstOrFail();
+        $insert = \DB::table("role_user")->insert([
+            'user_id'   => $this->id,
+            'role_id'   => $roleID->id,
+        ]);
+    }
 }

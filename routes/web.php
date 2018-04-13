@@ -11,11 +11,8 @@
 |
 */
 
-Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
-
 Route::group(['middleware'=>['auth']], function(){
     Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
-    // Route::get('/', function () {return view('auth.login');});
 
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
@@ -55,8 +52,12 @@ Route::group(['middleware'=>['auth']], function(){
 });
 
 Auth::routes();
+
 Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerIndex"]);
 Route::get('/registration/{id?}', ["as"=>"register.ref", "uses"=>"HomeController@ref"]);
+Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
+Route::get('/', function () {return view('auth.login');});
+
 Route::get('/logout', function () {
     auth()->logout();
     return redirect('/login');

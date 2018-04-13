@@ -25,9 +25,9 @@
         @yield('extra_style')
     </head>
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
-        @include('admin.partials.header')
+        @include('members.partials.header')
         <div class="page-container">
-            @include('admin.partials.menu')
+            @include('members.partials.menu')
             <div class="page-content-wrapper">
                 <div class="page-content">
                     @yield('content')
