@@ -18,6 +18,17 @@ class PlatformController extends Controller
         return view('admin.platforms.index')->with($data);
     }
 
+
+    public function getEditInfo(Request $request)
+    {
+        try {
+            $params['platform'] = Platform::find($request->platform_id,'slug');
+            return view('admin.platforms.partials._platforms_details_')->with($params);
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -80,7 +91,7 @@ class PlatformController extends Controller
             try {
                     $platform = Platform::find($id);
                     if($platform->is_active == 1){
-                        $plaform->is_active = 0;
+                        $platform->is_active = 0;
                         $platform->save();
                         $ip = $_SERVER['REMOTE_ADDR'];
                         activity_logs(auth()->user()->id, $ip, "De-Activate Platform");
@@ -131,13 +142,13 @@ class PlatformController extends Controller
     public function update(Request $request)
     {
         $data = $request->except('_token');
-        if(isset($data) && $data['req'] == 'add_platform') {
+        if(isset($data) && $data['req'] == 'update_platform') {
             \DB::beginTransaction();
             try {
-                    $platform = Platform::find($data['platform_id']);
+                    $platform = Platform::find($data['platform_id'],'slug');
                     $platform->name = $data['name'];
                     $platform->is_multiple = $data['is_multiple'];
-                    $plaform->save();
+                    $platform->save();
                     $ip = $_SERVER['REMOTE_ADDR'];
                     activity_logs(auth()->user()->id, $ip, "Update Platform");
                 \DB::commit();
@@ -162,9 +173,30 @@ class PlatformController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        $platform = Platform::find($id);
-        $plaform->delete();
+        $data = $request->except('_token');
+        if($data) {
+            if($data['req'] == 'platform_delete') {
+                try {
+                    $platform = Platform::find($id,'slug');
+                    $platform->delete();
+
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                    activity_logs(auth()->user()->id,$ip,"Delete Platform");
+
+                    return $response = [
+                        'msg' => 'Deleted successfully',
+                        'type' => 'true'
+                    ];
+
+                } catch(Exception $e) {
+                    return $response = [
+                        'msg' => "Internal Server Error",
+                        'type' => "false"
+                    ];
+                }
+            }
+        }
     }
 }

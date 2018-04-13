@@ -123,7 +123,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
-                                    <button id="sample_editable_1_new" class="btn sbold green"> Add New
+                                    <button data-toggle="modal" data-target="#new-platform" title="Add" class="btn sbold green"> Add New
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
@@ -326,7 +326,7 @@
         var investment_count   = "{{ $investment }}";
         var referral_count  = "{{ $referrals }}";
         var TOKEN = "{{csrf_token()}}";
-        var PLATFORM_URL = "{{URL::route('packages')}}";
+        var PLATFORM_URL = "{{URL::route('package')}}";
         var SUBSCRIBE = "{{URL::route('subscribe')}}";
     </script>
     <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script>

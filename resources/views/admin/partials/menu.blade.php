@@ -18,12 +18,12 @@
                     </a>
                     <ul class="sub-menu">
                         <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
+                            <a href="{{ URL::route('packages.index') }}" class="nav-link ">
                                 <span class="title">Packages</span>
                             </a>
                         </li>
                         <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
+                            <a href="{{ URL::route('packagetypes.index') }}" class="nav-link ">
                                 <span class="title">Package Types</span>
                             </a>
                         </li>
@@ -43,7 +43,7 @@
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                    <a href="{{ URL::route('users.index') }}" class="nav-link nav-toggle">
                         <i class="icon-bulb"></i>
                         <span class="title">Members</span>
                         <span class="arrow"></span>

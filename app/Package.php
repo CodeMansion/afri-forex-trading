@@ -12,4 +12,8 @@ class Package extends Model
         }
         return self::where('id', '=', $id)->firstOrFail();
     }
+    
+    public function Platform(){
+        return $this->belongsTo('App\Platform','platform_id');
+    }
 }

@@ -1,7 +1,7 @@
 @extends('admin.partials.app')
 
 @section('content')
-    <h1 class="page-title"> Admin Platforms <small>statistics, charts, recent events and reports</small> </h1>
+    <h1 class="page-title"> Admin Users <small>statistics, charts, recent events and reports</small> </h1>
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
@@ -9,19 +9,19 @@
                 <a href="{{ URL::route('dashboard') }} ">Home</a>
                 <i class="fa fa-angle-right"></i>
             </li>
-            <li><span>Dashboard</span></li>
+            <li><span>Users</span></li>
         </ul>
     </div>
     <div class="clearfix"></div>
     <div class="portlet light tasks-widget bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-green-haze bold uppercase">Platfroms </span>
-                <span class="caption-helper">Displaying list of platforms </span>                        
+                <span class="caption-subject font-green-haze bold uppercase">Users </span>
+                <span class="caption-helper">Displaying list of users </span>                        
             </div>
             <div class="actions">
                 <div class="btn-group">
-                    <a class="font-white btn green pull pull-left" data-toggle="modal" data-target="#new-platform" title="Add"><i class="i"></i> Create New Platform</a>
+                    <!--a class="font-white btn green pull pull-left" data-toggle="modal" data-target="#new-platform" title="Add"><i class="i"></i> Create New Platform</a-->
                     {{-- <a class="btn green-haze btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"> Actions
                         <i class="fa fa-angle-down"></i>
                     </a> --}}
@@ -37,17 +37,19 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="tab-content">
                             <div class="tab-pane active" id="purchases">
-                                @if(count($platforms) < 1)
+                                @if(count($users) < 1)
                                     <div class="danger-alert">
-                                        <i class="fa fa-warning"></i> <em>There are no platform available currently. Click on the button above to add a new platform.</em>
+                                        <i class="fa fa-warning"></i> <em>There are no user available currently.</em>
                                     </div>
                                 @else 
-                                    <table class="table table-striped table-hover platforms" id="sample_2">
+                                    <table class="table table-striped table-hover users" id="sample_2">
                                         <thead>
                                             <tr>
                                                 <th>S/N</th>
                                                 <th>Name</th> 
-                                                <th>Type</th>
+                                                <th>Email</th>
+                                                <th>Username</th>
+                                                <th>Telephone</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -55,31 +57,27 @@
                                         <tbody>
                                             @php($counter=1)
                                             @php($index=0)
-                                            @forelse($platforms as $platform)
+                                            @forelse($users as $user)
                                                 <tr>
                                                     <td>{{ $counter++}}</td>
-                                                    <td>{{ $platform->name}} </td>
+                                                    <td>{{ $user->full_name}} </td>
+                                                    <td>{{ $user->email}} </td>
+                                                    <td>{{ $user->username}}</td>
+                                                    <td></td>
                                                     <td>
-                                                        @if($platform->is_multiple == true)
-                                                            <label class="label label-success btn-sm"> Multiple</label>
+                                                        @if($user->is_active == true)
+                                                                <a href="#" data-href="{{ URL::route('users.activate', $user->id) }}" id="remarks{{$index}}" class="label label-success btn-sm"><i class="fa fa-minus-square-o"></i>Active</a>
                                                         @else
-                                                            <label class="label label-primary btn-sm"> Single</label>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @if($platform->is_active == true)
-                                                                <a href="#" data-href="{{ URL::route('platforms.activate', $platform->id) }}" id="deactivate{{$index}}" class="label label-success btn-sm"><i class="fa fa-minus-square-o"></i>Active</a>
-                                                        @else
-                                                            <a href="#" data-href="{{ URL::route('platforms.activate', $platform->id) }}" id="activate{{$index}}" class="label label-danger btn-sm"><i class="fa fa-minus-square-o"></i>Not Active</a>
+                                                            <a href="#" data-href="{{ URL::route('users.activate', $user->id) }}" id="remarks{{$index}}" class="label label-danger btn-sm"><i class="fa fa-minus-square-o"></i>Not Active</a>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         <div class="btn-group">
                                                             <button class="btn btn-xs green dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-expanded="false"> Actions<i class="fa fa-angle-down"></i></button>
                                                             <ul class="dropdown-menu pull-left" role="menu">
-                                                                <input type="hidden" id="platform_id{{$index}}" value="{{$platform->slug}}">
+                                                                <input type="hidden" id="user_id{{$index}}" value="{{$user->slug}}">
                                                                 <li><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i></a></li>
-                                                                <li><a data-href="{{ URL::route('platforms.delete',$platform->slug)}}" id="btn_platform_delete{{$index}}"><i class="fa fa-trash"></i></a></li>
+                                                                <li><a data-href="{{ URL::route('users.delete',$user->slug)}}" id="btn_user_delete{{$index}}"><i class="fa fa-trash"></i></a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -99,16 +97,16 @@
     </div>
 
 @section('modals')
-    @include('admin.platforms.modals._new_platforms')
-    @include('admin.platforms.modals._edit_platforms')
+    @include('admin.users.modals._new_users')
+    @include('admin.users.modals._edit_users')
 @endsection
 @endsection
 @section('extra_script')
     <script>
         var TOKEN = "{{csrf_token()}}";
-        var UPDATE_URL = "{{URL::route('platforms.update')}}";
-        var GET_EDIT_INFO = "{{URL::route('platforms.editInfo')}}";
-        var ADDPLATFORM = "{{URL::route('platforms.add')}}";
+        var UPDATE_URL = "{{URL::route('users.update')}}";
+        var GET_EDIT_INFO = "{{URL::route('users.editInfo')}}";
+        var ADDPLATFORM = "{{URL::route('users.add')}}";
     </script>
     <script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" ="text/javascript"></script>
@@ -116,7 +114,7 @@
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" ="text/javascript"></script>
     
-    <script src="{{ asset('assets/pages/admin/platform.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/pages/admin/user.js') }}" type="text/javascript"></script>
 @endsection
 @section('after_script')
     <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" ="text/javascript"></script>

@@ -12,10 +12,10 @@
 */
 
 
-//Route::get('/', function () {return view('auth.login');});
+Route::get('/', function () {return redirect()->route('login');});
 Route::group(['middleware'=>['auth']], function(){
     Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
-    Route::get('/packages',["as" => "packages", "uses"  => "HomeController@package"]);
+    Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
     Route::post('/subscribe',["as" => "subscribe", "uses"  => "SubscriptionController@store"]);
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
@@ -46,7 +46,6 @@ Route::group(['middleware'=>['auth']], function(){
         Route::post('/update',["as"=>"packages.update",'uses'=> 'PackageController@update']);
         Route::get('/delete/{id?}',["as"=>"packages.delete",'uses'=> 'PackageController@destroy']);
         Route::post('/get-details', ["as"=>"packages.editInfo", "uses"=>"PackageController@getEditInfo"]);
-        Route::get('/activate', ["as"=>"packages.activate", "uses"=>"PackageController@activate"]);
     });
     
     //----- PACKAGETYPE MANAGEMENT ----//
@@ -56,11 +55,16 @@ Route::group(['middleware'=>['auth']], function(){
         Route::post('/update',["as"=>"packagetypes.update",'uses'=> 'PackageTypeController@update']);
         Route::get('/delete/{id?}',["as"=>"packagetypes.delete",'uses'=> 'PackageTypeController@destroy']);
         Route::post('/get-details', ["as"=>"packagetypes.editInfo", "uses"=>"PackageTypeController@getEditInfo"]);
-        Route::get('/activate', ["as"=>"packagetypes.activate", "uses"=>"PackageTypeController@activate"]);
     });
 
     //----- USERS MANAGEMENT ----//
     Route::group(['prefix' => 'users'], function () {
+        Route::get('/', ["as"=>"users.index", "uses"=>"UserController@index"]);
+        Route::post('/store',["as"=>"users.add",'uses'=> 'UserController@store']);
+        Route::post('/update',["as"=>"users.update",'uses'=> 'UserController@update']);
+        Route::get('/delete/{id?}',["as"=>"users.delete",'uses'=> 'UserController@destroy']);
+        Route::post('/get-details', ["as"=>"users.editInfo", "uses"=>"UserController@getEditInfo"]);
+        Route::get('/activate', ["as"=>"users.activate", "uses"=>"UserController@activate"]);
     });
 
     //---- BULK MESSAGING MANAGEMENT ----//

@@ -68,9 +68,9 @@
                                                     </td>
                                                     <td>
                                                         @if($platform->is_active == true)
-                                                                <a href="#" data-href="{{ URL::route('platforms.activate', $platform->id) }}" id="deactivate{{$index}}" class="label label-success btn-sm"><i class="fa fa-minus-square-o"></i>Active</a>
+                                                                <a href="#" data-href="{{ URL::route('platforms.activate', $platform->id) }}" id="remarks{{$index}}" class="label label-success btn-sm"><i class="fa fa-minus-square-o"></i>Active</a>
                                                         @else
-                                                            <a href="#" data-href="{{ URL::route('platforms.activate', $platform->id) }}" id="activate{{$index}}" class="label label-danger btn-sm"><i class="fa fa-minus-square-o"></i>Not Active</a>
+                                                            <a href="#" data-href="{{ URL::route('platforms.activate', $platform->id) }}" id="remarks{{$index}}" class="label label-danger btn-sm"><i class="fa fa-minus-square-o"></i>Not Active</a>
                                                         @endif
                                                     </td>
                                                     <td>

@@ -34,7 +34,15 @@ class User extends Authenticatable
         return self::where('id', '=', $id)->firstOrFail();
     }
     
-    public function UserProfile(){
+    public function Profile(){
         return $this->belongsTo('App\UserProfile','user_id');
+    }
+
+    public function UserDownline(){
+        return $this->hasMany('App\UserDownline','user_id');
+    }
+
+    public function UserWallet(){
+        return $this->belongsTo('App\UserWallet','user_id');
     }
 }

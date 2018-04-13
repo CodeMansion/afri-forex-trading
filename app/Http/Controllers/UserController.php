@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\User;
 class UserController extends Controller
 {
     /**
@@ -13,7 +13,55 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $data['users'] = User::all();
+        return view('admin.users.index')->with($data);
+    }
+
+    public function getEditInfo(Request $request)
+    {
+        try {
+            $params['packagetype'] = User::find($request->user_id, 'slug');
+            return view('admin.users.partials._users_details_')->with($params);
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+
+    public function activate($id)
+    {
+        \DB::beginTransaction();
+            try {
+                    $user = User::find($id);
+                    if($user->is_active == 1){
+                        $user->is_active = 0;
+                        $user->save();
+                        $ip = $_SERVER['REMOTE_ADDR'];
+                        activity_logs(auth()->user()->id, $ip, "De-Activate User");
+                        \DB::commit();
+                        return $response = [
+                            'msg' => "User De-activated Successfully.",
+                            'type' => "true"
+                        ];
+                    }else{
+                        $user->is_active = 1;
+                        $user->save();
+                        $ip = $_SERVER['REMOTE_ADDR'];
+                        activity_logs(auth()->user()->id, $ip, "Activate User");
+                        \DB::commit();
+                        return $response = [
+                            'msg' => "User Activated Successfully.",
+                            'type' => "true"
+                        ];
+                    }
+
+            } catch(Exception $e) {
+                \DB::rollback();
+                return $response = [
+                    'msg' => "Internal Server Error",
+                    'type' => "false"
+                ];
+            }
     }
 
     /**
