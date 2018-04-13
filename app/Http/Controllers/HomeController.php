@@ -9,7 +9,12 @@ use App\UserDownline;
 use App\Mail\ConfirmRegistration;
 use DB;
 use Validator;
-
+use App\Platform;
+use App\Package;
+use App\PackageType;
+use App\Subscription;
+use App\Investment;
+use App\Referral;
 class HomeController extends Controller
 {
     
@@ -23,8 +28,23 @@ class HomeController extends Controller
         if(\Auth::user()->is_admin) {
             return view('admin.dashboard');
         }
-
-        return view('members.dashboard');
+        $data['platforms'] = Platform::whereIsActive(true)->get();
+        $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
+        $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
+        $data['referrals'] = Referral::whereUserId(auth()->user()->id)->count();
+        return view('members.dashboard')->with($data);
+    }
+    
+    public function package(Request $request){        
+        try {
+            $params['packages'] = Package::wherePlatformId($request->platform_id)->get();
+            if(($params['packages'])->count() > 0){
+                $params['packagetypes'] = PackageType::all();
+                return view('members.partials.package')->with($params);
+            }
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
 
@@ -81,10 +101,10 @@ class HomeController extends Controller
                         'type' => 'false'
                     ];
                 }
-                $referral = User::whereUsername($data['upline_id'])->first();
-                if(!$referral){
-                    $referral = 1;
-                }
+                $referral = User::whereUsername($data['upline_id'])->first()->id;
+                // if(empty($referral)){
+                //     $referral = 1;
+                // }
                 $user                   = new User();
                 $user->slug             = bin2hex(random_bytes(64));
                 $user->full_name        = $data['full_name'];
