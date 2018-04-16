@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class DailySignal extends Mailable
+class Subscriptions extends Mailable
 {
     use Queueable, SerializesModels;
 

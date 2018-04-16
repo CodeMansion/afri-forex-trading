@@ -78,8 +78,9 @@
                                                             <button class="btn btn-xs green dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-expanded="false"> Actions<i class="fa fa-angle-down"></i></button>
                                                             <ul class="dropdown-menu pull-left" role="menu">
                                                                 <input type="hidden" id="platform_id{{$index}}" value="{{$platform->slug}}">
-                                                                <li><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i></a></li>
-                                                                <li><a data-href="{{ URL::route('platforms.delete',$platform->slug)}}" id="btn_platform_delete{{$index}}"><i class="fa fa-trash"></i></a></li>
+                                                                <li><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i>Edit</a></li>
+                                                                <li><a href="{{ URL::route('platforms.show',$platform->slug) }}"><i class="icon-note"></i>View Users</a></li>
+                                                                <li><a data-href="{{ URL::route('platforms.delete',$platform->slug)}}" id="btn_platform_delete{{$index}}"><i class="fa fa-trash"></i>Delete</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>

@@ -34,6 +34,7 @@ Route::group(['middleware'=>['auth']], function(){
     Route::group(['prefix' => 'platforms'], function () {
         Route::get('/', ["as"=>"platforms.index", "uses"=>"PlatformController@index"]);
         Route::post('/store',["as"=>"platforms.add",'uses'=> 'PlatformController@store']);
+        Route::get('/show/{id?}', ["as"=>"platforms.show", "uses"=>"PlatformController@show"]);
         Route::post('/update',["as"=>"platforms.update",'uses'=> 'PlatformController@update']);
         Route::get('/delete/{id?}',["as"=>"platforms.delete",'uses'=> 'PlatformController@destroy']);
         Route::post('/get-details', ["as"=>"platforms.editInfo", "uses"=>"PlatformController@getEditInfo"]);
@@ -62,10 +63,16 @@ Route::group(['middleware'=>['auth']], function(){
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', ["as"=>"users.index", "uses"=>"UserController@index"]);
         Route::post('/store',["as"=>"users.add",'uses'=> 'UserController@store']);
+        Route::get('/show/{id?}', ["as"=>"users.show", "uses"=>"UserController@show"]);
         Route::post('/update',["as"=>"users.update",'uses'=> 'UserController@update']);
         Route::get('/delete/{id?}',["as"=>"users.delete",'uses'=> 'UserController@destroy']);
         Route::post('/get-details', ["as"=>"users.editInfo", "uses"=>"UserController@getEditInfo"]);
-        Route::get('/activate', ["as"=>"users.activate", "uses"=>"UserController@activate"]);
+        Route::get('/activate/{id?}', ["as"=>"users.activate", "uses"=>"UserController@activate"]);
+    });
+
+    //----- SUBSCRIPTION MANAGEMENT ----//
+    Route::group(['prefix' => 'subscriptions'], function () {
+        Route::get('/', ["as"=>"subscriptions.index", "uses"=>"SubscriptionController@index"]);
     });
 
     //---- BULK MESSAGING MANAGEMENT ----//

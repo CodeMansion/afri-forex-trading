@@ -194,7 +194,6 @@ $('body').find("table.table-striped.table-hover.platforms tbody tr").each(functi
             method: "GET",
             data: {
                 _token: TOKEN,
-                req: "platform_delete"
             },
             success: function(rst) {
                 if (rst.type == "true") {
@@ -233,10 +232,7 @@ $('body').find("table.table-striped.table-hover.platforms tbody tr").each(functi
         $.ajax({
             url: $(this).data("href"),
             method: "GET",
-            data: {
-                _token: TOKEN,
-                req: "platform_delete"
-            },
+            data: {},
             success: function(rst) {
                 if (rst.type == "true") {
                     $("#deactivate").attr("disabled", false);
