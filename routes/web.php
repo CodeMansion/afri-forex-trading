@@ -95,6 +95,7 @@ Route::group(['middleware'=>['auth']], function(){
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
 $this->post('login', 'Auth\LoginController@login')->name('login');
 
+Route::get('/user-support', ["as"=>"user_support", "uses"=>"MessageController@support"]);
 Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerIndex"]);
 Route::get('/registration/{id?}', ["as"=>"register.ref", "uses"=>"HomeController@ref"]);
 Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
