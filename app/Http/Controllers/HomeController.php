@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\User;
 use App\UserProfile;
 use App\UserDownline;
@@ -15,6 +16,7 @@ use App\PackageType;
 use App\Subscription;
 use App\Investment;
 use App\Referral;
+
 class HomeController extends Controller
 {
     
@@ -24,14 +26,18 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $data['menu_id'] = 1;
+
         if(\Auth::user()->is_admin) {
-            return view('admin.dashboard');
+            return view('admin.dashboard')->with($data);
         }
+
         $data['platforms'] = Platform::whereIsActive(true)->get();
         $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
         $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
         $data['referrals'] = Referral::whereUserId(auth()->user()->id)->count();
+
         return view('members.dashboard')->with($data);
     }
     
@@ -65,7 +71,7 @@ class HomeController extends Controller
 	{		
 		$custom_msg = [
 			'user_id' 		=> 'Upline is Required',
-			'full_name'      => 'Fullname is Required',
+			'full_name'     => 'Fullname is Required',
 			'username'      => 'Username is Required',
 			'email'         => 'Email is Required',
 			'telephone'     => 'Telephone Number is Required',
@@ -77,7 +83,7 @@ class HomeController extends Controller
 		
 		return Validator::make($data, [
 			'upline_id'		=> 'bail|required',
-			'full_name'      => 'bail|required|string|max:255',
+			'full_name'     => 'bail|required|string|max:255',
 			'username'      => 'bail|required|string|max:100',
 			'email'         => 'bail|required|string|email|max:255|unique:users',
 			'telephone'     => 'bail|required|string|max:15',

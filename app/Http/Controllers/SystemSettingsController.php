@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\MailSetting;
+
 class SystemSettingsController extends Controller
 {
     /**
@@ -11,9 +13,12 @@ class SystemSettingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function Mailindex()
     {
-        //
+        $data['menu_id'] = 9.0;
+        $data['mailing'] = MailSetting::find(1);
+
+        return view('admin.settings.mail_settings.index')->with($data);
     }
 
     /**
@@ -34,7 +39,30 @@ class SystemSettingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        if(!empty($data)) {
+            try {
+                
+                $update = MailSetting::find(1);
+                $update->host = $data['host'];
+                $update->password = $data['password'];
+                $update->username = $data['username'];
+                $update->port = $data['port'];
+                $update->encryption = $data['encryption'];
+                $update->from_name = $data['sender_name'];
+                $update->from_email = $data['sender_email'];
+                $update->reply_to = $data['reply_to'];
+                $update->save();
+
+                return response()->json([
+                    'msg'   => "Mail Settings Updated Successfully",
+                    'type'  => "true"
+                ], 200);
+
+            } catch(Exception $e) {
+                return false;
+            }
+        }
     }
 
     /**

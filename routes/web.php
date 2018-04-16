@@ -17,7 +17,7 @@ Route::group(['middleware'=>['auth']], function(){
     Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
     Route::post('/subscribe',["as" => "subscribe", "uses"  => "SubscriptionController@store"]);
-    
+
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
         //-- ROLES AND PERMISSION --//
@@ -70,6 +70,8 @@ Route::group(['middleware'=>['auth']], function(){
 
     //---- BULK MESSAGING MANAGEMENT ----//
     Route::group(['prefix' => 'messaging'], function () {
+        Route::get('/', ["as"=>"msgIndex", "uses"=>"MessageController@index"]);
+        Route::post('/send-mail', ["as"=>"msgSend", "uses"=>"MessageController@store"]);
     });
 
     //---- ACTIVITY LOGS ---//
@@ -81,16 +83,14 @@ Route::group(['middleware'=>['auth']], function(){
     });
 
     //---- SYSTEM SETTINGS MANAGEMENT ---//
-    Route::group(['prefix' => 'authentication'], function () {
+    Route::group(['prefix' => 'settings'], function () {
+        Route::group(['prefix' => 'mail'], function () {
+            Route::get('/', ["as"=>"mailIndex", "uses"=>"SystemSettingsController@mailIndex"]);
+            Route::post('/update-settings', ["as"=>"mailUpdate", "uses"=>"SystemSettingsController@store"]);
+        });
     });
 });
 
-// Auth::routes();
-
-// Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerIndex"]);
-// Route::get('/registration/{id?}', ["as"=>"register.ref", "uses"=>"HomeController@ref"]);
-// Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
-// Route::get('/', function () {return view('auth.login');});
 
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
 $this->post('login', 'Auth\LoginController@login')->name('login');
