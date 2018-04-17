@@ -14,10 +14,11 @@ class PaymentTransactionController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->is_admin) {
+        if(\Auth::user()->is_admin == 1) {
             $data['transactions'] = PaymentTransaction::all();
             return view('admin.transaction.index');
         }
+        return view('members.transactions.index');
     }
 
     /**

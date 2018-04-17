@@ -136,7 +136,7 @@
             </div>
             <div class="portlet-body">
                 <div class="table-scrollable">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" id="sample_2">
                         <thead>
                             <tr>
                                 <th> S/No. </th>

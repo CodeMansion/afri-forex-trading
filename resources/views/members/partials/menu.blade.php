@@ -38,29 +38,17 @@
                 </a>
             </li>
             <li class="nav-item  ">
-                <a href="javascript:;">
+                <a href="{{ URL::route('messaging.index') }}">
                     <i class="icon-settings"></i>
                     <span class="title">Disputes</span>
                 </a>
             </li>            
             <li class="nav-item  ">
-                <a href="javascript:;" class="nav-link nav-toggle">
+                <a href="{{ URL::route('transactions.index') }}" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>
                     <span class="title">Transactions</span>
                     <span class="arrow"></span>
                 </a>
-                <ul class="sub-menu">
-                    <li class="nav-item  ">
-                        <a href="#" class="nav-link ">
-                            <span class="title">Payment Transactions</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="#" class="nav-link ">
-                            <span class="title">Transaction Category</span>
-                        </a>
-                    </li>
-                </ul>
             </li>
             <li class="nav-item  ">
                 <a href="{{ URL::route('activity.index') }}">
