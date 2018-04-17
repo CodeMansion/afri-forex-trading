@@ -1,5 +1,5 @@
 function showInfoModal() {
-    $("#platform").modal({ backdrop: "static", keyboard: false });
+    //$("#platform").modal({ backdrop: "static", keyboard: false });
     //backdrop prevents closing the modal, keyboard prevents losing with esc key
 }
 

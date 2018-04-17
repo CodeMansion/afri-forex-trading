@@ -11,9 +11,9 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function support()
+    public function index()
     {
-        return view('members.user_support');
+        return view('members.support.index');
     }
 
     /**
