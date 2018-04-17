@@ -61,14 +61,14 @@
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="#" class="nav-link ">
+                        <a href="{{ URL::route('transactioncategories.index') }}" class="nav-link ">
                             <span class="title">Transaction Category</span>
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item  ">
-                <a href="?p=">
+                <a href="{{ URL::route('activity.index') }}">
                     <i class="icon-wallet"></i>
                     <span class="title">Activity Logs</span>
                 </a>

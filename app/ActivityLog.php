@@ -12,4 +12,8 @@ class ActivityLog extends Model
         }
         return self::where('id', '=', $id)->firstOrFail();
     }
+
+    public function User(){
+        return $this->belongsTo('App\User','user_id');
+    }
 }

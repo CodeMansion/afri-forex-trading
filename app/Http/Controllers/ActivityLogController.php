@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\PaymentTransaction;
 
-class PaymentTransactionController extends Controller
+class ActivityLogController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +13,12 @@ class PaymentTransactionController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->is_admin) {
-            $data['transactions'] = PaymentTransaction::all();
-            return view('admin.transaction.index');
-        }
+        if(\Auth::user()->is_admin == 1) {
+            $params['activitylogs'] = \App\ActivityLog::all();
+            return view('admin.activitylogs.index')->with($params);
+        }        
+        $params['activitylogs'] = \App\ActivityLog::whereUserId(\Auth::user()->id)->get();
+        return view('members.activitylogs.index')->with($params);
     }
 
     /**

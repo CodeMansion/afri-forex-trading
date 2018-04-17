@@ -107,7 +107,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
-                                    <button data-toggle="modal" data-target="#new-platform" title="Add" class="btn sbold green"> Add New
+                                    <button data-toggle="modal" data-target="#platform" title="Add" class="btn sbold green"> Add New
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
@@ -186,7 +186,8 @@
         var referral_count  = "{{ $referrals }}";
         var TOKEN = "{{csrf_token()}}";
         var PLATFORM_URL = "{{URL::route('package')}}";
-        var SUBSCRIBE = "{{URL::route('subscribe')}}";
+        var SUBSCRIBE = "{{URL::route('subscriptions.add')}}";
+        var REFERRAL = "{{URL::route('referrals.add')}}";
     </script>
     <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/flot/jquery.flot.min.js') }}" type="text/javascript"></script>

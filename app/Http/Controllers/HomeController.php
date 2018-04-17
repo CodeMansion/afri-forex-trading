@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->is_admin) {
+        if(\Auth::user()->is_admin == 1) {
             return view('admin.dashboard');
         }
         $data['platforms'] = Platform::whereIsActive(true)->get();

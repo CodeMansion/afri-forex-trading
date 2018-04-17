@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Earning;
 use Illuminate\Http\Request;
-use App\PaymentTransaction;
 
-class PaymentTransactionController extends Controller
+class EarningController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,7 @@ class PaymentTransactionController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->is_admin) {
-            $data['transactions'] = PaymentTransaction::all();
-            return view('admin.transaction.index');
-        }
+        //
     }
 
     /**
@@ -44,10 +41,10 @@ class PaymentTransactionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Earning  $earning
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Earning $earning)
     {
         //
     }
@@ -55,10 +52,10 @@ class PaymentTransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Earning  $earning
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Earning $earning)
     {
         //
     }
@@ -67,10 +64,10 @@ class PaymentTransactionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Earning  $earning
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Earning $earning)
     {
         //
     }
@@ -78,10 +75,10 @@ class PaymentTransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Earning  $earning
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Earning $earning)
     {
         //
     }

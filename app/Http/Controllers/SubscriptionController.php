@@ -17,8 +17,9 @@ class SubscriptionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
-        return view('members.platforms.subscriptions.index');
+    {    
+        $params['downlines'] = UserDownline::all();
+        return view('members.platforms.subscriptions.index')->with($params);
     }
 
     /**
