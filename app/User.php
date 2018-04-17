@@ -88,4 +88,10 @@ class User extends Authenticatable
     public function UserWallet(){
         return $this->belongsTo('App\UserWallet','user_id');
     }
+
+    public function ActivityLog(){
+        return $this->hasMany('App\ActivityLog','user_id');
+    }
+
+    
 }

@@ -1,7 +1,7 @@
 @extends('admin.partials.app')
 
 @section('content')
-    <h1 class="page-title"> Admin Transaction Categories <small>statistics, charts, recent events and reports</small> </h1>
+    <h1 class="page-title"> Admin Activity Logs <small>statistics, charts, recent events and reports</small> </h1>
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
@@ -9,26 +9,18 @@
                 <a href="{{ URL::route('dashboard') }} ">Home</a>
                 <i class="fa fa-angle-right"></i>
             </li>
-            <li><span>Transaction Categories</span></li>
+            <li><span>Activity Logs</span></li>
         </ul>
     </div>
     <div class="clearfix"></div>
     <div class="portlet light tasks-widget bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-green-haze bold uppercase">Transaction Categories </span>
-                <span class="caption-helper">Displaying list of transaction categories </span>                        
+                <span class="caption-subject font-green-haze bold uppercase">Activity Logs </span>
+                <span class="caption-helper">Displaying list of Activity Logs </span>                        
             </div>
             <div class="actions">
-                <div class="btn-group">
-                    <a class="font-white btn green pull pull-left" data-toggle="modal" data-target="#new-transactioncategories" title="Add"><i class="i"></i> Create New Transaction Category</a>
-                    {{-- <a class="btn green-haze btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"> Actions
-                        <i class="fa fa-angle-down"></i>
-                    </a> --}}
-                    <ul class="dropdown-menu pull-right">
-                        
-                    </ul>
-                </div>
+                
             </div>
         </div>
         <div class="portlet-body util-btn-margin-bottom-5">
@@ -37,12 +29,12 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="tab-content">
                             <div class="tab-pane active" id="purchases">
-                                @if(count($transactioncategories) < 1)
+                                @if(count($activitylogs) < 1)
                                     <div class="danger-alert">
-                                        <i class="fa fa-warning"></i> <em>There are no transaction categories available currently. Click on the button above to add a new transaction categories.</em>
+                                        <i class="fa fa-warning"></i> <em>There are no Activity Logs available currently. Click on the button above to add a new Activity Logs.</em>
                                     </div>
                                 @else 
-                                    <table class="table table-striped table-hover transactioncategories" id="sample_2">
+                                    <table class="table table-striped table-hover activitylogs" id="sample_2">
                                         <thead>
                                             <tr>
                                                 <th>S/N</th>
@@ -52,23 +44,12 @@
                                         </thead>
                                         <tbody>
                                             @php($counter=1)
-                                            @php($index=0)
-                                            @forelse($transactioncategories as $tra)
+                                            @forelse($activitylogs as $log)
                                                 <tr>
                                                     <td>{{ $counter++}}</td>
-                                                    <td>{{ $tra->name}} </td>                                                    
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs green dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-expanded="false"> Actions<i class="fa fa-angle-down"></i></button>
-                                                            <ul class="dropdown-menu pull-left" role="menu">
-                                                                <input type="hidden" id="transactioncategories_id{{$index}}" value="{{$tra->slug}}">
-                                                                <li><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i>Edit</a></li>
-                                                                <li><a data-href="{{ URL::route('transactioncategories.delete',$tra->slug)}}" id="btn_transactioncategories_delete{{$index}}"><i class="fa fa-trash"></i>Delete</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
+                                                    <td>{{ $log->User->full_name}} </td>                                                    
+                                                    <td>{{ $log->action}}</td>
                                                 </tr>
-                                                @php($index++)
                                             @empty
                                             @endforelse
                                         </tbody>
@@ -82,10 +63,6 @@
         </div>
     </div>
 
-@section('modals')
-    @include('admin.transactioncategories.modals._new_transaction_categories')
-    @include('admin.transactioncategories.modals._edit_transaction_categories')
-@endsection
 @endsection
 @section('extra_script')
     <script>

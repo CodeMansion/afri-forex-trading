@@ -13,7 +13,8 @@ class InvestmentController extends Controller
      */
     public function index()
     {
-        //
+        $params['downlines'] = UserDownline::all();
+        return view('members.platforms.investments.index')->with($params);
     }
 
     /**
