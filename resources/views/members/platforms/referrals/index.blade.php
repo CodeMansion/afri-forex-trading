@@ -90,7 +90,7 @@
     <div class="portlet-title">
         <div class="caption caption-md">
             <i class="icon-bar-chart theme-font hide"></i>
-            <span class="caption-subject font-blue-madison bold uppercase">Referrer</span>
+            <span class="caption-subject font-blue-madison bold uppercase">Investment Platform</span>
         </div>
     </div>
     <div class="portlet-body">
@@ -120,33 +120,152 @@
                 </div>
             </div>
         </div>
-        <div class="table-scrollable table-scrollable-borderless">
-            <table class="table table-hover table-light">
-                <thead>
-                    <tr class="uppercase">
-                        <th> Date </th>
-                        <th> Earnings </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <a href="javascript:;" class="primary-link">April 12, 2018</a>
-                        </td>
-                    <td> $345 </td>
-                </tr>
-            </tbody></table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-comments"></i>Investment Transactions</div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-hover" id="sample_2">
+                        <thead>
+                            <tr>
+                                <th> S/No. </th>
+                                <th> First Name </th>
+                                <th> Last Name </th>
+                                <th> Username </th>
+                                <th> Status </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> 1 </td>
+                                <td> Mark </td>
+                                <td> Otto </td>
+                                <td> makr124 </td>
+                                <td>
+                                    <span class="label label-sm label-success"> Approved </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 2 </td>
+                                <td> Jacob </td>
+                                <td> Nilson </td>
+                                <td> jac123 </td>
+                                <td>
+                                    <span class="label label-sm label-info"> Pending </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 3 </td>
+                                <td> Larry </td>
+                                <td> Cooper </td>
+                                <td> lar </td>
+                                <td>
+                                    <span class="label label-sm label-warning"> Suspended </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 4 </td>
+                                <td> Sandy </td>
+                                <td> Lim </td>
+                                <td> sanlim </td>
+                                <td>
+                                    <span class="label label-sm label-danger"> Blocked </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+        <!-- END SAMPLE TABLE PORTLET-->
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-comments"></i>Investment Downlines</div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-hover" id="sample_3">
+                        <thead>
+                            <tr>
+                                <th> S/No. </th>
+                                <th> First Name </th>
+                                <th> Last Name </th>
+                                <th> Username </th>
+                                <th> Status </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> 1 </td>
+                                <td> Mark </td>
+                                <td> Otto </td>
+                                <td> makr124 </td>
+                                <td>
+                                    <span class="label label-sm label-success"> Approved </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 2 </td>
+                                <td> Jacob </td>
+                                <td> Nilson </td>
+                                <td> jac123 </td>
+                                <td>
+                                    <span class="label label-sm label-info"> Pending </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 3 </td>
+                                <td> Larry </td>
+                                <td> Cooper </td>
+                                <td> lar </td>
+                                <td>
+                                    <span class="label label-sm label-warning"> Suspended </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 4 </td>
+                                <td> Sandy </td>
+                                <td> Lim </td>
+                                <td> sanlim </td>
+                                <td>
+                                    <span class="label label-sm label-danger"> Blocked </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- END SAMPLE TABLE PORTLET-->
     </div>
 </div>
 <!-- END PORTLET -->
 @endsection
 @section('extra_script')
-    <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/flot/jquery.flot.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/flot/jquery.flot.pie.min.js') }}" type="text/javascript"></script>
-    <!-- <script src="{{ asset('assets/pages/scripts/charts-flotcharts.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/global/scripts/datatable.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" ="text/javascript"></script>
+
 @endsection
 @section('after_script')
-    <script src="{{ asset('js/pages/dashboard_chart.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" ="text/javascript"></script>
 @endsection

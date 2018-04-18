@@ -41,7 +41,16 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::get('/show/{id?}', ["as"=>"referrals.show", "uses"=>"ReferralController@show"]);		
 		Route::post('/update',["as"=>"referrals.update",'uses'=> 'ReferralController@update']);		
 		Route::get('/delete/{id?}',["as"=>"referrals.delete",'uses'=> 'ReferralController@destroy']);		
-	});	
+	});
+	
+	//-	--- INVESTMENT MANAGEMENT ----//	
+	Route::group(['prefix' => 'investments'], function () {		
+		Route::get('/', ["as"=>"investments.index", "uses"=>"InvestmentController@index",'middleware'=>'platform-reg']);
+		Route::post('/store',["as"=>"investments.add",'uses'=> 'InvestmentController@store']);		
+		Route::get('/show/{id?}', ["as"=>"investments.show", "uses"=>"InvestmentController@show"]);		
+		Route::post('/update',["as"=>"investments.update",'uses'=> 'InvestmentController@update']);		
+		Route::get('/delete/{id?}',["as"=>"investments.delete",'uses'=> 'InvestmentController@destroy']);		
+	});
 	
 	//-	---- PLATFORM MANAGEMENT ----//	
 	Route::group(['prefix' => 'platforms'], function () {		
