@@ -86,11 +86,11 @@
 </div>
 
 <!-- BEGIN PORTLET -->
-<div class="portlet light ">
+{{-- <div class="portlet light ">
     <div class="portlet-title">
         <div class="caption caption-md">
             <i class="icon-bar-chart theme-font hide"></i>
-            <span class="caption-subject font-blue-madison bold uppercase">Daily Signal</span>
+            <span class="caption-subject font-blue-madison bold uppercase">Transactions</span>
         </div>
     </div>
     <div class="portlet-body">
@@ -121,7 +121,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-6">
