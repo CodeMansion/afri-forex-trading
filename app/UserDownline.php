@@ -12,4 +12,12 @@ class UserDownline extends Model
         }
         return self::where('id', '=', $id)->firstOrFail();
     }
+
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function Profile(){
+        return $this->hasOne('App\UserProfile','user_id');
+    }
 }

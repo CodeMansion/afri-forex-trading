@@ -12,4 +12,8 @@ class UserProfile extends Model
         }
         return self::where('id', '=', $id)->firstOrFail();
     }
+
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
 }

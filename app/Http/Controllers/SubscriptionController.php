@@ -20,10 +20,25 @@ class SubscriptionController extends Controller
     public function index()
     {   
         if(\Auth::user()->is_admin) {
-            $params['downlines'] = UserDownline::all();
-            return view('admin.platforms.subscription.index');
         }
-        $params['downlines'] = UserDownline::all();
+        $subscription = Subscription::whereUserId(auth()->user()->id)->first();
+        $params['downlines'] = UserDownline::whereUplineId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->get();
+        $params['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->get();
+        $params['recent'] = PaymentTransaction::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->orderBy('id','desc')->first();
+        $params['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
+        $earning = \App\Earning::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->first();
+        if(!empty($earning)){
+            $earning->amount = $params['downlines']->count()  * 25;
+            $earning->save();
+        }else{
+            $earning                = new \App\Earning();
+            $earning->slug           = bin2hex(random_bytes(64));
+            $earning->user_id       = auth()->user()->id;
+            $earning->platform_id   = $subscription->platform_id;
+            $earning->amount        = ($params['downlines']->count() - 2) * 5;
+            $earning->save();
+        }
+        $params['earning'] = $earning;
         return view('members.platforms.subscriptions.index')->with($params);
     }
 
@@ -62,6 +77,7 @@ class SubscriptionController extends Controller
                 $transaction                            = new PaymentTransaction();
                 $transaction->slug                      = bin2hex(random_bytes(64));
                 $transaction->user_id                   = auth()->user()->id;
+                $transaction->platform_id               = $data['platform_id'];
                 $transaction->transaction_category_id   = \App\TransactionCategory::whereName('Debit')->first()->id;
                 $transaction->amount                    = 128;
                 $transaction->is_paid                   = true;
