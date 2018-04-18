@@ -87,16 +87,16 @@ class SubscriptionController extends Controller
                 $upline = UserDownline::whereDownlineId(auth()->user()->id)->first();
                 if(isset($upline)){
                     if($upline->platform_id == Null){
-                        $upline->platform_id        = $referral->platform_id;
+                        $upline->platform_id        = $subscribe->platform_id;
                         $upline->is_active          = 1;
                         $upline->investment_amount  = $transaction->amount;
                         $upline->save();
                     }else{
                         // new platform downline
                         $downline                   = new UserDownline();
-                        $downline->platform_id      = $referral->platform_id;
+                        $downline->platform_id      = $subscribe->platform_id;
                         $downline->upline_id 	    = $upline->upline_id;
-                        $downline->downline_id 	    = $referral->user_id;
+                        $downline->downline_id 	    = $subscribe->user_id;
                         $downline->is_active        = 1;
                         $downline->investment_amount= $transaction->amount;
                         $downline->save();
