@@ -65,7 +65,7 @@
         </ul>
     </li>
     <li class="nav-item  ">
-        <a href="?p=">
+        <a href="{{ URL::route('activity.index') }}">
             <i class="icon-wallet"></i>
             <span class="title">Activity Logs</span>
         </a>

@@ -7,7 +7,7 @@ use App\Subscription;
 use DB;
 use Carbon\Carbon;
 use App\PaymentTransaction;
-use App\Mail\DailySignal;
+use App\Mail\Subscriptions;
 
 class SubscriptionController extends Controller
 {
@@ -16,9 +16,10 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function dailySignalIndex()
-    {
-        return view('members.daily_signal');
+    public function index()
+    {    
+        $params['downlines'] = UserDownline::all();
+        return view('members.platforms.subscriptions.index')->with($params);
     }
 
     /**
@@ -61,7 +62,7 @@ class SubscriptionController extends Controller
                 $transaction->reference_no              = bin2hex(random_bytes(8));
                 $transaction->save();
                 
-                //\Mail::to(auth()->user()->email)->send(new DailySignal($subscribe));
+                //\Mail::to(auth()->user()->email)->send(new Subscriptions($subscribe));
                 $ip = $_SERVER['REMOTE_ADDR'];
                 activity_logs(auth()->user()->id, $ip, "Subscribe for daily signal");
             \DB::commit();
@@ -88,7 +89,7 @@ class SubscriptionController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**

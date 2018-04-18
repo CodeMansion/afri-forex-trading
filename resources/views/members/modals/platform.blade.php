@@ -24,12 +24,13 @@
                             <div id="packages">
                                 
                             </div>
-                        </div>
-                        
+                        </div>                        
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-outline dark sbold uppercase" id="close" data-dismiss="modal">Close</button>
                         <button type="button" class="btn green" id="subscribe_pay"><i class="fa fa-plus"></i>Pay</button>
                         <button type="button" class="btn green" id="investment_pay"><i class="fa fa-plus"></i>Pay</button>
+                        <button type="button" class="btn green" id="referral"><i class="fa fa-plus"></i>Continue</button>
                     </div>
                 </form>
         </div>

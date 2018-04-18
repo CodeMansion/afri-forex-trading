@@ -12,4 +12,8 @@ class Platform extends Model
         }
         return self::where('id', '=', $id)->firstOrFail();
     }
+
+    public function Package(){
+        return $this->hasMany('App\Packages','platform_id');
+    }
 }

@@ -28,9 +28,8 @@ class HomeController extends Controller
     public function index()
     {   
         $data['menu_id'] = 1;
-
-        if(\Auth::user()->is_admin) {
-            return view('admin.dashboard')->with($data);
+        if(\Auth::user()->is_admin == 1) {
+            return view('admin.dashboard');
         }
 
         $data['platforms'] = Platform::whereIsActive(true)->get();

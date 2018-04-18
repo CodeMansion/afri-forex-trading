@@ -2,7 +2,7 @@
     <div class="page-header-inner ">
         <div class="page-logo">
             <a href="index.html"> 
-                <img src="../assets/layouts/layout2/img/logo-default.png" alt="logo" class="logo-default" /> 
+                <img src="{{ asset('assets/layouts/layout2/img/logo-default.png') }}" alt="logo" class="logo-default" /> 
             </a>
             <div class="menu-toggler sidebar-toggler"></div>
         </div>     
@@ -79,7 +79,7 @@
                                 <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
                                     <li>
                                         <a href="#">
-                                            <span class="photo"><img src="../assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt=""> </span>
+                                            <span class="photo"><img src="{{  asset('assets/layouts/layout3/img/avatar2.jpg') }}" class="img-circle" alt=""> </span>
                                             <span class="subject">
                                                 <span class="from"> Lisa Wong </span>
                                                 <span class="time">Just Now </span>
@@ -125,7 +125,7 @@
                     
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <img alt="" class="img-circle" src="../assets/layouts/layout2/img/avatar3_small.jpg" />
+                            <img alt="" class="img-circle" src="{{ asset('assets/layouts/layout2/img/avatar3_small.jpg') }}" />
                             <span class="username username-hide-on-mobile"> {{ \Auth::user()->username }} </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
