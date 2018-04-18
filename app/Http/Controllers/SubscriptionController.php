@@ -8,6 +8,7 @@ use DB;
 use Carbon\Carbon;
 use App\PaymentTransaction;
 use App\Mail\Subscriptions;
+use App\UserDownline;
 
 class SubscriptionController extends Controller
 {
@@ -17,7 +18,11 @@ class SubscriptionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {    
+    {   
+        if(\Auth::user()->is_admin) {
+            $params['downlines'] = UserDownline::all();
+            return view('admin.platforms.subscription.index');
+        }
         $params['downlines'] = UserDownline::all();
         return view('members.platforms.subscriptions.index')->with($params);
     }
@@ -47,6 +52,7 @@ class SubscriptionController extends Controller
                 $subscribe                  = new Subscription();
                 $subscribe->slug            = bin2hex(random_bytes(64));
                 $subscribe->user_id         = auth()->user()->id;
+                $subscribe->platform_id     = $data['platform_id'];
                 $subscribe->amount          = 75;
                 $subscribe->is_first_time   = true;
                 $subscribe->status          = 1;
@@ -57,10 +63,30 @@ class SubscriptionController extends Controller
                 $transaction->slug                      = bin2hex(random_bytes(64));
                 $transaction->user_id                   = auth()->user()->id;
                 $transaction->transaction_category_id   = \App\TransactionCategory::whereName('Debit')->first()->id;
-                $transaction->amount                    = 75;
+                $transaction->amount                    = 128;
                 $transaction->is_paid                   = true;
                 $transaction->reference_no              = bin2hex(random_bytes(8));
                 $transaction->save();
+
+                $upline = UserDownline::whereDownlineId(auth()->user()->id)->first();
+                if(isset($upline)){
+                    if($upline->platform_id == Null){
+                        $upline->platform_id        = $referral->platform_id;
+                        $upline->is_active          = 1;
+                        $upline->investment_amount  = $transaction->amount;
+                        $upline->save();
+                    }else{
+                        // new platform downline
+                        $downline                   = new UserDownline();
+                        $downline->platform_id      = $referral->platform_id;
+                        $downline->upline_id 	    = $upline->upline_id;
+                        $downline->downline_id 	    = $referral->user_id;
+                        $downline->is_active        = 1;
+                        $downline->investment_amount= $transaction->amount;
+                        $downline->save();
+                    }
+
+                }
                 
                 //\Mail::to(auth()->user()->email)->send(new Subscriptions($subscribe));
                 $ip = $_SERVER['REMOTE_ADDR'];

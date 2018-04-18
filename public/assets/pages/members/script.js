@@ -1,5 +1,5 @@
 function showInfoModal() {
-    //$("#platform").modal({ backdrop: "static", keyboard: false });
+    $("#platform").modal({ backdrop: "static", keyboard: false });
     //backdrop prevents closing the modal, keyboard prevents losing with esc key
 }
 
@@ -33,8 +33,8 @@ $('#platform_id').on('change', function() {
             method: "GET",
             data: {
                 _token: TOKEN,
-                platform_id: platform_id,
-                req: "add_plaform"
+                'platform_id': platform_id,
+                'req': "add_plaform"
             },
             success: function(rst) {
                 $("#packages").fadeIn();
@@ -62,7 +62,8 @@ $('#platform_id').on('change', function() {
 $("#subscribe_pay").on("click", function() {
     var platform_id = $("#platform_id").val();
     $("#packages").hide();
-
+    $(this).attr("disabled", true);
+    $(this).html("<i class='fa fa-refresh fa-spin'></i> Processing...");
     $.ajax({
         url: SUBSCRIBE,
         method: "POST",
@@ -78,7 +79,9 @@ $("#subscribe_pay").on("click", function() {
                 $("#errors").html(
                     "<div class='alert alert-success'>" + rst.msg + "</div><br/>"
                 );
-                $("#platform").modal('hide');
+                window.setTimeout(function() {
+                    $("#platform").modal("hide");
+                }, 5000);
             } else if (rst.type == "false") {
                 $("#subscribe_pay").attr("disabled", false);
                 $("#subscribe_pay").html("<i class='fa fa-warning fa-spin'></i> Failed. Try Again!");
@@ -100,7 +103,8 @@ $("#subscribe_pay").on("click", function() {
 $("#referral").on("click", function() {
     var platform_id = $("#platform_id").val();
     $("#packages").hide();
-
+    $(this).attr("disabled", true);
+    $(this).html("<i class='fa fa-refresh fa-spin'></i> Processing...");
     $.ajax({
         url: REFERRAL,
         method: "POST",
@@ -116,7 +120,9 @@ $("#referral").on("click", function() {
                 $("#errors").html(
                     "<div class='alert alert-success'>" + rst.msg + "</div><br/>"
                 );
-                $("#platform").modal("hide");
+                window.setTimeout(function() {
+                    $("#platform").modal("hide");
+                }, 5000)
             } else if (rst.type == "false") {
                 $("#referral").attr("disabled", false);
                 $("#referral").html("<i class='fa fa-warning fa-spin'></i> Failed. Try Again!");

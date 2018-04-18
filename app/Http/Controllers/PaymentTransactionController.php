@@ -14,7 +14,7 @@ class PaymentTransactionController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->is_admin == 1) {
+        if(\Auth::user()->is_admin) {
             $data['transactions'] = PaymentTransaction::all();
             return view('admin.transaction.index');
         }

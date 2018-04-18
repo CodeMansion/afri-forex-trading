@@ -102,7 +102,7 @@ Route::group(['middleware'=>['auth']], function(){
 	
 	//-	--- BULK MESSAGING MANAGEMENT ----//	
 	Route::group(['prefix' => 'messaging'], function () {	
-		Route::get('/', ["as"=>"messaging.index", "uses"=>"MessageController@index"]);	
+		Route::get('/', ["as"=>"messaging.index", "uses"=>"MessageController@index",'middleware'=>'platform-reg']);	
 	});	
 	
 	//-	--- ACTIVITY LOGS ---//	
@@ -112,7 +112,7 @@ Route::group(['middleware'=>['auth']], function(){
 	
 	//-	--- TRANSACTIONS MANAGEMENT -----//	
 	Route::group(['prefix' => 'transactions'], function () {
-		Route::get('/', ["as"=>"transactions.index", "uses"=>"PaymentTransactionController@index"]);
+		Route::get('/', ["as"=>"transactions.index", "uses"=>"PaymentTransactionController@index",'middleware'=>'platform-reg']);
 	});	
 	
 	//-	--- SYSTEM SETTINGS MANAGEMENT ---//	

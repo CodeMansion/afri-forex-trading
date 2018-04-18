@@ -81,9 +81,16 @@ class User extends Authenticatable
 
     }
     
-    public function UserDownline(){
-        return $this->hasMany('App\UserDownline','user_id');
+    public function UserDownline($platform_id){
+        if($platform_id == ''){
+            return $this->hasMany('App\UserDownline','upline_id');
+        }
+        return $this->hasMany('App\UserDownline','upline_id')->where('platform_id',$platform_id);
     }
+
+    public function Platform(){
+        return $this->hasMany('App\Platform','platform_id');
+    }   
 
     public function UserWallet(){
         return $this->belongsTo('App\UserWallet','user_id');
