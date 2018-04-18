@@ -132,6 +132,8 @@ class HomeController extends Controller
                 $downline->upline_id 	= ($referral) ? $referral : 1;
                 $downline->downline_id 	= $user->id;
                 $downline->save();
+
+                $user->assignRole(4);
                 
                 //\Mail::to($user->email)->send(new ConfirmRegistration($user));
                 $ip = $_SERVER['REMOTE_ADDR'];

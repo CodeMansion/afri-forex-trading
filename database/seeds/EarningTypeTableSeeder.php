@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class EarningTypeSeeder extends Seeder
+class EarningTypeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

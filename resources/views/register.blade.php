@@ -135,7 +135,7 @@
                 <div class="row">
                     <div class="col-md-offset-3 col-md-9">
                         <button type="button" id="register_user" class="btn green">Submit</button>
-                        <button type="button" class="btn default">Cancel</button>
+                        <a href="{{ url('/login') }}"><button type="button" class="btn default">Cancel</button></a>
                     </div>
                 </div>
             </div>

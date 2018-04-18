@@ -79,11 +79,7 @@
                                 <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
                                     <li>
                                         <a href="#">
-<<<<<<< HEAD
-                                            <span class="photo"><img src="../assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt=""> </span>
-=======
                                             <span class="photo"><img src="{{  asset('assets/layouts/layout3/img/avatar2.jpg') }}" class="img-circle" alt=""> </span>
->>>>>>> 22892ccd57029cb4bcfe5f62887dc4ebd94f7892
                                             <span class="subject">
                                                 <span class="from"> Lisa Wong </span>
                                                 <span class="time">Just Now </span>
@@ -129,11 +125,7 @@
                     
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-<<<<<<< HEAD
-                            <img alt="" class="img-circle" src="../assets/layouts/layout2/img/avatar3_small.jpg" />
-=======
                             <img alt="" class="img-circle" src="{{ asset('assets/layouts/layout2/img/avatar3_small.jpg') }}" />
->>>>>>> 22892ccd57029cb4bcfe5f62887dc4ebd94f7892
                             <span class="username username-hide-on-mobile"> {{ \Auth::user()->username }} </span>
                             <i class="fa fa-angle-down"></i>
                         </a>

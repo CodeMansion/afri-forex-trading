@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TransactionCategoryTableSeeder::class);
         $this->call(DisputePriorityTableSeeder::class);
         $this->call(MailSettingsTableSeeder::class);
-        $this->call(EarningTypeSeeder::class);
+        $this->call(EarningTypeTableSeeder::class);
     }
 }
