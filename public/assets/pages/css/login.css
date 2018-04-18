@@ -4,7 +4,15 @@ Login page
 ***/
 /* bg color */
 .login {
-  background-color: #364150 !important; }
+  /* background-color: #364150 !important; */
+  background-image: url('../../../images/background.jpg');
+  overflow-y: auto;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100%;
+  height: 100vh;
+  background-color:rgb(255, 250, 250); 
+}
 
 .login .logo {
   margin: 0 auto;
@@ -13,7 +21,8 @@ Login page
   text-align: center; }
 
 .login .content {
-  background-color: white;
+  background-color: #44a5987e;
+  /* opacity: 0.9; */
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
   -ms-border-radius: 7px;
@@ -27,7 +36,7 @@ Login page
   position: relative; }
 
 .login .content h3 {
-  color: #4db3a5;
+  color: white;
   text-align: center;
   font-size: 28px;
   font-weight: 400 !important; }
@@ -144,7 +153,7 @@ Login page
   margin-top: 10px; }
 
 .login .content .check {
-  color: #8290a3; }
+  color: white; }
 
 .login .content .rememberme {
   margin-left: 8px; }
@@ -176,8 +185,12 @@ Login page
   text-align: center;
   margin: 0 auto 30px 0;
   padding: 10px;
-  color: #7a8ca5;
+  color: white;
   font-size: 13px; }
+
+  .login .copyright a {
+    color: white;
+  }
 
 @media (max-width: 440px) {
   /***

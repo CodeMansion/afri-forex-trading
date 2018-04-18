@@ -6,7 +6,7 @@
 </div>
 <div class="content">
     <form class="login-form" method="POST" action="{{ route('login') }}">{{ csrf_field() }}
-        <h3 class="form-title font-green">Sign In</h3>
+        <h3 class="form-title">Sign In</h3>
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
             <span> Enter any username and password. </span>
