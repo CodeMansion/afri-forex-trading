@@ -16,14 +16,6 @@ function activity_logs($user,$ip,$action) {
 	}
 }
 
-function word_counter($string,$count) {
-	$words = explode(' ',$string);
-	$sentence = '';
-
-	if(count($words) > $count) {
-		$words = array_slice($words,0,$count);
-		$sentence = implode(' ',$words);
-	}
-
-	return $sentence;
+function word_counter($string,$count,$end) {
+	return \Illuminate\Support\Str::words($string,$count,$end);
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDisputesTable extends Migration
+class CreateDisputeRepliesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,16 @@ class CreateDisputesTable extends Migration
      */
     public function up()
     {
-        Schema::create('disputes', function (Blueprint $table) {
+        Schema::create('dispute_replies', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('slug', 190)->unique();
+            $table->integer('dispute_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
-            $table->string('ticket_no');
-            $table->string('title');
-            $table->string('message');
-            $table->integer('status')->default(0);
-            $table->integer('dispute_priority_id')->unsigned()->index();
+            $table->text('message');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('dispute_priority_id')->references('id')->on('dispute_priorities');
+            $table->foreign('dispute_id')->references('id')->on('disputes');
         });
     }
 
@@ -37,6 +33,6 @@ class CreateDisputesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('disputes');
+        Schema::dropIfExists('dispute_replies');
     }
 }

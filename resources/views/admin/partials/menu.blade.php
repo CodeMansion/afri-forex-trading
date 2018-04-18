@@ -40,9 +40,9 @@
                     <span class="arrow"></span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="javascript:;">
-                    <i class="icon-settings"></i>
+            <li class="nav-item {{menu_active($menu_id, 4)}}">
+                <a href="{{ URL::route('disputeIndex') }}">
+                    <i class="icon-envelope"></i>
                     <span class="title">Disputes</span>
                 </a>
             </li>

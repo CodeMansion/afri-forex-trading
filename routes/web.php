@@ -28,6 +28,11 @@ Route::group(['middleware'=>['auth']], function(){
 
     //---- DISPUTES MANAGEMENT ----//
     Route::group(['prefix' => 'disputes'], function () {
+        Route::get('/',["as"=>"disputeIndex", "uses"=>"DisputeController@index"]);
+        Route::get('/user-disputes',["as"=>"userDisputeIndex", "uses"=>"DisputeController@userIndex"]);
+        Route::get('/view/{slug?}',["as"=>"viewDispute", "uses"=>"DisputeController@show"]);
+        Route::post('/create-dispute', ["as"=>"disputeAdd", "uses"=>"DisputeController@store"]);
+        Route::post('/get-dispute', ["as"=>"getDispute", "uses"=>"DisputeController@getDisputes"]);
     });
 
     //----- PLATFORM MANAGEMENT ----//

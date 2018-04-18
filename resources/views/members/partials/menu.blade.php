@@ -31,7 +31,7 @@
                 </a>
             </li>
             <li class="nav-item  ">
-                <a href="javascript:;">
+                <a href="{{ URL::route('userDisputeIndex') }}">
                     <i class="icon-settings"></i>
                     <span class="title">Disputes</span>
                 </a>

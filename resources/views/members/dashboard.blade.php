@@ -313,9 +313,8 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    @include('members.modals.platform')
+    <!-- @include('members.modals.platform') -->
 </div>
-                            <!-- END EXAMPLE TABLE PORTLET-->
 @endsection
 @section('modals')
     @include('members.modals._new_registration')
