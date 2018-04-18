@@ -18,7 +18,9 @@ class CreateEarningsTable extends Migration
             $table->string('slug', 190)->unique();
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('earning_type_id')->unsigned()->index();
+            $table->integer('platform_id')->unsigned()->index();
+            $table->foreign('platform_id')->references('id')->on('platforms');
+            $table->integer('earning_type_id')->unsigned()->index()->nullable();
             $table->foreign('earning_type_id')->references('id')->on('earning_types');
             $table->decimal('amount', 10,2);
             $table->boolean('status')->default(false);

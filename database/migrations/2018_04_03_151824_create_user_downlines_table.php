@@ -17,12 +17,14 @@ class CreateUserDownlinesTable extends Migration
             $table->engine = "InnoDB";
             $table->increments('id');
             $table->integer('platform_id')->unsigned()->index()->nullable();
+            //$table->integer('downline_platform_id')->unsigned()->index()->nullable();
             $table->integer('upline_id')->unsigned()->index();
             $table->integer('downline_id')->unsigned()->index();
             $table->boolean('is_active')->default(false);
             $table->decimal('investment_amount', 10,2)->nullable();
             $table->timestamps();
             
+            //$table->foreign('upline_platform_id')->references('id')->on('platforms');
             $table->foreign('platform_id')->references('id')->on('platforms');
             $table->foreign('upline_id')->references('id')->on('users');
             $table->foreign('downline_id')->references('id')->on('users');

@@ -12,7 +12,8 @@ class PackageTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table("packages")->truncate();
+        \DB::statement("SET FOREIGN_KEY_CHECKS = 0");
+        \DB::table("package_types")->truncate();
         \App\PackageType::insert([
             [
                 'id' => 1,

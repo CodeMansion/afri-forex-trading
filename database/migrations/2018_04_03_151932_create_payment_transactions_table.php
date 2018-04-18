@@ -18,6 +18,8 @@ class CreatePaymentTransactionsTable extends Migration
             $table->increments('id');
             $table->string('slug', 190)->unique();
             $table->integer('transaction_category_id')->unsigned()->index();
+            $table->integer('platform_id')->unsigned()->index();
+            $table->foreign('platform_id')->references('id')->on('platforms');
             $table->decimal('amount', 10,2);
             $table->boolean('is_paid')->default(false);
             $table->integer('user_id')->unsigned()->index();

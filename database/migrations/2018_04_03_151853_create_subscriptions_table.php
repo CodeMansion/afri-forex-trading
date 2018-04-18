@@ -18,6 +18,7 @@ class CreateSubscriptionsTable extends Migration
             $table->increments('id');
             $table->string('slug', 190)->unique();
             $table->integer('user_id')->unsigned()->index();
+            $table->integer('platform_id')->unsigned()->index();
             $table->decimal('amount', 10,2);
             $table->boolean('is_first_time')->default(false);
             $table->integer('status')->default(0);
@@ -25,6 +26,7 @@ class CreateSubscriptionsTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('platform_id')->references('id')->on('platforms');
         });
     }
 

@@ -12,4 +12,8 @@ class PaymentTransaction extends Model
         }
         return self::where('id', '=', $id)->firstOrFail();
     }
+
+    public function Category(){
+        return $this->belongsTo(TransactionCategory::class);
+    }
 }

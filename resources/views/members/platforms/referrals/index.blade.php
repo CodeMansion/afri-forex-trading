@@ -7,7 +7,7 @@
                 <div class="display">
                     <div class="number">
                         <h3 class="font-green-sharp">
-                            <span data-counter="counterup" data-value="7800">7.00</span>
+                            <span data-counter="counterup" data-value="{{ ($earning) ? $earning->amount : 0 }}">7.00</span>
                             <small class="font-green-sharp">$</small>
                         </h3>
                         <small>RECENT CREDIT</small>
@@ -35,7 +35,7 @@
                     <div class="number">
                         <h3 class="font-red-haze">
                             <small class="font-green-sharp">$</small>
-                            <span data-counter="counterup" data-value="1349">10.00</span>
+                            <span data-counter="counterup" data-value="{{ ($recent) ? $recent->amount : 0 }}">10.00</span>
                         </h3>
                         <small>RECENT DEBIT</small>
                     </div>
@@ -62,7 +62,7 @@
                     <div class="number">
                         <h3 class="font-blue-sharp">
                             <small class="font-green-sharp">$</small>
-                            <span data-counter="counterup" data-value="567">567</span>
+                            <span data-counter="counterup" data-value="{{ ($wallet) ? $wallet->amount : 0 }}">567</span>
                         </h3>
                         <small>WALLET</small>
                     </div>
@@ -90,35 +90,7 @@
     <div class="portlet-title">
         <div class="caption caption-md">
             <i class="icon-bar-chart theme-font hide"></i>
-            <span class="caption-subject font-blue-madison bold uppercase">Investment Platform</span>
-        </div>
-    </div>
-    <div class="portlet-body">
-        <div class="row number-stats margin-bottom-30">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <div class="stat-left">
-                    <div class="stat-chart">
-                        <!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
-                        <div id="sparkline_bar"><canvas width="90" height="45" style="display: inline-block; width: 90px; height: 45px; vertical-align: top;"></canvas></div>
-                    </div>
-                    <div class="stat-number">
-                        <div class="title"> Total Earnings</div>
-                        <div class="number"> 2460 </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <div class="stat-right">
-                    <div class="stat-chart">
-                        <!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
-                        <div id="sparkline_bar2"><canvas width="90" height="45" style="display: inline-block; width: 90px; height: 45px; vertical-align: top;"></canvas></div>
-                    </div>
-                    <div class="stat-number">
-                        <div class="title"> Recent Earning </div>
-                        <div class="number"> 719 </div>
-                    </div>
-                </div>
-            </div>
+            <span class="caption-subject font-blue-madison bold uppercase">Referral Platform</span>
         </div>
     </div>
 </div>
@@ -128,62 +100,43 @@
         <div class="portlet box green">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-comments"></i>Investment Transactions</div>
+                    <i class="fa fa-comments"></i>Referral Transactions</div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
                 </div>
             </div>
             <div class="portlet-body">
                 <div class="table-scrollable">
-                    <table class="table table-striped table-hover" id="sample_2">
+                    @if(count($transactions) < 1)
+                        <div class="danger-alert">
+                            <i class="fa fa-warning"></i> <em>There are no Transactions available currently.</em>
+                        </div>
+                    @else 
+                    <table class="table table-striped table-hover" id="sample_3">
                         <thead>
                             <tr>
                                 <th> S/No. </th>
-                                <th> First Name </th>
-                                <th> Last Name </th>
-                                <th> Username </th>
-                                <th> Status </th>
+                                <th> Reference No. </th>
+                                <th> Category </th>
+                                <th> Amount </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td> 1 </td>
-                                <td> Mark </td>
-                                <td> Otto </td>
-                                <td> makr124 </td>
-                                <td>
-                                    <span class="label label-sm label-success"> Approved </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td> Jacob </td>
-                                <td> Nilson </td>
-                                <td> jac123 </td>
-                                <td>
-                                    <span class="label label-sm label-info"> Pending </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 3 </td>
-                                <td> Larry </td>
-                                <td> Cooper </td>
-                                <td> lar </td>
-                                <td>
-                                    <span class="label label-sm label-warning"> Suspended </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 4 </td>
-                                <td> Sandy </td>
-                                <td> Lim </td>
-                                <td> sanlim </td>
-                                <td>
-                                    <span class="label label-sm label-danger"> Blocked </span>
-                                </td>
-                            </tr>
+                            @php($counter=1)
+                            @forelse($transactions as $tranc)
+                                <tr>
+                                    <td>{{ $counter++}}</td>
+                                    <th>{{ $trac->reference_no }}</th>
+                                    <th>
+                                        <label class="label label-success btn-sm">{{ $trac->Category->name }}</label>
+                                    </th>
+                                    <th>{{ $trac->amount }}</th>
+                                </tr>
+                            @empty
+                            @endforelse
                         </tbody>
                     </table>
+                    @endif
                 </div>
             </div>
         </div>
@@ -194,62 +147,47 @@
         <div class="portlet box green">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-comments"></i>Investment Downlines</div>
+                    <i class="fa fa-comments"></i>Referral Downlines</div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
                 </div>
             </div>
             <div class="portlet-body">
                 <div class="table-scrollable">
+                    @if(count($downlines) < 1)
+                        <div class="danger-alert">
+                            <i class="fa fa-warning"></i> <em>There are no Downline available currently. Please Share Your Referral Link To Get Downlines.</em>
+                        </div>
+                    @else 
                     <table class="table table-striped table-hover" id="sample_3">
                         <thead>
                             <tr>
                                 <th> S/No. </th>
-                                <th> First Name </th>
-                                <th> Last Name </th>
+                                <th> FullName </th>
                                 <th> Username </th>
                                 <th> Status </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td> 1 </td>
-                                <td> Mark </td>
-                                <td> Otto </td>
-                                <td> makr124 </td>
-                                <td>
-                                    <span class="label label-sm label-success"> Approved </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td> Jacob </td>
-                                <td> Nilson </td>
-                                <td> jac123 </td>
-                                <td>
-                                    <span class="label label-sm label-info"> Pending </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 3 </td>
-                                <td> Larry </td>
-                                <td> Cooper </td>
-                                <td> lar </td>
-                                <td>
-                                    <span class="label label-sm label-warning"> Suspended </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 4 </td>
-                                <td> Sandy </td>
-                                <td> Lim </td>
-                                <td> sanlim </td>
-                                <td>
-                                    <span class="label label-sm label-danger"> Blocked </span>
-                                </td>
-                            </tr>
+                            @php($counter=1)
+                            @forelse($downlines as $down)
+                                <tr>
+                                    <td>{{ $counter++}}</td>
+                                    <td>{{ $down->Profile->full_name}} </td>                                                    
+                                    <td>{{ $down->Profile->User->username}}</td>
+                                    <td>
+                                        @if($down->is_active == 1)
+                                            <label class="label label-success btn-sm"> Active</label>
+                                        @else
+                                            <label class="label label-warning btn-sm"> Not Active</label>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                            @endforelse
                         </tbody>
                     </table>
+                    @endif
                 </div>
             </div>
         </div>
