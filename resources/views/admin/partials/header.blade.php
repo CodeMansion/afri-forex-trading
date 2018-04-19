@@ -42,12 +42,11 @@
                     <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-bell"></i>
-                            <span class="badge badge-default"> 0 </span>
+                            <span class="badge badge-danger"> 0 </span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="external">
-                                <h3>
-                                    <span class="bold">12 pending</span> notifications</h3>
+                                <h3><span class="bold">12 pending</span> notifications</h3>
                                 <a href="page_user_profile_1.html">view all</a>
                             </li>
                             <li>
@@ -65,7 +64,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                    <!-- <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-envelope-open"></i>
                             <span class="badge badge-default"> 1 </span>
@@ -90,38 +89,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
-                    
-                    <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <i class="icon-calendar"></i>
-                            <span class="badge badge-default"> 1 </span>
-                        </a>
-                        <ul class="dropdown-menu extended tasks">
-                            <li class="external">
-                                <h3>You have
-                                    <span class="bold">12 pending</span> tasks</h3>
-                                <a href="app_todo.html">view all</a>
-                            </li>
-                            <li>
-                                <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="task">
-                                                <span class="desc">New release v1.2 </span>
-                                                <span class="percent">30%</span>
-                                            </span>
-                                            <span class="progress">
-                                                <span style="width: 40%;" class="progress-bar progress-bar-success" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                                                    <span class="sr-only">40% Complete</span>
-                                                </span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                    </li> -->
                     
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -138,7 +106,6 @@
                                 </a>
                             </li>
                             <li class="divider"> </li>
-                            <li><a href="#"><i class="icon-lock"></i> Lock Screen </a></li>
                             <li><a href="{{ url('/logout') }}"><i class="icon-key"></i> Log Out </a></li>
                         </ul>
                     </li>

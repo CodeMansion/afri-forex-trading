@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 use App\User;
 use App\UserProfile;
@@ -16,6 +17,7 @@ use App\PackageType;
 use App\Subscription;
 use App\Investment;
 use App\Referral;
+use App\Notifications\NewMember;
 
 class HomeController extends Controller
 {
@@ -136,6 +138,10 @@ class HomeController extends Controller
                 $user->assignRole(4);
                 
                 //\Mail::to($user->email)->send(new ConfirmRegistration($user));
+                
+                $admin = User::find(1);
+                Notification::send($admin, new NewMember($profile));
+
                 $ip = $_SERVER['REMOTE_ADDR'];
                 activity_logs($user->id, $ip, "User Registered");
 
@@ -153,5 +159,13 @@ class HomeController extends Controller
                 ];
             }
         }
+    }
+
+    public function indexNotify(){
+        return view('admin.partials.util._notification');
+    }
+
+    public function notifications() {
+        return auth()->user()->unreadNotifications()->limit(5)->get()->toArray();
     }
 }

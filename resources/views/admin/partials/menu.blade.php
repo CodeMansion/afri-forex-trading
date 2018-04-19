@@ -8,7 +8,6 @@
         <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
             @if(\Auth::user()->isA('super-admin'))
                 @include('admin.partials.auth._super_admin')
-            @elseif(\Auth::user()->isA('ds-member'))
             @endif
         </ul>
     </div>

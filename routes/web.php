@@ -16,7 +16,9 @@ Route::get('/', function () {return redirect()->route('login');});
 Route::group(['middleware'=>['auth']], function(){
     Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
-    Route::post('/subscribe',["as" => "subscribe", "uses"  => "SubscriptionController@store"]);
+	Route::post('/subscribe',["as" => "subscribe", "uses"  => "SubscriptionController@store"]);
+	Route::get('/dashboard-notify',["as"=>"dashboardNotify", "uses"=>"HomeController@indexNotify"]);
+	Route::get('/notifications',["as"=>"notifications", "uses"=>"HomeController@notifications"]);
 
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {

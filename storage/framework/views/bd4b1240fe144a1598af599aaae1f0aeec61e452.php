@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <link rel="shortcut icon" href="<?php echo e(asset('images/elect-ng-logo.png')); ?>" type="image/png" />
 
-        <title>AfriMarket | Login Page</title>
+        <title>AfriMarket | <?php echo $__env->yieldContent('title'); ?></title>
         
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="<?php echo e(asset('assets/global/plugins/font-awesome/css/font-awesome.min.css')); ?>" rel="stylesheet" type="text/css" />
@@ -19,12 +19,11 @@
         <link href="<?php echo e(asset('assets/global/plugins/select2/css/select2-bootstrap.min.css')); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo e(asset('assets/global/css/components.min.css')); ?>" rel="stylesheet" id="style_components" type="text/css" />
         <link href="<?php echo e(asset('assets/global/css/plugins.min.css')); ?>" rel="stylesheet" type="text/css" />
-        <link href="<?php echo e(asset('assets/pages/css/login.min.css')); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo e(asset('assets/pages/css/login.css')); ?>" rel="stylesheet" type="text/css" />
     </head>
     <body class="login">
         
-        <?php echo $__env->yieldContent('content'); ?>
-               
+        <?php echo $__env->yieldContent('content'); ?> 
         <script src="<?php echo e(asset('assets/global/plugins/jquery.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/global/plugins/bootstrap/js/bootstrap.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/global/plugins/js.cookie.min.js')); ?>" type="text/javascript"></script>
@@ -45,7 +44,8 @@
                     $("#close").hide();
                 });
             });
-        </script>
+        </script>        
+        <?php echo $__env->yieldContent('javascript'); ?> 
     </body>
 </html>
     

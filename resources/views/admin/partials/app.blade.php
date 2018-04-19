@@ -29,6 +29,7 @@
         
     </head>
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+        <audio id="notifyAudio" style="display:none;"><source src="{{asset('js/shut-your-mouth.mp3')}}" type="audio/mpeg"></audio>
         @include('admin.partials.header')
         <div class="page-container">
             @include('admin.partials.menu')
@@ -52,6 +53,10 @@
 
         <!-- END PAGE LEVEL PLUGINS -->
         <script src="{{ asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
+        <script>
+            var NOTIFY = "{{URL::route('dashboardNotify')}}";
+            var NOTIFY_COUNT = parseInt(<?php echo count(auth()->user()->unreadNotifications); ?>);
+        </script>
         <script src="{{ asset('js/utilities.js') }}" type="text/javascript"></script>
 
         @yield('after_script')
@@ -63,29 +68,29 @@
         <script src="{{ asset('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
 
         <!---notification messages---->
-        <script src="{{ asset('js/notify.min.js') }}"></script>
+        <!-- <script src="{{ asset('js/notify.min.js') }}"></script> -->
         @if(\Session::has('error'))
             <!-- notification script -->
             <script type="text/javascript">
-                $.notify('{!! \Session::get('error') !!}', "error");
+                // $.notify('{!! \Session::get('error') !!}', "error");
             </script>
         @endif
         @if(\Session::has('success'))
             <!-- notification script -->
             <script type="text/javascript">
-                $.notify('{!! \Session::get('success') !!}', "success");
+                // $.notify('{!! \Session::get('success') !!}', "success");
             </script>
         @endif
         @if(\Session::has('info'))
             <!-- notification script -->
             <script type="text/javascript">
-                $.notify('{!! \Session::get('info') !!}', "info");
+                // $.notify('{!! \Session::get('info') !!}', "info");
             </script>
         @endif
         @if(\Session::has('warning'))
             <!-- notification script -->
             <script type="text/javascript">
-                $.notify('{!! \Session::get('warning') !!}', "warning");
+                // $.notify('{!! \Session::get('warning') !!}', "warning");
             </script>
         @endif
 

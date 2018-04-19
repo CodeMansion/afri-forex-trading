@@ -70,25 +70,6 @@
             <span class="title">Activity Logs</span>
         </a>
     </li>
-    <li class="nav-item  ">
-        <a href="javascript:;" class="nav-link nav-toggle">
-            <i class="icon-bar-chart"></i>
-            <span class="title">Authentication</span>
-            <span class="arrow"></span>
-        </a>
-        <ul class="sub-menu">
-            <li class="nav-item  ">
-                <a href="#" class="nav-link ">
-                    <span class="title">Manage Users</span>
-                </a>
-            </li>
-            <li class="nav-item  ">
-                <a href="#" class="nav-link ">
-                    <span class="title">Roles &amp; Permission</span>
-                </a>
-            </li>
-        </ul>
-    </li>
     <li class="nav-item {{menu_active($menu_id, 9)}}">
         <a href="javascript:;" class="nav-link nav-toggle">
             <i class="icon-settings"></i>
