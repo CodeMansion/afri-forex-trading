@@ -14,6 +14,7 @@
         <link href="{{ asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" />
         
         <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -30,13 +31,37 @@
         <script src="{{ asset('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript"></script>
-        
+        <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+
         <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
         
         <script src="{{ asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/pages/scripts/login.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/pages/scripts/ui-toastr.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/utilities.js') }}" type="text/javascript"></script>
+
+        @if(\Session::has('error'))
+            <script type="text/javascript">
+                toastr.error("{!! \Session::get('error') !!}");
+            </script>
+        @endif
+        @if(\Session::has('success'))
+            <script type="text/javascript">
+                toastr.success("{!! \Session::get('success') !!}");
+            </script>
+        @endif
+        @if(\Session::has('info'))
+            <script type="text/javascript">
+                toastr.info("{!! \Session::get('info') !!}");
+            </script>
+        @endif
+        @if(\Session::has('warning'))
+            <script type="text/javascript">
+                toastr.warning("{!! \Session::get('warning') !!}");
+            </script>
+        @endif
 
         <script>
             $(document).ready(function(){

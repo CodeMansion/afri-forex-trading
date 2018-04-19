@@ -146,6 +146,7 @@ Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']
 
 Route::get('/logout', function () {	
 	auth()->logout();	
+	\Session::flash('success', 'Your have successfully logged out. Have a nice time!');
 	return redirect('/login');	
 });
 

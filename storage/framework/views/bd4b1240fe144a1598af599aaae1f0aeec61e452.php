@@ -14,6 +14,7 @@
         <link href="<?php echo e(asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css')); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo e(asset('assets/global/plugins/bootstrap/css/bootstrap.min.css')); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo e(asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo e(asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')); ?>" rel="stylesheet" type="text/css" />
         
         <link href="<?php echo e(asset('assets/global/plugins/select2/css/select2.min.css')); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo e(asset('assets/global/plugins/select2/css/select2-bootstrap.min.css')); ?>" rel="stylesheet" type="text/css" />
@@ -30,13 +31,37 @@
         <script src="<?php echo e(asset('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/global/plugins/jquery.blockui.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')); ?>" type="text/javascript"></script>
-        
+        <script src="<?php echo e(asset('assets/global/plugins/bootstrap-toastr/toastr.min.js')); ?>" type="text/javascript"></script>
+
         <script src="<?php echo e(asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/global/plugins/select2/js/select2.full.min.js')); ?>" type="text/javascript"></script>
         
         <script src="<?php echo e(asset('assets/global/scripts/app.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/pages/scripts/login.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('assets/pages/scripts/ui-toastr.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/utilities.js')); ?>" type="text/javascript"></script>
+
+        <?php if(\Session::has('error')): ?>
+            <script type="text/javascript">
+                toastr.error("<?php echo \Session::get('error'); ?>");
+            </script>
+        <?php endif; ?>
+        <?php if(\Session::has('success')): ?>
+            <script type="text/javascript">
+                toastr.success("<?php echo \Session::get('success'); ?>");
+            </script>
+        <?php endif; ?>
+        <?php if(\Session::has('info')): ?>
+            <script type="text/javascript">
+                toastr.info("<?php echo \Session::get('info'); ?>");
+            </script>
+        <?php endif; ?>
+        <?php if(\Session::has('warning')): ?>
+            <script type="text/javascript">
+                toastr.warning("<?php echo \Session::get('warning'); ?>");
+            </script>
+        <?php endif; ?>
 
         <script>
             $(document).ready(function(){

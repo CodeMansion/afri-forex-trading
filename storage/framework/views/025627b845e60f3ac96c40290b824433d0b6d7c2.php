@@ -14,7 +14,7 @@
         <link href="<?php echo e(asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css')); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo e(asset('assets/global/plugins/bootstrap/css/bootstrap.min.css')); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo e(asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')); ?>" rel="stylesheet" type="text/css" />
-
+        <link href="<?php echo e(asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')); ?>" rel="stylesheet" type="text/css" />
         <?php echo $__env->yieldContent('extra_style'); ?>
         
         <link href="<?php echo e(asset('assets/global/css/components-md.min.css')); ?>" rel="stylesheet" id="style_components" type="text/css" />
@@ -48,7 +48,7 @@
         <script src="<?php echo e(asset('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/global/plugins/jquery.blockui.min.js')); ?>" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
-
+        <script src="<?php echo e(asset('assets/global/plugins/bootstrap-toastr/toastr.min.js')); ?>" type="text/javascript"></script>
         <?php echo $__env->yieldContent('extra_script'); ?>
 
         <!-- END PAGE LEVEL PLUGINS -->
@@ -61,6 +61,7 @@
 
         <?php echo $__env->yieldContent('after_script'); ?>
         
+        <script src="<?php echo e(asset('assets/pages/scripts/ui-toastr.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/pages/scripts/dashboard.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/layouts/layout/scripts/layout.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/layouts/layout/scripts/demo.min.js')); ?>" type="text/javascript"></script>
@@ -68,29 +69,24 @@
         <script src="<?php echo e(asset('assets/layouts/global/scripts/quick-nav.min.js')); ?>" type="text/javascript"></script>
 
         <!---notification messages---->
-        <!-- <script src="<?php echo e(asset('js/notify.min.js')); ?>"></script> -->
         <?php if(\Session::has('error')): ?>
-            <!-- notification script -->
             <script type="text/javascript">
-                // $.notify('<?php echo \Session::get('error'); ?>', "error");
+                toastr.error("<?php echo \Session::get('error'); ?>");
             </script>
         <?php endif; ?>
         <?php if(\Session::has('success')): ?>
-            <!-- notification script -->
             <script type="text/javascript">
-                // $.notify('<?php echo \Session::get('success'); ?>', "success");
+                toastr.success("<?php echo \Session::get('success'); ?>");
             </script>
         <?php endif; ?>
         <?php if(\Session::has('info')): ?>
-            <!-- notification script -->
             <script type="text/javascript">
-                // $.notify('<?php echo \Session::get('info'); ?>', "info");
+                toastr.info("<?php echo \Session::get('info'); ?>");
             </script>
         <?php endif; ?>
         <?php if(\Session::has('warning')): ?>
-            <!-- notification script -->
             <script type="text/javascript">
-                // $.notify('<?php echo \Session::get('warning'); ?>', "warning");
+                toastr.warning("<?php echo \Session::get('warning'); ?>");
             </script>
         <?php endif; ?>
 
