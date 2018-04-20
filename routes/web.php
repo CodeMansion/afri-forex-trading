@@ -139,6 +139,11 @@ Route::group(['middleware'=>['auth']], function(){
         Route::group(['prefix' => 'mail'], function () {
             Route::get('/', ["as"=>"mailIndex", "uses"=>"SystemSettingsController@mailIndex"]);
             Route::post('/update-settings', ["as"=>"mailUpdate", "uses"=>"SystemSettingsController@store"]);
+		});
+		
+		Route::group(['prefix' => 'general-settings'], function () {
+            Route::get('/', ["as"=>"generalSettingIndex", "uses"=>"SystemSettingsController@generalSettingsIndex"]);
+            Route::post('/update-general-settings', ["as"=>"generalSettingUpdate", "uses"=>"SystemSettingsController@storeGeneralSettings"]);
         });
     });
 });

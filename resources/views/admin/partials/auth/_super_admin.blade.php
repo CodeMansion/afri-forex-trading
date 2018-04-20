@@ -83,7 +83,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link ">
+                <a href="{{ URL::route('generalSettingIndex') }}" class="nav-link ">
                     <span class="title">General Settings</span>
                 </a>
             </li>

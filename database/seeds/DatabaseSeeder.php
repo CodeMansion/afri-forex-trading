@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TransactionCategoryTableSeeder::class);
         $this->call(DisputePriorityTableSeeder::class);
         $this->call(MailSettingsTableSeeder::class);
+        $this->call(GeneralSettingTableSeeder::class);
         $this->call(EarningTypeTableSeeder::class);
     }
 }

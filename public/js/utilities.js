@@ -29,9 +29,15 @@ var AppUtilities = function() {
                 $('#header_notification_bar').html(data);
             },
             error: function(alaxB, HTTerror, errorMsg) {
-                alert(errorMsg);
+                console.log(errorMsg);
             }
         });
+    }
+
+    var pushNotification = function() {
+        if(NOTIFY_COUNT >= 1) {
+            toastr.info("You have unread notifications");
+        }
     }
 
     var markNotificationAsRead = function() {
@@ -42,13 +48,17 @@ var AppUtilities = function() {
     setInterval(() => {
         displayNotifications();
     }, 10000)
+
+    setInterval(() => {
+        pushNotification();
+    }, 30000);
     
     
     return {
         init: function() {
             loadComponent();
-
             displayNotifications();
+            pushNotification();
         }
     }
 }();

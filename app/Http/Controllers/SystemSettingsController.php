@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\MailSetting;
+use App\GeneralSetting;
 
 class SystemSettingsController extends Controller
 {
@@ -19,6 +20,14 @@ class SystemSettingsController extends Controller
         $data['mailing'] = MailSetting::find(1);
 
         return view('admin.settings.mail_settings.index')->with($data);
+    }
+
+    public function generalSettingsIndex()
+    {
+        $data['menu_id'] = 9.0;
+        $data['settings'] = GeneralSetting::find(1);
+
+        return view('admin.settings.general_settings.index')->with($data);
     }
 
     /**
@@ -61,6 +70,38 @@ class SystemSettingsController extends Controller
 
             } catch(Exception $e) {
                 return false;
+            }
+        }
+    }
+
+    public function storeGeneralSettings(Request $request)
+    {
+        $data = $request->except('_token');
+        if(!empty($data)) {
+            try {
+                
+                $update = GeneralSetting::find(1);
+                $update->application_name = $data['application_name'];
+                $update->motto = $data['motto'];
+                $update->description = $data['description'];
+                $update->enable_sound_notification = ($data['sound_notification'] == 'true') ? true : false;
+                $update->enable_push_notification = ($data['push_notification'] == 'true') ? true : false;
+                $update->enable_session_timeout = ($data['session_timeout'] == 'true') ? true : false;
+                $update->enable_login_email_alert = ($data['login_alert'] == 'true') ? true : false;
+                $update->currency_exchange_api = $data['exchange_api'];
+                $update->default_currency = $data['currency'];
+                $update->enable_system_backup = ($data['system_backup'] == 'true') ? true : false;
+                $update->save();
+
+
+
+                return response()->json([
+                    'msg'   => "General Settings Updated Successfully",
+                    'type'  => "true"
+                ], 200);
+
+            } catch(Exception $e) {
+                return redirect()->back()->with('error', $e->getMessage);
             }
         }
     }
