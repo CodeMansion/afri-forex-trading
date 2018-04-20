@@ -89,8 +89,8 @@ class User extends Authenticatable
     }
 
     public function Platform(){
-        return $this->hasMany('App\Platform','platform_id');
-    } 
+        return $this->hasMany('App\Platform','user_id');
+    }    
 
     public function UserWallet(){
         return $this->belongsTo('App\UserWallet','user_id');

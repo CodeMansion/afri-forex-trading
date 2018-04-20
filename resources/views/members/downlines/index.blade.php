@@ -38,6 +38,8 @@
                                         <thead>
                                             <tr>
                                                 <th>S/N</th>
+                                                <th>Platform</th>
+                                                <th>Username</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
@@ -48,6 +50,8 @@
                                             @forelse($downlines as $down)
                                                 <tr>
                                                     <td>{{ $counter++}}</td>
+                                                     <td><span class="label label-sm label-success">{{ $down->Profile->Platform->name}}</span></td>
+                                                    <td>{{ $down->Profile->User->username}}</td>
                                                     <td>{{ $down->Profile->full_name}} </td> 
                                                     <td>{{ $down->Profile->email}} </td> 
                                                     <td>{{ $down->Profile->telephone}} </td>  

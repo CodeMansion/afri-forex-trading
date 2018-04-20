@@ -20,4 +20,6 @@ class UserDownline extends Model
     public function Profile(){
         return $this->hasOne('App\UserProfile','user_id');
     }
+
+    
 }

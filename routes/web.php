@@ -146,6 +146,7 @@ $this->post('login', 'Auth\LoginController@login')->name('login');
 Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerIndex"]);
 Route::get('/registration/{id?}', ["as"=>"register.ref", "uses"=>"HomeController@ref"]);
 Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
+Route::post('/reset/verify/{id?}',['as' => 'reset.store' ,'uses' => 'HomeController@reset_confirm']);
 
 Route::get('/logout', function () {	
 	auth()->logout();	

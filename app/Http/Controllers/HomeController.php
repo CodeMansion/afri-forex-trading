@@ -71,6 +71,53 @@ class HomeController extends Controller
         }
         return view('register',compact('referral'));
     }
+
+    public function forget_password(Request $request)
+    {
+        $user = User::whereEmail($request('email'))->first();
+        if(!$user){
+            return response()->json(['warning' => 'user with this email address does not exist!'], 200);
+        }
+        \Mail::to($user)->send(new Forget($user));
+        return response()->json(['success' => 'password reset link has beeen sent to your mail!'], 200);
+    }
+    
+    public function reset($confirm)
+    {
+        return view('reset');
+    }
+
+    public function check_oldpasword(Request $request)
+    {
+        $user = User::wherePassword($request->password)->first();
+        if(!$user){
+            return $response = [
+                'msg' => "your password not correct.",
+                'type' => "false"
+            ];
+        }
+        return $response = [
+            'type' => "true"
+        ];
+    }
+
+    public function reset_confirm(Request $request,$confirm)
+    {
+        $user = User::whereSlug($confirm)->first();
+        if(!$user){
+            return $response = [
+                'msg' => "your password reset link do not exist.",
+                'type' => "false"
+            ];
+        }
+        $user->is_active = 1;
+        $user->password = $request->password;
+        $user->save();
+        return $response = [
+            'msg' => "your password reset has been made successfully.",
+            'type' => "true"
+        ];
+    }
     
     protected function validator(array $data)
 	{		
