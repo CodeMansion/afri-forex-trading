@@ -1,0 +1,62 @@
+body {
+    padding: 60px;
+}
+
+#register {
+    background-image: url('../../../images/registration.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+#register .register-card {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.568);
+    color: white;
+}
+
+#register .register-card .form-control {
+    height: 50px;
+    font-size: 19px;
+}
+
+#register .register-card p a {
+    color: yellowgreen;
+}
+
+#register .register-card h3 {
+    color: yellowgreen;
+}
+
+#register .register-card button {
+    text-transform: uppercase;
+    font-size: 25px;
+}
+
+#register .register-card #show_password:hover {
+    cursor: pointer;
+}
+
+#register .col-md-7 h1 {
+    color: yellowgreen;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 6em;
+    border-bottom: 1px solid white;
+    -webkit-text-stroke: 2px white;
+    padding: 10px;
+}
+
+#register .col-md-7 h3 {
+    color: white;
+    font-size: 3em;
+    font-weight: 600;
+}
+
+#register .col-md-7 ol {
+    color: white;
+    font-size: 30px;
+    font-weight: 100;
+    font-style: italic;
+    border-bottom: 1px solid white;
+}

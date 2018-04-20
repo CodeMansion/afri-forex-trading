@@ -1,137 +1,129 @@
-@extends('layouts.app')
-@section('title','Registration')
-@section('content')
-<div class="logo">
-    <a href="index.html"><img src="../assets/pages/img/logo-big.png" alt="" /> </a>
-</div>
-<div class="row">
-    <div class="col-md-7">
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <meta name="author" content="">
+        <meta name="description" content="" />
 
-        <div class="portlet light portlet-fit ">
-            <div class="portlet-body">
-                <div class="mt-element-step">
-                    <div class="row step-background">
-                        <div class="mt-step-desc">
-                            <h1 style="font-size:5em;">Make Maximum Profit</h1>
-                            
-                            <div class="font-grey-cascade">In Three Easy Ways</div>
-                            <br> </div>
-                        <div class="col-md-4 bg-grey-steel mt-step-col">
-                            <div class="mt-step-number">1</div>
-                            <div class="mt-step-title uppercase font-grey-cascade">Purchase</div>
-                            <div class="mt-step-content font-grey-cascade">Purchasing Minimum of 1 Platform</div>
-                        </div>
-                        <div class="col-md-4 bg-grey-steel mt-step-col active">
-                            <div class="mt-step-number">2</div>
-                            <div class="mt-step-title uppercase font-grey-cascade">Growth</div>
-                            <div class="mt-step-content font-grey-cascade">Watch you Income Increase </div>
-                        </div>
-                        <div class="col-md-4 bg-grey-steel mt-step-col">
-                            <div class="mt-step-number">3</div>
-                            <div class="mt-step-title uppercase font-grey-cascade">Withdraw</div>
-                            <div class="mt-step-content font-grey-cascade">Withdraw your funds at ANYTIME</div>
-                        </div>
-                    </div>
-                    <br>
-                    <br>
+        <title>AfriMarket | New Member Registration</title>
+        
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" />
+        
+        <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/pages/css/register.css') }}" rel="stylesheet" type="text/css" />
+    </head>
+    <body id="register">
+        <div class="row">
+            <div class="col-md-7">
+                <h1>Make Maximum Profit</h1> 
+                <h3>In Three Easy Ways</h3>
+                <ol>
+                    <li>Purchase - Purchasing Minimum of 1 Platform</li>
+                    <li>Growth - Watch you investment Increase</li>
+                    <li>Withdraw - Withdraw your profit at ANYTIME</li>
+                </ol> 
+            </div>
+        
+            <div class="col-md-4">
+                <div class="register-card">
+                    <div id="errors"></div>
+                    <form action="#" method="#">
+                        <center>
+                            <h3>New Member Registration Form</h3><hr/>
+                            <div class="col-md-12 form-group">   
+                                <input type="text" class="form-control" name="upline_id" id="upline_id" value="<?php if(isset($referral)): ?> {{ $referral->username }} <?php else: ?>Afri-Forex<?php endif ?>" disabled>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" placeholder="FULL NAME" name="full_name" id="full_name">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <select class="form-control" name="country_id" id="country_id">
+                                    <option value="">--Select Country--</option>
+                                    <option value="1">Nigeria</option>
+                                    <option value="2">United States</option>
+                                    <option value="3">South Africa</option>
+                                    <option value="4">Saudi Arabia</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="phone" class="form-control" placeholder="+234(0)80 1111 2222" name="telephone" id="telephone"> 
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" placeholder="USERNAME" name="username" id="username">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="email" class="form-control" placeholder="EMAIL ADDRESS" name="email" id="email">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" placeholder="PASSWORD" name="password" id="password">
+                                    <span class="input-group-addon" id="show_password">
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-12 form-group">
+                                <select class="form-control" name="state_id" id="state_id">
+                                    <option value="">Select...</option>
+                                    <option value="1">Nigeria</option>
+                                    <option value="2">United States</option>
+                                    <option value="3">South Africa</option>
+                                    <option value="4">Saudi Arabia</option>
+                                </select>
+                            </div> -->
+                            <div class="col-md-12 form-group">
+                                <button type="button" id="register_member_btn" class="btn btn-lg btn-success form-control">Submit</button>
+                            </div>
+                            <p>Are you a Register User? <a href="{{ url('/login') }}">Sign In Here</a></p>
+                        </center>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
-        
-    <div class="col-md-4 portlet-body form">
-    <!-- BEGIN FORM-->
-        <form action="#" method="#"class="form-horizontal">
-            <center><h3 class="form-title font-green">User Registration Form</h3></center>
-            
-            <div class="col-md-12 form-body">
-                <div class="col-md-12 form-group">                    
-                    <div id="errors"></div>
-                        <input type="text" class="form-control" placeholder="Username of Your Referral" name="upline_id" id="upline_id" value="<?php if(isset($referral)): ?> {{ $referral->username }} <?php else: ?>Afri-Forex<?php endif ?>" disabled>
-                </div>
-                <div class="col-md-12 form-group">
-                        <input type="text" class="form-control" placeholder="Full Name" name="full_name" id="full_name">
-                </div>
-                <div class="col-md-12 form-group">
-                    <input type="text" class="form-control" placeholder="Username" name="username" id="username">
-                </div>
-                <div class="col-md-12 form-group">
-                    <div class="input-group">
-                        <input type="password" class="form-control" placeholder="Password" name="password" id="password">
-                        <span class="input-group-addon">
-                            <i class="fa fa-user"></i>
-                        </span>
-                    </div>
-                </div>
 
-                <div class="col-md-12 form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-envelope"></i>
-                        </span>
-                        <input type="email" class="form-control" placeholder="Email" name="email" id="email">
-                    </div>
-                </div>
-                <div class="col-md-12 form-group">
-                    <select class="form-control" name="country_id" id="country_id">
-                        <option value="">Select...</option>
-                        <option value="1">Nigeria</option>
-                        <option value="2">United States</option>
-                        <option value="3">South Africa</option>
-                        <option value="4">Saudi Arabia</option>
-                    </select>
-                </div>
-                <div class="col-md-12 form-group">
-                    <select class="form-control" name="state_id" id="state_id">
-                        <option value="">Select...</option>
-                        <option value="1">Nigeria</option>
-                        <option value="2">United States</option>
-                        <option value="3">South Africa</option>
-                        <option value="4">Saudi Arabia</option>
-                    </select>
-                </div>
-                <div class="col-md-12 form-group">
-                    <div class="input-group">
-                        <span class="input-group-btn btn-right">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Action
-                                <i class="fa fa-angle-down"></i>
-                            </button>
-                            <ul class="dropdown-menu pull-right" role="menu">
-                                <li><a href="javascript:;">+234</a></li>
-                                <li><a href="javascript:;">+856</a></li>
-                                <li><a href="javascript:;">+777</a></li>
-                                <li><a href="javascript:;">+1</a></li>
-                            </ul>
-                        </span>
-                        <div class="input-group-control">
-                            <input type="phone" class="form-control" placeholder="000 111 2222" name="telephone" id="telephone"> 
-                        </div>
-                    </div>
-                
-                </div>
-                <div class="row">
-                    <div class="col-md-offset-3 col-md-9">
-                        <button type="button" id="register_user" class="btn green">Submit</button>
-                        <a href="{{ url('/login') }}"><button type="button" class="btn default">Cancel</button></a>
-                    </div>
-                </div>
-                <div class="col-md-12 form-group">
-                    <center>
-                        <button type="button" id="register_user" class="btn btn-large green" style="width:49%; margin:0px;">Submit</button>
-                        <button type="button" class="btn default" style="width:49%; margin:0px;">Cancel</button>
-                    </center>
-                    <p>Are you a Register User? <a href="#"><em>Sign In</em></a></p>
-                </div>                                    
-            </div>
-        </form>
-    </div>
-</div>
-<!-- END FORM-->
-@endsection
-@section('javascript')
-    <script>
-        var TOKEN = "{{csrf_token()}}";
-        var REGISTER_URL = "{{URL::route('register.store')}}";
-    </script>
-    <script src="{{ asset('assets/pages/members/register.js') }}" type="text/javascript"></script>
-@endsection
+        <script src="{{ asset('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/global/plugins/js.cookie.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+        
+        <script src="{{ asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/pages/scripts/ui-toastr.min.js') }}" type="text/javascript"></script>
+        <script>
+            var TOKEN = "{{csrf_token()}}";
+            var REGISTER_URL = "{{URL::route('register.store')}}";
+        </script>
+        <script src="{{ asset('js/pages/registration.js') }}" type="text/javascript"></script>
+
+        @if(\Session::has('error'))
+            <script type="text/javascript">
+                toastr.error("{!! \Session::get('error') !!}");
+            </script>
+        @endif
+        @if(\Session::has('success'))
+            <script type="text/javascript">
+                toastr.success("{!! \Session::get('success') !!}");
+            </script>
+        @endif
+        @if(\Session::has('info'))
+            <script type="text/javascript">
+                toastr.info("{!! \Session::get('info') !!}");
+            </script>
+        @endif
+        @if(\Session::has('warning'))
+            <script type="text/javascript">
+                toastr.warning("{!! \Session::get('warning') !!}");
+            </script>
+        @endif
+    </body>
+</html>
+    

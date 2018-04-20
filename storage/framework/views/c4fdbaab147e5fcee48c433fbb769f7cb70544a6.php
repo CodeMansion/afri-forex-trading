@@ -1,7 +1,7 @@
 <?php $__env->startSection('title','Login'); ?>
 <?php $__env->startSection('content'); ?>
 <div class="logo">
-    <a href="index.html"><img src="../assets/pages/img/logo-big.png" alt="" /> </a>
+    <!-- <a href="index.html"><img src="../assets/pages/img/logo-big.png" alt="" /> </a> -->
 </div>
 <div class="content">
     <form class="login-form" method="POST" action="<?php echo e(route('login')); ?>"><?php echo e(csrf_field()); ?>
@@ -40,7 +40,7 @@
             <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
         </div>
         <div class="create-account">
-            <p><a href="<?php echo e(URL::route('register')); ?>" id="register-btn" class="uppercase">Create an account</a></p>
+            <p><a href="<?php echo e(URL::route('register')); ?>" class="uppercase">Create a membership account</a></p>
         </div>
     </form>
     <form class="forget-form" action="#" method="POST">

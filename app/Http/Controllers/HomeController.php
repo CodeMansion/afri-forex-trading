@@ -101,7 +101,7 @@ class HomeController extends Controller
 			'telephone'     => 'bail|required|string|max:15',
 			'country_id'    => 'bail|required|string',
 			'state_id'    	=> 'bail|required|string',
-			'password'      => 'bail|required|string|min:6|confirmed',
+			'password'      => 'bail|required|string|min:6',
 		],$custom_msg);
 		
     }
@@ -119,6 +119,7 @@ class HomeController extends Controller
                         'type' => 'false'
                     ];
                 }
+                
                 $referral = User::whereUsername($data['upline_id'])->first()->id;
                 
                 $user                   = new User();

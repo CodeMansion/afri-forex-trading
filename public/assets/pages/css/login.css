@@ -1,17 +1,12 @@
-/* Cubic Bezier Transition */
-/***
-Login page
-***/
-/* bg color */
+
 .login {
-  background-color: #364150 !important;
-  /* background-image: url('../../../images/background.jpg'); */
+  /* background-color: #364150 !important; */
+  background-image: url('../../../images/login.jpg');
   overflow-y: auto;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: 100%;
+  background-size: cover;
   height: 100vh;
-  /* background-color:rgb(255, 250, 250);  */
 }
 
 .login .logo {
@@ -21,8 +16,7 @@ Login page
   text-align: center; }
 
 .login .content {
-  background-color: #44a5987e;
-  /* opacity: 0.9; */
+  background-color: #0000009d;
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
   -ms-border-radius: 7px;
@@ -39,7 +33,9 @@ Login page
   color: white;
   text-align: center;
   font-size: 28px;
-  font-weight: 400 !important; }
+  font-weight: 400 !important; 
+  text-transform: uppercase;
+}
 
 .login .content h4 {
   color: #555; }
@@ -53,6 +49,10 @@ Login page
 .login .content .forget-form {
   padding: 0px;
   margin: 0px; }
+
+.login .content a {
+  color: yellowgreen;
+}
 
 .login .content .form-control {
   border: none;
@@ -75,7 +75,13 @@ Login page
   padding-right: 9px; }
 
 .login .content .forget-form {
-  display: none; }
+  display: none; 
+}
+
+.login .content .forget-form p {
+  color: white;
+  text-align: center;
+}
 
 .login .content .register-form {
   display: none; }
@@ -162,7 +168,7 @@ Login page
   margin: 0 -40px -30px -40px;
   padding: 15px 0 17px 0;
   text-align: center;
-  background-color: #6c7a8d;
+  background-color: #004458;
   -webkit-border-radius: 0 0 7px 7px;
   -moz-border-radius: 0 0 7px 7px;
   -ms-border-radius: 0 0 7px 7px;
@@ -185,7 +191,7 @@ Login page
   text-align: center;
   margin: 0 auto 30px 0;
   padding: 10px;
-  color: white;
+  color: rgb(122, 255, 144);
   font-size: 13px; }
 
   .login .copyright a {
