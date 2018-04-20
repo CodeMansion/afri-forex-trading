@@ -28,8 +28,8 @@
         <link href="<?php echo e(asset('css/custom.css')); ?>" rel="stylesheet" type="text/css" />
         
     </head>
-    <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
-        <audio id="notifyAudio" style="display:none;"><source src="<?php echo e(asset('js/shut-your-mouth.mp3')); ?>" type="audio/mpeg"></audio>
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-footer-fixed">
+        <audio id="notifyAudio" style="display:none;"><source src="<?php echo e(asset('js/plucky.mp3')); ?>" type="audio/mpeg"></audio>
         <?php echo $__env->make('admin.partials.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <div class="page-container">
             <?php echo $__env->make('admin.partials.menu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

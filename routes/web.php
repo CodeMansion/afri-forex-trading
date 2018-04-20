@@ -19,6 +19,12 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::post('/subscribe',["as" => "subscribe", "uses"  => "SubscriptionController@store"]);
 	Route::get('/dashboard-notify',["as"=>"dashboardNotify", "uses"=>"HomeController@indexNotify"]);
 	Route::get('/notifications',["as"=>"notifications", "uses"=>"HomeController@notifications"]);
+	Route::get('/load-dispute', ["as"=>"loadDispute", "uses"=>"HomeController@loadDispute"]);
+	Route::get('/load-activity-logs', ["as"=>"loadActivityLogs", "uses"=>"HomeController@loadActivityLogs"]);
+	Route::get('/load-transactions', ["as"=>"loadTransactions", "uses"=>"HomeController@loadTransactions"]);
+	Route::get('/load-support', ["as"=>"loadSupport", "uses"=>"HomeController@loadSupport"]);
+	Route::get('/load-chart', ["as"=>"loadChart", "uses"=>"HomeController@loadChart"]);
+	Route::get('/load-new-members', ["as"=>"loadMembers", "uses"=>"HomeController@loadMembers"]);
 
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {

@@ -21,11 +21,12 @@ class CreateUserProfilesTable extends Migration
             $table->string('full_name', 90);
             $table->string('email',100)->unique();
             $table->string('telephone');
-            $table->integer('country_id');
+            $table->integer('country_id')->unsigned()->index();
             $table->integer('state_id');
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('country_id')->references('id')->on('countries');
         });
         
     }

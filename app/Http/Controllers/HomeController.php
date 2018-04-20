@@ -17,6 +17,10 @@ use App\PackageType;
 use App\Subscription;
 use App\Investment;
 use App\Referral;
+use App\Dispute;
+use App\ActivityLog;
+use App\PaymentTransaction;
+
 use App\Notifications\NewMember;
 
 class HomeController extends Controller
@@ -30,8 +34,15 @@ class HomeController extends Controller
     public function index()
     {   
         $data['menu_id'] = 1;
+
         if(\Auth::user()->is_admin == 1) {
-            return view('admin.dashboard');
+            $data['disputes'] = Dispute::orderBy('id','DESC')->limit(10)->get();
+            $data['members'] = User::members()->orderBy('id','DESC')->limit(10)->get();
+            $data['activities'] = ActivityLog::orderBy('id','DESC')->limit(10)->get();
+            $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
+            $data['transactions_count'] = PaymentTransaction::all()->count();
+            $data['members_count'] = User::members()->count();
+            return view('admin.dashboard.index')->with($data);
         }
 
         $data['platforms'] = Platform::whereIsActive(true)->get();
@@ -109,9 +120,7 @@ class HomeController extends Controller
                     ];
                 }
                 $referral = User::whereUsername($data['upline_id'])->first()->id;
-                // if(empty($referral)){
-                //     $referral = 1;
-                // }
+                
                 $user                   = new User();
                 $user->slug             = bin2hex(random_bytes(64));
                 $user->full_name        = $data['full_name'];
@@ -167,5 +176,29 @@ class HomeController extends Controller
 
     public function notifications() {
         return auth()->user()->unreadNotifications()->limit(5)->get()->toArray();
+    }
+
+    public function loadDispute(){
+        $data['disputes'] = Dispute::all();
+        return view('admin.partials.util._show_dispute')->with($data);
+    }
+
+    public function loadMembers() {
+        $data['members'] = User::members()->orderBy('id','DESC')->limit(10)->get();
+        return view('admin.partials.util._new_members')->with($data);
+    }
+
+    public function loadActivityLogs() {
+        $data['activities'] = ActivityLog::orderBy('id','DESC')->limit(10)->get();
+        return view('admin.partials.util._activity_logs')->with($data);
+    }
+
+    public function loadChart() {
+        return true;
+    }
+
+    public function loadTransactions() {
+        $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
+        return view('admin.partials.util._recent_transactions')->with($data);
     }
 }
