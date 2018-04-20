@@ -1,4 +1,4 @@
-@extends('member.partials.app')
+@extends('members.partials.app')
 
 @section('content')
     {{-- <h1 class="page-title"> Admin Activity Logs <small>statistics, charts, recent events and reports</small> </h1>

@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-4">
             <ul class="pagination">
-                <li><a href="#" class="dp-item dp-selected dp-today" data-moment="" title="" style="width: 140px;"><i id="dp-calendar" class="glyphicon glyphicon-calendar"></i></a></li>
+            <li><i id="dp-calendar" class="glyphicon glyphicon-calendar"></i><?php $Today = date('y:m:d'); $new = date('l, F d, Y', strtotime($Today)); echo $new; ?></li>
             </ul>
         </div>
     </div>
@@ -133,81 +133,25 @@
                         <div class="mt-list-container list-default ext-1">
                             <div class="mt-list-title uppercase">My List</div>
                             <ul>
-                                <li class="mt-list-item done">
+                                @forelse($activities as $activity)
+                                    <li class="mt-list-item done">
                                     <div class="list-icon-container">
                                         <a href="javascript:;">
                                             <i class="icon-check"></i>
                                         </a>
                                     </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
+                                    <div class="list-datetime"> 
+                                        {{ $activity->created_at->diffForHumans() }}</div>
                                     <div class="list-item-content">
                                         <h3 class="uppercase">
-                                            <a href="javascript:;">Concept Proof</a>
+                                            <a href="javascript:;">{{ $activity->ip }}</a>
                                         </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
+                                        <p>{{ $activity->action }}</p>
                                     </div>
                                 </li>
-                                <li class="mt-list-item">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-close"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
-                                <li class="mt-list-item">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-close"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
-                                <li class="mt-list-item done">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-check"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
-                                <li class="mt-list-item">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-close"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
+                                @empty
+                                    <h4>No Recent Activity</h4>
+                                @endforelse
                             </ul>
                         </div>
                     </div>
@@ -228,81 +172,25 @@
                         <div class="mt-list-container list-default ext-1">
                             <div class="mt-list-title uppercase">My List</div>
                             <ul>
-                                <li class="mt-list-item done">
+                                @forelse($supports as $support)
+                                    <li class="mt-list-item done">
                                     <div class="list-icon-container">
                                         <a href="javascript:;">
                                             <i class="icon-check"></i>
                                         </a>
                                     </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
+                                    <div class="list-datetime"> 
+                                        {{ $support->created_at->diffForHumans() }}</div>
                                     <div class="list-item-content">
                                         <h3 class="uppercase">
-                                            <a href="javascript:;">Concept Proof</a>
+                                            <a href="javascript:;">{{ $support->ticket_no }}</a>
                                         </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
+                                        <p>{{ $trans->message }}</p>
                                     </div>
                                 </li>
-                                <li class="mt-list-item">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-close"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
-                                <li class="mt-list-item">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-close"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
-                                <li class="mt-list-item done">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-check"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
-                                <li class="mt-list-item">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-close"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
+                                @empty
+                                    <h4>No Support Message Available</h4>
+                                @endforelse
                             </ul>
                         </div>
                     </div>
@@ -323,81 +211,25 @@
                         <div class="mt-list-container list-default ext-1">
                             <div class="mt-list-title uppercase">My List</div>
                             <ul>
+                                @forelse($transactions as $trans)
                                 <li class="mt-list-item done">
                                     <div class="list-icon-container">
                                         <a href="javascript:;">
                                             <i class="icon-check"></i>
                                         </a>
                                     </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
+                                    <div class="list-datetime"> 
+                                        {{ $trans->created_at->diffForHumans() }}</div>
                                     <div class="list-item-content">
                                         <h3 class="uppercase">
-                                            <a href="javascript:;">Concept Proof</a>
+                                            <a href="javascript:;">{{ $trans->amount }}</a>
                                         </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
+                                        <p>{{ $trans->reference_no }}</p>
                                     </div>
                                 </li>
-                                <li class="mt-list-item">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-close"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
-                                <li class="mt-list-item">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-close"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
-                                <li class="mt-list-item done">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-check"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
-                                <li class="mt-list-item">
-                                    <div class="list-icon-container">
-                                        <a href="javascript:;">
-                                            <i class="icon-close"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-datetime"> 11am
-                                        <br> 8 Nov </div>
-                                    <div class="list-item-content">
-                                        <h3 class="uppercase">
-                                            <a href="javascript:;">Listings Feature</a>
-                                        </h3>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </li>
+                                @empty
+                                    <h4>No Transactions Available</h4>
+                                @endforelse
                             </ul>
                         </div>
                     </div>

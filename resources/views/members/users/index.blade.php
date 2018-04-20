@@ -97,25 +97,25 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-9">
-                        <div class="tab-content">
+                    <div class="col-md-9">                        
+                        <div id="errors"></div>
+                        <div class="tab-content">                            
                             <div id="tab_1-1" class="tab-pane active">
-                                <form role="form" action="#">
                                     <div class="form-group">
                                         <label class="control-label">FullName</label>
-                                        <input type="text" value="{{ auth()->user()->full_name }}" placeholder="John" class="form-control"> 
+                                        <input type="text" value="{{ auth()->user()->full_name }}" placeholder="John" id="full_name" class="form-control"> 
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Username</label>
-                                        <input type="text" value="{{ auth()->user()->username }}" placeholder="John" class="form-control"> 
+                                        <input type="text" value="{{ auth()->user()->username }}" placeholder="John" id="username" class="form-control"> 
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Email</label>
-                                        <input type="text" value="{{ auth()->user()->email }}" placeholder="John" class="form-control"> 
+                                        <input type="text" value="{{ auth()->user()->email }}" placeholder="John" id="email" class="form-control"> 
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Mobile Number</label>
-                                        <input type="text" value="{{ auth()->user()->Profile->telephone }}" placeholder="+1 646 580 DEMO (6284)" class="form-control"> 
+                                        <input type="text" value="{{ auth()->user()->Profile->telephone }}" placeholder="+1 646 580 DEMO (6284)" id="telephone" class="form-control"> 
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Country</label>
@@ -129,7 +129,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">State</label>
-                                        <select class="form-control" name="country_id" id="country_id">
+                                        <select class="form-control" name="country_id" id="state_id">
                                             <option value="">Select...</option>
                                             <option value="1">Nigeria</option>
                                             <option value="2">United States</option>
@@ -138,15 +138,12 @@
                                         </select>
                                     </div>
                                     <div class="margiv-top-10">
-                                        <a href="javascript:;" class="btn green"> Save Changes </a>
-                                        <a href="javascript:;" class="btn default"> Cancel </a>
+                                        <button id="update" class="btn green"> Save Changes </button>
                                     </div>
-                                </form>
                             </div>
                             <div id="tab_2-2" class="tab-pane">
                                 <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
                                     </p>
-                                <form action="#" role="form">
                                     <div class="form-group">
                                         <div class="fileinput fileinput-new" data-provides="fileinput">
                                             <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
@@ -169,44 +166,41 @@
                                         <a href="javascript:;" class="btn green"> Submit </a>
                                         <a href="javascript:;" class="btn default"> Cancel </a>
                                     </div>
-                                </form>
                             </div>
                             <div id="tab_3-3" class="tab-pane">
-                                <form action="#">
                                     <div class="form-group">
                                         <label class="control-label">Current Password</label>
-                                        <input type="password" class="form-control"> </div>
+                                        <input type="password" id="password" class="form-control"> </div>
                                     <div class="form-group">
                                         <label class="control-label">New Password</label>
-                                        <input type="password" class="form-control"> </div>
+                                        <input type="password" id="new_password" class="form-control"> </div>
                                     <div class="form-group">
                                         <label class="control-label">Re-type New Password</label>
-                                        <input type="password" class="form-control"> </div>
+                                        <input type="password" id="confirm_new_password" class="form-control"> </div>
                                     <div class="margin-top-10">
-                                        <a href="javascript:;" class="btn green"> Change Password </a>
-                                        <a href="javascript:;" class="btn default"> Cancel </a>
+                                        <button id="change_password" class="btn green"> Change Password </button>
                                     </div>
-                                </form>
                             </div>
                             <div id="tab_4-4" class="tab-pane">
-                            <form action="#">
                                     <div class="form-group">
                                         <label class="control-label">Account Name</label>
-                                        <input type="text" class="form-control"> </div>
+                                        <input type="text" id="account_name" class="form-control"> 
+                                    </div>
                                     <div class="form-group">
                                         <label class="control-label">Account Username</label>
-                                        <input type="text" class="form-control"> </div>
+                                        <input type="text" id="account_username" class="form-control">
+                                    </div>
                                     <div class="form-group">
                                         <label class="control-label">Account Email</label>
-                                        <input type="email" class="form-control"> </div>
+                                        <input type="email" id="account_email" class="form-control"> 
+                                    </div>
                                     <div class="form-group">
                                         <label class="control-label">Account Token</label>
-                                        <input type="text" class="form-control"> </div>
-                                    <div class="margin-top-10">
-                                        <a href="javascript:;" class="btn green"> Save Info </a>
-                                        <a href="javascript:;" class="btn default"> Cancel </a>
+                                        <input type="text" id="account_token" class="form-control"> 
                                     </div>
-                                </form>
+                                    <div class="margin-top-10">
+                                        <button id="add_account" class="btn green"> Save Info </button>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -218,6 +212,11 @@
 </div>
 @endsection
 @section('extra_script')
+    <script>
+        var TOKEN = "{{csrf_token()}}";
+        var RESET = "{{URL::route('reset.store')}}";
+    </script>
+    <script src="{{ asset('assets/pages/members/profile.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/flot/jquery.flot.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/flot/jquery.flot.pie.min.js') }}" type="text/javascript"></script>

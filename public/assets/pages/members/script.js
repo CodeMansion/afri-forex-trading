@@ -62,6 +62,7 @@ $('#platform_id').on('change', function() {
 $("#subscribe_pay").on("click", function() {
     var platform_id = $("#platform_id").val();
     $("#packages").hide();
+    $("#errors").html("");
     $(this).attr("disabled", true);
     $(this).html("<i class='fa fa-refresh fa-spin'></i> Processing...");
     $.ajax({
@@ -103,6 +104,7 @@ $("#subscribe_pay").on("click", function() {
 $("#referral").on("click", function() {
     var platform_id = $("#platform_id").val();
     $("#packages").hide();
+    $("#errors").html("");
     $(this).attr("disabled", true);
     $(this).html("<i class='fa fa-refresh fa-spin'></i> Processing...");
     $.ajax({

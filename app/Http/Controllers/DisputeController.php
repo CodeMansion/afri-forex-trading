@@ -17,14 +17,17 @@ class DisputeController extends Controller
      */
     public function index()
     {
-        $data['menu_id'] = 4.0;
-        $data['disputes'] = Dispute::all();
-        $data['priorities'] = DisputePriority::all();
-        $data['pending'] = Dispute::isPending();
-        $data['resolved'] = Dispute::isResolved();
-        $data['responded'] = Dispute::isResponded();
+        if(\Auth::user()->is_admin) {
+            $data['menu_id'] = 4.0;
+            $data['disputes'] = Dispute::all();
+            $data['priorities'] = DisputePriority::all();
+            $data['pending'] = Dispute::isPending();
+            $data['resolved'] = Dispute::isResolved();
+            $data['responded'] = Dispute::isResponded();
 
-        return view('admin.disputes.index')->with($data);
+            return view('admin.disputes.index')->with($data);
+        }
+        return view('members.support.index');
     }
 
     /**

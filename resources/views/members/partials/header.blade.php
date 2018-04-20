@@ -10,7 +10,7 @@
         
         <div class="page-top">
             <div class="col-md-4" style="padding:15px;">
-                <input type="text" id="mt-target-1" value="http://www.keenthemes.com">
+                <input type="text" id="mt-target-1" value="{{ URL::route('register') }}/{{ auth()->user()->slug }}">
                 <a href="javascript:;" class="btn green mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-1">
                     <i class="icon-note"></i> Copy
                 </a>

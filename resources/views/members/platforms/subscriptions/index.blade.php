@@ -128,11 +128,11 @@
                             @forelse($transactions as $tranc)
                                 <tr>
                                     <td>{{ $counter++}}</td>
-                                    <th>{{ $trac->reference_no }}</th>
+                                    <th>{{ $tranc->reference_no }}</th>
                                     <th>
-                                        <label class="label label-success btn-sm">{{ $trac->Category->name }}</label>
+                                        <label class="label label-success btn-sm">{{ $tranc->Category->name }}</label>
                                     </th>
-                                    <th>{{ $trac->amount }}</th>
+                                    <th>{{ $tranc->amount }}</th>
                                 </tr>
                             @empty
                             @endforelse

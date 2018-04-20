@@ -14,10 +14,12 @@ class UserDownline extends Model
     }
 
     public function User(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User','user_id');
     }
 
     public function Profile(){
         return $this->hasOne('App\UserProfile','user_id');
     }
+
+    
 }

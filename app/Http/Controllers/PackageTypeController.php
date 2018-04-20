@@ -15,14 +15,14 @@ class PackageTypeController extends Controller
     public function index()
     {
         $data['packagetypes'] = PackageType::all();
-        return view('admin.packagetypes.index')->with($data);
+        return view('admin.package_types.index')->with($data);
     }
 
     public function getEditInfo(Request $request)
     {
         try {
             $params['packagetype'] = PackageType::find($request->packagetype_id, 'slug');
-            return view('admin.packagetypes.partials._packagetypes_details_')->with($params);
+            return view('admin.package_types.partials._packagetypes_details_')->with($params);
         } catch (Exception $e) {
             return false;
         }

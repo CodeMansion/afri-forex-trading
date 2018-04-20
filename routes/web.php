@@ -37,7 +37,6 @@ Route::group(['middleware'=>['auth']], function(){
     //---- DISPUTES MANAGEMENT ----//
     Route::group(['prefix' => 'disputes'], function () {
         Route::get('/',["as"=>"disputeIndex", "uses"=>"DisputeController@index"]);
-        Route::get('/user-disputes',["as"=>"userDisputeIndex", "uses"=>"DisputeController@userIndex"]);
         Route::get('/view/{slug?}',["as"=>"viewDispute", "uses"=>"DisputeController@show"]);
         Route::post('/create-dispute', ["as"=>"disputeAdd", "uses"=>"DisputeController@store"]);
         Route::post('/get-dispute', ["as"=>"getDispute", "uses"=>"DisputeController@getDisputes"]);
@@ -128,10 +127,16 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::group(['prefix' => 'logs'], function () {		
 		Route::get('/', ["as"=>"activity.index", "uses"=>"ActivityLogController@index",'middleware'=>'platform-reg']);		
 	});	
+
+	//-	--- DOWNLINE MANAGEMENT ---//	
+	Route::group(['prefix' => 'downlines'], function () {		
+		Route::get('/', ["as"=>"downlines.index", "uses"=>"UserDownlineController@index",'middleware'=>'platform-reg']);		
+	});
 	
 	//-	--- TRANSACTIONS MANAGEMENT -----//	
 	Route::group(['prefix' => 'transactions'], function () {
 		Route::get('/', ["as"=>"transactions.index", "uses"=>"PaymentTransactionController@index"]);
+		Route::get('/delete/{id?}',["as"=>"transactions.delete",'uses'=> 'PaymentTransactionController@destroy']);
     });	
     
     //---- SYSTEM SETTINGS MANAGEMENT ---//
@@ -154,6 +159,7 @@ $this->post('login', 'Auth\LoginController@login')->name('login');
 Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerIndex"]);
 Route::get('/registration/{id?}', ["as"=>"register.ref", "uses"=>"HomeController@ref"]);
 Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
+Route::post('/reset/verify/{id?}',['as' => 'reset.store' ,'uses' => 'HomeController@reset_confirm']);
 
 Route::get('/logout', function () {	
 	auth()->logout();	

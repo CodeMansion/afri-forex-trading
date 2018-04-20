@@ -19,23 +19,16 @@
         <span class="title">Platforms</span>
         <span class="arrow"></span>
     </a>
-    <ul class="sub-menu">
-        <li class="nav-item  ">
-            <a href="#" class="nav-link ">
-                <span class="title">Packages</span>
-            </a>
-        </li>
-    </ul>
 </li>
 <li class="nav-item  ">
-    <a href="javascript:;">
+    <a href="{{ URL::route('downlines.index') }}">
         <i class="icon-puzzle"></i>
-        <span class="title">Messages</span>
+        <span class="title">DownLines</span>
         <span class="arrow"></span>
     </a>
 </li>
 <li class="nav-item  ">
-    <a href="#">
+    <a href="{{ URL::route('disputeIndex') }}">
         <i class="icon-envelope"></i>
         <span class="title">Support Ticket</span>
     </a>

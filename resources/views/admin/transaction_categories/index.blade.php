@@ -83,8 +83,8 @@
     </div>
 
 @section('modals')
-    @include('admin.transactioncategories.modals._new_transaction_categories')
-    @include('admin.transactioncategories.modals._edit_transaction_categories')
+    @include('admin.transaction_categories.modals._new_transaction_categories')
+    @include('admin.transaction_categories.modals._edit_transaction_categories')
 @endsection
 @endsection
 @section('extra_script')
