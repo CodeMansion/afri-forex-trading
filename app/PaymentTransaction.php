@@ -14,6 +14,10 @@ class PaymentTransaction extends Model
     }
 
     public function Category(){
-        return $this->belongsTo(TransactionCategory::class);
+        return $this->belongsTo("App\TransactionCategory","transaction_category_id");
+    }
+
+    public function Platform(){
+        return $this->belongsTo(Platform::class);
     }
 }

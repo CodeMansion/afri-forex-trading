@@ -30,7 +30,7 @@ class ReferralController extends Controller
             $earning->amount = ($params['downlines']->count() - 2) * 5;
             $earning->save();
         }else{
-            $earning                = new \App\Earning();
+            $earning                = new \App\Earning(); 
             $earning->slug           = bin2hex(random_bytes(64));
             $earning->user_id       = auth()->user()->id;
             $earning->platform_id   = $referral->platform_id;

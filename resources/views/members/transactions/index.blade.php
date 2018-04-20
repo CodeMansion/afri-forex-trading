@@ -7,7 +7,7 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-green-sharp">
-                        <span data-counter="counterup" data-value="7800">7.00</span>
+                        <span data-counter="counterup" data-value="{{ ($credit) ? $credit->amount : 0 }}">7.00</span>
                         <small class="font-green-sharp">$</small>
                     </h3>
                     <small>RECENT CREDIT</small>
@@ -35,7 +35,7 @@
                 <div class="number">
                     <h3 class="font-red-haze">
                         <small class="font-green-sharp">$</small>
-                        <span data-counter="counterup" data-value="1349">10.00</span>
+                        <span data-counter="counterup" data-value="{{ ($debit) ? $debit->amount : 0 }}">10.00</span>
                     </h3>
                     <small>RECENT DEBIT</small>
                 </div>
@@ -62,7 +62,7 @@
                 <div class="number">
                     <h3 class="font-blue-sharp">
                         <small class="font-green-sharp">$</small>
-                        <span data-counter="counterup" data-value="567">567</span>
+                        <span data-counter="counterup" data-value="{{ ($wallet) ? $wallet->amount : 0 }}">567</span>
                     </h3>
                     <small>WALLET</small>
                 </div>
@@ -124,147 +124,68 @@
 </div> --}}
 
 <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-6">
+    <div class="col-md-12 col-sm-12 col-xs-12">
         <!-- BEGIN SAMPLE TABLE PORTLET-->
         <div class="portlet box green">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-comments"></i>All Credit Transactions</div>
+                    <i class="fa fa-comments"></i>All Transactions</div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
                 </div>
             </div>
             <div class="portlet-body">
                 <div class="table-scrollable">
+                    @if(count($transactions) < 1)
+                        <div class="danger-alert">
+                            <i class="fa fa-warning"></i> <em>There are no Transactions available currently. </em>
+                        </div>
+                    @else 
                     <table class="table table-striped table-hover" id="sample_2">
                         <thead>
                             <tr>
                                 <th> S/No. </th>
-                                <th> First Name </th>
-                                <th> Last Name </th>
-                                <th> Username </th>
-                                <th> Status </th>
+                                <th> Reference No. </th>
+                                <th> Category </th>
+                                <th> Platform </th>
+                                <th> Amount </th>                                
                             </tr>
                         </thead>
                         <tbody>
+                            @php($counter=1)
+                            @forelse($transactions as $trans)
                             <tr>
-                                <td> 1 </td>
-                                <td> Mark </td>
-                                <td> Otto </td>
-                                <td> makr124 </td>
+                                <td>{{$counter++}}</td>
+                                <td>{{ $trans->reference_no }}</td>
+                                <td> <span class="label label-sm label-success"> {{ $trans->Category->name }} </span> </td>
+                                <td> {{ $trans->Platform->name }} </td>
+                                <td> {{ $trans->amount }} </td>
                                 <td>
-                                    <span class="label label-sm label-success"> Approved </span>
+                                    
                                 </td>
                             </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td> Jacob </td>
-                                <td> Nilson </td>
-                                <td> jac123 </td>
-                                <td>
-                                    <span class="label label-sm label-info"> Pending </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 3 </td>
-                                <td> Larry </td>
-                                <td> Cooper </td>
-                                <td> lar </td>
-                                <td>
-                                    <span class="label label-sm label-warning"> Suspended </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 4 </td>
-                                <td> Sandy </td>
-                                <td> Lim </td>
-                                <td> sanlim </td>
-                                <td>
-                                    <span class="label label-sm label-danger"> Blocked </span>
-                                </td>
-                            </tr>
+                            @empty
+                            @endforelse
                         </tbody>
                     </table>
+                    @endif
                 </div>
             </div>
         </div>
         <!-- END SAMPLE TABLE PORTLET-->
     </div>
-    <div class="col-md-6 col-sm-6 col-xs-6">
-    <div class="portlet box green">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-comments"></i>All Debit Transactions</div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="table-scrollable">
-                    <table class="table table-striped table-hover" id="sample_1">
-                        <thead>
-                            <tr>
-                                <th> S/No. </th>
-                                <th> First Name </th>
-                                <th> Last Name </th>
-                                <th> Username </th>
-                                <th> Status </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td> 1 </td>
-                                <td> Mark </td>
-                                <td> Otto </td>
-                                <td> makr124 </td>
-                                <td>
-                                    <span class="label label-sm label-success"> Approved </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td> Jacob </td>
-                                <td> Nilson </td>
-                                <td> jac123 </td>
-                                <td>
-                                    <span class="label label-sm label-info"> Pending </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 3 </td>
-                                <td> Larry </td>
-                                <td> Cooper </td>
-                                <td> lar </td>
-                                <td>
-                                    <span class="label label-sm label-warning"> Suspended </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 4 </td>
-                                <td> Sandy </td>
-                                <td> Lim </td>
-                                <td> sanlim </td>
-                                <td>
-                                    <span class="label label-sm label-danger"> Blocked </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 <!-- END PORTLET -->
 @endsection
-@section('extra_script')
+@section('extra_script')    
     <script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" ="text/javascript"></script>
-
+    
+    <script src="{{ asset('assets/pages/admin/transactioncategories.js') }}" type="text/javascript"></script>
 @endsection
 @section('after_script')
-<script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" ="text/javascript"></script>
 @endsection

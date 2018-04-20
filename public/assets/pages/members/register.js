@@ -22,9 +22,10 @@ $('#register_user').on('click', function() {
         $("#errors").html("<div class='alert alert-danger'>Please state can not be empty</div><br/>");
     } else if (telephone < 1) {
         $("#errors").html("<div class='alert alert-danger'>Please telephone can not be empty</div><br/>");
-    } else if (password != $("#confirm_password").val()) {
-        $("#errors").html("<div class='alert alert-danger'>Password and Confirm password do not match</div><br/>");
-    } else {
+    } //else if (password != $("#confirm_password").val()) {
+    //$("#errors").html("<div class='alert alert-danger'>Password and Confirm password do not match</div><br/>");
+    //} 
+    else {
         $("#errors").html("");
         $(this).attr("disabled", true);
         $(this).html("<i class='fa fa-refresh fa-spin'></i> Processing...");

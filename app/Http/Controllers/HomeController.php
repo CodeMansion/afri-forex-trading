@@ -16,6 +16,9 @@ use App\PackageType;
 use App\Subscription;
 use App\Investment;
 use App\Referral;
+use App\ActivityLog;
+use App\PaymentTransaction;
+use App\Dispute;
 
 class HomeController extends Controller
 {
@@ -36,7 +39,9 @@ class HomeController extends Controller
         $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
         $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
         $data['referrals'] = Referral::whereUserId(auth()->user()->id)->count();
-
+        $data['activities'] = ActivityLog::whereUserId(auth()->user()->id)->orderBy('id','desc')->limit(5)->get();
+        $data['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->orderBy('id','desc')->limit(5)->get();
+        $data['supports'] = Dispute::whereUserId(auth()->user()->id)->orderBy('id','desc')->limit(5)->get();
         return view('members.dashboard')->with($data);
     }
     
@@ -55,6 +60,7 @@ class HomeController extends Controller
 
     public function registerIndex()
     {
+        //$data['countries'] = Country::all();
         return view('register');
     }
     
@@ -88,7 +94,7 @@ class HomeController extends Controller
 			'telephone'     => 'bail|required|string|max:15',
 			'country_id'    => 'bail|required|string',
 			'state_id'    	=> 'bail|required|string',
-			'password'      => 'bail|required|string|min:6|confirmed',
+			'password'      => 'bail|required|string|min:6',
 		],$custom_msg);
 		
     }

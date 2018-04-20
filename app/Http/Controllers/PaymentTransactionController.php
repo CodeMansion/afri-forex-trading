@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PaymentTransaction;
+use App\UserWallet;
 
 class PaymentTransactionController extends Controller
 {
@@ -18,10 +19,14 @@ class PaymentTransactionController extends Controller
             $data['transactions'] = PaymentTransaction::all();
             return view('admin.transactions.index')->with($data);
         }
-        return view('members.transactions.index');
+        $data['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->get();
+        $data['debit']  = PaymentTransaction::whereUserId(auth()->user()->id)->whereTransactionCategoryId(2)->orderBy('id','desc')->first();
+        $data['credit']  = PaymentTransaction::whereUserId(auth()->user()->id)->whereTransactionCategoryId(1)->orderBy('id','desc')->first();
+        $data['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
+        return view('members.transactions.index')->with($data);
     }
 
-    /**
+    /** 
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

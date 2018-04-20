@@ -50,12 +50,14 @@
         <script src="{{ asset('assets/global/plugins/morris/raphael-min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/counterup/jquery.waypoints.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/counterup/jquery.counterup.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/global/plugins/clipboardjs/clipboard.min.js') }}" type="text/javascript"></script>
 
         @yield('extra_script')
 
         <!-- END PAGE LEVEL PLUGINS -->
         <script src="{{ asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('js/utilities.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/pages/scripts/components-clipboard.min.js') }}" type="text/javascript"></script>
 
         @yield('after_script')
         

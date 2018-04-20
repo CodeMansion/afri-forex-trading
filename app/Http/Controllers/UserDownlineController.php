@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\UserDownline;
 
 class UserDownlineController extends Controller
 {
@@ -13,7 +14,8 @@ class UserDownlineController extends Controller
      */
     public function index()
     {
-        //
+        $data['downlines'] = UserDownline::whereUplineId(auth()->user()->id)->get(); 
+        return view('members.downlines.index')->with($data); 
     }
 
     /**

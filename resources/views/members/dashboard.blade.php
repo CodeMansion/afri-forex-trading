@@ -1,7 +1,29 @@
 @extends('members.partials.app')
 
 @section('content')
-    <h1 class="page-title"> Member Dashboard <small>statistics, charts, recent events and reports</small> </h1>
+    <div class="row">
+        <div class="col-md-4">
+            <h1 class="page-title"> Member Dashboard</h1>
+        </div>
+        <div class="col-md-4">
+            <div class="display">
+                <div class="number">
+                    <center>
+                        <h1 class="font-red-haze">
+                            <small>Account Balance</small><br />
+                            <small class="font-green-sharp">$</small>
+                            <span data-counter="counterup" data-value="20.00"></span>
+                        </h1>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <ul class="pagination">
+            <li><i id="dp-calendar" class="glyphicon glyphicon-calendar"></i><?php $Today = date('y:m:d'); $new = date('l, F d, Y', strtotime($Today)); echo $new; ?></li>
+            </ul>
+        </div>
+    </div>
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
@@ -46,7 +68,7 @@
                     <div class="number">
                         <h3 class="font-red-haze">
                             <small class="font-green-sharp">$</small>
-                            <span data-counter="counterup" data-value="1349">10.00</span>
+                            <span data-counter="counterup" data-value="20.00"></span>
                         </h3>
                         <small>RECENT DEBIT</small>
                     </div>
@@ -97,76 +119,120 @@
     </div>
 
     <!-- <div class="clearfix"></div> -->
-
     <div class="row">
-        <div class="col-md-12">
-        <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <div class="portlet light ">
+        <div class="col-md-4">
+            <div class="portlet light portlet-fit ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class=" icon-layers font-green"></i>
+                        <span class="caption-subject font-green bold uppercase">Recent Activity</span>
+                    </div>
+                </div>
                 <div class="portlet-body">
-                    <div class="table-toolbar">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="btn-group">
-                                    <button data-toggle="modal" data-target="#platform" title="Add" class="btn sbold green"> Add New
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
+                    <div class="mt-element-list">
+                        <div class="mt-list-container list-default ext-1">
+                            <div class="mt-list-title uppercase">My List</div>
+                            <ul>
+                                @forelse($activities as $activity)
+                                    <li class="mt-list-item done">
+                                    <div class="list-icon-container">
+                                        <a href="javascript:;">
+                                            <i class="icon-check"></i>
+                                        </a>
+                                    </div>
+                                    <div class="list-datetime"> 
+                                        {{ $activity->created_at->diffForHumans() }}</div>
+                                    <div class="list-item-content">
+                                        <h3 class="uppercase">
+                                            <a href="javascript:;">{{ $activity->ip }}</a>
+                                        </h3>
+                                        <p>{{ $activity->action }}</p>
+                                    </div>
+                                </li>
+                                @empty
+                                    <h4>No Recent Activity</h4>
+                                @endforelse
+                            </ul>
                         </div>
                     </div>
-                    <div id="sample_1_wrapper" class="dataTables_wrapper no-footer"><div class="row"><div class="col-md-6 col-sm-6"><div class="dataTables_length" id="sample_1_length"><label>Show <select name="sample_1_length" aria-controls="sample_1" class="form-control input-sm input-xsmall input-inline"><option value="5">5</option><option value="15">15</option><option value="20">20</option><option value="-1">All</option></select></label></div></div><div class="col-md-6 col-sm-6"><div id="sample_1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm input-small input-inline" placeholder="" aria-controls="sample_1"></label></div></div></div><div class="table-scrollable"><table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer" id="sample_1" role="grid" aria-describedby="sample_1_info">
-                    <table class="table table-striped table-hover" id="sample_3">
-                        <thead>
-                            <tr>
-                                <th> S/No. </th>
-                                <th> First Name </th>
-                                <th> Last Name </th>
-                                <th> Username </th>
-                                <th> Status </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td> 1 </td>
-                                <td> Mark </td>
-                                <td> Otto </td>
-                                <td> makr124 </td>
-                                <td>
-                                    <span class="label label-sm label-success"> Approved </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td> Jacob </td>
-                                <td> Nilson </td>
-                                <td> jac123 </td>
-                                <td>
-                                    <span class="label label-sm label-info"> Pending </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 3 </td>
-                                <td> Larry </td>
-                                <td> Cooper </td>
-                                <td> lar </td>
-                                <td>
-                                    <span class="label label-sm label-warning"> Suspended </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 4 </td>
-                                <td> Sandy </td>
-                                <td> Lim </td>
-                                <td> sanlim </td>
-                                <td>
-                                    <span class="label label-sm label-danger"> Blocked </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
-                <div class="row"><div class="col-md-5 col-sm-5">
-                    <div class="dataTables_info" id="sample_1_info" role="status" aria-live="polite">Showing 1 to 5 of 25 records</div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="portlet light portlet-fit ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class=" icon-layers font-green"></i>
+                        <span class="caption-subject font-green bold uppercase">Recent Support Ticket </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="mt-element-list">
+                        <div class="mt-list-container list-default ext-1">
+                            <div class="mt-list-title uppercase">My List</div>
+                            <ul>
+                                @forelse($supports as $support)
+                                    <li class="mt-list-item done">
+                                    <div class="list-icon-container">
+                                        <a href="javascript:;">
+                                            <i class="icon-check"></i>
+                                        </a>
+                                    </div>
+                                    <div class="list-datetime"> 
+                                        {{ $support->created_at->diffForHumans() }}</div>
+                                    <div class="list-item-content">
+                                        <h3 class="uppercase">
+                                            <a href="javascript:;">{{ $support->ticket_no }}</a>
+                                        </h3>
+                                        <p>{{ $trans->message }}</p>
+                                    </div>
+                                </li>
+                                @empty
+                                    <h4>No Support Message Available</h4>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="portlet light portlet-fit ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class=" icon-layers font-green"></i>
+                        <span class="caption-subject font-green bold uppercase">Recent Transactions </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="mt-element-list">
+                        <div class="mt-list-container list-default ext-1">
+                            <div class="mt-list-title uppercase">My List</div>
+                            <ul>
+                                @forelse($transactions as $trans)
+                                <li class="mt-list-item done">
+                                    <div class="list-icon-container">
+                                        <a href="javascript:;">
+                                            <i class="icon-check"></i>
+                                        </a>
+                                    </div>
+                                    <div class="list-datetime"> 
+                                        {{ $trans->created_at->diffForHumans() }}</div>
+                                    <div class="list-item-content">
+                                        <h3 class="uppercase">
+                                            <a href="javascript:;">{{ $trans->amount }}</a>
+                                        </h3>
+                                        <p>{{ $trans->reference_no }}</p>
+                                    </div>
+                                </li>
+                                @empty
+                                    <h4>No Transactions Available</h4>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

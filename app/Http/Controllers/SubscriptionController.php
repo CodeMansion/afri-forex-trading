@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\PaymentTransaction;
 use App\Mail\Subscriptions;
 use App\UserDownline;
+use App\UserWallet;
 
 class SubscriptionController extends Controller
 {

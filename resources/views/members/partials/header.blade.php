@@ -7,36 +7,14 @@
             <div class="menu-toggler sidebar-toggler"></div>
         </div>     
         <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
-        <div class="page-actions">
-            <div class="btn-group">
-                <button type="button" class="btn btn-circle btn-outline green dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-plus"></i>&nbsp;
-                    <span class="hidden-sm hidden-xs">Quick Actions&nbsp;</span>&nbsp;
-                    <i class="fa fa-angle-down"></i>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="javascript:;"><i class="icon-docs"></i> New Post </a> </li>
-                    <li><a href="javascript:;"><i class="icon-tag"></i> New Comment </a></li>
-                    <li><a href="javascript:;"><i class="icon-share"></i> Share </a></li>
-                    <li class="divider"> </li>
-                    <li><a href="javascript:;"><i class="icon-flag"></i> Comments<span class="badge badge-success">4</span></a></li>
-                    <li><a href="javascript:;"><i class="icon-users"></i> Feedbacks<span class="badge badge-danger">2</span></a></li>
-                </ul>
-            </div>
-        </div>
-                
+        
         <div class="page-top">
-            <form class="search-form search-form-expanded" action="#" method="GET">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search..." name="query">
-                    <span class="input-group-btn">
-                        <a href="javascript:;" class="btn submit">
-                            <i class="icon-magnifier"></i>
-                        </a>
-                    </span>
-                </div>
-            </form>
-                    
+            <div class="col-md-4" style="padding:15px;">
+                <input type="text" id="mt-target-1" value="{{ URL::route('register') }}/{{ auth()->user()->slug }}">
+                <a href="javascript:;" class="btn green mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-1">
+                    <i class="icon-note"></i> Copy
+                </a>
+            </div>            
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
                     <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">

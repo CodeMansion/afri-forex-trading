@@ -29,7 +29,6 @@ Route::group(['middleware'=>['auth']], function(){
     //---- DISPUTES MANAGEMENT ----//
     Route::group(['prefix' => 'disputes'], function () {
         Route::get('/',["as"=>"disputeIndex", "uses"=>"DisputeController@index"]);
-        Route::get('/user-disputes',["as"=>"userDisputeIndex", "uses"=>"DisputeController@userIndex"]);
         Route::get('/view/{slug?}',["as"=>"viewDispute", "uses"=>"DisputeController@show"]);
         Route::post('/create-dispute', ["as"=>"disputeAdd", "uses"=>"DisputeController@store"]);
         Route::post('/get-dispute', ["as"=>"getDispute", "uses"=>"DisputeController@getDisputes"]);
@@ -120,6 +119,11 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::group(['prefix' => 'logs'], function () {		
 		Route::get('/', ["as"=>"activity.index", "uses"=>"ActivityLogController@index",'middleware'=>'platform-reg']);		
 	});	
+
+	//-	--- DOWNLINE MANAGEMENT ---//	
+	Route::group(['prefix' => 'downlines'], function () {		
+		Route::get('/', ["as"=>"downlines.index", "uses"=>"UserDownlineController@index",'middleware'=>'platform-reg']);		
+	});
 	
 	//-	--- TRANSACTIONS MANAGEMENT -----//	
 	Route::group(['prefix' => 'transactions'], function () {
