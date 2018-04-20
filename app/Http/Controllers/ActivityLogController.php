@@ -15,10 +15,10 @@ class ActivityLogController extends Controller
     {
         if(\Auth::user()->is_admin == 1) {
             $params['activitylogs'] = \App\ActivityLog::all();
-            return view('admin.activitylogs.index')->with($params);
+            return view('admin.activity_logs.index')->with($params);
         }        
         $params['activitylogs'] = \App\ActivityLog::whereUserId(\Auth::user()->id)->get();
-        return view('members.activitylogs.index')->with($params);
+        return view('members.activity_logs.index')->with($params);
     }
 
     /**

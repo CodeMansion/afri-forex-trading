@@ -15,7 +15,7 @@ class TransactionCategoryController extends Controller
     public function index()
     {
         $data['transactioncategories'] = TransactionCategory::all();
-        return view('admin.transactioncategories.index')->with($data);
+        return view('admin.transaction_categories.index')->with($data);
     }
 
 
@@ -23,7 +23,7 @@ class TransactionCategoryController extends Controller
     {
         try {
             $params['transactioncategory'] = TransactionCategory::find($request->transactioncategories_id, 'slug');
-            return view('admin.transactioncategories.partials._transaction_categories_details_')->with($params);
+            return view('admin.transaction_categories.partials._transaction_categories_details_')->with($params);
         } catch (Exception $e) {
             return false;
         }

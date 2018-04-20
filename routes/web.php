@@ -124,6 +124,7 @@ Route::group(['middleware'=>['auth']], function(){
 	//-	--- TRANSACTIONS MANAGEMENT -----//	
 	Route::group(['prefix' => 'transactions'], function () {
 		Route::get('/', ["as"=>"transactions.index", "uses"=>"PaymentTransactionController@index"]);
+		Route::get('/delete/{id?}',["as"=>"transactions.delete",'uses'=> 'PaymentTransactionController@destroy']);
     });	
     
     //---- SYSTEM SETTINGS MANAGEMENT ---//

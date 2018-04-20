@@ -16,7 +16,7 @@ class PaymentTransactionController extends Controller
     {
         if(\Auth::user()->is_admin) {
             $data['transactions'] = PaymentTransaction::all();
-            return view('admin.transaction.index');
+            return view('admin.transactions.index')->with($data);
         }
         return view('members.transactions.index');
     }

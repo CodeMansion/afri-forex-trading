@@ -83,7 +83,7 @@ class HomeController extends Controller
 		return Validator::make($data, [
 			'upline_id'		=> 'bail|required',
 			'full_name'     => 'bail|required|string|max:255',
-			'username'      => 'bail|required|string|max:100',
+			'username'      => 'bail|required|string|max:100|unique:users',
 			'email'         => 'bail|required|string|email|max:255|unique:users',
 			'telephone'     => 'bail|required|string|max:15',
 			'country_id'    => 'bail|required|string',
