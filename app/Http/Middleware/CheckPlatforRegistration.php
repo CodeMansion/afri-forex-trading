@@ -19,15 +19,19 @@ class CheckPlatforRegistration
      */
     public function handle($request, Closure $next)
     {
-        if((isset(auth()->user()->id)) && (auth()->user()->is_admin == 0)){
-            $subscription = Subscription::whereUserId(auth()->user()->id)->count();
-            $investment = Investment::whereUserId(auth()->user()->id)->count();
-            $referral   = Referral::whereUserId(auth()->user()->id)->count();
-            if($subscription > 0 || $investment > 0 || $referral > 0){
-                return $next($request);
-            }
-            return redirect()->route('dashboard');
-        }
+        // if((isset(auth()->user()->id)) && (auth()->user()->is_admin == 0)) {
+            
+        //     $subscription = Subscription::whereUserId(auth()->user()->id)->count();
+        //     $investment = Investment::whereUserId(auth()->user()->id)->count();
+        //     $referral   = Referral::whereUserId(auth()->user()->id)->count();
+
+        //     if($subscription > 0 || $investment > 0 || $referral > 0){
+        //         return $next($request);
+        //     } else {
+        //         return redirect()->route('dashboard');
+        //     }
+        // }
+
         return $next($request);
     }
 }

@@ -24,8 +24,8 @@ var AppRegistration = function() {
             toastr.error("Telephone field is required");
         } else {
 
-            $(this).attr("disabled", true);
-            $(this).html("<i class='fa fa-refresh fa-spin'></i> Processing...");
+            $("#register_member_btn").attr("disabled", true);
+            $("#register_member_btn").html("<i class='fa fa-refresh fa-spin'></i> Processing...");
     
             $.ajax({
                 url: REGISTER_URL,
@@ -38,7 +38,6 @@ var AppRegistration = function() {
                     'username': username,
                     'password': password,
                     'country_id': country_id,
-                    // 'state_id': state_id,
                     'telephone': telephone,
                     'req': 'register_new_user'
                 },
@@ -82,7 +81,7 @@ var AppRegistration = function() {
 
             $("#show_password").on("mousedown", function() {
                 showPassword();
-                toastr.warning("Tips! Don't expose your password to anyone");
+                toastr.warning("Tips! Don't expose your password to anyone else.");
             });
 
             $("#show_password").on("mouseup", function() {

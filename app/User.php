@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'full_name', 'username','country_id','state_id','upline_id','telephone','email', 'password',
+        'full_name', 'username', 'country_id', 'upline_id', 'telephone', 'email', 'password',
     ];
 
     /**
@@ -32,6 +32,22 @@ class User extends Authenticatable
             return self::where($field, '=', $id)->firstOrFail();
         }
         return self::where('id', '=', $id)->firstOrFail();
+    }
+
+    public function setPasswordAttribute($query) {
+        return $this->attributes['password'] = bcrypt($query);
+    }
+
+    public function setFullNameAttribute($value) {
+        return $this->attributes['full_name'] = ucwords($value);
+    }
+
+    public function setEmailAttribute($value) {
+        return $this->attributes['email'] = preg_replace('/\s/', '', strtolower($value));
+    }
+
+    public function setUserNameAttribute($value) {
+        return $this->attributes['username'] = preg_replace('/\s/', '', $value);
     }
     
     public function Profile(){
@@ -102,5 +118,15 @@ class User extends Authenticatable
 
     public function scopeMembers($query) {
         return $query->where('is_admin',false);
+    }
+
+    public static function hasEmail($field) {
+        $check = self::where('email',$field)->first();
+        return ($check);
+    }
+
+    public static function hasUsername($field) {
+        $check = self::where('username',$field)->first();
+        return ($check);
     }
 }

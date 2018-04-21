@@ -45,6 +45,11 @@ class HomeController extends Controller
             return view('admin.dashboard.index')->with($data);
         }
 
+        if(\Auth::user()->is_admin == 0 && \Auth::user()->is_active == 0) {
+            auth()->logout();	
+            \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+            return redirect('/login');
+        }
         $data['platforms'] = Platform::whereIsActive(true)->get();
         $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
         $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
@@ -138,85 +143,91 @@ class HomeController extends Controller
 			'email'         => 'Email is Required',
 			'telephone'     => 'Telephone Number is Required',
 			'country_id'    => 'Country is Required',
-			'state_id'    	=> 'State is Required',
 			'password'      => 'Password & Confirm Password Don not Match',
 		];
-		
 		
 		return Validator::make($data, [
 			'upline_id'		=> 'bail|required',
 			'full_name'     => 'bail|required|string|max:255',
-			'username'      => 'bail|required|string|max:100|unique:users',
-			'email'         => 'bail|required|string|email|max:255|unique:users',
+			'username'      => 'bail|required|string',
+			'email'         => 'bail|required|string|email',
 			'telephone'     => 'bail|required|string|max:15',
 			'country_id'    => 'bail|required|string',
-			'state_id'    	=> 'bail|required|string',
 			'password'      => 'bail|required|string|min:6',
 		],$custom_msg);
-		
     }
     
     public function store(Request $request)
     {
         $data = $request->except('_except');
         if(isset($data) && $data['req'] == 'register_new_user') {
+            $referral = User::whereUsername($data['upline_id'])->first()->id;
             \DB::beginTransaction();
             try {
                 $validate = $this->validator($request->except('_token'));
                 if($validate->fails()) {
                     return $response = [
-                        'msg' => $validate->errors(),
+                        'msg' => "Invalid Input",
                         'type' => 'false'
                     ];
                 }
 
-                $referral = User::whereUsername($data['upline_id'])->first()->id;
+                $check_email = User::hasEmail($data['email']);
+                if($check_email) {
+                    return response()->json([
+                        "msg"   => "This email already exist",
+                        "type"  => "false"
+                    ]);
+                }
+
+                $check_username = User::hasUsername($data['username']);
+                if($check_username) {
+                    return response()->json([
+                        "msg"   => "This username already exist",
+                        "type"  => "false"
+                    ]);
+                }
+
+                $userId = User::insertGetId([
+                    'slug'      => bin2hex(random_bytes(64)),
+                    'full_name' => preg_replace('/\s/', '', ucwords($data['full_name'])),
+                    'username'  => preg_replace('/\s/', '', $data['username']),
+                    'email'     => preg_replace('/\s/', '', strtolower($data['email'])),
+                    'password'  => bcrypt($data['password']),
+                    'is_admin'  => false
+                ]);
                 
-                $user                   = new User();
-                $user->slug             = bin2hex(random_bytes(64));
-                $user->full_name        = $data['full_name'];
-                $user->username         = $data['username'];
-                $user->email            = $data['email'];
-                $user->password         = bcrypt($data['password']);
-                $user->save();
-                
-                $profile                = new UserProfile();
-                $profile->user_id       = $user->id;
-                $profile->slug          = bin2hex(random_bytes(64));
-                $profile->full_name     = $data['full_name'];
-                $profile->email         = $data['email'];
-                $profile->telephone     = $data['telephone'];
-                $profile->country_id    = $data['country_id'];
-                $profile->state_id      = $data['state_id'];
+                $profile = new UserProfile();
+                $profile->user_id = $userId;
+                $profile->slug = bin2hex(random_bytes(64));
+                $profile->full_name = $data['full_name'];
+                $profile->email = $data['email'];
+                $profile->telephone = $data['telephone'];
+                $profile->country_id = $data['country_id'];
                 $profile->save();
                 
-                $downline               = new UserDownline();
-                $downline->upline_id 	= ($referral) ? $referral : 1;
-                $downline->downline_id 	= $user->id;
+                $downline = new UserDownline();
+                $downline->upline_id = ($referral) ? $referral : 1;
+                $downline->downline_id = $userId;
                 $downline->save();
-
+                
+                $user = User::find($userId);
                 $user->assignRole(4);
                 
                 //\Mail::to($user->email)->send(new ConfirmRegistration($user));
                 
                 $admin = User::find(1);
                 Notification::send($admin, new NewMember($profile));
-
-                $ip = $_SERVER['REMOTE_ADDR'];
-                activity_logs($user->id, $ip, "User Registered");
-
+                
                 \DB::commit();
-                return $response = [
-                    'msg' => "Registration Successfull! A Confirmation Code Has Been Sent To Your Mail.",
-                    'type' => "true"
-                ];
+                return response()->json([
+                    'msg'   => "Registration Successfull! A Confirmation Code Has Been Sent To Your Mail.",
+                    'type'  => "true"
+                ],200);
 
             } catch(Exception $e) {
                 \DB::rollback();
-                return $response = [
-                    'msg' => "Internal Server Error",
-                    'type' => "false"
-                ];
+                return redirect()->back()->with("error", $e->getMessage());
             }
         }
     }

@@ -22,7 +22,7 @@ class CreateUserProfilesTable extends Migration
             $table->string('email',100)->unique();
             $table->string('telephone');
             $table->integer('country_id')->unsigned()->index();
-            $table->integer('state_id');
+            $table->integer('state_id')->nullable();
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users');

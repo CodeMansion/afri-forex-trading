@@ -41,7 +41,12 @@
         <script src="<?php echo e(asset('assets/pages/scripts/login.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('assets/pages/scripts/ui-toastr.min.js')); ?>" type="text/javascript"></script>
         <script src="<?php echo e(asset('js/utilities.js')); ?>" type="text/javascript"></script>
-
+       
+        <?php if($errors->has('email') || $errors->has('password')): ?>
+            <script type="text/javascript">
+                toastr.error("<?php echo e($errors->first('email')); ?> <?php echo e($errors->first('password')); ?>");
+            </script>
+        <?php endif; ?>
         <?php if(\Session::has('error')): ?>
             <script type="text/javascript">
                 toastr.error("<?php echo \Session::get('error'); ?>");

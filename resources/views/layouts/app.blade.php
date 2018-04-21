@@ -41,7 +41,12 @@
         <script src="{{ asset('assets/pages/scripts/login.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/pages/scripts/ui-toastr.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('js/utilities.js') }}" type="text/javascript"></script>
-
+       
+        @if($errors->has('email') || $errors->has('password'))
+            <script type="text/javascript">
+                toastr.error("{{ $errors->first('email') }} {{ $errors->first('password') }}");
+            </script>
+        @endif
         @if(\Session::has('error'))
             <script type="text/javascript">
                 toastr.error("{!! \Session::get('error') !!}");

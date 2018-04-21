@@ -13,7 +13,7 @@
 */
 
 Route::get('/', function () {return redirect()->route('login');});
-Route::group(['middleware'=>['auth']], function(){
+Route::group(['middleware'=>['auth','checkMemberActive']], function(){
     Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
 	Route::post('/subscribe',["as" => "subscribe", "uses"  => "SubscriptionController@store"]);
@@ -44,7 +44,7 @@ Route::group(['middleware'=>['auth']], function(){
 
     //-	--- REFERRER MANAGEMENT ----//	
 	Route::group(['prefix' => 'referrals'], function () {		
-		Route::get('/', ["as"=>"referrals.index", "uses"=>"ReferralController@index",'middleware'=>'platform-reg']);		
+		Route::get('/', ["as"=>"referrals.index", "uses"=>"ReferralController@index"]);		
 		Route::post('/store',["as"=>"referrals.add",'uses'=> 'ReferralController@store']);		
 		Route::get('/show/{id?}', ["as"=>"referrals.show", "uses"=>"ReferralController@show"]);		
 		Route::post('/update',["as"=>"referrals.update",'uses'=> 'ReferralController@update']);		
@@ -53,7 +53,7 @@ Route::group(['middleware'=>['auth']], function(){
 	
 	//-	--- INVESTMENT MANAGEMENT ----//	
 	Route::group(['prefix' => 'investments'], function () {		
-		Route::get('/', ["as"=>"investments.index", "uses"=>"InvestmentController@index",'middleware'=>'platform-reg']);
+		Route::get('/', ["as"=>"investments.index", "uses"=>"InvestmentController@index"]);
 		Route::post('/store',["as"=>"investments.add",'uses'=> 'InvestmentController@store']);		
 		Route::get('/show/{id?}', ["as"=>"investments.show", "uses"=>"InvestmentController@show"]);		
 		Route::post('/update',["as"=>"investments.update",'uses'=> 'InvestmentController@update']);		
@@ -62,7 +62,7 @@ Route::group(['middleware'=>['auth']], function(){
 	
 	//-	---- PLATFORM MANAGEMENT ----//	
 	Route::group(['prefix' => 'platforms'], function () {		
-		Route::get('/', ["as"=>"platforms.index", "uses"=>"PlatformController@index",'middleware'=>'platform-reg']);		
+		Route::get('/', ["as"=>"platforms.index", "uses"=>"PlatformController@index"]);		
 		Route::post('/store',["as"=>"platforms.add",'uses'=> 'PlatformController@store']);		
 		Route::get('/show/{id?}', ["as"=>"platforms.show", "uses"=>"PlatformController@show"]);		
 		Route::post('/update',["as"=>"platforms.update",'uses'=> 'PlatformController@update']);		
@@ -73,7 +73,7 @@ Route::group(['middleware'=>['auth']], function(){
 	
 	//-	---- PACKAGE MANAGEMENT ----//	
 	Route::group(['prefix' => 'packages'], function () {		
-		Route::get('/', ["as"=>"packages.index", "uses"=>"PackageController@index",'middleware'=>'platform-reg']);		
+		Route::get('/', ["as"=>"packages.index", "uses"=>"PackageController@index"]);		
 		Route::post('/store',["as"=>"packages.add",'uses'=> 'PackageController@store']);		
 		Route::post('/update',["as"=>"packages.update",'uses'=> 'PackageController@update']);		
 		Route::get('/delete/{id?}',["as"=>"packages.delete",'uses'=> 'PackageController@destroy']);		
@@ -82,7 +82,7 @@ Route::group(['middleware'=>['auth']], function(){
 	
 	//-	---- PACKAGETYPE MANAGEMENT ----//	
 	Route::group(['prefix' => 'packagetypes'], function () {		
-		Route::get('/', ["as"=>"packagetypes.index", "uses"=>"PackageTypeController@index",'middleware'=>'platform-reg']);		
+		Route::get('/', ["as"=>"packagetypes.index", "uses"=>"PackageTypeController@index"]);		
 		Route::post('/store',["as"=>"packagetypes.add",'uses'=> 'PackageTypeController@store']);		
 		Route::post('/update',["as"=>"packagetypes.update",'uses'=> 'PackageTypeController@update']);		
 		Route::get('/delete/{id?}',["as"=>"packagetypes.delete",'uses'=> 'PackageTypeController@destroy']);		
@@ -91,7 +91,7 @@ Route::group(['middleware'=>['auth']], function(){
 	
 	//-	---- USERS MANAGEMENT ----//	
 	Route::group(['prefix' => 'users'], function () {		
-		Route::get('/', ["as"=>"users.index", "uses"=>"UserController@index",'middleware'=>'platform-reg']);		
+		Route::get('/', ["as"=>"users.index", "uses"=>"UserController@index"]);		
 		Route::post('/store',["as"=>"users.add",'uses'=> 'UserController@store']);		
 		Route::get('/show/{id?}', ["as"=>"users.show", "uses"=>"UserController@show"]);		
 		Route::post('/update',["as"=>"users.update",'uses'=> 'UserController@update']);		
@@ -102,7 +102,7 @@ Route::group(['middleware'=>['auth']], function(){
 	
 	//-	---- TRANSACTION CATEGORY MANAGEMENT ----//	
 	Route::group(['prefix' => 'transactioncategories'], function () {		
-		Route::get('/', ["as"=>"transactioncategories.index", "uses"=>"TransactionCategoryController@index",'middleware'=>'platform-reg']);		
+		Route::get('/', ["as"=>"transactioncategories.index", "uses"=>"TransactionCategoryController@index"]);		
 		Route::post('/store',["as"=>"transactioncategories.add",'uses'=> 'TransactionCategoryController@store']);		
 		Route::get('/show/{id?}', ["as"=>"transactioncategories.show", "uses"=>"TransactionCategoryController@show"]);		
 		Route::post('/update',["as"=>"transactioncategories.update",'uses'=> 'TransactionCategoryController@update']);		
@@ -113,7 +113,7 @@ Route::group(['middleware'=>['auth']], function(){
 	
 	//-	---- SUBSCRIPTION MANAGEMENT ----//	
 	Route::group(['prefix' => 'subscriptions'], function () {		
-		Route::get('/', ["as"=>"subscriptions.index", "uses"=>"SubscriptionController@index",'middleware'=>'platform-reg']);		
+		Route::get('/', ["as"=>"subscriptions.index", "uses"=>"SubscriptionController@index"]);		
 		Route::post('/store',["as" => "subscriptions.add", "uses"  => "SubscriptionController@store"]);	
 	});	
 
@@ -125,12 +125,12 @@ Route::group(['middleware'=>['auth']], function(){
 
     //-	--- ACTIVITY LOGS ---//	
 	Route::group(['prefix' => 'logs'], function () {		
-		Route::get('/', ["as"=>"activity.index", "uses"=>"ActivityLogController@index",'middleware'=>'platform-reg']);		
+		Route::get('/', ["as"=>"activity.index", "uses"=>"ActivityLogController@index"]);		
 	});	
 
 	//-	--- DOWNLINE MANAGEMENT ---//	
 	Route::group(['prefix' => 'downlines'], function () {		
-		Route::get('/', ["as"=>"downlines.index", "uses"=>"UserDownlineController@index",'middleware'=>'platform-reg']);		
+		Route::get('/', ["as"=>"downlines.index", "uses"=>"UserDownlineController@index"]);		
 	});
 	
 	//-	--- TRANSACTIONS MANAGEMENT -----//	

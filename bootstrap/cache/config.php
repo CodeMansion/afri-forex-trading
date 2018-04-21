@@ -433,6 +433,10 @@
       16 => 'X_FORWARDED_PORT',
     ),
   ),
+  'countries' => 
+  array (
+    'table_name' => 'countries',
+  ),
   'tinker' => 
   array (
     'dont_alias' => 

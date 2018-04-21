@@ -69,15 +69,6 @@
                                     </span>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-12 form-group">
-                                <select class="form-control" name="state_id" id="state_id">
-                                    <option value="">Select...</option>
-                                    <option value="1">Nigeria</option>
-                                    <option value="2">United States</option>
-                                    <option value="3">South Africa</option>
-                                    <option value="4">Saudi Arabia</option>
-                                </select>
-                            </div> -->
                             <div class="col-md-12 form-group">
                                 <button type="button" id="register_member_btn" class="btn btn-lg btn-success form-control">Submit</button>
                             </div>

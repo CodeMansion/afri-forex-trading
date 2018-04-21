@@ -8,17 +8,13 @@
         <h3><span class="bold">{{ count(auth()->user()->unreadNotifications)}} pending</span> notifications</h3>
         <a href="#">view all</a>
     </li>
-    <li>
-    @forelse(auth()->user()->unreadNotifications as $notification)
-        <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+        @forelse(auth()->user()->unreadNotifications as $notification)
             <li id="notify_link">
                 @include('admin.partials.notifications.'. snake_case(class_basename($notification->type)))
             </li>
-        </ul>
-    @empty
-        <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+        @empty
             <li></li>
-        </ul>
-    @endforelse
-    </li>
+        @endforelse
+    </ul>
 </ul>
