@@ -14,6 +14,10 @@ class ActivityLog extends Model
     }
 
     public function User(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function scopeUserActivities($query) {
+        return $query->where('user_id',auth()->user()->id);
     }
 }

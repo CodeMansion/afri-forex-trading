@@ -18,7 +18,7 @@ var AppUtilities = function() {
         "hideMethod": "fadeOut"
     } 
 
-    var displayNotifications = function() {
+    var displayNotifications = function(type) {
         $.ajax({
             url: NOTIFY, 
             success: function(data) {

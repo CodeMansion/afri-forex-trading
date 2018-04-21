@@ -6,6 +6,7 @@ var AppDashboard = function() {
         $("#support_loader").hide();
         $("#transaction_loader").hide();
         $("#activity_loader").hide();
+        $("#latest_news_loader").hide();
     }
 
     var showDispute = function() {
@@ -36,10 +37,10 @@ var AppDashboard = function() {
         });
     }
 
-    var showActivityLogs = function() {
+    var showActivityLogs = function(type) {
         $("#activity_loader").show();
         $.ajax({
-            url: ACTIVITY, 
+            url: (type == 'admin') ? ACTIVITY_ALL : ACTIVITY_ONE , 
             success: function(data) {
                 $("#activity_loader").hide();
                 $("#show_logs").html(data);
@@ -50,10 +51,24 @@ var AppDashboard = function() {
         });
     }
 
-    var showTransactions = function() {
+    var showTransactions = function(type) {
         $("#transaction_loader").show();
         $.ajax({
-            url: TRANSACTION, 
+            url: (type == 'admin') ? TRANSACTION : TRANSACTION_ONE, 
+            success: function(data) {
+                $("#transaction_loader").hide();
+                $('#show_transaction').html(data);
+            },
+            error: function(alaxB, HTTerror, errorMsg) {
+                console.log(errorMsg);
+            }
+        });
+    }
+
+    var showLatestNews = function(type) {
+        $("#transaction_loader").show();
+        $.ajax({
+            url: (type == 'admin') ? TRANSACTION_ALL : TRANSACTION_ONE , 
             success: function(data) {
                 $("#transaction_loader").hide();
                 $('#show_transaction').html(data);
@@ -77,8 +92,8 @@ var AppDashboard = function() {
             LoadComponent();
             showDispute();
             showNewMembers();
-            showActivityLogs();
-            showTransactions();
+            showActivityLogs('admin');
+            showTransactions('admin');
         }
     }
 }();

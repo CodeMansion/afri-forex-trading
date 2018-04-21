@@ -14,7 +14,7 @@
                 @include('admin.partials.notifications.'. snake_case(class_basename($notification->type)))
             </li>
         @empty
-            <li></li>
+            <li><center><em>There are no notification</em></center></li>
         @endforelse
     </ul>
 </ul>

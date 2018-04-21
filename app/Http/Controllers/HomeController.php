@@ -34,8 +34,13 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        $data['menu_id'] = 1;
+        if(\Auth::user()->is_admin == 0 && \Auth::user()->is_active == 0) {
+            auth()->logout();	
+            \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+            return redirect('/login');
+        }
 
+        $data['menu_id'] = 1;
         if(\Auth::user()->is_admin == 1) {
             $data['disputes'] = Dispute::orderBy('id','DESC')->limit(10)->get();
             $data['members'] = User::members()->orderBy('id','DESC')->limit(10)->get();
@@ -43,22 +48,19 @@ class HomeController extends Controller
             $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
             $data['transactions_count'] = PaymentTransaction::all()->count();
             $data['members_count'] = User::members()->count();
+            
             return view('admin.dashboard.index')->with($data);
         }
 
-        if(\Auth::user()->is_admin == 0 && \Auth::user()->is_active == 0) {
-            auth()->logout();	
-            \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
-            return redirect('/login');
-        }
         $data['platforms'] = Platform::whereIsActive(true)->get();
         $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
         $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
         $data['referrals'] = Referral::whereUserId(auth()->user()->id)->count();
-        $data['activities'] = ActivityLog::whereUserId(auth()->user()->id)->orderBy('id','desc')->limit(5)->get();
-        $data['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->orderBy('id','desc')->limit(5)->get();
-        $data['supports'] = Dispute::whereUserId(auth()->user()->id)->orderBy('id','desc')->limit(5)->get();
-        return view('members.dashboard')->with($data);
+        $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
+        $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','desc')->limit(5)->get();
+        $data['supports'] = Dispute::userDispute()->orderBy('id','desc')->limit(5)->get();
+
+        return view('members.dashboard.index')->with($data);
     }
     
     public function package(Request $request){        
@@ -191,10 +193,10 @@ class HomeController extends Controller
 
                 $userId = User::insertGetId([
                     'slug'      => bin2hex(random_bytes(64)),
-                    'full_name' => preg_replace('/\s/', '', ucwords($data['full_name'])),
-                    'username'  => preg_replace('/\s/', '', $data['username']),
-                    'email'     => preg_replace('/\s/', '', strtolower($data['email'])),
-                    'password'  => bcrypt($data['password']),
+                    'full_name' => $data['full_name'],
+                    'username'  => $data['username'],
+                    'email'     => $data['email'],
+                    'password'  => $data['password'],
                     'is_admin'  => false
                 ]);
                 
@@ -256,12 +258,22 @@ class HomeController extends Controller
         return view('admin.partials.util._activity_logs')->with($data);
     }
 
+    public function loadActivityLogsOne() {
+        $data['activities'] = ActivityLog::userActivities()->orderBy('id','DESC')->limit(10)->get();
+        return view('admin.partials.util._activity_logs')->with($data);
+    }
+
     public function loadChart() {
         return true;
     }
 
     public function loadTransactions() {
         $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
+        return view('admin.partials.util._recent_transactions')->with($data);
+    }
+
+    public function loadTransactionsOne() {
+        $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','DESC')->limit(10)->get();
         return view('admin.partials.util._recent_transactions')->with($data);
     }
 }
