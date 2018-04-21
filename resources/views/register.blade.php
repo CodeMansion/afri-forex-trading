@@ -46,10 +46,9 @@
                             <div class="col-md-12 form-group">
                                 <select class="form-control" name="country_id" id="country_id">
                                     <option value="">--Select Country--</option>
-                                    <option value="1">Nigeria</option>
-                                    <option value="2">United States</option>
-                                    <option value="3">South Africa</option>
-                                    <option value="4">Saudi Arabia</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{ $country['id']}}">{{ $country['name']}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-12 form-group">

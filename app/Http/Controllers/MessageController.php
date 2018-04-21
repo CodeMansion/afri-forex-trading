@@ -85,7 +85,7 @@ class MessageController extends Controller
                     $new = new SentMessage();
                     $new->slug = bin2hex(random_bytes(64));
                     $new->subject = $data['subject'];
-                    $new->message = htmlspecialchars_encode($data['message']);
+                    $new->message = htmlspecialchars_decode($data['message']);
                     $new->type = "Individuals";
                     $new->save();
                 }

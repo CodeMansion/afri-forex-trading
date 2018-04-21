@@ -20,6 +20,7 @@ use App\Referral;
 use App\Dispute;
 use App\ActivityLog;
 use App\PaymentTransaction;
+use App\Country;
 
 use App\Notifications\NewMember;
 
@@ -75,8 +76,8 @@ class HomeController extends Controller
 
     public function registerIndex()
     {
-        //$data['countries'] = Country::all();
-        return view('register');
+        $data['countries'] = Country::all();
+        return view('register')->with($data);
     }
     
     public function ref($ref){

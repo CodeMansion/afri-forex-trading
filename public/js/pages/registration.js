@@ -7,7 +7,6 @@ var AppRegistration = function() {
         var email = $("#email").val();
         var password = $("#password").val();
         var country_id = $("#country_id").val();
-        // var state_id = $("#state_id").val();
         var telephone = $("#telephone").val();
 
         if (fullname.length < 1) {
@@ -25,7 +24,7 @@ var AppRegistration = function() {
         } else {
 
             $("#register_member_btn").attr("disabled", true);
-            $("#register_member_btn").html("<i class='fa fa-refresh fa-spin'></i> Processing...");
+            $("#register_member_btn").html("<i class='fa fa-spinner fa-spin'></i> Processing...");
     
             $.ajax({
                 url: REGISTER_URL,
