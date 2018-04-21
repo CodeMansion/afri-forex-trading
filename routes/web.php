@@ -21,7 +21,7 @@ Route::group(['middleware'=>['auth','checkMemberActive']], function(){
 	Route::get('/dashboard-notify',["as"=>"dashboardNotify", "uses"=>"HomeController@indexNotify"]);
 	Route::get('/notifications',["as"=>"notifications", "uses"=>"HomeController@notifications"]);
 	Route::get('/load-dispute', ["as"=>"loadDispute", "uses"=>"HomeController@loadDispute"]);
-	Route::get('/load-activity-logs-all', ["as"=>"loadActivityLogsAll", "uses"=>"HomeController@loadActivityLogs"]);
+	Route::get('/load-activity-logs', ["as"=>"loadActivityLogs", "uses"=>"HomeController@loadActivityLogs"]);
 	Route::get('/load-transactions', ["as"=>"loadTransactions", "uses"=>"HomeController@loadTransactions"]);
 	Route::get('/load-support', ["as"=>"loadSupport", "uses"=>"HomeController@loadSupport"]);
 	Route::get('/load-chart', ["as"=>"loadChart", "uses"=>"HomeController@loadChart"]);
