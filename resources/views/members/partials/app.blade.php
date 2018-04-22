@@ -14,6 +14,7 @@
         <link href="{{ asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" />
         
         <link href="{{ asset('assets/global/css/components-md.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
         <link href="{{ asset('assets/global/css/plugins-md.min.css') }}" rel="stylesheet" type="text/css" />
@@ -24,7 +25,7 @@
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet" type="text/css" />
         @yield('extra_style')
     </head>
-    <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-footer-fixed">
         <audio id="notifyAudio" style="display:none;"><source src="{{asset('js/shut-your-mouth.mp3')}}" type="audio/mpeg"></audio>
 
         @include('members.partials.header')
@@ -52,26 +53,58 @@
         <script src="{{ asset('assets/global/plugins/morris/raphael-min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/counterup/jquery.waypoints.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/counterup/jquery.counterup.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/clipboardjs/clipboard.min.js') }}" type="text/javascript"></script>
-
         @yield('extra_script')
 
         <!-- END PAGE LEVEL PLUGINS -->
         <script src="{{ asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
-        <script>
-            var NOTIFY = "{{URL::route('dashboardNotify')}}";
-            var NOTIFY_COUNT = parseInt(<?php echo count(auth()->user()->unreadNotifications); ?>);
-        </script>
-        <script src="{{ asset('js/utilities.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/pages/scripts/ui-toastr.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/pages/scripts/components-clipboard.min.js') }}" type="text/javascript"></script>
 
         @yield('after_script')
         
+        <script>
+            var NOTIFY = "{{ URL::route('dashboardNotify') }}";
+            var NOTIFY_COUNT = parseInt(<?php echo count(auth()->user()->unreadNotifications); ?>);
+        </script>
+        
+        <script src="{{ asset('js/utilities.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/pages/scripts/dashboard.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/layouts/layout/scripts/layout.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/layouts/layout/scripts/demo.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
+
+        <!---notification messages---->
+        @if(\Session::has('error'))
+            <script type="text/javascript">
+                toastr.error("{!! \Session::get('error') !!}");
+            </script>
+        @endif
+        @if(\Session::has('success'))
+            <script type="text/javascript">
+                toastr.success("{!! \Session::get('success') !!}");
+            </script>
+        @endif
+        @if(\Session::has('info'))
+            <script type="text/javascript">
+                toastr.info("{!! \Session::get('info') !!}");
+            </script>
+        @endif
+        @if(\Session::has('warning'))
+            <script type="text/javascript">
+                toastr.warning("{!! \Session::get('warning') !!}");
+            </script>
+        @endif
+
+        <script>
+            $(document).ready(function(){
+                $("#close-notify").on("click", function(){
+                    $("#close").hide();
+                });
+            });
+        </script>
     </body>
 </html>
     

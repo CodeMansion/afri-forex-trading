@@ -18,7 +18,7 @@
         <div class="scroller" style="height: 228px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
             <div class="" id="show_transaction">
                 @if(count($transactions) < 1)
-                    <center><em>There asre no transactions</em></center>
+                    <center><em>There are no transactions</em></center>
                 @else
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">

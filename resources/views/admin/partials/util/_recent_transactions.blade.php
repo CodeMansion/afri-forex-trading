@@ -1,5 +1,5 @@
 @if(count($transactions) < 1)
-    <center><em>There asre no transactions</em></center>
+    <center><em>There are no transactions</em></center>
 @else
 <div class="table-scrollable table-scrollable-borderless">
     <table class="table table-hover table-light">

@@ -10,11 +10,11 @@
         
         <div class="page-top">
             <div class="col-md-4" style="padding:15px;">
-                <input type="text" id="mt-target-1" value="{{ URL::route('register') }}/{{ auth()->user()->slug }}">
-                <a href="javascript:;" class="btn green mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-1">
-                    <i class="icon-note"></i> Copy
+                <input type="text" id="mt-target-1" style="width:400px;height: 30px;border: 1px solid grey;padding: 10px;" value="{{ URL::route('register') }}/{{ auth()->user()->slug }}">
+                <a href="javascript:;" style="padding: 5px;" class="mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-1" target="Copy Link to clipboard">
+                    <i class="icon-note"></i>
                 </a>
-            </div>            
+            </div>    
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
                     <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
@@ -29,7 +29,7 @@
                     <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-envelope-open"></i>
-                            <span class="badge badge-default"> 1 </span>
+                            <span class="badge badge-danger"> 0 </span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="external">
@@ -37,38 +37,21 @@
                                 <a href="app_inbox.html">view all</a>
                             </li>
                             <li>
-                                <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                    <li>
-                                        <a href="#">
-                                            <span class="photo"><img src="{{  asset('assets/layouts/layout3/img/avatar2.jpg') }}" class="img-circle" alt=""> </span>
-                                            <span class="subject">
-                                                <span class="from"> Lisa Wong </span>
-                                                <span class="time">Just Now </span>
-                                            </span>
-                                            <span class="message"> Vivamus sed auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                
                             </li>
                         </ul>
                     </li>
                     
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <img alt="" class="img-circle" src="{{ asset('assets/layouts/layout2/img/avatar3_small.jpg') }}" />
+                            <img alt="" class="img-circle" src="{{ asset('images/default.png') }}" />
                             <span class="username username-hide-on-mobile"> {{ \Auth::user()->username }} </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li><a href="#"><i class="icon-user"></i> My Profile </a></li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-envelope-open"></i> My Inbox
-                                    <span class="badge badge-danger"> 3 </span>
-                                </a>
-                            </li>
+                            <li><a href="#"><i class="icon-envelope-open"></i> My Inbox<span class="badge badge-danger"> 3 </span></a></li>
                             <li class="divider"> </li>
-                            <li><a href="#"><i class="icon-lock"></i> Lock Screen </a></li>
                             <li><a href="{{ url('/logout') }}"><i class="icon-key"></i> Log Out </a></li>
                         </ul>
                     </li>

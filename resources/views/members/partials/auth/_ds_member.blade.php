@@ -23,7 +23,7 @@
 <li class="nav-item  ">
     <a href="{{ URL::route('downlines.index') }}">
         <i class="icon-puzzle"></i>
-        <span class="title">DownLines</span>
+        <span class="title">My DownLines</span>
         <span class="arrow"></span>
     </a>
 </li>
@@ -36,7 +36,7 @@
 <li class="nav-item  ">
     <a href="{{ URL::route('transactions.index') }}" class="nav-link nav-toggle">
         <i class="icon-briefcase"></i>
-        <span class="title">Transactions</span>
+        <span class="title">My Transactions</span>
         <span class="arrow"></span>
     </a>
 </li>

@@ -24,4 +24,8 @@ class PaymentTransaction extends Model
     public function Platform(){
         return $this->belongsTo(Platform::class);
     }
+
+    public function scopeUserTransactions($query) {
+        return $query->where('user_id',auth()->user()->id);
+    }
 }
