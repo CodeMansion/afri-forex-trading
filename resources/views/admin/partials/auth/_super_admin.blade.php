@@ -9,7 +9,7 @@
     <li class="nav-item">
         <a href="{{ URL::route('platforms.index') }}" class="nav-link nav-toggle">
             <i class="icon-diamond"></i>
-            <span class="title">Platforms</span>
+            <span class="title">Services</span>
             <span class="arrow"></span>
         </a>
         <ul class="sub-menu">

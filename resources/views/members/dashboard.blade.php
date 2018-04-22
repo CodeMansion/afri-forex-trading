@@ -238,7 +238,7 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <!-- @include('members.modals.platform') -->
+    @include('members.modals.platform')
 </div>
 @endsection
 @section('modals')

@@ -9,14 +9,14 @@
 <li class="nav-item  ">
     <a href="{{ URL::route('users.index') }}" class="nav-link nav-toggle">
         <i class="icon-bulb"></i>
-        <span class="title">User Profile</span>
+        <span class="title">My Profile</span>
         <span class="arrow"></span>
     </a>
 </li>
 <li class="nav-item  ">
     <a href="{{ URL::route('platforms.index') }}" class="nav-link nav-toggle">
         <i class="icon-diamond"></i>
-        <span class="title">Platforms</span>
+        <span class="title">My Services</span>
         <span class="arrow"></span>
     </a>
 </li>

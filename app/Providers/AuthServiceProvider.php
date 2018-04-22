@@ -31,13 +31,13 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //If the permission table exist in the database
-        if(Schema::hasTable('permissions')){
-            foreach($this->getPermissions() as $permission){
-                $gate->define($permission->name, function($user) use ($permission){
-                    return $user->hasRole($permission->roles);
-                });
-            }
-        }
+        // if(Schema::hasTable('permissions')){
+        //     foreach($this->getPermissions() as $permission){
+        //         $gate->define($permission->name, function($user) use ($permission){
+        //             return $user->hasRole($permission->roles);
+        //         });
+        //     }
+        // }
     }
 
     protected function getPermissions(){
