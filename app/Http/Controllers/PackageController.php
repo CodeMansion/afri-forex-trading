@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Package;
 use App\Platform;
+use Gate;
+
 class PackageController extends Controller
 {
     /**
@@ -14,6 +16,18 @@ class PackageController extends Controller
      */
     public function index()
     {
+        if(Gate::allows('is_account_active')){
+            auth()->logout();	
+            \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+            return redirect('/login');
+        }
+
+        $user = strtoupper(auth()->user()->full_name);
+        if(Gate::allows('has_member_paid')) {
+            \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
+            return redirect(route('packageSub'));
+        }
+            
         $data['packages'] = Package::all();
         $data['platforms'] = Platform::whereIsActive(true)->get();
         return view('admin.packages.index')->with($data);

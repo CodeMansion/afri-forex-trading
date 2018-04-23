@@ -7,6 +7,7 @@ use App\Platform;
 use App\Subscription;
 use App\Referral;
 use App\Investment;
+use Gate;
 
 class PlatformController extends Controller
 {
@@ -17,10 +18,17 @@ class PlatformController extends Controller
      */
     public function index()
     {
+        $user = strtoupper(auth()->user()->full_name);
+        if(Gate::allows('has_member_paid')) {
+            \Session::flash('error',"Hi, $user, you are required to subscribe for a platform before proceeding. Thank you!");
+            return redirect(route('packageSub'));
+        }
+        
         if(\Auth::user()->is_admin) {
             $data['platforms'] = Platform::all();
             return view('admin.platforms.index')->with($data);
         }
+
         $params['subscription'] = Subscription::whereUserId(auth()->user()->id)->first();
         $params['investment'] = Investment::whereUserId(auth()->user()->id)->first();
         $params['referral'] = Referral::whereUserId(auth()->user()->id)->first();

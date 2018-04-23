@@ -24,4 +24,8 @@ class Investment extends Model
     public function PackageType(){
         return $this->belongsTo('App\PackageType','package_type_id');
     }
+
+    public function scopeUserInvestments($query){
+        return $query->where('user_id',auth()->user()->id);
+    }
 }

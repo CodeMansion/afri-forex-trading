@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Gate;
+use App\ActivityLog;
+
 class UserController extends Controller
 {
     /**
@@ -13,11 +16,30 @@ class UserController extends Controller
      */
     public function index()
     {        
+        if(Gate::allows('is_account_active')){
+            auth()->logout();	
+            \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+            return redirect('/login');
+        }
+
+        // $user = strtoupper(auth()->user()->full_name);
+        // if(Gate::allows('has_member_paid')) {
+        //     \Session::flash('error',"Hi, $user, you are required to subscribe for a platform before proceeding. Thank you!");
+        //     return redirect(route('packageSub'));
+        // }
+            
         if(\Auth::user()->is_admin) {
-            $data['users'] = User::all()->except(1);
+            $data['menu_id'] = 1;
+            $data['users'] = User::all();
+
             return view('admin.users.index')->with($data);
         }
-        return view('members.users.index');
+
+        $data['menu_id'] = 2;
+        $data['profile'] = User::userProfile();
+        $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->get();
+
+        return view('members.users.index')->with($data);
     }
 
     public function getEditInfo(Request $request)

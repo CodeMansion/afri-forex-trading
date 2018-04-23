@@ -16,4 +16,8 @@ class Subscription extends Model
     public function User(){
         return $this->belongsTo('App\User','user_id');
     }
+
+    public function scopeUserSubscriptions($query){
+        return $query->where('user_id',auth()->user()->id);
+    }
 }

@@ -21,7 +21,7 @@ use App\Dispute;
 use App\ActivityLog;
 use App\PaymentTransaction;
 use App\Country;
-
+use Gate;
 use App\Notifications\NewMember;
 
 class HomeController extends Controller
@@ -32,23 +32,30 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+   
     public function index()
     {   
-        if(\Auth::user()->is_admin == 0 && \Auth::user()->is_active == 0) {
+        if(Gate::allows('is_account_active')) {
             auth()->logout();	
             \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
             return redirect('/login');
         }
 
+        $user = strtoupper(auth()->user()->full_name);
+        if(Gate::allows('has_member_paid')) {
+            \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
+            return redirect(route('packageSub'));
+        }
+        
         $data['menu_id'] = 1;
-        if(\Auth::user()->is_admin == 1) {
+        if(auth()->user()->is_admin == 1) {
             $data['disputes'] = Dispute::orderBy('id','DESC')->limit(10)->get();
             $data['members'] = User::members()->orderBy('id','DESC')->limit(10)->get();
             $data['activities'] = ActivityLog::orderBy('id','DESC')->limit(10)->get();
             $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
             $data['transactions_count'] = PaymentTransaction::all()->count();
             $data['members_count'] = User::members()->count();
-            
+
             return view('admin.dashboard.index')->with($data);
         }
 
@@ -61,6 +68,13 @@ class HomeController extends Controller
         $data['supports'] = Dispute::userDispute()->orderBy('id','desc')->limit(5)->get();
 
         return view('members.dashboard.index')->with($data);
+    }
+
+    public function packageSubIndex()
+    {
+        $data['platforms'] = Platform::active();
+        
+        return view('members.first_subscription')->with($data);
     }
     
     public function package(Request $request){        

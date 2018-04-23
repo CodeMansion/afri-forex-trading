@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Permission;
+use App\Subscription;
+use App\Investment;
+use App\Referral;
 
 use Illuminate\Support\Facades\Schema;
 use Laravel\Passport\Passport;
@@ -29,6 +32,26 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         $this->registerPolicies();
+
+        $gate->define('is_account_active', function ($user){
+            if(auth()->user()->is_admin == 0 && auth()->user()->is_active == 0)
+                return true;
+ 
+            return false;
+         });
+
+         $gate->define('has_member_paid', function($user) {
+            if(auth()->user()->is_admin == 0 && auth()->user()->is_active == 1) {
+                $subscription = Subscription::userSubscriptions()->count();
+                $investment = Investment::userInvestments()->count();
+                $referral   = Referral::userReferrals()->count();
+
+                if($subscription < 1 || $investment < 1 || $referral < 1) 
+                    return true;
+                    
+                return false;
+            }
+         });
 
         //If the permission table exist in the database
         if(Schema::hasTable('permissions')){

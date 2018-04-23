@@ -129,4 +129,8 @@ class User extends Authenticatable
         $check = self::where('username',$field)->first();
         return ($check);
     }
+
+    public function scopeUserProfile($query) {
+        return $query->where('id',auth()->user()->id)->first();
+    }
 }

@@ -13,8 +13,9 @@
 */
 
 Route::get('/', function () {return redirect()->route('login');});
-Route::group(['middleware'=>['auth','checkMemberActive']], function(){
-    Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
+Route::group(['middleware'=>['auth']], function(){
+	Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
+	Route::get('/package-subscribe', ["as"=>"packageSub", "uses"=>"HomeController@packageSubIndex"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
 	Route::post('/subscribe',["as" => "subscribe", "uses"  => "SubscriptionController@store"]);
 	//--- ADMIN NOTIFICATIONS ---//
