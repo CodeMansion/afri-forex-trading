@@ -16,17 +16,25 @@ class UserController extends Controller
      */
     public function index()
     {        
-        if(Gate::allows('is_account_active')){
-            auth()->logout();	
-            \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
-            return redirect('/login');
-        }
+        if(auth()->user()->is_admin == 0) {
+            if(Gate::allows('is_account_active')) {
+                auth()->logout();	
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
+    
+            $user = strtoupper(auth()->user()->full_name);
+            if(!Gate::allows('has_member_paid')) {
+                \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
+                return redirect(route('packageSub'));
+            }
 
-        // $user = strtoupper(auth()->user()->full_name);
-        // if(Gate::allows('has_member_paid')) {
-        //     \Session::flash('error',"Hi, $user, you are required to subscribe for a platform before proceeding. Thank you!");
-        //     return redirect(route('packageSub'));
-        // }
+            $data['menu_id'] = 2;
+            $data['profile'] = User::userProfile();
+            $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->get();
+
+            return view('members.users.index')->with($data);
+        }
             
         if(\Auth::user()->is_admin) {
             $data['menu_id'] = 1;
@@ -34,12 +42,6 @@ class UserController extends Controller
 
             return view('admin.users.index')->with($data);
         }
-
-        $data['menu_id'] = 2;
-        $data['profile'] = User::userProfile();
-        $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->get();
-
-        return view('members.users.index')->with($data);
     }
 
     public function getEditInfo(Request $request)

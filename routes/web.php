@@ -15,9 +15,10 @@
 Route::get('/', function () {return redirect()->route('login');});
 Route::group(['middleware'=>['auth']], function(){
 	Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
-	Route::get('/package-subscribe', ["as"=>"packageSub", "uses"=>"HomeController@packageSubIndex"]);
+	Route::get('/service-subscribe', ["as"=>"packageSub", "uses"=>"HomeController@packageSubIndex"]);
+	Route::post('/get-daily-signal-info', ["as"=>"getDailySignalInfo", "uses"=>"HomeController@getDailySignalInfo"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
-	Route::post('/subscribe',["as" => "subscribe", "uses"  => "SubscriptionController@store"]);
+	Route::post('/process-payment/{type?}',["as" => "processPayment", "uses"  => "SubscriptionController@processPayment"]);
 	//--- ADMIN NOTIFICATIONS ---//
 	Route::get('/dashboard-notify',["as"=>"dashboardNotify", "uses"=>"HomeController@indexNotify"]);
 	Route::get('/notifications',["as"=>"notifications", "uses"=>"HomeController@notifications"]);

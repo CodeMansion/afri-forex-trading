@@ -46,7 +46,7 @@ class AuthServiceProvider extends ServiceProvider
                 $investment = Investment::userInvestments()->count();
                 $referral   = Referral::userReferrals()->count();
 
-                if($subscription < 1 || $investment < 1 || $referral < 1) 
+                if($subscription >= 1 || $investment >= 1 || $referral >= 1) 
                     return true;
                     
                 return false;

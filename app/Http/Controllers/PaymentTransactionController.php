@@ -16,22 +16,31 @@ class PaymentTransactionController extends Controller
      */
     public function index()
     {
-        $user = strtoupper(auth()->user()->full_name);
-        if(Gate::allows('has_member_paid')) {
-            \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
-            return redirect(route('packageSub'));
+        if(auth()->user()->is_admin == 0) {
+            if(Gate::allows('is_account_active')) {
+                auth()->logout();	
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
+    
+            $user = strtoupper(auth()->user()->full_name);
+            if(!Gate::allows('has_member_paid')) {
+                \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
+                return redirect(route('packageSub'));
+            }
+
+            $data['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->get();
+            $data['debit']  = PaymentTransaction::whereUserId(auth()->user()->id)->whereTransactionCategoryId(2)->orderBy('id','desc')->first();
+            $data['credit']  = PaymentTransaction::whereUserId(auth()->user()->id)->whereTransactionCategoryId(1)->orderBy('id','desc')->first();
+            $data['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
+
+            return view('members.transactions.index')->with($data);
         }
 
         if(\Auth::user()->is_admin) {
             $data['transactions'] = PaymentTransaction::all();
             return view('admin.transactions.index')->with($data);
         }
-
-        $data['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->get();
-        $data['debit']  = PaymentTransaction::whereUserId(auth()->user()->id)->whereTransactionCategoryId(2)->orderBy('id','desc')->first();
-        $data['credit']  = PaymentTransaction::whereUserId(auth()->user()->id)->whereTransactionCategoryId(1)->orderBy('id','desc')->first();
-        $data['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
-        return view('members.transactions.index')->with($data);
     }
 
     /** 

@@ -10,6 +10,7 @@ use App\PaymentTransaction;
 use App\Mail\Subscriptions;
 use App\UserDownline;
 use App\UserWallet;
+use App\TransactionCategory;
 use Gate;
 
 class SubscriptionController extends Controller
@@ -21,39 +22,41 @@ class SubscriptionController extends Controller
      */
     public function index()
     {   
-        if(Gate::allows('is_account_active')){
-            auth()->logout();	
-            \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
-            return redirect('/login');
-        }
+        if(auth()->user()->is_admin == 0) {
+            if(Gate::allows('is_account_active')) {
+                auth()->logout();	
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
+    
+            $user = strtoupper(auth()->user()->full_name);
+            if(!Gate::allows('has_member_paid')) {
+                \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
+                return redirect(route('packageSub'));
+            }
 
-        $user = strtoupper(auth()->user()->full_name);
-        if(Gate::allows('has_member_paid')) {
-            \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
-            return redirect(route('packageSub'));
+            $subscription = Subscription::whereUserId(auth()->user()->id)->first();
+            $params['downlines'] = UserDownline::whereUplineId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->get();
+            $params['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->get();
+            $params['recent'] = PaymentTransaction::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->orderBy('id','desc')->first();
+            $params['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
+            $earning = \App\Earning::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->first();
+            
+            if(!empty($earning)){
+                $earning->amount = $params['downlines']->count()  * 25;
+                $earning->save();
+            }else{
+                $earning                = new \App\Earning();
+                $earning->slug           = bin2hex(random_bytes(64));
+                $earning->user_id       = auth()->user()->id;
+                $earning->platform_id   = $subscription->platform_id;
+                $earning->amount        = ($params['downlines']->count() - 2) * 5;
+                $earning->save();
+            }
+            
+            $params['earning'] = $earning;
+            return view('members.platforms.subscriptions.index')->with($params);
         }
-
-        $subscription = Subscription::whereUserId(auth()->user()->id)->first();
-        $params['downlines'] = UserDownline::whereUplineId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->get();
-        $params['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->get();
-        $params['recent'] = PaymentTransaction::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->orderBy('id','desc')->first();
-        $params['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
-        $earning = \App\Earning::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->first();
-        
-        if(!empty($earning)){
-            $earning->amount = $params['downlines']->count()  * 25;
-            $earning->save();
-        }else{
-            $earning                = new \App\Earning();
-            $earning->slug           = bin2hex(random_bytes(64));
-            $earning->user_id       = auth()->user()->id;
-            $earning->platform_id   = $subscription->platform_id;
-            $earning->amount        = ($params['downlines']->count() - 2) * 5;
-            $earning->save();
-        }
-        
-        $params['earning'] = $earning;
-        return view('members.platforms.subscriptions.index')->with($params);
     }
 
     /**
@@ -120,7 +123,7 @@ class SubscriptionController extends Controller
                 
                 //\Mail::to(auth()->user()->email)->send(new Subscriptions($subscribe));
                 $ip = $_SERVER['REMOTE_ADDR'];
-                activity_logs(auth()->user()->id, $ip, "Subscribe for daily signal");
+                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribe for daily signal");
             \DB::commit();
                 return $response = [
                     'msg' => "You Have Successfully Subscribe For Daily Signal.",
@@ -134,6 +137,54 @@ class SubscriptionController extends Controller
                     'type' => "false"
                 ];
             }
+        }
+    }
+
+    public function processPayment(Request $request,$type)
+    {
+        $data = $request->except('_token');
+        if(isset($type) && $type == 'ajax') {
+            try {
+                $subscribe = Subscription::insert([
+                    'slug'          => bin2hex(random_bytes(64)),
+                    'user_id'       => auth()->user()->id,
+                    'platform_id'   => $data['id'],
+                    'amount'        => (double)$data['amount'],
+                    'is_first_time' => true,
+                    'status'        => 1,
+                    'expiry_date'   => Carbon::now()->addDays(60),
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
+
+                $transaction = PaymentTransaction::insert([
+                    'slug'          => bin2hex(random_bytes(64)),
+                    'user_id'       => auth()->user()->id,
+                    'platform_id'   => $data['id'],
+                    'transaction_category_id'   => TransactionCategory::where('name','Debit')->first()->id,
+                    'amount'        => (double)$data['amount'],
+                    'is_paid'       => true,
+                    'reference_no'  => date('Ymdhis'),
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
+
+                #TODO - Upline info
+                #TODO - Send email notification
+                #TODO - Send system message
+
+                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribed for Daily Signal");
+                return response()->json([
+                    'msg' => "Payment successfull!"
+                ],200);
+
+            } catch(Exception $e) {
+                return false;
+            }
+        }
+
+        if(isset($type) && $type == 'api') {
+
         }
     }
 

@@ -35,18 +35,6 @@ class HomeController extends Controller
    
     public function index()
     {   
-        if(Gate::allows('is_account_active')) {
-            auth()->logout();	
-            \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
-            return redirect('/login');
-        }
-
-        $user = strtoupper(auth()->user()->full_name);
-        if(Gate::allows('has_member_paid')) {
-            \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
-            return redirect(route('packageSub'));
-        }
-        
         $data['menu_id'] = 1;
         if(auth()->user()->is_admin == 1) {
             $data['disputes'] = Dispute::orderBy('id','DESC')->limit(10)->get();
@@ -59,22 +47,47 @@ class HomeController extends Controller
             return view('admin.dashboard.index')->with($data);
         }
 
-        $data['platforms'] = Platform::whereIsActive(true)->get();
-        $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
-        $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
-        $data['referrals'] = Referral::whereUserId(auth()->user()->id)->count();
-        $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
-        $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','desc')->limit(5)->get();
-        $data['supports'] = Dispute::userDispute()->orderBy('id','desc')->limit(5)->get();
+        if(auth()->user()->is_admin == 0){
+            if(Gate::allows('is_account_active')) {
+                auth()->logout();	
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
+    
+            $user = strtoupper(auth()->user()->full_name);
+            if(!Gate::allows('has_member_paid')) {
+                \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
+                return redirect(route('packageSub'));
+            }
 
-        return view('members.dashboard.index')->with($data);
+            $data['platforms'] = Platform::whereIsActive(true)->get();
+            $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
+            $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
+            $data['referrals'] = Referral::whereUserId(auth()->user()->id)->count();
+            $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
+            $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','desc')->limit(5)->get();
+            $data['supports'] = Dispute::userDispute()->orderBy('id','desc')->limit(5)->get();
+
+            return view('members.dashboard.index')->with($data);
+        }
     }
 
     public function packageSubIndex()
     {
-        $data['platforms'] = Platform::active();
+        $data['platforms'] = Platform::active()->get();
         
-        return view('members.first_subscription')->with($data);
+        return view('subscription.index')->with($data);
+    }
+
+    public function getDailySignalInfo(Request $request) {
+        try {
+            $data = $request->except('_token');
+            $param['daily_signal'] = Platform::active()->where('id',$data['id'])->first();
+
+            return view('subscription.partials._daily_signal_sub')->with($param);
+        } catch(Exception $e) {
+            return false;
+        }
     }
     
     public function package(Request $request){        

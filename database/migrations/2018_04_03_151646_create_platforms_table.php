@@ -19,6 +19,7 @@ class CreatePlatformsTable extends Migration
             $table->string('name', 100)->unique();
             $table->boolean('is_multiple')->default(false);
             $table->boolean('is_active')->default(false);
+            $table->decimal('price', 10,2)->nullable();
             $table->timestamps();
         });
     }
