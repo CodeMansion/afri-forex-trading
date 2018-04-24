@@ -48,13 +48,13 @@
                                             </div>
                                             <div class="arrow-down <?php if($index==0){ echo "border-top-red"; }elseif($index==1){ echo "border-top-green"; }else{echo "border-top-blue";} ?>"></div>
                                             <div class="price-table-pricing">
-                                                <h3><sup class="price-sign">$</sup>00.0</h3>
-                                                <p>per month</p>
+                                                <h3><sup class="price-sign">$</sup>{{ number_format($platform->price) }}</h3>
+                                                <p>Subscription Fee</p>
                                             </div>
                                             <div class="price-table-content">
                                                 <div class="row mobile-padding">
                                                     <div class="col-xs-3 text-right mobile-padding"><i class="icon-user"></i></div>
-                                                    <div class="col-xs-9 text-left mobile-padding">3 Members</div>
+                                                    <div class="col-xs-9 text-left mobile-padding">{{ $platform->description }}</div>
                                                 </div>
                                             </div>
                                             <div class="arrow-down arrow-grey"></div>
