@@ -19,7 +19,7 @@
                         </div>
                     </div><hr/>
                     <div class="margin-top-10">
-                        <a href="javascript:;" id="change_picture_btn" class="btn green"> Submit </a>
+                        <a href="javascript:;" id="change_picture_btn" class="btn green" disabled> Submit </a>
                         <a href="javascript:;" class="btn default" data-dismiss="modal" aria-hidden="true"> Cancel </a>
                     </div>
                 </form>

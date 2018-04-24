@@ -22,6 +22,7 @@ use App\ActivityLog;
 use App\PaymentTransaction;
 use App\Country;
 use Gate;
+use Carbon\Carbon;
 use App\Notifications\NewMember;
 
 class HomeController extends Controller
@@ -220,11 +221,13 @@ class HomeController extends Controller
 
                 $userId = User::insertGetId([
                     'slug'      => bin2hex(random_bytes(64)),
-                    'full_name' => $data['full_name'],
+                    'full_name' => ucwords($data['full_name']),
                     'username'  => $data['username'],
-                    'email'     => $data['email'],
-                    'password'  => $data['password'],
-                    'is_admin'  => false
+                    'email'     => preg_replace('/\s/', '', strtolower($data['email'])),
+                    'password'  => bcrypt($data['password']),
+                    'is_admin'  => false,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
                 ]);
                 
                 $profile = new UserProfile();

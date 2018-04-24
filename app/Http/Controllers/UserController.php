@@ -33,14 +33,14 @@ class UserController extends Controller
             $data['profile'] = User::userProfile();
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->get();
 
-            return view('members.users.index')->with($data);
+            return view('members.profile.index')->with($data);
         }
             
         if(\Auth::user()->is_admin) {
-            $data['menu_id'] = 1;
-            $data['users'] = User::all();
+            $data['menu_id'] = 5;
+            $data['members'] = User::all()->except(1);
 
-            return view('admin.users.index')->with($data);
+            return view('admin.members.index')->with($data);
         }
     }
 
@@ -55,40 +55,22 @@ class UserController extends Controller
     }
 
 
-    public function activate($id)
+    public function activate(Request $request)
     {
-        \DB::beginTransaction();
-            try {
-                    $user = User::find($id);
-                    if($user->is_active == 1){
-                        $user->is_active = 0;
-                        $user->save();
-                        $ip = $_SERVER['REMOTE_ADDR'];
-                        activity_logs(auth()->user()->id, $ip, "De-Activate User");
-                        \DB::commit();
-                        return response()->json([
-                            'msg' => "User De-activated Successfully.",
-                            'type' => "true"
-                        ]);
-                    }else{
-                        $user->is_active = 1;
-                        $user->save();
-                        $ip = $_SERVER['REMOTE_ADDR'];
-                        activity_logs(auth()->user()->id, $ip, "Activate User");
-                        \DB::commit();
-                        return $response = [
-                            'msg' => "User Activated Successfully.",
-                            'type' => "true"
-                        ];
-                    }
-
-            } catch(Exception $e) {
-                \DB::rollback();
-                return $response = [
-                    'msg' => "Internal Server Error",
-                    'type' => "false"
-                ];
-            }
+        $data = $request->except('_token');
+        try {
+            $user = User::find($data['member_id'],'slug');
+            $user->is_active = true;
+            $user->save();
+            
+            activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Activated Member Account");
+                
+            return response()->json([
+                "msg"   => "Account activated successfully!"
+            ],200);
+        } catch(Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -118,11 +100,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
         if(\Auth::user()->is_admin) {
-            $data['users'] = User::all();
-            return view('admin.users.show')->with($data);
+            $data['menu_id'] = 5;
+            $data['profile'] = User::find($slug,'slug');
+            $data['activities'] = ActivityLog::where('user_id',$data['profile']->id)->orderBy('id','desc')->get();
+
+            return view('admin.members.show')->with($data);
         }
     }
 

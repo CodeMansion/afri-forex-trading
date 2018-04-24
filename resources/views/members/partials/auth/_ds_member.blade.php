@@ -7,7 +7,7 @@
     </a>
 </li>
 <li class="nav-item {{menu_active($menu_id, 2)}}">
-    <a href="{{ URL::route('users.index') }}" class="nav-link nav-toggle">
+    <a href="{{ URL::route('membersIndex') }}" class="nav-link nav-toggle">
         <i class="icon-bulb"></i>
         <span class="title">My Profile</span>
         <span class="arrow"></span>

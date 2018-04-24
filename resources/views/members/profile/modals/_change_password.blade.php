@@ -20,7 +20,7 @@
                         <input type="password" class="form-control" /> 
                     </div><hr/>
                     <div class="margin-top-10">
-                        <a href="javascript:;" id="change_password_btn" class="btn green"> Change Password </a>
+                        <a href="javascript:;" id="change_password_btn" class="btn green" disabled> Change Password </a>
                         <a href="javascript:;" class="btn default" data-dismiss="modal" aria-hidden="true"> Cancel </a>
                     </div>
                 </form>

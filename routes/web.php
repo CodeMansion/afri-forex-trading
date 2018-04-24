@@ -96,15 +96,15 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::post('/get-details', ["as"=>"packagetypes.editInfo", "uses"=>"PackageTypeController@getEditInfo"]);
 	});	
 	
-	//-	---- USERS MANAGEMENT ----//	
-	Route::group(['prefix' => 'users'], function () {		
-		Route::get('/', ["as"=>"users.index", "uses"=>"UserController@index"]);		
+	//-	---- MEMBERS MANAGEMENT ----//	
+	Route::group(['prefix' => 'members'], function () {		
+		Route::get('/', ["as"=>"membersIndex", "uses"=>"UserController@index"]);		
 		Route::post('/store',["as"=>"users.add",'uses'=> 'UserController@store']);		
-		Route::get('/show/{id?}', ["as"=>"users.show", "uses"=>"UserController@show"]);		
+		Route::get('/show/{slug?}', ["as"=>"showMember", "uses"=>"UserController@show"]);		
 		Route::post('/update',["as"=>"users.update",'uses'=> 'UserController@update']);		
 		Route::get('/delete/{id?}',["as"=>"users.delete",'uses'=> 'UserController@destroy']);		
 		Route::post('/get-details', ["as"=>"users.editInfo", "uses"=>"UserController@getEditInfo"]);		
-		Route::get('/activate/{id?}', ["as"=>"users.activate", "uses"=>"UserController@activate"]);		
+		Route::post('/activate-member-account', ["as"=>"activateMemberAccount", "uses"=>"UserController@activate"]);		
 	});	
 	
 	//-	---- TRANSACTION CATEGORY MANAGEMENT ----//	
