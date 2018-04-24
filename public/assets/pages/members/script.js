@@ -142,3 +142,68 @@ $("#referral").on("click", function() {
         }
     });
 });
+
+$("#investment_pay").on("click", function() {
+    var platform_id = $("#platform_id").val();
+    var package_id = $("#package_id").val();
+    var package_type_id = $("#package_type_id").val();
+    $("#errors").html("");
+    if (platform_id.length < 1) {
+        $("#errors").html("<div class='alert alert-danger'>Please Fullname can not be empty</div><br/>");
+    } else if (package_id.length < 1) {
+        $("#errors").html("<div class='alert alert-danger'>Please email can not be empty</div><br/>");
+    } else if (package_type_id.length < 1) {
+        $("#errors").html("<div class='alert alert-danger'>Please password can not be empty</div><br/>");
+    } else {
+        $(this).attr("disabled", true);
+        $(this).html("<i class='fa fa-refresh fa-spin'></i> Processing...");
+        $.ajax({
+            url: REFERRAL,
+            method: "POST",
+            data: {
+                '_token': TOKEN,
+                'platform_id': platform_id,
+                'package_id': package_id,
+                'package_type_id': package_type_id,
+                'req': "investment_pay"
+            },
+            success: function(rst) {
+                if (rst.type == "true") {
+                    $("#investment_pay").attr("disabled", false);
+                    $("#investment_pay").html(
+                        "<i class='fa fa-check'></i> Submit!"
+                    );
+                    $("#errors").html(
+                        "<div class='alert alert-success'>" +
+                        rst.msg +
+                        "</div><br/>"
+                    );
+                    window.setTimeout(function() {
+                        $("#platform").modal("hide");
+                    }, 5000);
+                } else if (rst.type == "false") {
+                    $("#investment_pay").attr("disabled", false);
+                    $("#investment_pay").html(
+                        "<i class='fa fa-warning fa-spin'></i> Failed. Try Again!"
+                    );
+                    $("#errors").html(
+                        "<div class='alert alert-danger'>" +
+                        rst.msg +
+                        "</div><br/>"
+                    );
+                }
+            },
+            error: function(rst) {
+                $("#investment_pay").attr("disabled", false);
+                $("#investment_pay").html(
+                    "<i class='fa fa-warning fa-spin'></i> Failed. Try Again!"
+                );
+                $("#errors").html(
+                    "<div class='alert alert-danger'>" +
+                    rst.msg +
+                    "</div><br/>"
+                );
+            }
+        });
+    }
+});
