@@ -78,7 +78,7 @@
                                                 <input type="text" placeholder="Telephone" id="telephone" value="{{ $profile['telephone'] }}" class="form-control" /> 
                                             </div><hr/>
                                             <div class="margiv-top-10">
-                                                <a href="javascript:;" id="update_profile_btn" class="btn green"> Save Changes </a>
+                                                <a href="javascript:;" id="update_profile_btn" class="btn green" disabled> Save Changes </a>
                                             </div>
                                         </form>
                                     </div>
@@ -101,7 +101,7 @@
                                                 <input type="text" id="account_token" class="form-control"> 
                                             </div><hr/>
                                             <div class="margiv-top-10">
-                                                <a href="javascript:;" id="update_account_btn" class="btn green"> Save Changes </a>
+                                                <a href="javascript:;" id="update_account_btn" class="btn green" disabled> Save Changes </a>
                                             </div>
                                         </form>
                                     </div>
@@ -141,8 +141,8 @@
     </div>
 @endsection
 @section('modals')
-    @include('members.users.modals._change_password')
-    @include('members.users.modals._change_picture')
+    @include('members.profile.modals._change_password')
+    @include('members.profile.modals._change_picture')
 @endsection
 @section('extra_script')
     <script>

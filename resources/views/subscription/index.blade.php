@@ -1,6 +1,7 @@
 @extends('members.partials.app')
 @section('extra_style')
     <link href="{{ asset('assets/pages/css/pricing.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     <h1 class="page-title"> 
@@ -48,12 +49,12 @@
                                             </div>
                                             <div class="arrow-down <?php if($index==0){ echo "border-top-red"; }elseif($index==1){ echo "border-top-green"; }else{echo "border-top-blue";} ?>"></div>
                                             <div class="price-table-pricing">
-                                                <h3><sup class="price-sign">$</sup>{{ number_format($platform->price) }}</h3>
+                                                <h3><sup class="price-sign">$</sup>{{ number_format($platform->price,2) }}</h3>
                                                 <p>Subscription Fee</p>
                                             </div>
                                             <div class="price-table-content">
                                                 <div class="row mobile-padding">
-                                                    <div class="col-xs-3 text-right mobile-padding"><i class="icon-user"></i></div>
+                                                    <div class="col-xs-3 text-right mobile-padding"></div>
                                                     <div class="col-xs-9 text-left mobile-padding">{{ $platform->description }}</div>
                                                 </div>
                                             </div>
@@ -91,8 +92,9 @@
         var TRANSACTION_ONE = "{{ URL::route('loadTransactionsOne') }}";
         var ACTIVITY_ONE = "{{ URL::route('loadActivityLogsOne') }}";
     </script>
-    
+    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection
 @section('after_script')
     <script src="{{ asset('js/pages/subscription_page.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection

@@ -35,23 +35,22 @@ var AppServiceSubscription = function() {
     }
 
     var processPayment = function(type,amount) {
-        var fee = 72.00;
         $.ajax({
             url: PAYMENT,
             method: "POST",
             data: {
                 'id': type,
-                'amount': fee,
+                'amount': amount,
                 '_token': TOKEN
             },
             success: function(data) {
-                toastr.success(data.msg);
+                swal("Successful!",data.msg,"success");
                 setTimeout(() => {
                     window.location.replace("/dashboard");
-                }, 5000);
+                }, 3000);
             },
             error: function(alaxB, HTTerror, errorMsg) {
-                toastr.error(errorMsg);
+                swal("Error",errorMsg,"error");
             }
         });
     }
@@ -76,9 +75,20 @@ var AppServiceSubscription = function() {
 
             $('body').find("#select_packages").on("click","#payment_btn", function() {
                 $(this).attr('disabled', true);
-                var amount;
+                var amount = $("#amount").val();
                 var id = $("#select_packages").find("#platform_id").val();
-                processPayment(id,amount);
+                swal({
+                    title: "Are you sure?",
+                    text: "You are about to make payment for a service",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes, Make Payment!",
+                    closeOnConfirm: false
+                },
+                function(){
+                    processPayment(id,amount);
+                });
             });
         }
     }

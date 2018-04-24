@@ -24,6 +24,7 @@ use App\Country;
 use Gate;
 use Carbon\Carbon;
 use App\Notifications\NewMember;
+use App\UserWallet;
 
 class HomeController extends Controller
 {
@@ -68,6 +69,9 @@ class HomeController extends Controller
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
             $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','desc')->limit(5)->get();
             $data['supports'] = Dispute::userDispute()->orderBy('id','desc')->limit(5)->get();
+            $data['balance'] = UserWallet::balance()->first()->amount;
+            $data['debit'] = PaymentTransaction::userLatestDebit()->first();
+            $data['credit'] = PaymentTransaction::userLatestCredit()->first();
 
             return view('members.dashboard.index')->with($data);
         }

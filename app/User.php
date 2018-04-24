@@ -112,6 +112,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\UserWallet','user_id');
     }
 
+    public function debit_transactions() {
+        return $this->hasMany('App\PaymentTransaction', 'user_id')->where('transaction_category_id',2);
+    }
+
     public function ActivityLog(){
         return $this->hasMany('App\ActivityLog','user_id');
     }
