@@ -4,7 +4,13 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-green-sharp">
-                        <span data-counter="counterup" data-value="7800">$7.00</span>
+                        <span data-counter="counterup" data-value="7800">
+                            @if(isset($credit))
+                                ${{ number_format($credit->amount, 2) }}
+                            @else
+                                $0.00
+                            @endif
+                        </span>
                         <small class="font-green-sharp"></small>
                     </h3>
                     <small>MY RECENT CREDIT</small>
@@ -20,7 +26,13 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-green-sharp">
-                        <span data-counter="counterup" data-value="7800">$7.00</span>
+                        <span data-counter="counterup" data-value="7800">
+                            @if(isset($debit))
+                                ${{ number_format($debit->amount, 2) }}
+                            @else
+                                $0.00
+                            @endif
+                        </span>
                         <small class="font-green-sharp"></small>
                     </h3>
                     <small>MY RECENT DEBIT</small>
@@ -37,7 +49,7 @@
                 <div class="number">
                     <h3 class="font-blue-sharp">
                         <small class="font-green-sharp">$</small>
-                        <span data-counter="counterup" data-value="567">567</span>
+                        <span data-counter="counterup" data-value="567">{{ number_format($balance, 2) }}</span>
                     </h3>
                     <small>MY WALLET BALANCE</small>
                 </div>

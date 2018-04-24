@@ -36,7 +36,6 @@
 </div>
 @endsection
 @section('modals')
-    @include('members.modals._new_registration')
 @endsection
 @section('extra_script')
     <script>

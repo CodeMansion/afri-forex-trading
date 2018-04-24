@@ -12,13 +12,16 @@ class PlatformTableSeeder extends Seeder
      */
     public function run()
     {
-		\DB::table("platforms")->truncate();
+        \DB::statement("SET FOREIGN_KEY_CHECKS = 0");
+        \DB::table("platforms")->truncate();
         \App\Platform::insert([
             [
                 'id' => 1,
                 'slug' => bin2hex(random_bytes(64)),
                 'name' => 'Daily Signal',
                 'is_multiple' => false,
+                'price' => 72.00,
+                'description' => null,
                 'is_active' => true,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()->addMinute(10),
@@ -27,8 +30,10 @@ class PlatformTableSeeder extends Seeder
                 'id' => 2,
                 'slug' => bin2hex(random_bytes(64)),
                 'name' => 'Investment',
+                'price' => 0,
                 'is_multiple' => true,
                 'is_active' => true,
+                'description' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()->addMinute(10),
             ],
@@ -36,8 +41,10 @@ class PlatformTableSeeder extends Seeder
                 'id' => 3,
                 'slug' => bin2hex(random_bytes(64)),
                 'name' => 'Referrer',
+                'price' => 0,
                 'is_multiple' => true,
                 'is_active' => true,
+                'description' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()->addMinute(10),
             ],

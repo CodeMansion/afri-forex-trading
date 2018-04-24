@@ -38,9 +38,9 @@
             <span class="title">Disputes</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a href="{{ URL::route('users.index') }}" class="nav-link nav-toggle">
-            <i class="icon-bulb"></i>
+    <li class="nav-item {{menu_active($menu_id, 5)}}">
+        <a href="{{ URL::route('membersIndex') }}" class="nav-link nav-toggle">
+            <i class="icon-users"></i>
             <span class="title">Members</span>
             <span class="arrow"></span>
         </a>

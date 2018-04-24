@@ -17,8 +17,10 @@ class CreatePlatformsTable extends Migration
             $table->increments('id');
             $table->string('slug', 190)->unique();
             $table->string('name', 100)->unique();
+            $table->string('description')->nullable();
             $table->boolean('is_multiple')->default(false);
             $table->boolean('is_active')->default(false);
+            $table->decimal('price', 10,2)->nullable();
             $table->timestamps();
         });
     }

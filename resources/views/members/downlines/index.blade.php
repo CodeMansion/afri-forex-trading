@@ -1,18 +1,27 @@
 @extends('members.partials.app')
 
+@section('extra_style')
+    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
 @section('content')
-    {{-- <h1 class="page-title"> Admin Downlines <small>statistics, charts, recent events and reports</small> </h1>
+    <h1 class="page-title"> 
+        <i class="fa fa-dashboard"></i> Hello, <strong>{{ strtoupper(\Auth::user()->full_name) }} | </strong> <small>MY DOWNLINES</small> 
+        <span class="pull-right">
+            <i class="fa fa-calendar"></i> <?php echo date('l, F d, Y', strtotime(now())); ?>
+        </span>
+    </h1>
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
                 <i class="icon-home"></i>
-                <a href="{{ URL::route('dashboard') }} ">Home</a>
+                <a href="#">Home</a>
                 <i class="fa fa-angle-right"></i>
             </li>
-            <li><span>Downlines</span></li>
+            <li><span>My Downlines</span></li>
         </ul>
     </div>
-    <div class="clearfix"></div> --}}
+
     <div class="portlet light tasks-widget bordered">
         <div class="portlet-title">
             <div class="caption">
@@ -24,44 +33,40 @@
             </div>
         </div>
         <div class="portlet-body util-btn-margin-bottom-5">
-            <div id="serverErrors"></div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="purchases">
-                                @if(count($downlines) < 1)
-                                    <div class="danger-alert">
-                                        <i class="fa fa-warning"></i> <em>There are no Downlines available currently. </em>
-                                    </div>
-                                @else 
-                                    <table class="table table-striped table-hover activitylogs" id="sample_2">
-                                        <thead>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="tab-content">
+                        <div class="tab-pane active">
+                            @if(count($downlines) < 1)
+                                <center><em>No Downline found </em></center> 
+                            @else 
+                                <table class="table table-striped table-hover activitylogs" id="sample_2">
+                                    <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Platform</th>
+                                            <th>Username</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php($counter=1)
+                                        @forelse($downlines as $down)
                                             <tr>
-                                                <th>S/N</th>
-                                                <th>Platform</th>
-                                                <th>Username</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
+                                                <td>{{ $counter++}}</td>
+                                                <td><span class="label label-sm label-success">{{ $down->Profile->Platform->name}}</span></td>
+                                                <td>{{ $down->Profile->User->username}}</td>
+                                                <td>{{ $down->Profile->full_name}} </td> 
+                                                <td>{{ $down->Profile->email}} </td> 
+                                                <td>{{ $down->Profile->telephone}} </td>  
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php($counter=1)
-                                            @forelse($downlines as $down)
-                                                <tr>
-                                                    <td>{{ $counter++}}</td>
-                                                     <td><span class="label label-sm label-success">{{ $down->Profile->Platform->name}}</span></td>
-                                                    <td>{{ $down->Profile->User->username}}</td>
-                                                    <td>{{ $down->Profile->full_name}} </td> 
-                                                    <td>{{ $down->Profile->email}} </td> 
-                                                    <td>{{ $down->Profile->telephone}} </td>  
-                                                </tr>
-                                            @empty
-                                            @endforelse
-                                        </tbody>
-                                    </table>
-                                @endif
-                            </div>
+                                        @empty
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            @endif
                         </div>
                     </div>
                 </div>

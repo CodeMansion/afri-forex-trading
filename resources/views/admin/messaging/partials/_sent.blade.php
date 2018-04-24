@@ -28,7 +28,7 @@
                     </td>
                     <td class="view-message hidden-xs"> {{ $message['type'] }} </td>
                     <td class="view-message "> {{ $message['subject'] }} </td>
-                    <td><?php echo word_counter(htmlspecialchars_decode($message['message']), 15); ?> ...</td>
+                    <td><?php echo word_counter(htmlspecialchars_decode($message['message']), 15, "..."); ?></td>
                     <td class="view-message text-right"> {{ $message->created_at->diffForHumans()}} </td>
                     <td></td>
                 </tr>

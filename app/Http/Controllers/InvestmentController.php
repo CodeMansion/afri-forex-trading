@@ -11,6 +11,8 @@ use App\Investment;
 use App\UserDownline;
 use App\Mail\Investments;
 
+use Gate;
+
 class InvestmentController extends Controller
 {
     /**
@@ -20,8 +22,22 @@ class InvestmentController extends Controller
      */
     public function index()
     {
-        $params['downlines'] = UserDownline::all();
-        return view('members.platforms.investments.index')->with($params);
+        if(auth()->user()->is_admin == 0) {
+            if(Gate::allows('is_account_active')) {
+                auth()->logout();	
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
+    
+            $user = strtoupper(auth()->user()->full_name);
+            if(!Gate::allows('has_member_paid')) {
+                \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
+                return redirect(route('packageSub'));
+            }
+
+            $params['downlines'] = UserDownline::all();
+            return view('members.platforms.investments.index')->with($params);
+        }
     }
 
     /**

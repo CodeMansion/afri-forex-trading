@@ -13,10 +13,12 @@
 */
 
 Route::get('/', function () {return redirect()->route('login');});
-Route::group(['middleware'=>['auth','checkMemberActive']], function(){
-    Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
+Route::group(['middleware'=>['auth']], function(){
+	Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
+	Route::get('/service-subscribe', ["as"=>"packageSub", "uses"=>"HomeController@packageSubIndex"]);
+	Route::post('/get-daily-signal-info', ["as"=>"getDailySignalInfo", "uses"=>"HomeController@getDailySignalInfo"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
-	Route::post('/subscribe',["as" => "subscribe", "uses"  => "SubscriptionController@store"]);
+	Route::post('/process-payment/{type?}',["as" => "processPayment", "uses"  => "SubscriptionController@processPayment"]);
 	//--- ADMIN NOTIFICATIONS ---//
 	Route::get('/dashboard-notify',["as"=>"dashboardNotify", "uses"=>"HomeController@indexNotify"]);
 	Route::get('/notifications',["as"=>"notifications", "uses"=>"HomeController@notifications"]);
@@ -94,15 +96,15 @@ Route::group(['middleware'=>['auth','checkMemberActive']], function(){
 		Route::post('/get-details', ["as"=>"packagetypes.editInfo", "uses"=>"PackageTypeController@getEditInfo"]);
 	});	
 	
-	//-	---- USERS MANAGEMENT ----//	
-	Route::group(['prefix' => 'users'], function () {		
-		Route::get('/', ["as"=>"users.index", "uses"=>"UserController@index"]);		
+	//-	---- MEMBERS MANAGEMENT ----//	
+	Route::group(['prefix' => 'members'], function () {		
+		Route::get('/', ["as"=>"membersIndex", "uses"=>"UserController@index"]);		
 		Route::post('/store',["as"=>"users.add",'uses'=> 'UserController@store']);		
-		Route::get('/show/{id?}', ["as"=>"users.show", "uses"=>"UserController@show"]);		
+		Route::get('/show/{slug?}', ["as"=>"showMember", "uses"=>"UserController@show"]);		
 		Route::post('/update',["as"=>"users.update",'uses'=> 'UserController@update']);		
 		Route::get('/delete/{id?}',["as"=>"users.delete",'uses'=> 'UserController@destroy']);		
 		Route::post('/get-details', ["as"=>"users.editInfo", "uses"=>"UserController@getEditInfo"]);		
-		Route::get('/activate/{id?}', ["as"=>"users.activate", "uses"=>"UserController@activate"]);		
+		Route::post('/activate-member-account', ["as"=>"activateMemberAccount", "uses"=>"UserController@activate"]);		
 	});	
 	
 	//-	---- TRANSACTION CATEGORY MANAGEMENT ----//	
