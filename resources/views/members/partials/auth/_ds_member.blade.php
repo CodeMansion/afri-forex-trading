@@ -8,12 +8,12 @@
 </li>
 <li class="nav-item {{menu_active($menu_id, 2)}}">
     <a href="{{ URL::route('membersIndex') }}" class="nav-link nav-toggle">
-        <i class="icon-bulb"></i>
+        <i class="icon-user"></i>
         <span class="title">My Profile</span>
         <span class="arrow"></span>
     </a>
 </li>
-<li class="nav-item  ">
+<li class="nav-item {{menu_active($menu_id, 3)}} ">
     <a href="{{ URL::route('platforms.index') }}" class="nav-link nav-toggle">
         <i class="icon-diamond"></i>
         <span class="title">My Platforms</span>

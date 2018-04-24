@@ -31,9 +31,11 @@ class PlatformController extends Controller
                 return redirect(route('packageSub'));
             }
 
+            $params['menu_id'] = 3;
             $params['subscription'] = Subscription::whereUserId(auth()->user()->id)->first();
             $params['investment'] = Investment::whereUserId(auth()->user()->id)->first();
             $params['referral'] = Referral::whereUserId(auth()->user()->id)->first();
+
             return view('members.platforms.index')->with($params);
         }
         
