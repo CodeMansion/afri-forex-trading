@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Dispute;
 use App\DisputePriority;
 use App\DisputeReply;
+use Gate;
 
 class DisputeController extends Controller
 {
@@ -27,7 +28,26 @@ class DisputeController extends Controller
 
             return view('admin.disputes.index')->with($data);
         }
-        return view('members.support.index');
+
+        if(auth()->user()->is_admin == 0) {
+            if(Gate::allows('is_account_active')) {
+                auth()->logout();	
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
+    
+            $user = strtoupper(auth()->user()->full_name);
+            if(!Gate::allows('has_member_paid')) {
+                \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
+                return redirect(route('packageSub'));
+            }
+
+            $data['menu_id'] = 5.0;
+            $data['disputes'] = Dispute::userDispute()->get();
+            $data['priorities'] = DisputePriority::all();
+            
+            return view('members.support.index')->with($data);
+        }
     }
 
     /**
@@ -90,6 +110,15 @@ class DisputeController extends Controller
      */
     public function show($id)
     {
+        if(auth()->user()->is_admin == 0) {
+            $data['menu_id'] = 4.0;
+            $data['dispute'] = Dispute::find($id,'slug');
+            $data['priorities'] = DisputePriority::all();
+            $data['replies'] = $data['dispute']->reply()->get();
+
+            return view('members.support.view')->with($data);
+        }
+        
         $data['menu_id'] = 4.0;
         $data['dispute'] = Dispute::find($id,'slug');
         $data['priorities'] = DisputePriority::all();

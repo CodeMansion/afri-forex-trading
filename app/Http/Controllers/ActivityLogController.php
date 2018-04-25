@@ -17,8 +17,23 @@ class ActivityLogController extends Controller
             $params['activitylogs'] = \App\ActivityLog::all();
             return view('admin.activity_logs.index')->with($params);
         }        
-        $params['activitylogs'] = \App\ActivityLog::whereUserId(\Auth::user()->id)->get();
-        return view('members.activity_logs.index')->with($params);
+
+        if(auth()->user()->is_admin == 0) {
+            if(Gate::allows('is_account_active')) {
+                auth()->logout();	
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
+    
+            $user = strtoupper(auth()->user()->full_name);
+            if(!Gate::allows('has_member_paid')) {
+                \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
+                return redirect(route('packageSub'));
+            }
+
+            $params['activitylogs'] = \App\ActivityLog::whereUserId(\Auth::user()->id)->get();
+            return view('members.activity_logs.index')->with($params);
+        }
     }
 
     /**
