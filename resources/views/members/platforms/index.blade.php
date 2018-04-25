@@ -18,22 +18,27 @@
         </ul>
     </div>
 
-     <div class="portlet light tasks-widget bordered">
-        <div class="portlet-title">
-            <div class="caption">
-                <span class="caption-subject font-green-haze bold uppercase">My Subscribed Services </span>
-                <span class="caption-helper"> </span>                        
-            </div>
-            <div class="actions">
-                
-            </div>
-        </div>
-        <div class="portlet-body util-btn-margin-bottom-5">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
+    <div class="row">
+        @if(isset($subscription))
+        <a href="#">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="dashboard-stat2">
+                    <div class="display">
+                        <div class="number">
+                            <h3 class="font-green-sharp">
+                                <span>{{ $subscription->platform->name }}</span>
+                                <small class="font-green-sharp"></small>
+                            </h3>
+                            <h4>${{ number_format($subscription->amount,'2') }}</h4>
+                        </div>
+                        <div class="icon">
+                            <i class="icon-pie-chart"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
+        @endif
     </div>
 @endsection
 @section('extra_script')

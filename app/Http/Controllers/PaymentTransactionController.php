@@ -29,10 +29,10 @@ class PaymentTransactionController extends Controller
                 return redirect(route('packageSub'));
             }
 
-            $data['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->get();
-            $data['debit']  = PaymentTransaction::whereUserId(auth()->user()->id)->whereTransactionCategoryId(2)->orderBy('id','desc')->first();
-            $data['credit']  = PaymentTransaction::whereUserId(auth()->user()->id)->whereTransactionCategoryId(1)->orderBy('id','desc')->first();
-            $data['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
+            $data['transactions'] = PaymentTransaction::userTransactions()->get();
+            $data['debit']  = PaymentTransaction::userLatestDebit()->first();
+            $data['credit']  = PaymentTransaction::userLatestCredit()->first();
+            $data['wallet'] = UserWallet::balance()->first();
 
             return view('members.transactions.index')->with($data);
         }

@@ -32,9 +32,9 @@ class PlatformController extends Controller
             }
 
             $params['menu_id'] = 3;
-            $params['subscription'] = Subscription::whereUserId(auth()->user()->id)->first();
-            $params['investment'] = Investment::whereUserId(auth()->user()->id)->first();
-            $params['referral'] = Referral::whereUserId(auth()->user()->id)->first();
+            $params['subscription'] = Subscription::userSubscriptions()->first();
+            $params['investment'] = Investment::userInvestments()->first();
+            $params['referral'] = Referral::userReferrals()->first();
 
             return view('members.platforms.index')->with($params);
         }

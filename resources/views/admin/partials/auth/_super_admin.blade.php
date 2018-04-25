@@ -45,26 +45,14 @@
             <span class="arrow"></span>
         </a>
     </li>
-    <li class="nav-item  ">
-        <a href="javascript:;" class="nav-link nav-toggle">
+    <li class="nav-item {{menu_active($menu_id, 6)}}">
+        <a href="{{ URL::route('transactions.index') }}" class="nav-link nav-toggle">
             <i class="icon-briefcase"></i>
             <span class="title">Transactions</span>
             <span class="arrow"></span>
         </a>
-        <ul class="sub-menu">
-            <li class="nav-item  ">
-                <a href="{{ URL::route('transactions.index') }}" class="nav-link ">
-                    <span class="title">Payment Transactions</span>
-                </a>
-            </li>
-            <li class="nav-item  ">
-                <a href="{{ URL::route('transactioncategories.index') }}" class="nav-link ">
-                    <span class="title">Transaction Category</span>
-                </a>
-            </li>
-        </ul>
     </li>
-    <li class="nav-item  ">
+    <li class="nav-item {{menu_active($menu_id, 7)}}">
         <a href="{{ URL::route('activity.index') }}">
             <i class="icon-wallet"></i>
             <span class="title">Activity Logs</span>

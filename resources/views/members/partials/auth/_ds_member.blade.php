@@ -27,22 +27,22 @@
         <span class="arrow"></span>
     </a>
 </li>
-<li class="nav-item  ">
+<li class="nav-item {{menu_active($menu_id, 5)}}">
     <a href="{{ URL::route('disputeIndex') }}">
         <i class="icon-envelope"></i>
         <span class="title">Support Ticket</span>
     </a>
 </li>            
-<li class="nav-item  ">
+<li class="nav-item  {{menu_active($menu_id, 6)}}">
     <a href="{{ URL::route('transactions.index') }}" class="nav-link nav-toggle">
         <i class="icon-briefcase"></i>
         <span class="title">My Transactions</span>
         <span class="arrow"></span>
     </a>
 </li>
-<li class="nav-item  ">
+<li class="nav-item {{menu_active($menu_id, 7)}}">
     <a href="{{ URL::route('transactions.index') }}" class="nav-link nav-toggle">
-        <i class="icon-bars"></i>
+        <i class="icon-speech"></i>
         <span class="title">My Testimonies</span>
         <span class="arrow"></span>
     </a>

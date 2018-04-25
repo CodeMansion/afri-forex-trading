@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<h1 class="page-title"> 
+    <h1 class="page-title"> 
         <i class="fa fa-users"></i> Members Page <small></small> 
         <span class="pull-right">
             <i class="fa fa-calendar"></i> <?php echo date('l, F d, Y', strtotime(now())); ?>
@@ -27,8 +27,8 @@
     <div class="portlet light tasks-widget bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-green-haze bold uppercase">Users </span>
-                <span class="caption-helper">Displaying list of registered </span>                        
+                <span class="caption-subject font-green-haze bold uppercase">Members </span>
+                <span class="caption-helper">Displaying list of registered Members</span>                        
             </div>
             <div class="actions">
                 

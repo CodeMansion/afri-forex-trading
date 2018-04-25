@@ -21,8 +21,8 @@
                     <div class="item">
                         <div class="item-head">
                             <div class="item-details">
-                                <img class="item-pic rounded" src="../assets/pages/media/users/avatar4.jpg">
-                                <a href="" class="item-name primary-link">{{ $dispute->user->Profile }}</a>
+                                <img class="item-pic rounded" src="{{ asset('images/default.png') }}">
+                                <a href="" class="item-name primary-link">{{ $dispute->user->Profile->full_name }}</a>
                                 <span class="item-label">{{ $dispute->created_at->diffForHumans() }}</span>
                             </div>
                             <span class="item-status">
