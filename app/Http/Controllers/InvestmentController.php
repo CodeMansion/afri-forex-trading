@@ -105,10 +105,10 @@ class InvestmentController extends Controller
                 $ip = $_SERVER['REMOTE_ADDR'];
                 activity_logs(auth()->user()->id, $ip, "Payed for Investment");
             \DB::commit();
-                return $response = [
+                return response()->json([
                     'msg' => "You Have Successfully investment For Investment.",
                     'type' => "true"
-                ];
+                ],200);
 
             } catch(Exception $e) {
                 \DB::rollback();

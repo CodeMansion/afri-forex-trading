@@ -61,11 +61,7 @@ class HomeController extends Controller
                 \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
                 return redirect(route('packageSub'));
             }
-
-            $data['platforms'] = Platform::whereIsActive(true)->get();
-            $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
-            $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
-            $data['referrals'] = Referral::whereUserId(auth()->user()->id)->count();
+            
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
             $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','desc')->limit(5)->get();
             $data['supports'] = Dispute::userDispute()->orderBy('id','desc')->limit(5)->get();
@@ -80,6 +76,7 @@ class HomeController extends Controller
     public function packageSubIndex()
     {
         $data['platforms'] = Platform::active()->get();
+        $data['package_types'] = PackageType::all();
         
         return view('subscription.index')->with($data);
     }
@@ -94,7 +91,42 @@ class HomeController extends Controller
             return false;
         }
     }
+
+    public function getReferrerInfo(Request $request) {
+        try {
+            $data = $request->except('_token');
+            $param['referrer'] = Platform::active()->where('id',$data['id'])->first();
+
+            return view('subscription.partials._referrer_sub')->with($param);
+        } catch(Exception $e) {
+            return false;
+        }
+    }
     
+
+    public function getInvestmentInfo(Request $request) {
+        try {
+            $data = $request->except('_token');
+            $params['investment'] = Platform::active()->where('id',$data['id'])->first();
+            $params['packages'] = Package::wherePlatformId($data['id'])->get();
+            return view('subscription.partials._investment_sub')->with($params);
+        } catch(Exception $e) {
+            return false;
+        }
+    }
+
+    public function getInvestmentPaymentInfo(Request $request) {
+        try {
+            $data = $request->except('_token');
+            $params['investment'] = Platform::active()->where('id',$data['platform_id'])->first();
+            $params['package'] = Package::whereId($data['package_id'])->first();
+            $params['type'] = PackageType::whereId($data['package_type_id'])->first();
+            return view('subscription.partials._subscribe_investment')->with($params);
+        } catch(Exception $e) {
+            return false;
+        }
+    }
+
     public function package(Request $request){        
         try {
             $params['packages'] = Package::wherePlatformId($request->platform_id)->get();

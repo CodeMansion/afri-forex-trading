@@ -118,8 +118,28 @@ class SubscriptionController extends Controller
                     'updated_at'    => Carbon::now()
                 ]);
 
-                #TODO - Upline info
-                #TODO - Send email notification
+                $upline = UserDownline::whereDownlineId(auth()->user()->id)->first();
+                if(isset($upline)){
+                    if($upline->platform_id == Null){
+                        $upline->platform_id = $subscribe->platform_id;
+                        $upline->investment_amount= $transaction->amount;
+                        $upline->is_active   = 1;
+                        $upline->save();
+                    }else{
+                        // new platform downline
+                        $downline               = new UserDownline();
+                        $downline->platform_id  = $subscribe->platform_id;
+                        $downline->upline_id 	= $upline->upline_id;
+                        $downline->downline_id 	= $subscribe->user_id;
+                        $downline->investment_amount= $transaction->amount;
+                        $downline->is_active    = 1;
+                        $downline->save();
+                    }
+
+                }
+
+                //\Mail::to(auth()->user()->email)->send(new Subscriptions($subscribe));
+
                 #TODO - Send system message
 
                 activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribed for Daily Signal");

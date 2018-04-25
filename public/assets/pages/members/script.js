@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
     $("#subscribe_pay").hide();
     $("#investment_pay").hide();
@@ -154,7 +153,7 @@ $("#investment_pay").on("click", function() {
         $(this).attr("disabled", true);
         $(this).html("<i class='fa fa-refresh fa-spin'></i> Processing...");
         $.ajax({
-            url: REFERRAL,
+            url: INVEST,
             method: "POST",
             data: {
                 '_token': TOKEN,
