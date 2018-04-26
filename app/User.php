@@ -97,11 +97,11 @@ class User extends Authenticatable
 
     }
     
-    public function UserDownline($platform_id){
-        if($platform_id == ''){
-            return $this->hasMany('App\UserDownline','upline_id');
+    public function UserDownline($platform_id = null){
+        if($platform_id == null){
+            return $this->hasMany('App\UserDownline','downline_id');
         }
-        return $this->hasMany('App\UserDownline','upline_id')->where('platform_id',$platform_id);
+        return $this->hasMany('App\UserDownline','downline_id')->where('platform_id',$platform_id);
     }
 
     public function Platform(){
@@ -110,7 +110,7 @@ class User extends Authenticatable
 
     public function UserWallet(){
         return $this->belongsTo('App\UserWallet','user_id');
-    }
+    }    
 
     public function debit_transactions() {
         return $this->hasMany('App\PaymentTransaction', 'user_id')->where('transaction_category_id',2);

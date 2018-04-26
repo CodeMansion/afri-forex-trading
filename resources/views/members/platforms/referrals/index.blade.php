@@ -1,99 +1,22 @@
 @extends('members.partials.app')
 
 @section('content')
-<div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="dashboard-stat2 ">
-            <div class="display">
-                <div class="number">
-                    <h3 class="font-green-sharp">
-                        <span data-counter="counterup" data-value="{{ ($earning) ? $earning->amount : 0 }}">7.00</span>
-                        <small class="font-green-sharp">$</small>
-                    </h3>
-                    <small>RECENT CREDIT</small>
-                </div>
-                <div class="icon">
-                    <i class="icon-pie-chart"></i>
-                </div>
-            </div>
-            <div class="progress-info">
-                <div class="progress">
-                    <span style="width: 76%;" class="progress-bar progress-bar-success green-sharp">
-                        <span class="sr-only">20% progress</span>
-                    </span>
-                </div>
-            <div class="status">
-                <div class="status-title"> progress </div>
-                    <div class="status-number"> 20% </div>
-                </div>
-            </div>
-        </div>
+<h1 class="page-title"> 
+        <i class="fa fa-dashboard"></i> Hello, <strong>{{ strtoupper(\Auth::user()->full_name) }} | </strong> <small>MY Referrals</small> 
+        <span class="pull-right">
+            <i class="fa fa-calendar"></i> <?php echo date('l, F d, Y', strtotime(now())); ?>
+        </span>
+    </h1>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="icon-home"></i>
+                <a href="#">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li><span>Referrals</span></li>
+        </ul>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="dashboard-stat2 ">
-            <div class="display">
-                <div class="number">
-                    <h3 class="font-red-haze">
-                        <small class="font-green-sharp">$</small>
-                        <span data-counter="counterup" data-value="{{ ($recent) ? $recent->amount : 0 }}">10.00</span>
-                    </h3>
-                    <small>RECENT DEBIT</small>
-                </div>
-                <div class="icon">
-                    <i class="icon-like"></i>
-                </div>
-            </div>
-            <div class="progress-info">
-                <div class="progress">
-                    <span style="width: 85%;" class="progress-bar progress-bar-success red-haze">
-                        <span class="sr-only">85% change</span>
-                    </span>
-                </div>
-                <div class="status">
-                    <div class="status-title"> change </div>
-                    <div class="status-number"> 85% </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="dashboard-stat2 ">
-            <div class="display">
-                <div class="number">
-                    <h3 class="font-blue-sharp">
-                        <small class="font-green-sharp">$</small>
-                        <span data-counter="counterup" data-value="{{ ($wallet) ? $wallet->amount : 0 }}">567</span>
-                    </h3>
-                    <small>WALLET</small>
-                </div>
-                <div class="icon">
-                    <i class="icon-basket"></i>
-                </div>
-            </div>
-            <div class="progress-info">
-                <div class="progress">
-                    <span style="width: 45%;" class="progress-bar progress-bar-success blue-sharp">
-                        <span class="sr-only">45% grow</span>
-                    </span>
-                </div>
-                <div class="status">
-                    <div class="status-title"> grow </div>
-                    <div class="status-number"> 45% </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-    
-<!-- BEGIN PORTLET -->
-<div class="portlet light ">
-    <div class="portlet-title">
-        <div class="caption caption-md">
-            <i class="icon-bar-chart theme-font hide"></i>
-            <span class="caption-subject font-blue-madison bold uppercase">Referral Platform</span>
-        </div>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-6">
         <!-- BEGIN SAMPLE TABLE PORTLET-->
@@ -144,22 +67,21 @@
     </div>
     <div class="col-md-6 col-sm-6 col-xs-6">
         <!-- BEGIN SAMPLE TABLE PORTLET-->
-        <div class="portlet box green">
+        <div class="portlet light tasks-widget">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-comments"></i>Referral Downlines</div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                    <span class="caption-subject font-green-haze bold uppercase">Downlines </span>
+                    <span class="caption-helper">Displaying list of Downline </span>                        
                 </div>
             </div>
-            <div class="portlet-body">
-                <div class="table-scrollable">
+            <div class="portlet-body downlines">
+                <div class="table">
                     @if(count($downlines) < 1)
                         <div class="danger-alert">
                             <i class="fa fa-warning"></i> <em>There are no Downline available currently. Please Share Your Referral Link To Get Downlines.</em>
                         </div>
                     @else 
-                    <table class="table table-striped table-hover" id="sample_3">
+                    <table class="table table-striped table-hover" id="sample_2">
                         <thead>
                             <tr>
                                 <th> S/No. </th>
@@ -170,11 +92,11 @@
                         </thead>
                         <tbody>
                             @php($counter=1)
-                            @forelse($downlines as $down)
+                            @foreach($downlines as $down)
                                 <tr>
                                     <td>{{ $counter++}}</td>
-                                    <td>{{ $down->Profile->full_name}} </td>                                                    
-                                    <td>{{ $down->Profile->User->username}}</td>
+                                    <td>{{ $down->User->username}} </td>                                                    
+                                    <td>{{ $down->User->full_name}}</td>
                                     <td>
                                         @if($down->is_active == 1)
                                             <label class="label label-success btn-sm"> Active</label>
@@ -183,8 +105,7 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @empty
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                     @endif

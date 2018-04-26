@@ -28,7 +28,7 @@ class UserDownlineController extends Controller
                 return redirect(route('packageSub'));
             }
 
-            $data['downlines'] = UserDownline::whereUplineId(auth()->user()->id)->get(); 
+            $data['downlines'] = UserDownline::UserDownline()->get(); 
             return view('members.downlines.index')->with($data); 
         }
     }

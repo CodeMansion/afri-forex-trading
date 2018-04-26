@@ -20,7 +20,7 @@
 
     <div class="row">
         @if(isset($subscription))
-        <a href="#">
+        <a href="{{ URL::route('subscriptions.index') }}">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="dashboard-stat2">
                     <div class="display">
@@ -30,6 +30,46 @@
                                 <small class="font-green-sharp"></small>
                             </h3>
                             <h4>${{ number_format($subscription->amount,'2') }}</h4>
+                        </div>
+                        <div class="icon">
+                            <i class="icon-pie-chart"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        @endif
+        @if(isset($investment))
+        <a href="{{ URL::route('investments.index') }}">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="dashboard-stat2">
+                    <div class="display">
+                        <div class="number">
+                            <h3 class="font-green-sharp">
+                                <span>{{ $investment->platform->name }}</span>
+                                <small class="font-green-sharp"></small>
+                            </h3>
+                            <h4>${{ number_format($investment->Package->investment_amount,'2') }}</h4>
+                        </div>
+                        <div class="icon">
+                            <i class="icon-pie-chart"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        @endif
+        @if(isset($referral))
+        <a href="{{ URL::route('referrals.index') }}">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="dashboard-stat2">
+                    <div class="display">
+                        <div class="number">
+                            <h3 class="font-green-sharp">
+                                <span>{{ $referral->platform->name }}</span>
+                                <small class="font-green-sharp"></small>
+                            </h3>
+                            <h4>${{ number_format(0,'2') }}</h4>
                         </div>
                         <div class="icon">
                             <i class="icon-pie-chart"></i>

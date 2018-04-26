@@ -11,17 +11,25 @@
                     <div class="form-body">
                         <div class="form-group">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Name</label><span style="color:red">*</span>
                                 <input class="form-control" type="text" id="name" name="name" placeholder="e.g.Platform Name" /> 
                             </div>
                             <div class="form-group">
-                                <label>Type</label>
+                                <label>Type</label><span style="color:red">*</span>
                                 <select class="form-control" id="is_multiple">
                                     <option value="">-- Select Type --</option>  
                                     <option value="0">Single</option>
                                     <option value="1">Multiple</option>
                                 </select>                                
-                            </div>                            
+                            </div>
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input class="form-control" type="text" id="price" name="price" placeholder="e.g. 128" /> 
+                            </div>  
+                            <div class="form-group">
+                                <label>ReCycle Price</label>
+                                <input class="form-control" type="text" id="recycle_price" name="recycle_price" placeholder="e.g. 70" /> 
+                            </div>                           
                         </div>
                     </div>
             </div>

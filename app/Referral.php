@@ -17,6 +17,10 @@ class Referral extends Model
 		return $this->belongsTo('App\User','user_id');
 	}
 
+	public function platform() {
+        return $this->belongsTo('App\Platform', 'platform_id');
+    }
+
 	public function scopeUserReferrals($query){
 		return $query->where('user_id',auth()->user()->id);
 	}

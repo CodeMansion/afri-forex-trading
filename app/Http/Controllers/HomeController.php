@@ -61,7 +61,11 @@ class HomeController extends Controller
                 \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
                 return redirect(route('packageSub'));
             }
-            
+
+            $data['platforms'] = Platform::whereIsActive(true)->get();
+            $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
+            $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
+            $data['referrals'] = Referral::whereUserId(auth()->user()->id)->count();
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
             $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','desc')->limit(5)->get();
             $data['supports'] = Dispute::userDispute()->orderBy('id','desc')->limit(5)->get();
@@ -147,11 +151,12 @@ class HomeController extends Controller
     }
     
     public function ref($ref){
-        $referral = User::whereSlug($ref)->first();
-        if(!$referral){
+        $data['referral'] = User::whereSlug($ref)->first();
+        if(!$data['referral']){
             return redirect()->route('register');
         }
-        return view('register',compact('referral'));
+        $data['countries'] = Country::all();
+        return view('register')->with($data);
     }
 
     public function forget_password(Request $request)

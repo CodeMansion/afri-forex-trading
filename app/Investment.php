@@ -25,7 +25,13 @@ class Investment extends Model
         return $this->belongsTo('App\PackageType','package_type_id');
     }
 
+    public function platform() {
+        return $this->belongsTo('App\Platform', 'platform_id');
+    }
+
     public function scopeUserInvestments($query){
         return $query->where('user_id',auth()->user()->id);
     }
+
+    
 }

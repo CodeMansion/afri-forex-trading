@@ -56,11 +56,11 @@
                                         @forelse($downlines as $down)
                                             <tr>
                                                 <td>{{ $counter++}}</td>
-                                                <td><span class="label label-sm label-success">{{ $down->Profile->Platform->name}}</span></td>
-                                                <td>{{ $down->Profile->User->username}}</td>
-                                                <td>{{ $down->Profile->full_name}} </td> 
-                                                <td>{{ $down->Profile->email}} </td> 
-                                                <td>{{ $down->Profile->telephone}} </td>  
+                                                <td><span class="label label-sm label-success">{{ $down->Platform->name}}</span></td>
+                                                <td>{{ $down->User->username}} </td>                                                    
+                                                <td>{{ $down->User->full_name}}</td> 
+                                                <td>{{ $down->User->Profile->email}} </td> 
+                                                <td>{{ $down->User->Profile->telephone}} </td>  
                                             </tr>
                                         @empty
                                         @endforelse

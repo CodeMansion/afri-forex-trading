@@ -11,11 +11,11 @@
                     <div class="form-body">
                         <div class="form-group">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Name</label><span style="color:red">*</span>
                                 <input class="form-control" type="text" id="name" name="name" placeholder="e.g.Package Type Name" /> 
                             </div>
                             <div class="form-group">
-                                <label>Percentage</label>
+                                <label>Percentage</label><span style="color:red">*</span>
                                 <input class="form-control" type="text" id="percentage" name="name" placeholder="e.g.Package Type Percentage" />                              
                             </div>                            
                         </div>

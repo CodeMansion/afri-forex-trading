@@ -85,10 +85,14 @@ var AppServiceSubscription = function() {
                 '_token': TOKEN
             },
             success: function(data) {
-                swal("Successful!", data.msg, "success");
-                setTimeout(() => {
-                    window.location.replace("/dashboard");
-                }, 3000);
+                if (data.type == "true") {
+                    swal("Successful!", data.msg, "success");
+                    setTimeout(() => {
+                        window.location.replace("/dashboard");
+                    }, 3000);
+                } else if (data.type == "false") {
+                    toastr.warning(data.msg);
+                }
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 swal("Error", errorMsg, "error");
@@ -111,7 +115,9 @@ var AppServiceSubscription = function() {
                     setTimeout(() => {
                         window.location.replace("/dashboard");
                     }, 3000);
-                } else if (rst.type == "false") {}
+                } else if (rst.type == "false") {
+                    toastr.warning(rst.msg);
+                }
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 swal("Error", errorMsg, "error");

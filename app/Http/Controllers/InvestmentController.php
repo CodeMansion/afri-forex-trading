@@ -10,6 +10,10 @@ use App\PackageType;
 use App\Investment;
 use App\UserDownline;
 use App\Mail\Investments;
+use App\UserWallet;
+use App\Referral;
+use App\User;
+use Carbon\Carbon;
 
 use Gate;
 
@@ -35,7 +39,9 @@ class InvestmentController extends Controller
                 return redirect(route('packageSub'));
             }
 
-            $params['downlines'] = UserDownline::all();
+            $investment = Investment::UserInvestments()->first();
+            $params['investments'] = Investment::UserInvestments()->get();
+            $params['downlines'] = UserDownline::UserDownline()->wherePlatformId($investment->platform_id)->get();
             return view('members.platforms.investments.index')->with($params);
         }
     }
@@ -62,6 +68,13 @@ class InvestmentController extends Controller
         if(isset($data) && $data['req'] == 'investment_pay') {
             \DB::beginTransaction();
             try {
+                $referral = Referral::UserReferrals()->count();
+                if($referral > 0 ){
+                    return $response = [
+                        'msg' => "You can not subscribe to investment! User already exist on referrer service.",
+                        'type' => "false"
+                    ];
+                }
                 $investment                  = new Investment();
                 $investment->slug            = bin2hex(random_bytes(64));
                 $investment->user_id         = auth()->user()->id;
@@ -100,6 +113,15 @@ class InvestmentController extends Controller
                     }
 
                 }
+
+                $wallet = UserWallet::insert([
+                    'slug'          => bin2hex(random_bytes(64)),
+                    'user_id'       => auth()->user()->id,
+                    'amount'        => 0.00,
+                    'status'        => 1,
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
                 
                 //\Mail::to(auth()->user()->email)->send(new Investments($investment));
                 $ip = $_SERVER['REMOTE_ADDR'];
@@ -128,7 +150,27 @@ class InvestmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $investment = Investment::UserInvestments()->whereId($id)->first();
+        $params['downlines'] = UserDownline::UserDownline()->wherePlatformId($investment->platform_id)->get();
+        $params['transactions'] = PaymentTransaction::UserTransactions()->wherePlatformId($investment->platform_id)->get();
+        $params['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
+        $data['debit'] = PaymentTransaction::userLatestDebit()->first();
+        $data['credit'] = PaymentTransaction::userLatestCredit()->first();
+        $earning = \App\Earning::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->first();
+        
+        if(!empty($earning)){
+            $earning->amount = $params['downlines']->count()  * 25;
+            $earning->save();
+        }else{
+            $earning                = new \App\Earning();
+            $earning->slug           = bin2hex(random_bytes(64));
+            $earning->user_id       = auth()->user()->id;
+            $earning->platform_id   = $subscription->platform_id;
+            $earning->amount        = ($params['downlines']->count() - 2) * 5;
+            $earning->save();
+        }
+        
+        $params['earning'] = $earning;
     }
 
     /**

@@ -11,11 +11,11 @@
                     <div class="form-body">
                         <div class="form-group">
                             <div class="form-group">
-                                <label>Package Name</label>
+                                <label>Package Name</label><span style="color:red">*</span>
                                 <input class="form-control" type="text" id="name" name="name" placeholder="e.g.Package Name" /> 
                             </div>
                             <div class="form-group">
-                                <label>Platform</label>
+                                <label>Platform</label><span style="color:red">*</span>
                                 <select class="form-control" id="platform_id">
                                     <option value="">-- Select Type --</option>  
                                     @forelse($platforms as $platform)
@@ -26,11 +26,11 @@
                                 </select>                                
                             </div> 
                             <div class="form-group">
-                                <label>Package Investment Amount</label>
+                                <label>Package Investment Amount</label><span style="color:red">*</span>
                                 <input class="form-control" type="text" id="investment_amount" name="name" placeholder="e.g.Package Investment Amount" /> 
                             </div>
                             <div class="form-group">
-                                <label>Package Investment Monthly Charge</label>
+                                <label>Package Investment Monthly Charge</label><span style="color:red">*</span>
                                 <input class="form-control" type="text" id="monthly_charge" name="name" placeholder="e.g.Package Investment Monthly Charge" /> 
                             </div>                           
                         </div>

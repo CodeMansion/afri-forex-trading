@@ -2,6 +2,8 @@
 $("#add-platform").on("click", function() {
     var name = $("#name").val();
     var is_multiple = $("#is_multiple").val();
+    var price = $("#price").val();
+    var recycle_price = $("#recycle_price").val();
     if (name.length < 1) {
         $("#serverError").html("<div class='danger-alert'>Please enter a value for NAME</div><br/>");
     } else if (is_multiple.length < 1) {
@@ -19,6 +21,8 @@ $("#add-platform").on("click", function() {
                 '_token': TOKEN,
                 'name': name,
                 'is_multiple': is_multiple,
+                'price': price,
+                'recycle_price': recycle_price,
                 'req': "add_platform"
             },
             success: function(rst) {
@@ -71,6 +75,8 @@ $('body').find("#platform_details").on("click ", "#edit-platform", function() {
     var name = $("#name1").val();
     var is_multiple = $("#is_multiple1").val();
     var slug = $("#slug").val();
+    var price = $('#price1').val();
+    var recycle_price = $('#recycle_price1').val();
     if (name.length < 1) {
         $("#serverErrors1").html("<div class='danger-alert'>Please enter a value for name</div><br/>");
     } else if (is_multiple.length < 1) {
@@ -88,6 +94,8 @@ $('body').find("#platform_details").on("click ", "#edit-platform", function() {
                 'name': name,
                 'platform_id': slug,
                 'is_multiple': is_multiple,
+                'price': price,
+                'recycle_price': recycle_price,
                 'req': 'update_platform'
             },
             success: function(rst) {
@@ -152,8 +160,8 @@ $('body').find("table.table-striped.table-hover.platforms tbody tr").each(functi
             url: $(this).data("href"),
             method: "GET",
             data: {
-                _token: TOKEN,
-                req: "platform_delete"
+                '_token': TOKEN,
+                'req': "platform_delete"
             },
             success: function(rst) {
                 if (rst.type == "true") {
@@ -193,7 +201,7 @@ $('body').find("table.table-striped.table-hover.platforms tbody tr").each(functi
             url: $(this).data("href"),
             method: "GET",
             data: {
-                _token: TOKEN,
+                '_token': TOKEN,
             },
             success: function(rst) {
                 if (rst.type == "true") {
