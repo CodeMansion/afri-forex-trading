@@ -116,10 +116,13 @@ class HomeController extends Controller
     
     public function ref($ref){
         $referral = User::whereSlug($ref)->first();
+        $data['countries'] = Country::all();
         if(!$referral){
             return redirect()->route('register');
         }
-        return view('register',compact('referral'));
+        
+        $data['referral'] = $referral;
+        return view('register')->with($data);
     }
 
     public function forget_password(Request $request)

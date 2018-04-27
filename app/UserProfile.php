@@ -24,10 +24,6 @@ class UserProfile extends Model
     }
 
     public function User(){
-        return $this->belongsTo(User::class);
-    }
-
-    public function Platform(){
-        return $this->belongsTo('App\Platform','user_id');
+        return $this->belongsTo('App\User', 'user_id');
     }
 }

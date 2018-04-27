@@ -34,7 +34,7 @@
                         <ul class="dropdown-menu">
                             <li class="external">
                                 <h3>You have <span class="bold">1 New</span> Messages</h3>
-                                <a href="app_inbox.html">view all</a>
+                                <!-- <a href="app_inbox.html">view all</a> -->
                             </li>
                             <li>
                                 

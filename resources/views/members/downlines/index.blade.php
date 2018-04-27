@@ -53,17 +53,16 @@
                                     </thead>
                                     <tbody>
                                         @php($counter=1)
-                                        @forelse($downlines as $down)
+                                        @foreach($downlines as $downline)
                                             <tr>
-                                                <td>{{ $counter++}}</td>
-                                                <td><span class="label label-sm label-success">{{ $down->Profile->Platform->name}}</span></td>
-                                                <td>{{ $down->Profile->User->username}}</td>
-                                                <td>{{ $down->Profile->full_name}} </td> 
-                                                <td>{{ $down->Profile->email}} </td> 
-                                                <td>{{ $down->Profile->telephone}} </td>  
+                                                <td>#</td>
+                                                <td><span class="label label-sm label-success">{{ $downline->Platform->name}}</span></td>
+                                                <td>{{ $downline->User->username}}</td>
+                                                <td>{{ $downline->User->full_name}} </td> 
+                                                <td>{{ $downline->User->email}} </td> 
+                                                <td>{{ $downline->User->telephone}} </td>  
                                             </tr>
-                                        @empty
-                                        @endforelse
+                                        @endforeach
                                     </tbody>
                                 </table>
                             @endif

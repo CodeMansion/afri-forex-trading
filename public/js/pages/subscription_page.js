@@ -51,6 +51,7 @@ var AppServiceSubscription = function() {
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 swal("Error",errorMsg,"error");
+                $("#payment_btn").attr('disabled', false);
             }
         });
     }
@@ -74,7 +75,6 @@ var AppServiceSubscription = function() {
             });
 
             $('body').find("#select_packages").on("click","#payment_btn", function() {
-                $(this).attr('disabled', true);
                 var amount = $("#amount").val();
                 var id = $("#select_packages").find("#platform_id").val();
                 swal({

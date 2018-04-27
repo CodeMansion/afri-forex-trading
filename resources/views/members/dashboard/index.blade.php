@@ -39,9 +39,6 @@
 @endsection
 @section('extra_script')
     <script>
-        var subscription_count = "{{ $subscription }}";
-        var investment_count   = "{{ $investment }}";
-        var referral_count  = "{{ $referrals }}";
         var TOKEN = "{{csrf_token()}}";
         var PLATFORM_URL = "{{URL::route('package')}}";
         var SUBSCRIBE = "{{URL::route('subscriptions.add')}}";
@@ -49,14 +46,11 @@
         var MEMBERS = "{{ URL::route('loadMembers') }}";
         var TRANSACTION_ONE = "{{ URL::route('loadTransactionsOne') }}";
         var ACTIVITY_ONE = "{{ URL::route('loadActivityLogsOne') }}";
+        var DISPUTE = "{{ URL::route('loadDispute') }}";
+        var ACTIVITY = "{{ URL::route('loadActivityLogs') }}";
+        var TRANSACTION = "{{ URL::route('loadTransactions') }}";
     </script>
     <script src="{{ asset('js/pages/dashboard.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/flot/jquery.flot.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/flot/jquery.flot.pie.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" ="text/javascript"></script>
 @endsection
 @section('after_script')
-    <script src="{{ asset('assets/pages/members/script.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/pages/dashboard_chart.js') }}" type="text/javascript"></script>
 @endsection

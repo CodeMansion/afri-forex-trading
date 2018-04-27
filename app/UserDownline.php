@@ -14,12 +14,10 @@ class UserDownline extends Model
     }
 
     public function User(){
-        return $this->belongsTo('App\User','user_id');
+        return $this->belongsTo('App\User','downline_id');
     }
 
-    public function Profile(){
-        return $this->hasOne('App\UserProfile','user_id');
+    public function Platform() {
+        return $this->belongsTo('App\Platform', 'platform_id');
     }
-
-    
 }

@@ -42,6 +42,13 @@ class EarningTypeTableSeeder extends Seeder
                 'name' => 'Quarterly',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()->addMinute(10),
+            ],
+            [
+                'id' => 5,
+                'slug' => bin2hex(random_bytes(64)),                
+                'name' => 'Referral',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()->addMinute(10),
             ]
         ]);
     }

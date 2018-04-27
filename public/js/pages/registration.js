@@ -47,7 +47,7 @@ var AppRegistration = function() {
                         toastr.success("Registration was successfully. A link has been sent to your email for confirmation. Thank you!");
                         setTimeout(() => {
                             window.location.replace("/login");
-                        }, 10000);
+                        }, 3000);
                     } else if (rst.type == "false") {
                         $("#register_member_btn").attr("disabled", false);
                         $("#register_member_btn").html("Submit");

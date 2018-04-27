@@ -40,7 +40,7 @@ var AppDashboard = function() {
     var showActivityLogs = function(type) {
         $("#activity_loader").show();
         $.ajax({
-            url: (type == 'admin') ? ACTIVITY_ALL : ACTIVITY_ONE , 
+            url: (type == 'admin') ? ACTIVITY : ACTIVITY_ONE , 
             success: function(data) {
                 $("#activity_loader").hide();
                 $("#show_logs").html(data);

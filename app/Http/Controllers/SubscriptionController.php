@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Subscription;
-use DB;
 use Carbon\Carbon;
 use App\PaymentTransaction;
 use App\Mail\Subscriptions;
 use App\UserDownline;
 use App\UserWallet;
 use App\TransactionCategory;
+use App\Notifications\MemberSubscription;
 use Gate;
+use DB;
+use Notification;
+use App\User;
 
 class SubscriptionController extends Controller
 {
@@ -50,7 +53,7 @@ class SubscriptionController extends Controller
                 $earning->slug           = bin2hex(random_bytes(64));
                 $earning->user_id       = auth()->user()->id;
                 $earning->platform_id   = $subscription->platform_id;
-                $earning->amount        = ($params['downlines']->count() - 2) * 5;
+                $earning->amount        = $params['downlines']->count() * 25;
                 $earning->save();
             }
             
@@ -118,9 +121,16 @@ class SubscriptionController extends Controller
                     'updated_at'    => Carbon::now()
                 ]);
 
-                #TODO - Upline info
+                $upline = UserDownline::where('downline_id',auth()->user()->id)->first();
+                $upline->platform_id = $data['id'];
+                $upline->is_active = true;
+                $upline->investment_amount = (double)$data['amount'];
+                $upline->save();
+
                 #TODO - Send email notification
                 #TODO - Send system message
+                $admin = User::find(1);
+                Notification::send($admin, new MemberSubscription($subscribe));
 
                 activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribed for Daily Signal");
                 return response()->json([

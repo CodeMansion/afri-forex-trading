@@ -21,6 +21,7 @@ class CreateInvestmentsTable extends Migration
             $table->integer('platform_id')->unsigned()->index();
             $table->integer('package_id')->unsigned()->index();
             $table->integer('package_type_id')->unsigned()->index();
+            $table->date('expiry_date')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
 

@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Subscription;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -97,11 +99,18 @@ class User extends Authenticatable
 
     }
     
-    public function UserDownline($platform_id){
-        if($platform_id == ''){
+    public function UserDownline($platform_id=null){
+        if($platform_id == null){
             return $this->hasMany('App\UserDownline','upline_id');
         }
-        return $this->hasMany('App\UserDownline','upline_id')->where('platform_id',$platform_id);
+        return $this->hasMany('App\UserDownline','upline_id')->where([
+            'platform_id'   => $platform_id,
+            'is_active'     => true
+        ]);
+    }
+
+    public function UserEarnings() {
+        return $this->hasMany('App\Earning', 'user_id');
     }
 
     public function Platform(){
@@ -136,5 +145,10 @@ class User extends Authenticatable
 
     public function scopeUserProfile($query) {
         return $query->where('id',auth()->user()->id)->first();
+    }
+
+    public static function SubscriptionMembers() {
+        $members = Subscription::all();
+        return $members;
     }
 }
