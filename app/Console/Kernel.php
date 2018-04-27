@@ -13,9 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        '\App\Console\Commands\Investment',
-        '\App\Console\Commands\Referral',
-        '\App\Console\Commands\Subscription',
+        
     ];
 
     /**
@@ -26,10 +24,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('Investment:calculation')->everyMinute();
-        $schedule->command('Referral:calculation')->everyMinute();
-        $schedule->command('Subscription:calculation')->everyMinute();
-        $schedule->command('HourlyEarning:shoot')->everyMinute();
         $schedule->command('DailySignalEarnings:shoot')->everyMinute();
     }
 
