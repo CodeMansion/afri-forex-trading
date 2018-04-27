@@ -1,3 +1,4 @@
+<?php $config = \App\GeneralSetting::find(1); ?>
 <!DOCTYPE html>
 <html>
     <head>

@@ -48,6 +48,7 @@ var GeneralSettings = function() {
                     $("#update_general_settings_btn").attr('disabled', false);
                     $("#loader").hide();
                     swal("Successful", rst.msg, "success");
+                    location.reload();
                 } else if(rst.type == "false") {
                     $("#update_general_settings_btn").attr('disabled', false);
                     $("#loader").hide();

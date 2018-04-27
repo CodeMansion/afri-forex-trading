@@ -23,7 +23,9 @@ var AppUtilities = function() {
             url: NOTIFY, 
             success: function(data) {
                 if(NOTIFY_COUNT >= 1) {
-                    $('#notifyAudio')[0].play();
+                    if(ENABLE_SOUND == 1) {
+                        $('#notifyAudio')[0].play();
+                    }
                 }
                 $('#header_notification_bar').show();
                 $('#header_notification_bar').html(data);
@@ -34,6 +36,7 @@ var AppUtilities = function() {
         });
     }
 
+    
     var pushNotification = function() {
         if(NOTIFY_COUNT >= 1) {
             toastr.info("You have unread notifications");
@@ -45,20 +48,34 @@ var AppUtilities = function() {
         location.reload();
     }
 
+
     setInterval(() => {
         displayNotifications();
     }, 10000)
 
-    setInterval(() => {
-        pushNotification();
-    }, 30000);
+
+    if(ENABLE_PUSH == 1) {
+        setInterval(() => {
+            pushNotification();
+        }, 30000);
+    }
     
     
     return {
         init: function() {
             loadComponent();
             displayNotifications();
-            pushNotification();
+
+            if(ENABLE_PUSH == 1) {
+                pushNotification();
+            }
+
+            $('body').find("#header_notification_bar li #mark_notification_as_read li").each(function(index) {
+                $("#mark_" + index).on("click", function() {
+                    alert('hello');
+                });
+            });
+            
         }
     }
 }();
