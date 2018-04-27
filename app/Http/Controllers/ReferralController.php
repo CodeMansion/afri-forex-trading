@@ -8,6 +8,9 @@ use App\Mail\Referrer;
 use App\UserDownline;
 use App\PaymentTransaction;
 use App\UserWallet;
+use Carbon\Carbon;
+use App\Investment;
+use App\Subscription;
 use Gate;
 
 class ReferralController extends Controller
@@ -32,26 +35,10 @@ class ReferralController extends Controller
                 return redirect(route('packageSub'));
             }
 
-            $referral = Referral::whereUserId(auth()->user()->id)->first();
-            $params['downlines'] = UserDownline::whereUplineId(auth()->user()->id)->wherePlatformId($referral->platform_id)->get();
-            $params['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->wherePlatformId($referral->platform_id)->get();
-            $params['recent'] = PaymentTransaction::whereUserId(auth()->user()->id)->wherePlatformId($referral->platform_id)->orderBy('id','desc')->first();
-            $params['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
-            $earning = \App\Earning::whereUserId(auth()->user()->id)->wherePlatformId($referral->platform_id)->first();
+            $referral = Referral::UserReferrals()->first();
+            $params['downlines'] = UserDownline::UserDownline()->wherePlatformId($referral->platform_id)->get();
+            $params['transactions'] = PaymentTransaction::UserTransactions()->wherePlatformId($referral->platform_id)->get();
             
-            if(!empty($earning)){
-                $earning->amount = ($params['downlines']->count() - 2) * 5;
-                $earning->save();
-            }else{
-                $earning                = new \App\Earning(); 
-                $earning->slug           = bin2hex(random_bytes(64));
-                $earning->user_id       = auth()->user()->id;
-                $earning->platform_id   = $referral->platform_id;
-                $earning->amount        = ($params['downlines']->count() - 2) * 5;
-                $earning->save();
-            }
-            
-            $params['earning'] = $earning;
             return view('members.platforms.referrals.index')->with($params);
         }
     }
@@ -66,6 +53,17 @@ class ReferralController extends Controller
         //
     }
 
+    protected function CheckIfOtherServicesExist(){
+        $investment = Investment::UserInvestments()->count();
+        $subscription = Subscription::UserSubscriptions()->count();
+        if($investment > 0 || $subscription > 0){
+            return $response = [
+                'msg' => "Error.",
+                'type' => "false"
+            ];
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -78,6 +76,15 @@ class ReferralController extends Controller
         if(isset($data) && $data['req'] == 'referral') {
             \DB::beginTransaction();
             try {
+
+                $investment = Investment::UserInvestments()->count();
+                $subscription = Subscription::UserSubscriptions()->count();
+                if($investment > 0 || $subscription > 0){
+                    return $response = [
+                        'msg' => "Error.",
+                        'type' => "false"
+                    ];
+                }
                 $referral                  = new Referral();
                 $referral->slug            = bin2hex(random_bytes(64));
                 $referral->user_id         = auth()->user()->id;
@@ -103,6 +110,15 @@ class ReferralController extends Controller
                     }
 
                 }
+                
+                $wallet = UserWallet::insert([
+                    'slug'          => bin2hex(random_bytes(64)),
+                    'user_id'       => auth()->user()->id,
+                    'amount'        => 0.00,
+                    'status'        => 1,
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
                 
                 
                 //\Mail::to(auth()->user()->email)->send(new Referrer($referral));

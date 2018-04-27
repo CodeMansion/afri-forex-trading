@@ -3,6 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TransactionCategory;
+use App\PaymentTransaction;
+use App\Package;
+use App\PackageType;
+use App\Investment;
+use App\UserDownline;
+use App\Mail\Investments;
+use App\UserWallet;
+use App\Referral;
+use App\User;
+use Carbon\Carbon;
 
 use Gate;
 
@@ -28,7 +39,9 @@ class InvestmentController extends Controller
                 return redirect(route('packageSub'));
             }
 
-            $params['downlines'] = UserDownline::all();
+            $investment = Investment::UserInvestments()->first();
+            $params['investments'] = Investment::UserInvestments()->get();
+            $params['downlines'] = UserDownline::UserDownline()->wherePlatformId($investment->platform_id)->get();
             return view('members.platforms.investments.index')->with($params);
         }
     }
@@ -51,7 +64,82 @@ class InvestmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        if(isset($data) && $data['req'] == 'investment_pay') {
+            \DB::beginTransaction();
+            try {
+                $referral = Referral::UserReferrals()->count();
+                if($referral > 0 ){
+                    return $response = [
+                        'msg' => "You can not subscribe to investment! User already exist on referrer service.",
+                        'type' => "false"
+                    ];
+                }
+                $investment                  = new Investment();
+                $investment->slug            = bin2hex(random_bytes(64));
+                $investment->user_id         = auth()->user()->id;
+                $investment->platform_id     = $data['platform_id'];
+                $investment->package_id      = $data['package_id'];
+                $investment->package_type_id = $data['package_type_id'];
+                $investment->status          = 1;
+                $investment->save();
+                
+                $transaction                            = new PaymentTransaction();
+                $transaction->slug                      = bin2hex(random_bytes(64));
+                $transaction->user_id                   = auth()->user()->id;
+                $transaction->platform_id               = $data['platform_id'];
+                $transaction->transaction_category_id   = TransactionCategory::whereName('Debit')->first()->id;
+                $transaction->amount                    = Package::whereId($data['package_id'])->first()->investment_amount;
+                $transaction->is_paid                   = true;
+                $transaction->reference_no              = bin2hex(random_bytes(8));
+                $transaction->save();
+
+                $upline = UserDownline::whereDownlineId(auth()->user()->id)->first();
+                if(isset($upline)){
+                    if($upline->platform_id == Null){
+                        $upline->platform_id        = $investment->platform_id;
+                        $upline->is_active          = 1;
+                        $upline->investment_amount  = $transaction->amount;
+                        $upline->save();
+                    }else{
+                        // new platform downline
+                        $downline                   = new UserDownline();
+                        $downline->platform_id      = $investment->platform_id;
+                        $downline->upline_id 	    = $upline->upline_id;
+                        $downline->downline_id 	    = $investment->user_id;
+                        $downline->is_active        = 1;
+                        $downline->investment_amount= $transaction->amount;
+                        $downline->save();
+                    }
+
+                }
+
+                $wallet = UserWallet::insert([
+                    'slug'          => bin2hex(random_bytes(64)),
+                    'user_id'       => auth()->user()->id,
+                    'amount'        => 0.00,
+                    'status'        => 1,
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
+                
+                //\Mail::to(auth()->user()->email)->send(new Investments($investment));
+                $ip = $_SERVER['REMOTE_ADDR'];
+                activity_logs(auth()->user()->id, $ip, "Payed for Investment");
+            \DB::commit();
+                return response()->json([
+                    'msg' => "You Have Successfully investment For Investment.",
+                    'type' => "true"
+                ],200);
+
+            } catch(Exception $e) {
+                \DB::rollback();
+                return $response = [
+                    'msg' => "Internal Server Error",
+                    'type' => "false"
+                ];
+            }
+        }
     }
 
     /**
@@ -62,7 +150,27 @@ class InvestmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $investment = Investment::UserInvestments()->whereId($id)->first();
+        $params['downlines'] = UserDownline::UserDownline()->wherePlatformId($investment->platform_id)->get();
+        $params['transactions'] = PaymentTransaction::UserTransactions()->wherePlatformId($investment->platform_id)->get();
+        $params['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
+        $data['debit'] = PaymentTransaction::userLatestDebit()->first();
+        $data['credit'] = PaymentTransaction::userLatestCredit()->first();
+        $earning = \App\Earning::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->first();
+        
+        if(!empty($earning)){
+            $earning->amount = $params['downlines']->count()  * 25;
+            $earning->save();
+        }else{
+            $earning                = new \App\Earning();
+            $earning->slug           = bin2hex(random_bytes(64));
+            $earning->user_id       = auth()->user()->id;
+            $earning->platform_id   = $subscription->platform_id;
+            $earning->amount        = ($params['downlines']->count() - 2) * 5;
+            $earning->save();
+        }
+        
+        $params['earning'] = $earning;
     }
 
     /**

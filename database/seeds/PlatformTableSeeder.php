@@ -42,7 +42,7 @@ class PlatformTableSeeder extends Seeder
                 'slug' => bin2hex(random_bytes(64)),
                 'name' => 'Referrer',
                 'price' => 0,
-                'is_multiple' => true,
+                'is_multiple' => false,
                 'is_active' => true,
                 'description' => null,
                 'created_at' => Carbon::now(),

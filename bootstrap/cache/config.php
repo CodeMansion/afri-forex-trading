@@ -8,7 +8,7 @@
     'timezone' => 'UTC',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => 'base64:QHHzFRL3i0yoKOTm7RaE+NEBgs8RLHaqIhWB8a1U4Qk=',
+    'key' => 'base64:Ut97PhdxW8GMZvXbF/JVEfdEmhimA5PeD4VYWZRk6SM=',
     'cipher' => 'AES-256-CBC',
     'log' => 'single',
     'log_level' => 'debug',
@@ -171,7 +171,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1\\storage\\framework/cache/data',
+        'path' => 'C:\\Users\\user\\Desktop\\afri-forex-trading\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -203,6 +203,10 @@
     ),
     'prefix' => 'laravel_cache',
   ),
+  'countries' => 
+  array (
+    'table_name' => 'countries',
+  ),
   'database' => 
   array (
     'default' => 'mysql',
@@ -211,7 +215,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'afrimarket',
+        'database' => 'frio_market',
         'prefix' => '',
       ),
       'mysql' => 
@@ -219,12 +223,12 @@
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'afrimarket',
+        'database' => 'frio_market',
         'username' => 'root',
-        'password' => 'PhilliPians$413',
+        'password' => '',
         'unix_socket' => '',
-        'charset' => 'utf8mb4',
-        'collation' => 'utf8mb4_unicode_ci',
+        'charset' => 'utf8',
+        'collation' => 'utf8_unicode_ci',
         'prefix' => '',
         'strict' => true,
         'engine' => NULL,
@@ -234,9 +238,9 @@
         'driver' => 'pgsql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'afrimarket',
+        'database' => 'frio_market',
         'username' => 'root',
-        'password' => 'PhilliPians$413',
+        'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
         'schema' => 'public',
@@ -247,9 +251,9 @@
         'driver' => 'sqlsrv',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'afrimarket',
+        'database' => 'frio_market',
         'username' => 'root',
-        'password' => 'PhilliPians$413',
+        'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
       ),
@@ -276,12 +280,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1\\storage\\app',
+        'root' => 'C:\\Users\\user\\Desktop\\afri-forex-trading\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1\\storage\\app/public',
+        'root' => 'C:\\Users\\user\\Desktop\\afri-forex-trading\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -314,13 +318,13 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1\\resources\\views/vendor/mail',
+        0 => 'C:\\Users\\user\\Desktop\\afri-forex-trading\\resources\\views/vendor/mail',
       ),
     ),
   ),
   'queue' => 
   array (
-    'default' => 'syncs',
+    'default' => 'sync',
     'connections' => 
     array (
       'sync' => 
@@ -394,7 +398,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1\\storage\\framework/sessions',
+    'files' => 'C:\\Users\\user\\Desktop\\afri-forex-trading\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -414,9 +418,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1\\resources\\views',
+      0 => 'C:\\Users\\user\\Desktop\\afri-forex-trading\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1\\storage\\framework\\views',
+    'compiled' => 'C:\\Users\\user\\Desktop\\afri-forex-trading\\storage\\framework\\views',
   ),
   'trustedproxy' => 
   array (
@@ -432,10 +436,6 @@
       8 => 'X_FORWARDED_PROTO',
       16 => 'X_FORWARDED_PORT',
     ),
-  ),
-  'countries' => 
-  array (
-    'table_name' => 'countries',
   ),
   'tinker' => 
   array (

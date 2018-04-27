@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\PaymentTransaction;
 use App\Mail\Subscriptions;
 use App\UserDownline;
+use App\Referral;
 use App\UserWallet;
 use App\TransactionCategory;
 use App\Notifications\MemberSubscription;
@@ -38,26 +39,9 @@ class SubscriptionController extends Controller
                 return redirect(route('packageSub'));
             }
 
-            $subscription = Subscription::whereUserId(auth()->user()->id)->first();
-            $params['downlines'] = UserDownline::whereUplineId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->get();
-            $params['transactions'] = PaymentTransaction::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->get();
-            $params['recent'] = PaymentTransaction::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->orderBy('id','desc')->first();
-            $params['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
-            $earning = \App\Earning::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->first();
-            
-            if(!empty($earning)){
-                $earning->amount = $params['downlines']->count()  * 25;
-                $earning->save();
-            }else{
-                $earning                = new \App\Earning();
-                $earning->slug           = bin2hex(random_bytes(64));
-                $earning->user_id       = auth()->user()->id;
-                $earning->platform_id   = $subscription->platform_id;
-                $earning->amount        = $params['downlines']->count() * 25;
-                $earning->save();
-            }
-            
-            $params['earning'] = $earning;
+            $subscription = Subscription::UserSubscriptions()->first();
+            $params['downlines'] = UserDownline::UserDownline()->wherePlatformId($subscription->platform_id)->get();
+            $params['transactions'] = PaymentTransaction::UserTransactions()->wherePlatformId($subscription->platform_id)->get();
             return view('members.platforms.subscriptions.index')->with($params);
         }
     }
@@ -88,6 +72,21 @@ class SubscriptionController extends Controller
         $data = $request->except('_token');
         if(isset($type) && $type == 'ajax') {
             try {
+
+                $referral = Referral::UserReferrals()->count();
+                $subscription = Subscription::UserSubscriptions()->count();
+                if($referral > 0 ){
+                    return $response = [
+                        'msg' => "You can not subscribe to daily signal! User already exist on referrer service.",
+                        'type' => "false"
+                    ];
+                }else if($subscription > 0){
+                    return $response = [
+                        'msg' => "User already exist on this service.",
+                        'type' => "false"
+                    ];
+                }
+
                 $subscribe = Subscription::insert([
                     'slug'          => bin2hex(random_bytes(64)),
                     'user_id'       => auth()->user()->id,
@@ -121,20 +120,36 @@ class SubscriptionController extends Controller
                     'updated_at'    => Carbon::now()
                 ]);
 
-                $upline = UserDownline::where('downline_id',auth()->user()->id)->first();
-                $upline->platform_id = $data['id'];
-                $upline->is_active = true;
-                $upline->investment_amount = (double)$data['amount'];
-                $upline->save();
+                $upline = UserDownline::whereDownlineId(auth()->user()->id)->first();
+                if(isset($upline)){
+                    if($upline->platform_id == null){
+                        $upline->platform_id = $data['id'];
+                        $upline->investment_amount = (double)$data['amount'];
+                        $upline->is_active   = 1;
+                        $upline->save();
+                    }else{
+                        // new platform downline
+                        $downline               = new UserDownline();
+                        $downline->platform_id  = $data['id'];
+                        $downline->upline_id 	= $upline->upline_id;
+                        $downline->downline_id 	= auth()->user()->id;
+                        $downline->investment_amount= (double)$data['amount'];
+                        $downline->is_active    = 1;
+                        $downline->save();
+                    }
 
-                #TODO - Send email notification
+                }
+
+                //\Mail::to(auth()->user()->email)->send(new Subscriptions($subscribe));
+
                 #TODO - Send system message
                 $admin = User::find(1);
                 Notification::send($admin, new MemberSubscription($subscribe));
 
                 activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribed for Daily Signal");
                 return response()->json([
-                    'msg' => "Payment successfull!"
+                    'msg' => "Payment successfull!",
+                    'type' => "true"
                 ],200);
 
             } catch(Exception $e) {

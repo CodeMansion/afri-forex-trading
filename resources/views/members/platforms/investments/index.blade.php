@@ -1,255 +1,112 @@
 @extends('members.partials.app')
 
 @section('content')
+    <h1 class="page-title"> 
+        <i class="fa fa-dashboard"></i> Hello, <strong>{{ strtoupper(\Auth::user()->full_name) }} | </strong> <small>MY INVESTMENTS</small> 
+        <span class="pull-right">
+            <i class="fa fa-calendar"></i> <?php echo date('l, F d, Y', strtotime(now())); ?>
+        </span>
+    </h1>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="icon-home"></i>
+                <a href="#">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li><span>Investments</span></li>
+        </ul>
+    </div>
+
 <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-            <div class="dashboard-stat2 ">
-                <div class="display">
-                    <div class="number">
-                        <h3 class="font-green-sharp">
-                            <span data-counter="counterup" data-value="7800">7.00</span>
-                            <small class="font-green-sharp">$</small>
-                        </h3>
-                        <small>RECENT CREDIT</small>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="profile-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light ">
+                        <div class="portlet-title tabbable-line">
+                            <div class="caption caption-md">
+                                <i class="icon-globe theme-font hide"></i>
+                                <span class="caption-subject font-blue-madison bold uppercase">Investments</span>
+                            </div>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab_1_1" data-toggle="tab">Investments </a></li>
+                                <li> <a href="#tab_1_3" data-toggle="tab">Investment Downlines </a></li>
+                            </ul>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1_1">
+                                    <div class="table">
+                                        @if(count($investments) < 1)
+                                            <div class="danger-alert">
+                                                <i class="fa fa-warning"></i> <em>There are no Investment available currently. Please subscibe to a investment service.</em>
+                                            </div>
+                                        @else 
+                                        <table class="table table-striped table-hover" id="sample_2">
+                                            <thead>
+                                                <tr>
+                                                    <th> S/No. </th>
+                                                    <th> Package </th>
+                                                    <th> Package Type </th>
+                                                    <th> Earnings </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php($counter=1)
+                                                @foreach($investments as $investment)
+                                                    <tr>
+                                                        <td>{{ $counter++}}</td>
+                                                        <td>{{ $investment->Package->name}} </td>                      
+                                                        <td>{{ $investment->PackageType->name}}</td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_1_3">
+                                    <div class="table">
+                                        @if(count($downlines) < 1)
+                                            <div class="danger-alert">
+                                                <i class="fa fa-warning"></i> <em>There are no Downline available currently. Please Share Your Referral Link To Get Downlines.</em>
+                                            </div>
+                                        @else 
+                                        <table class="table table-striped table-hover" id="sample_3">
+                                            <thead>
+                                                <tr>
+                                                    <th> S/No. </th>
+                                                    <th> FullName </th>
+                                                    <th> Username </th>
+                                                    <th> Status </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php($counter=1)
+                                                @foreach($downlines as $down)
+                                                    <tr>
+                                                        <td>{{ $counter++}}</td>
+                                                        <td>{{ $down->User->username}} </td>                           
+                                                        <td>{{ $down->User->full_name}}</td>
+                                                        <td>
+                                                            @if($down->is_active == 1)
+                                                                <label class="label label-success btn-sm"> Active</label>
+                                                            @else
+                                                                <label class="label label-warning btn-sm"> Not Active</label>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="icon-pie-chart"></i>
-                    </div>
-                </div>
-                <div class="progress-info">
-                    <div class="progress">
-                        <span style="width: 76%;" class="progress-bar progress-bar-success green-sharp">
-                            <span class="sr-only">20% progress</span>
-                        </span>
-                    </div>
-                <div class="status">
-                    <div class="status-title"> progress </div>
-                        <div class="status-number"> 20% </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-            <div class="dashboard-stat2 ">
-                <div class="display">
-                    <div class="number">
-                        <h3 class="font-red-haze">
-                            <small class="font-green-sharp">$</small>
-                            <span data-counter="counterup" data-value="1349">10.00</span>
-                        </h3>
-                        <small>RECENT DEBIT</small>
-                    </div>
-                    <div class="icon">
-                        <i class="icon-like"></i>
-                    </div>
-                </div>
-                <div class="progress-info">
-                    <div class="progress">
-                        <span style="width: 85%;" class="progress-bar progress-bar-success red-haze">
-                            <span class="sr-only">85% change</span>
-                        </span>
-                    </div>
-                    <div class="status">
-                        <div class="status-title"> change </div>
-                        <div class="status-number"> 85% </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-            <div class="dashboard-stat2 ">
-                <div class="display">
-                    <div class="number">
-                        <h3 class="font-blue-sharp">
-                            <small class="font-green-sharp">$</small>
-                            <span data-counter="counterup" data-value="567">567</span>
-                        </h3>
-                        <small>WALLET</small>
-                    </div>
-                    <div class="icon">
-                        <i class="icon-basket"></i>
-                    </div>
-                </div>
-                <div class="progress-info">
-                    <div class="progress">
-                        <span style="width: 45%;" class="progress-bar progress-bar-success blue-sharp">
-                            <span class="sr-only">45% grow</span>
-                        </span>
-                    </div>
-                    <div class="status">
-                        <div class="status-title"> grow </div>
-                        <div class="status-number"> 45% </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-<!-- BEGIN PORTLET -->
-<div class="portlet light ">
-    <div class="portlet-title">
-        <div class="caption caption-md">
-            <i class="icon-bar-chart theme-font hide"></i>
-            <span class="caption-subject font-blue-madison bold uppercase">Investment Platform</span>
-        </div>
-    </div>
-    <div class="portlet-body">
-        <div class="row number-stats margin-bottom-30">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <div class="stat-left">
-                    <div class="stat-chart">
-                        <!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
-                        <div id="sparkline_bar"><canvas width="90" height="45" style="display: inline-block; width: 90px; height: 45px; vertical-align: top;"></canvas></div>
-                    </div>
-                    <div class="stat-number">
-                        <div class="title"> Total Earnings</div>
-                        <div class="number"> 2460 </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <div class="stat-right">
-                    <div class="stat-chart">
-                        <!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
-                        <div id="sparkline_bar2"><canvas width="90" height="45" style="display: inline-block; width: 90px; height: 45px; vertical-align: top;"></canvas></div>
-                    </div>
-                    <div class="stat-number">
-                        <div class="title"> Recent Earning </div>
-                        <div class="number"> 719 </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-6">
-        <!-- BEGIN SAMPLE TABLE PORTLET-->
-        <div class="portlet box green">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-comments"></i>Investment Transactions</div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="table-scrollable">
-                    <table class="table table-striped table-hover" id="sample_2">
-                        <thead>
-                            <tr>
-                                <th> S/No. </th>
-                                <th> First Name </th>
-                                <th> Last Name </th>
-                                <th> Username </th>
-                                <th> Status </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td> 1 </td>
-                                <td> Mark </td>
-                                <td> Otto </td>
-                                <td> makr124 </td>
-                                <td>
-                                    <span class="label label-sm label-success"> Approved </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td> Jacob </td>
-                                <td> Nilson </td>
-                                <td> jac123 </td>
-                                <td>
-                                    <span class="label label-sm label-info"> Pending </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 3 </td>
-                                <td> Larry </td>
-                                <td> Cooper </td>
-                                <td> lar </td>
-                                <td>
-                                    <span class="label label-sm label-warning"> Suspended </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 4 </td>
-                                <td> Sandy </td>
-                                <td> Lim </td>
-                                <td> sanlim </td>
-                                <td>
-                                    <span class="label label-sm label-danger"> Blocked </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- END SAMPLE TABLE PORTLET-->
-    </div>
-    <div class="col-md-6 col-sm-6 col-xs-6">
-        <!-- BEGIN SAMPLE TABLE PORTLET-->
-        <div class="portlet box green">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-comments"></i>Investment Downlines</div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="table-scrollable">
-                    <table class="table table-striped table-hover" id="sample_3">
-                        <thead>
-                            <tr>
-                                <th> S/No. </th>
-                                <th> First Name </th>
-                                <th> Last Name </th>
-                                <th> Username </th>
-                                <th> Status </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td> 1 </td>
-                                <td> Mark </td>
-                                <td> Otto </td>
-                                <td> makr124 </td>
-                                <td>
-                                    <span class="label label-sm label-success"> Approved </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td> Jacob </td>
-                                <td> Nilson </td>
-                                <td> jac123 </td>
-                                <td>
-                                    <span class="label label-sm label-info"> Pending </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 3 </td>
-                                <td> Larry </td>
-                                <td> Cooper </td>
-                                <td> lar </td>
-                                <td>
-                                    <span class="label label-sm label-warning"> Suspended </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 4 </td>
-                                <td> Sandy </td>
-                                <td> Lim </td>
-                                <td> sanlim </td>
-                                <td>
-                                    <span class="label label-sm label-danger"> Blocked </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -267,5 +124,6 @@
 
 @endsection
 @section('after_script')
+    <script src="{{ asset('js/pages/investment.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" ="text/javascript"></script>
 @endsection

@@ -16,6 +16,16 @@
             </li>
             <li><span>Dashboard</span></li>
         </ul>
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-circle btn-outline green dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-plus"></i>&nbsp;
+                <span class="hidden-sm hidden-xs">Quick Actions&nbsp;</span>&nbsp;
+                <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu" role="menu">                                   
+                <li><a href="{{ URL::route('packageSub') }}"><i class="icon-note"></i>Add Service</a></li> <li><a href="{{ URL::route('register') }}/{{ auth()->user()->slug }}" target="_blank"><i class="icon-note"></i>Add new Member</a></li>
+            </ul>
+        </div>
     </div>
     @include('members.dashboard.partials._cards')
 

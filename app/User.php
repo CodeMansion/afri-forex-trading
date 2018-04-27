@@ -119,7 +119,7 @@ class User extends Authenticatable
 
     public function UserWallet(){
         return $this->belongsTo('App\UserWallet','user_id');
-    }
+    }    
 
     public function debit_transactions() {
         return $this->hasMany('App\PaymentTransaction', 'user_id')->where('transaction_category_id',2);

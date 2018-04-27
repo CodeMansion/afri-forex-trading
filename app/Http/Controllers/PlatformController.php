@@ -81,6 +81,8 @@ class PlatformController extends Controller
                     Platform::insert([
                             'slug' => bin2hex(random_bytes(64)),
                             'name' => $data['name'],
+                            'price' => ($data['price']) ? $data['price'] : "",
+                            'recycle_price' => ($data['recycle_price']) ? $data['recycle_price'] : "",
                             'is_multiple' => $data['is_multiple'],
                     ]);
                     $ip = $_SERVER['REMOTE_ADDR'];
@@ -182,6 +184,8 @@ class PlatformController extends Controller
                     $platform = Platform::find($data['platform_id'],'slug');
                     $platform->name = $data['name'];
                     $platform->is_multiple = $data['is_multiple'];
+                    $platform->price = ($data['price']) ? $data['price'] : "";
+                    $platform->recycle_price = ($data['recycle_price']) ? $data['recycle_price'] : "";
                     $platform->save();
                     $ip = $_SERVER['REMOTE_ADDR'];
                     activity_logs(auth()->user()->id, $ip, "Update Platform");

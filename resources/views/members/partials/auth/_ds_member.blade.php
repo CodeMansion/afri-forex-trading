@@ -16,7 +16,7 @@
 <li class="nav-item {{menu_active($menu_id, 3)}} ">
     <a href="{{ URL::route('platforms.index') }}" class="nav-link nav-toggle">
         <i class="icon-diamond"></i>
-        <span class="title">My Platforms</span>
+        <span class="title">My Services</span>
         <span class="arrow"></span>
     </a>
 </li>
