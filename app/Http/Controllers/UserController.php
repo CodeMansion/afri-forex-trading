@@ -73,6 +73,36 @@ class UserController extends Controller
         }
     }
 
+
+    public function resetPassword(Request $request)
+    {
+        $data = $request->except('_token');
+        if($data) {
+            try {
+                $check = User::where('password',bcrypt($data['old_password']))->first();
+                if(!$check) {
+                    return response()->json([
+                        "msg"   => "Incorrect old password!",
+                        "type"  =>  "false"
+                    ]);
+                }
+                
+                $member = User::find($data['slug'],'slug');
+                $member->password = $data['new_password'];
+                $member->save();
+
+                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "$member->full_name changed password");
+                return response()->json([
+                    "msg"   => "Password changed successfully!",
+                    "type"  => "true"
+                ],200);
+
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

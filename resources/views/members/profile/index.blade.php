@@ -149,6 +149,8 @@
     <script>
         var TOKEN = "{{csrf_token()}}";
         var RESET = "{{URL::route('reset.store')}}";
+        var RESET_PASSWORD = "{{ URL::route('resetPassword') }}";
+        var USER_SLUG = "{{ auth()->user()->slug }}";
     </script>
     <script src="{{ asset('js/pages/user_profile.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>

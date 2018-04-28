@@ -104,7 +104,8 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::post('/update',["as"=>"users.update",'uses'=> 'UserController@update']);		
 		Route::get('/delete/{id?}',["as"=>"users.delete",'uses'=> 'UserController@destroy']);		
 		Route::post('/get-details', ["as"=>"users.editInfo", "uses"=>"UserController@getEditInfo"]);		
-		Route::post('/activate-member-account', ["as"=>"activateMemberAccount", "uses"=>"UserController@activate"]);		
+		Route::post('/activate-member-account', ["as"=>"activateMemberAccount", "uses"=>"UserController@activate"]);
+		Route::post('/password-reset', ["as"=>"resetPassword", "uses"=>"UserController@resetPassword"]);		
 	});	
 	
 	//-	---- TRANSACTION CATEGORY MANAGEMENT ----//	
