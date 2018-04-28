@@ -49,6 +49,7 @@ var AppServiceSubscription = function() {
                         toastr.error(errorMsg);
                     }
                 });
+                
             } else {
                 toastr.info("You selected Referrer!");
                 $.ajax({
@@ -89,17 +90,14 @@ var AppServiceSubscription = function() {
                     swal("Successful!", data.msg, "success");
                     setTimeout(() => {
                         window.location.replace("/dashboard");
-                    }, 3000);
+                    }, 2000);
                 } else if (data.type == "false") {
                     toastr.warning(data.msg);
                 }
             },
             error: function(alaxB, HTTerror, errorMsg) {
-<<<<<<< HEAD
                 swal("Error",errorMsg,"error");
                 $("#payment_btn").attr('disabled', false);
-=======
-                swal("Error", errorMsg, "error");
             }
         });
     }
@@ -118,7 +116,7 @@ var AppServiceSubscription = function() {
                     swal("Successful!", rst.msg, "success");
                     setTimeout(() => {
                         window.location.replace("/dashboard");
-                    }, 3000);
+                    }, 2000);
                 } else if (rst.type == "false") {
                     toastr.warning(rst.msg);
                 }
@@ -145,12 +143,11 @@ var AppServiceSubscription = function() {
                     swal("Successful!", rst.msg, "success");
                     setTimeout(() => {
                         window.location.replace("/dashboard");
-                    }, 3000);
+                    }, 2000);
                 } else if (rst.type == "false") {}
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 swal("Error", errorMsg, "error");
->>>>>>> d90deb90a4a301c9e96e88d246f90005fc19f9e3
             }
         });
     }
@@ -173,9 +170,6 @@ var AppServiceSubscription = function() {
                 $("#service_page").fadeIn();
             });
 
-<<<<<<< HEAD
-            $('body').find("#select_packages").on("click","#payment_btn", function() {
-=======
             $('body').find("#select_packages").on("click", "#package_type", function() {
                 $("#select_packages").hide();
                 $("#select_package_types").fadeIn();
@@ -214,7 +208,6 @@ var AppServiceSubscription = function() {
 
             $('body').find("#select_packages").on("click", "#payment_btn", function() {
                 $(this).attr('disabled', true);
->>>>>>> d90deb90a4a301c9e96e88d246f90005fc19f9e3
                 var amount = $("#amount").val();
                 var id = $("#select_packages").find("#platform_id").val();
                 swal({

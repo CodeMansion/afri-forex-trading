@@ -327,12 +327,12 @@ class HomeController extends Controller
     }
 
     public function loadActivityLogs() {
-        $data['activities'] = ActivityLog::orderBy('id','DESC')->limit(10)->get();
-        return view('admin.partials.util._activity_logs')->with($data);
-    }
-
-    public function loadActivityLogsOne() {
-        $data['activities'] = ActivityLog::userActivities()->orderBy('id','DESC')->limit(10)->get();
+        if(auth()->user()->is_admin) {
+            $data['activities'] = ActivityLog::orderBy('id','DESC')->limit(10)->get();
+        } elseif(auth()->user()->is_admin == 0) {
+            $data['activities'] = ActivityLog::userActivities()->orderBy('id','DESC')->limit(10)->get();
+        }
+        
         return view('admin.partials.util._activity_logs')->with($data);
     }
 
@@ -341,12 +341,12 @@ class HomeController extends Controller
     }
 
     public function loadTransactions() {
-        $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
-        return view('admin.partials.util._recent_transactions')->with($data);
-    }
-
-    public function loadTransactionsOne() {
-        $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','DESC')->limit(10)->get();
+        if(auth()->user()->is_admin) {
+            $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
+        } else if(auth()->user()->is_admin == 0) {
+            $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','DESC')->limit(10)->get();
+        }
+        
         return view('admin.partials.util._recent_transactions')->with($data);
     }
 }

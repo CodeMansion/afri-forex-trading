@@ -47,7 +47,7 @@
         </div>
         <div class="scroller-footer">
             <div class="btn-arrow-link pull-right">
-                <a href="javascript:;">See All Records</a>
+                <a href="{{ URL::route('membersIndex') }}">See All Records</a>
                 <i class="icon-arrow-right"></i>
             </div>
         </div>

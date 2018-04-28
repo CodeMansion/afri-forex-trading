@@ -54,8 +54,6 @@
         var SUBSCRIBE = "{{URL::route('subscriptions.add')}}";
         var REFERRAL = "{{URL::route('referrals.add')}}";
         var MEMBERS = "{{ URL::route('loadMembers') }}";
-        var TRANSACTION_ONE = "{{ URL::route('loadTransactionsOne') }}";
-        var ACTIVITY_ONE = "{{ URL::route('loadActivityLogsOne') }}";
         var DISPUTE = "{{ URL::route('loadDispute') }}";
         var ACTIVITY = "{{ URL::route('loadActivityLogs') }}";
         var TRANSACTION = "{{ URL::route('loadTransactions') }}";

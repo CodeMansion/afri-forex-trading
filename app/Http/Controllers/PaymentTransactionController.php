@@ -29,6 +29,7 @@ class PaymentTransactionController extends Controller
                 return redirect(route('packageSub'));
             }
 
+            $data['menu_id'] = 6.0;
             $data['transactions'] = PaymentTransaction::userTransactions()->get();
             $data['debit']  = PaymentTransaction::userLatestDebit()->first();
             $data['credit']  = PaymentTransaction::userLatestCredit()->first();

@@ -22,6 +22,7 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::post('/get-referrer-info', ["as"=>"getReferrerInfo", "uses"=>"HomeController@getReferrerInfo"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
 	Route::post('/process-payment/{type?}',["as" => "processPayment", "uses"  => "SubscriptionController@processPayment"]);
+	
 	//--- ADMIN NOTIFICATIONS ---//
 	Route::get('/dashboard-notify',["as"=>"dashboardNotify", "uses"=>"HomeController@indexNotify"]);
 	Route::get('/notifications',["as"=>"notifications", "uses"=>"HomeController@notifications"]);
@@ -31,11 +32,7 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::get('/load-support', ["as"=>"loadSupport", "uses"=>"HomeController@loadSupport"]);
 	Route::get('/load-chart', ["as"=>"loadChart", "uses"=>"HomeController@loadChart"]);
 	Route::get('/load-new-members', ["as"=>"loadMembers", "uses"=>"HomeController@loadMembers"]);
-
-	//--- USERS NOTIFICATIONS ---//
-	Route::get('/load-activity-logs-one', ["as"=>"loadActivityLogsOne", "uses"=>"HomeController@loadActivityLogsOne"]);
-	Route::get('/load-transactions-one', ["as"=>"loadTransactionsOne", "uses"=>"HomeController@loadTransactionsOne"]);
-
+	
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
         //-- ROLES AND PERMISSION --//

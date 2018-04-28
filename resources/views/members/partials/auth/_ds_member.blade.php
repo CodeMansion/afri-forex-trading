@@ -13,14 +13,14 @@
         <span class="arrow"></span>
     </a>
 </li>
-<li class="nav-item {{menu_active($menu_id, 3)}} ">
+<li class="nav-item {{menu_active($menu_id, 3)}}">
     <a href="{{ URL::route('platforms.index') }}" class="nav-link nav-toggle">
         <i class="icon-diamond"></i>
         <span class="title">My Services</span>
         <span class="arrow"></span>
     </a>
 </li>
-<li class="nav-item  ">
+<li class="nav-item {{menu_active($menu_id, 4)}}">
     <a href="{{ URL::route('downlines.index') }}">
         <i class="icon-puzzle"></i>
         <span class="title">My DownLines</span>

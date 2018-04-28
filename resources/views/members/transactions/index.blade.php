@@ -26,9 +26,7 @@
                 <span class="caption-subject font-green-haze bold uppercase">My Recent Transactions </span>
                 <span class="caption-helper">Displaying list of Transactions </span>                        
             </div>
-            <div class="actions">
-                
-            </div>
+            <div class="actions"></div>
         </div>
         <div class="portlet-body util-btn-margin-bottom-5">
             <div class="row">
@@ -36,30 +34,31 @@
                     @if(count($transactions) < 1)
                         <center><em>No Transactions found</em></center>
                     @else 
-                    <table class="table table-striped table-hover" id="sample_2">
+                    <table class="table table-bordered table-hover" id="sample_2">
                         <thead>
                             <tr>
-                                <th> S/No. </th>
-                                <th> Reference No. </th>
-                                <th> Category </th>
-                                <th> Platform </th>
-                                <th> Amount </th>                                
+                                <th width="30">S/N</th>
+                                <th>REFRENCE NO</th>
+                                <th width="50">TYPE</th>
+                                <th>SERVICE</th>
+                                <th width="90">AMOUNT</th>  
+                                <th width="50">STATUS</th> 
+                                <th>DATE</th>                             
                             </tr>
                         </thead>
                         <tbody>
                             @php($counter=1)
-                            @forelse($transactions as $trans)
+                            @foreach($transactions as $transaction)
                             <tr>
-                                <td>{{$counter++}}</td>
-                                <td>{{ $trans->reference_no }}</td>
-                                <td> <span class="label label-sm label-success"> {{ $trans->Category->name }} </span> </td>
-                                <td> {{ $trans->Platform->name }} </td>
-                                <td> {{ $trans->amount }} </td>
-                                <td>
-                                </td>
+                                <td>#</td>
+                                <td>{{ $transaction->reference_no }}</td>
+                                <td><span class="badge badge-success"> {{ $transaction->Category->name }} </span> </td>
+                                <td>{{ $transaction->Platform->name }}</td>
+                                <td>${{ number_format($transaction->amount,2) }}</td>
+                                <td></td>
+                                <td>{{ $transaction->created_at }}</td>
                             </tr>
-                            @empty
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                     @endif
@@ -69,12 +68,12 @@
     </div>
 @endsection
 @section('extra_script')    
-    <script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" ="text/javascript"></script>
-    <script src="{{ asset('assets/global/scripts/datatable.js') }}" ="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" ="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" ="text/javascript"></script>
+    
 @endsection
 @section('after_script')
-    <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" type="text/javascript"></script>
 @endsection

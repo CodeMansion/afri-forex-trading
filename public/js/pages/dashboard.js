@@ -37,10 +37,10 @@ var AppDashboard = function() {
         });
     }
 
-    var showActivityLogs = function(type) {
+    var showActivityLogs = function() {
         $("#activity_loader").show();
         $.ajax({
-            url: (type == 'admin') ? ACTIVITY : ACTIVITY_ONE , 
+            url: ACTIVITY, 
             success: function(data) {
                 $("#activity_loader").hide();
                 $("#show_logs").html(data);
@@ -51,10 +51,10 @@ var AppDashboard = function() {
         });
     }
 
-    var showTransactions = function(type) {
+    var showTransactions = function() {
         $("#transaction_loader").show();
         $.ajax({
-            url: (type == 'admin') ? TRANSACTION : TRANSACTION_ONE, 
+            url: TRANSACTION, 
             success: function(data) {
                 $("#transaction_loader").hide();
                 $('#show_transaction').html(data);
@@ -65,10 +65,10 @@ var AppDashboard = function() {
         });
     }
 
-    var showLatestNews = function(type) {
+    var showLatestNews = function() {
         $("#transaction_loader").show();
         $.ajax({
-            url: (type == 'admin') ? TRANSACTION_ALL : TRANSACTION_ONE , 
+            url: TRANSACTION, 
             success: function(data) {
                 $("#transaction_loader").hide();
                 $('#show_transaction').html(data);
@@ -92,8 +92,8 @@ var AppDashboard = function() {
             LoadComponent();
             showDispute();
             showNewMembers();
-            showActivityLogs('admin');
-            showTransactions('admin');
+            showActivityLogs();
+            showTransactions();
         }
     }
 }();
