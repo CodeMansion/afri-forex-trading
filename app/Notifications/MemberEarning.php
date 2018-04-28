@@ -11,16 +11,16 @@ class MemberEarning extends Notification
 {
     use Queueable;
 
-    protected $earning;
+    protected $member;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($earning)
+    public function __construct($member)
     {
-        $this->earning = $earning;
+        $this->member = $member;
     }
 
     /**
@@ -61,10 +61,10 @@ class MemberEarning extends Notification
         ];
     }
 
-    public function toDatabase($notifiable) 
+    public function toDatabase($notifiable)
     {
         return [
-            'user'   => auth()->user()
-        ];  
+            'user' => auth()->user()
+        ];
     }
 }

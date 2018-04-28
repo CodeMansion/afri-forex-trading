@@ -303,15 +303,15 @@
   array (
     'driver' => 'smtp',
     'host' => 'smtp.mailtrap.io',
-    'port' => '2525',
+    'port' => 25,
     'from' => 
     array (
-      'address' => 'hello@example.com',
-      'name' => 'Example',
+      'address' => 'support@afromarketers.com',
+      'name' => 'Afro Marketers',
     ),
-    'encryption' => NULL,
-    'username' => NULL,
-    'password' => NULL,
+    'encryption' => 'TLS',
+    'username' => '3d7504a2bedc3d',
+    'password' => '6c1205c12632af',
     'sendmail' => '/usr/sbin/sendmail -bs',
     'markdown' => 
     array (

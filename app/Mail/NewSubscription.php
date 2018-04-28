@@ -10,19 +10,20 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ConfirmRegistration extends Mailable
+class NewSubscription extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $member;
+    protected $service;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($member)
+    public function __construct($service)
     {
-        $this->member = $member;
+        $this->service = $service;
     }
 
     /**
@@ -33,10 +34,11 @@ class ConfirmRegistration extends Mailable
     public function build()
     {
         $data['setting'] = MailSetting::find(1);
-        $data['member'] = $this->member;
+        $data['service'] = $this->service;
+        $data['member'] = auth()->user()->full_name;
 
-        return $this->view("emails.confirm_registration")->with($data)
+        return $this->view("emails.member_subscription")->with($data)
             ->replyTo($data['setting']['reply_to'])
-            ->subject("New Member Account Activation");
+            ->subject("First Time Subscription");
     }
 }

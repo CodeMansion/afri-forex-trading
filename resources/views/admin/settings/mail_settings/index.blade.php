@@ -60,9 +60,9 @@
                                     <label class="col-md-3 control-label">Mail Encryption</label>
                                     <div class="col-md-9">
                                         <select class="form-control" id="mail_encryption">
-                                            <option name="none" <?php ($mailing['encryption'] == 'none') ? "selected" : ""; ?> >None</option>
-                                            <option name="tls" <?php ($mailing['encryption'] == 'tls') ? "selected" : ""; ?>>TLS</option>
-                                            <option name="ssl" <?php ($mailing['encryption'] == 'ssl') ? "selected" : ""; ?>>SSL</option>
+                                            <option name="none" <?php echo ($mailing['encryption'] == 'none') ? "selected" : ""; ?> >None</option>
+                                            <option name="tls" <?php echo ($mailing['encryption'] == 'TLS') ? "selected" : ""; ?>>TLS</option>
+                                            <option name="ssl" <?php echo ($mailing['encryption'] == 'SSL') ? "selected" : ""; ?>>SSL</option>
                                         </select>
                                     </div>
                                 </div>

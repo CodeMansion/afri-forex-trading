@@ -10,16 +10,17 @@ use Illuminate\Notifications\Messages\MailMessage;
 class MemberSubscription extends Notification
 {
     use Queueable;
-    protected $subscription;
+
+    protected $member;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($subscription)
+    public function __construct($member)
     {
-        $this->subscription = $subscription;
+        $this->member = $member;
     }
 
     /**
@@ -62,8 +63,8 @@ class MemberSubscription extends Notification
 
     public function toDatabase($notifiable)
     {
-        return  [
-            "user" => auth()->user()
+        return [
+            'user' => auth()->user(),
         ];
     }
 }

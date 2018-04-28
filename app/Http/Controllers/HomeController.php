@@ -22,6 +22,7 @@ use App\ActivityLog;
 use App\PaymentTransaction;
 use App\Country;
 use Gate;
+use Mail;
 use Carbon\Carbon;
 use App\Notifications\NewMember;
 use App\UserWallet;
@@ -290,7 +291,7 @@ class HomeController extends Controller
                 $user = User::find($userId);
                 $user->assignRole(4);
                 
-                //\Mail::to($user->email)->send(new ConfirmRegistration($user));
+                Mail::to($user->email)->send(new ConfirmRegistration($user));
                 
                 $admin = User::find(1);
                 Notification::send($admin, new NewMember($profile));
@@ -305,6 +306,25 @@ class HomeController extends Controller
                 \DB::rollback();
                 return redirect()->back()->with("error", $e->getMessage());
             }
+        }
+    }
+
+    public function activateAccount($slug, $check) {
+        if(isset($slug) && $check == "true") {
+            $member = User::find($slug,'slug');
+            $is_active = $member->is_active;
+            if($is_active) {
+                \Session::flash("error","Has Account has already been activated. Please login");
+                return redirect(url('/login'));
+            } 
+
+            $member->is_active = true;
+            $member->save();
+
+            \Session::flash("success","Your account has been activated successfully. Please login");
+            return redirect(url('/login'));
+        } else {
+            return redirect(url('/404'));
         }
     }
 

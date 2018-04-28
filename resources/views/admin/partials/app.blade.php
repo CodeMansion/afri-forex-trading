@@ -8,7 +8,7 @@
         <meta name="description" content="" />
         <link rel="shortcut icon" href="{{ asset('images/elect-ng-logo.png') }}" type="image/png" />
 
-        <title>{{ $config['application_name']}} :: Adminiistrator</title>
+        <title>{{ $config['application_name']}} :: Administrator</title>
         
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Subscription;
 use Carbon\Carbon;
 use App\PaymentTransaction;
-use App\Mail\Subscriptions;
+use App\Mail\NewSubscription;
 use App\UserDownline;
 use App\Referral;
 use App\UserWallet;
@@ -71,6 +71,7 @@ class SubscriptionController extends Controller
     {
         $data = $request->except('_token');
         if(isset($type) && $type == 'ajax') {
+            \DB::beginTransaction();
             try {
 
                 $referral = Referral::UserReferrals()->count();
@@ -140,11 +141,13 @@ class SubscriptionController extends Controller
 
                 }
 
-                //\Mail::to(auth()->user()->email)->send(new Subscriptions($subscribe));
-
                 #TODO - Send system message
                 $admin = User::find(1);
                 Notification::send($admin, new MemberSubscription($subscribe));
+
+                \DB::commit();
+
+                \Mail::to(auth()->user()->email)->send(new NewSubscription($data));
 
                 activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribed for Daily Signal");
                 return response()->json([
@@ -153,6 +156,7 @@ class SubscriptionController extends Controller
                 ],200);
 
             } catch(Exception $e) {
+                \DB::rollback();
                 return false;
             }
         }
