@@ -79,14 +79,14 @@ class UserController extends Controller
         $data = $request->except('_token');
         if($data) {
             try {
-                $check = User::where('password',bcrypt($data['old_password']))->first();
+                $check = \Hash::check($data['old_password'],auth()->user()->password);
                 if(!$check) {
                     return response()->json([
                         "msg"   => "Incorrect old password!",
                         "type"  =>  "false"
                     ]);
                 }
-                
+
                 $member = User::find($data['slug'],'slug');
                 $member->password = $data['new_password'];
                 $member->save();
