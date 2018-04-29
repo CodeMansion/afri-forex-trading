@@ -25,8 +25,8 @@ class CreateSubscriptionsTable extends Migration
             $table->date('expiry_date');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('platform_id')->references('id')->on('platforms');
+            // $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('platform_id')->references('id')->on('platforms');
         });
     }
 

@@ -14,6 +14,7 @@ class CreateUserWalletsTable extends Migration
     public function up()
     {
         Schema::create('user_wallets', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('slug', 190)->unique();
             $table->integer('user_id')->unsigned()->index();
@@ -21,7 +22,7 @@ class CreateUserWalletsTable extends Migration
             $table->boolean('status')->default(false);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

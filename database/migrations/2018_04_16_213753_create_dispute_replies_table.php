@@ -22,7 +22,7 @@ class CreateDisputeRepliesTable extends Migration
             $table->text('message');
             $table->timestamps();
 
-            $table->foreign('dispute_id')->references('id')->on('disputes');
+            // $table->foreign('dispute_id')->references('id')->on('disputes');
         });
     }
 

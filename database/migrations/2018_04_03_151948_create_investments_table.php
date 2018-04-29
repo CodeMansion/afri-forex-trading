@@ -25,10 +25,10 @@ class CreateInvestmentsTable extends Migration
             $table->integer('status')->default(0);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('platform_id')->references('id')->on('platforms');
-            $table->foreign('package_id')->references('id')->on('packages');
-            $table->foreign('package_type_id')->references('id')->on('package_types');
+            // $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('platform_id')->references('id')->on('platforms');
+            // $table->foreign('package_id')->references('id')->on('packages');
+            // $table->foreign('package_type_id')->references('id')->on('package_types');
         });
     }
 

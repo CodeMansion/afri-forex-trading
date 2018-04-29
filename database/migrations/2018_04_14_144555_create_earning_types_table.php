@@ -14,6 +14,7 @@ class CreateEarningTypesTable extends Migration
     public function up()
     {
         Schema::create('earning_types', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('slug', 190)->unique();
             $table->string('name');

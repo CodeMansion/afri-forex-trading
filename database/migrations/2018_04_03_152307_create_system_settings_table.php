@@ -13,10 +13,11 @@ class CreateSystemSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('system_settings', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-        });
+        // Schema::create('system_settings', function (Blueprint $table) {
+        //     $table->engine = 'InnoDB';
+        //     $table->increments('id');
+        //     $table->timestamps();
+        // });
     }
 
     /**

@@ -14,6 +14,7 @@ class CreateEarningsTable extends Migration
     public function up()
     {
         Schema::create('earnings', function (Blueprint $table) {
+            $table->engine = 'InnoDB';            
             $table->increments('id');
             $table->string('slug', 190)->unique();
             $table->integer('user_id')->unsigned()->index();
@@ -23,9 +24,9 @@ class CreateEarningsTable extends Migration
             $table->boolean('status')->default(false);
             $table->timestamps();
             
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('platform_id')->references('id')->on('platforms');
-            $table->foreign('earning_type_id')->references('id')->on('earning_types');
+            // $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('platform_id')->references('id')->on('platforms');
+            // $table->foreign('earning_type_id')->references('id')->on('earning_types');
         });
     }
 

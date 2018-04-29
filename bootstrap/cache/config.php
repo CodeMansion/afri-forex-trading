@@ -303,7 +303,7 @@
   array (
     'driver' => 'smtp',
     'host' => 'smtp.mailtrap.io',
-    'port' => 25,
+    'port' => 465,
     'from' => 
     array (
       'address' => 'support@afromarketers.com',
