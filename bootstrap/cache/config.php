@@ -302,16 +302,16 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'smtp.mailtrap.io',
-    'port' => 465,
+    'host' => 'smtp.gmail.com',
+    'port' => 587,
     'from' => 
     array (
       'address' => 'support@afromarketers.com',
       'name' => 'Afro Marketers',
     ),
     'encryption' => 'TLS',
-    'username' => '3d7504a2bedc3d',
-    'password' => '6c1205c12632af',
+    'username' => 'brainajax@gmail.com',
+    'password' => 'PhilliPiansPhilliPians$413',
     'sendmail' => '/usr/sbin/sendmail -bs',
     'markdown' => 
     array (
@@ -319,6 +319,15 @@
       'paths' => 
       array (
         0 => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1.1\\resources\\views/vendor/mail',
+      ),
+    ),
+    'stream' => 
+    array (
+      'ssl' => 
+      array (
+        'allow_self_signed' => true,
+        'verify_peer' => false,
+        'verify_peer_name' => false,
       ),
     ),
   ),
