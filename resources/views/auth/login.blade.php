@@ -43,15 +43,15 @@
             <p><a href="{{ URL::route('register') }}" class="uppercase">Create a membership account</a></p>
         </div>
     </form>
-    <form class="forget-form" action="#" method="POST">
+    <form class="forget-form" action="#">
         <h3 class="font-green">Forget Password ?</h3>
         <p> Enter your e-mail address below to reset your password. </p>
         <div class="form-group">
-            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" /> 
+            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" id="forget_email" /> 
         </div>
         <div class="form-actions">
             <button type="button" id="back-btn" class="btn green btn-outline">Back</button>
-            <button type="submit" class="btn btn-success uppercase pull-right">Submit</button>
+            <button type="button" id="forget_password" class="btn btn-success uppercase pull-right">Submit</button>
         </div>
     </form>
 </div>

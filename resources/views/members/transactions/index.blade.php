@@ -53,7 +53,13 @@
                                 <td>{{$counter++}}</td>
                                 <td>{{ $trans->reference_no }}</td>
                                 <td> <span class="label label-sm label-success"> {{ $trans->Category->name }} </span> </td>
-                                <td> {{ $trans->Platform->name }} </td>
+                                <td> 
+                                    @if(isset($trans->Platform->name))
+                                        {{  $trans->Platform->name }}</span> 
+                                    @else
+                                        Transfer
+                                    @endif
+                                 </td>
                                 <td> {{ $trans->amount }} </td>
                                 <td>
                                 </td>

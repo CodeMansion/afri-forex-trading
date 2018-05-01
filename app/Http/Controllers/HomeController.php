@@ -9,6 +9,7 @@ use App\User;
 use App\UserProfile;
 use App\UserDownline;
 use App\Mail\ConfirmRegistration;
+use App\Mail\ForgetPassword;
 use DB;
 use Validator;
 use App\Platform;
@@ -163,12 +164,12 @@ class HomeController extends Controller
 
     public function forget_password(Request $request)
     {
-        $user = User::whereEmail($request('email'))->first();
+        $user = User::whereEmail($request->email)->first();
         if(!$user){
-            return response()->json(['warning' => 'user with this email address does not exist!'], 200);
+            return response()->json(['type' => 'false','msg' => 'user with this email address does not exist!'], 200);
         }
-        \Mail::to($user)->send(new Forget($user));
-        return response()->json(['success' => 'password reset link has beeen sent to your mail!'], 200);
+        //\Mail::to($user)->send(new ForgetPassword($user));
+        return response()->json(['type' => 'true','msg' => 'password reset link has beeen sent to your mail!'], 200);
     }
     
     public function reset($confirm)
@@ -176,16 +177,20 @@ class HomeController extends Controller
         return view('reset');
     }
 
-    public function check_oldpasword(Request $request)
+    public function change_oldpassword(Request $request)
     {
-        $user = User::wherePassword($request->password)->first();
-        if(!$user){
+        $user = User::whereId(auth()->user()->id)->first();
+        if($user->password != bcrypt($request->old_password)){
             return $response = [
-                'msg' => "your password not correct.",
+                'msg' => "your current password not correct.",
                 'type' => "false"
             ];
         }
+        $user->is_active = 1;
+        $user->password = $request->password;
+        $user->save();
         return $response = [
+            'msg' => "your password reset has been made successfully.",
             'type' => "true"
         ];
     }

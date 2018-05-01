@@ -36,7 +36,13 @@
                                 <tr>
                                     <td class="fit"><img class="user-pic rounded" src="{{ asset('images/default.png') }}"> </td>
                                     <td><a href="javascript:;" class="primary-link">{{ $transaction->user->full_name }}</a></td>
-                                    <td> <span class="badge badge-success">{{ $transaction->Platform->name }}</span> </td>
+                                    <td> <span class="badge badge-success">
+                                        @if(isset($transaction->Platform->name))
+                                        {{  $transaction->Platform->name }}</span> 
+                                        @else
+                                         Transfer
+                                        @endif
+                                    </td>
                                     <td> ${{ number_format($transaction->amount,2) }} </td>
                                     <td><span class="badge badge-primary">{{ $transaction->Category->name }}</span></td>
                                     <td><span class="bold theme-font">{{ $transaction->created_at->diffForHumans() }}</span></td>

@@ -7,20 +7,21 @@
             </div>
             <div class="modal-body">
                 <form action="#">
+                    <div id="errors"></div>
                     <div class="form-group">
                         <label class="control-label">Current Password</label>
-                        <input type="password" class="form-control" /> 
+                        <input id="password" type="password" class="form-control" /> 
                     </div>
                     <div class="form-group">
                         <label class="control-label">New Password</label>
-                        <input type="password" class="form-control" /> 
+                        <input id="new_password" type="password" class="form-control" /> 
                     </div>
                     <div class="form-group">
                         <label class="control-label">Re-type New Password</label>
-                        <input type="password" class="form-control" /> 
+                        <input id="confirm_new_password" type="password" class="form-control" /> 
                     </div><hr/>
                     <div class="margin-top-10">
-                        <a href="javascript:;" id="change_password_btn" class="btn green" disabled> Change Password </a>
+                        <a href="javascript:;" id="change_password_btn" class="btn green"> Change Password </a>
                         <a href="javascript:;" class="btn default" data-dismiss="modal" aria-hidden="true"> Cancel </a>
                     </div>
                 </form>

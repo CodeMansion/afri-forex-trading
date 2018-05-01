@@ -110,15 +110,17 @@ class ReferralController extends Controller
                     }
 
                 }
-                
-                $wallet = UserWallet::insert([
-                    'slug'          => bin2hex(random_bytes(64)),
-                    'user_id'       => auth()->user()->id,
-                    'amount'        => 0.00,
-                    'status'        => 1,
-                    'created_at'    => Carbon::now(),
-                    'updated_at'    => Carbon::now()
-                ]);
+                $check_wallet = CheckMemberWallet(auth()->user()->id);
+                if (!check_wallet) {
+                    $wallet = UserWallet::insert([
+                        'slug'          => bin2hex(random_bytes(64)),
+                        'user_id'       => auth()->user()->id,
+                        'amount'        => 0.00,
+                        'status'        => 1,
+                        'created_at'    => Carbon::now(),
+                        'updated_at'    => Carbon::now()
+                    ]);
+                }
                 
                 
                 //\Mail::to(auth()->user()->email)->send(new Referrer($referral));

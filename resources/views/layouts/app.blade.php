@@ -73,6 +73,42 @@
                 $("#close-notify").on("click", function(){
                     $("#close").hide();
                 });
+                $("#forget_password").on("click",function(){
+                    var FORGET_PASSWORD = "{{ URL::route('forget_password') }}";
+                    var TOKEN = "{{csrf_token()}}";
+                    var email = $("#forget_email").val();
+                    if(email.length < 1){
+                        toastr.error("This field can not be empty!");
+                    }else{
+                        $("#forget_password").attr("disabled", true);
+                        $("#forget_password").html("<i class='fa fa-refresh fa-spin'></i> Processing...");
+                        $.ajax({
+                            url: FORGET_PASSWORD,
+                            method: "POST",
+                            data: {
+                                '_token': TOKEN,
+                                'email': email
+                            },
+                            success: function(rst) {
+                                if (rst.type == "true") {
+                                    $("#forget_password").attr("disabled", false);
+                                    $("#forget_password").html("<i class='fa fa-check'></i> Submit!");
+                                    toastr.success(rst.msg);
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 5000);
+                                } else if (rst.type == "false") {
+                                    $("#forget_password").attr("disabled", false);
+                                    $("#forget_password").html("<i class='fa fa-warning fa-spin'></i> Failed. Try Again!");
+                                    toastr.warning(rst.msg);
+                                }
+                            },
+                            error: function(alaxB, HTTerror, errorMsg) {
+                                toastr.error(errorMsg);
+                            }
+                        });
+                    }
+                });
             });
         </script>        
         @yield('javascript') 

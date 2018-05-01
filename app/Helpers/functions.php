@@ -19,3 +19,8 @@ function activity_logs($user,$ip,$action) {
 function word_counter($string,$count,$end) {
 	return \Illuminate\Support\Str::words($string,$count,$end);
 }
+
+function CheckMemberWallet($field) {
+	$check = App\UserWallet::whereUserId($field)->first();
+	return ($check);
+}
