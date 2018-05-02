@@ -71,6 +71,7 @@ class HomeController extends Controller
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
             $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','desc')->limit(5)->get();
             $data['supports'] = Dispute::userDispute()->orderBy('id','desc')->limit(5)->get();
+            $data['earnings'] = User::find(auth()->user()->slug,'slug')->UserEarnings()->get();
             $data['balance'] = UserWallet::balance()->first()->amount;
             $data['debit'] = PaymentTransaction::userLatestDebit()->first();
             $data['credit'] = PaymentTransaction::userLatestCredit()->first();
@@ -373,5 +374,13 @@ class HomeController extends Controller
         }
         
         return view('admin.partials.util._recent_transactions')->with($data);
+    }
+
+    public function loadEarnings() {
+        if(auth()->user()->is_admin == 0) {
+            $data['earnings'] = User::find(auth()->user()->slug, 'slug')->UserEarnings()->orderBy('id','DESC')->limit(10)->get();
+        }
+        
+        return view('members.partials.util._latest_earnings')->with($data);
     }
 }

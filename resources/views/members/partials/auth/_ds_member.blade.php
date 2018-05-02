@@ -20,6 +20,13 @@
         <span class="arrow"></span>
     </a>
 </li>
+<li class="nav-item {{menu_active($menu_id, 8)}}">
+    <a href="{{ URL::route('earningsIndex') }}" class="nav-link nav-toggle">
+        <i class="icon-handbag"></i>
+        <span class="title">My Earnings</span>
+        <span class="arrow"></span>
+    </a>
+</li>
 <li class="nav-item {{menu_active($menu_id, 4)}}">
     <a href="{{ URL::route('downlines.index') }}">
         <i class="icon-puzzle"></i>

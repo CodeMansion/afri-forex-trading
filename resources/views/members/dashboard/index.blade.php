@@ -23,13 +23,22 @@
                 <i class="fa fa-angle-down"></i>
             </button>
             <ul class="dropdown-menu" role="menu">                                   
-                <li><a href="{{ URL::route('packageSub') }}"><i class="icon-note"></i>Add Service</a></li> <li><a href="{{ URL::route('register') }}/{{ auth()->user()->slug }}" target="_blank"><i class="icon-note"></i>Add new Member</a></li>
+                <li><a href="{{ URL::route('packageSub') }}"><i class="icon-note"></i>Add Service</a></li> 
+                <li><a href="{{ URL::route('register') }}/{{ auth()->user()->slug }}" target="_blank"><i class="icon-note"></i> Add new Member</a></li>
+                <li><a href="#"><i class="icon-note"></i> Make Withdrawal</a></li>
             </ul>
         </div>
     </div>
     @include('members.dashboard.partials._cards')
 
-    <!-- <div class="clearfix"></div> -->
+    <div class="row">
+        <div class="col-lg-8 col-xs-12 col-sm-12">
+            @include('members.dashboard.partials._earnings_chart')
+        </div>
+        <div class="col-lg-4 col-xs-12 col-sm-12">
+            @include('members.dashboard.partials._latest_earnings')
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-4 col-xs-12 col-sm-12">
             @include('members.dashboard.partials._latest_news')
@@ -55,6 +64,7 @@
         var REFERRAL = "{{URL::route('referrals.add')}}";
         var MEMBERS = "{{ URL::route('loadMembers') }}";
         var DISPUTE = "{{ URL::route('loadDispute') }}";
+        var EARNINGS = "{{ URL::route('loadEarnings') }}";
         var ACTIVITY = "{{ URL::route('loadActivityLogs') }}";
         var TRANSACTION = "{{ URL::route('loadTransactions') }}";
     </script>

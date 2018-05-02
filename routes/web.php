@@ -32,6 +32,7 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::get('/load-support', ["as"=>"loadSupport", "uses"=>"HomeController@loadSupport"]);
 	Route::get('/load-chart', ["as"=>"loadChart", "uses"=>"HomeController@loadChart"]);
 	Route::get('/load-new-members', ["as"=>"loadMembers", "uses"=>"HomeController@loadMembers"]);
+	Route::get('/load-members-earnings', ["as"=>"loadEarnings", "uses"=>"HomeController@loadEarnings"]);
 	
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
@@ -47,7 +48,12 @@ Route::group(['middleware'=>['auth']], function(){
         Route::get('/view/{slug?}',["as"=>"viewDispute", "uses"=>"DisputeController@show"]);
         Route::post('/create-dispute', ["as"=>"disputeAdd", "uses"=>"DisputeController@store"]);
         Route::post('/get-dispute', ["as"=>"getDispute", "uses"=>"DisputeController@getDisputes"]);
-    });
+	});
+	
+	// ----- MEMBER EARNINGS MANAGEMENT ------//
+	Route::group(['prefix' => 'earnings'], function () {
+		Route::get('/',["as"=>"earningsIndex", "uses"=>"EarningController@index"]);
+	});
 
     //-	--- REFERRER MANAGEMENT ----//	
 	Route::group(['prefix' => 'referrals'], function () {		

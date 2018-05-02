@@ -2,7 +2,7 @@
     <div class="portlet-title">
         <div class="caption caption-md">
             <i class="icon-bar-chart font-dark hide"></i>
-            <span class="caption-subject font-dark bold uppercase">Activity Logs</span>
+            <span class="caption-subject font-dark bold uppercase"><i class="icon-refresh"></i> Activity Logs</span>
             <span class="caption-helper"><img src="{{ asset('images/loader.gif') }}" id="activity_loader" /> </span>
         </div>
         <div class="inputs">
