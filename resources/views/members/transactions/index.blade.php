@@ -53,7 +53,13 @@
                                 <td>#</td>
                                 <td>{{ $transaction->reference_no }}</td>
                                 <td><span class="badge badge-success"> {{ $transaction->Category->name }} </span> </td>
-                                <td>{{ $transaction->Platform->name }}</td>
+                                <td>
+                                    @if(isset($trnsaction->Platform->name))
+                                        <span class="badge badge-default">{{ $transaction->Platform->name }}</span>
+                                    @else   
+                                        <span class="badge badge-warning">Transfer</span>
+                                    @endif
+                                </td>
                                 <td>${{ number_format($transaction->amount,2) }}</td>
                                 <td></td>
                                 <td>{{ $transaction->created_at }}</td>
@@ -72,7 +78,6 @@
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" ="text/javascript"></script>
-    
 @endsection
 @section('after_script')
     <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" type="text/javascript"></script>

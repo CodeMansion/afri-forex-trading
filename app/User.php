@@ -118,7 +118,7 @@ class User extends Authenticatable
     }    
 
     public function UserWallet(){
-        return $this->belongsTo('App\UserWallet','user_id');
+        return $this->hasOne('App\UserWallet','user_id');
     }    
 
     public function debit_transactions() {
@@ -141,7 +141,7 @@ class User extends Authenticatable
     public static function hasUsername($field) {
         $check = self::where('username',$field)->first();
         return ($check);
-    }
+    }    
 
     public function scopeUserProfile($query) {
         return $query->where('id',auth()->user()->id)->first();

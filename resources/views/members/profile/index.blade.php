@@ -37,8 +37,8 @@
                         <ul class="nav">
                             <li><a href="#" data-target="#change_password" data-toggle="modal"><i class="icon-home"></i> Change Password </a></li>
                             <li class="" data-target="#change_picture" data-toggle="modal"><a href="#"><i class="icon-settings"></i> Change Picture </a></li>
-                            <li><a href="#"><i class="icon-info"></i> Share Funds </a></li>
                             <li><a href="#"><i class="icon-info"></i> View Upline Info </a></li>
+                            <li data-target="#share_fund" data-toggle="modal"><a href="#"><i class="icon-info"></i> Share Funds </a></li>
                         </ul>
                     </div>
                 </div>
@@ -72,14 +72,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">Username</label>
-                                                <input type="email" placeholder="Username" id="username" value="{{ $profile['username'] }}" class="form-control" /> 
+                                                <input type="email" placeholder="Username" id="username" value="{{ $profile['username'] }}" class="form-control" disabled/> 
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">Telephone</label>
-                                                <input type="text" placeholder="Telephone" id="telephone" value="{{ $profile['telephone'] }}" class="form-control" /> 
+                                                <input type="text" placeholder="Telephone" id="telephone" value="{{ $profile->Profile['telephone'] }}" class="form-control" /> 
                                             </div><hr/>
                                             <div class="margiv-top-10">
-                                                <a href="javascript:;" id="update_profile_btn" class="btn green" disabled> Save Changes </a>
+                                                <a href="javascript:;" id="update_profile_btn" class="btn green"> Save Changes </a>
                                             </div>
                                         </form>
                                     </div>
@@ -143,6 +143,7 @@
 @endsection
 @section('modals')
     @include('members.profile.modals._change_password')
+    @include('members.profile.modals._share_fund')
     @include('members.profile.modals._change_picture')
 @endsection
 @section('extra_script')
@@ -151,6 +152,10 @@
         var RESET = "{{URL::route('reset.store')}}";
         var RESET_PASSWORD = "{{ URL::route('resetPassword') }}";
         var USER_SLUG = "{{ auth()->user()->slug }}";
+        var RESET = "{{URL::route('reset.password')}}";
+        var UPDATE = "{{URL::route('users.update')}}";
+        var USERDETAILS = "{{URL::route('users.FundInfo')}}";
+        var SHARE_FUND = "{{URL::route('users.sharefund')}}";
     </script>
     <script src="{{ asset('js/pages/user_profile.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
