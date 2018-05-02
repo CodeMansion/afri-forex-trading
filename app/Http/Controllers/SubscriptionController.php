@@ -111,8 +111,9 @@ class SubscriptionController extends Controller
                     'created_at'    => Carbon::now(),
                     'updated_at'    => Carbon::now()
                 ]);
+
                 $check_wallet = CheckMemberWallet(auth()->user()->id);
-                if (!check_wallet) {
+                if (!$check_wallet) {
                     $wallet = UserWallet::insert([
                         'slug'          => bin2hex(random_bytes(64)),
                         'user_id'       => auth()->user()->id,
@@ -128,16 +129,16 @@ class SubscriptionController extends Controller
                     if($upline->platform_id == null){
                         $upline->platform_id = $data['id'];
                         $upline->investment_amount = (double)$data['amount'];
-                        $upline->is_active   = 1;
+                        $upline->is_active = 1;
                         $upline->save();
                     }else{
                         // new platform downline
-                        $downline               = new UserDownline();
+                        $downline  = new UserDownline();
                         $downline->platform_id  = $data['id'];
-                        $downline->upline_id 	= $upline->upline_id;
-                        $downline->downline_id 	= auth()->user()->id;
-                        $downline->investment_amount= (double)$data['amount'];
-                        $downline->is_active    = 1;
+                        $downline->upline_id = $upline->upline_id;
+                        $downline->downline_id	= auth()->user()->id;
+                        $downline->investment_amount = (double)$data['amount'];
+                        $downline->is_active = 1;
                         $downline->save();
                     }
 

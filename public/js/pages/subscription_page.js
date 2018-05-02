@@ -123,6 +123,7 @@ var AppServiceSubscription = function() {
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 swal("Error", errorMsg, "error");
+                $("#payment_btn").attr('disabled', false);
             }
         });
     }
@@ -148,6 +149,7 @@ var AppServiceSubscription = function() {
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 swal("Error", errorMsg, "error");
+                $("#payment_btn").attr('disabled', false);
             }
         });
     }
