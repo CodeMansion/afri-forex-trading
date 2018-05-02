@@ -106,7 +106,8 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::post('/get-details', ["as"=>"users.editInfo", "uses"=>"UserController@getEditInfo"]);
 		Route::post('/get-user-fund-details', ["as" => "users.FundInfo", "uses" => "UserController@getUserDetails"]);
 		Route::post('/share-fund', ["as" => "users.sharefund", "uses" => "UserController@ShareFund"]);
-		Route::post('/activate-member-account', ["as"=>"activateMemberAccount", "uses"=>"UserController@activate"]);		
+		Route::post('/activate-member-account', ["as"=>"activateMemberAccount", "uses"=>"UserController@activate"]);
+		Route::post('/reset-password', ["as"=>"resetPassword", "uses"=>"UserController@resetPassword"]);		
 	});	
 	
 	//-	---- TRANSACTION CATEGORY MANAGEMENT ----//	
@@ -168,11 +169,8 @@ $this->post('login', 'Auth\LoginController@login')->name('login');
 Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerIndex"]);
 Route::get('/registration/{id?}', ["as"=>"register.ref", "uses"=>"HomeController@ref"]);
 Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
-<<<<<<< HEAD
 Route::get('member-account-activation/{slug?}/confirmation={check?}', ['as'=>'confirmRegistration', 'uses'=>'HomeController@activateAccount']);
-=======
 Route::post('/forget-password', ['as' => 'forget_password', 'uses' => 'HomeController@forget_password']);
->>>>>>> ee1ad03456790945d1f7fcbb35ec172e6b8c57b5
 Route::post('/reset/verify/{id?}',['as' => 'reset.store' ,'uses' => 'HomeController@reset_confirm']);
 Route::post('/reset/change',['as' => 'reset.password' ,'uses' => 'HomeController@change_oldpassword']);
 

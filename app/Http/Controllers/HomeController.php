@@ -148,7 +148,7 @@ class HomeController extends Controller
 
     public function registerIndex()
     {
-        $data['countries'] = Country::all();
+        $data['countries'] = Country::orderBy('name','ASC')->get();
         return view('register')->with($data);
     }
     
