@@ -23,9 +23,9 @@ class CreateUserDownlinesTable extends Migration
             $table->decimal('investment_amount', 10,2)->nullable();
             $table->timestamps();
             
-            $table->foreign('platform_id')->references('id')->on('platforms');
-            $table->foreign('upline_id')->references('id')->on('users');
-            $table->foreign('downline_id')->references('id')->on('users');
+            // $table->foreign('platform_id')->references('id')->on('platforms');
+            // $table->foreign('upline_id')->references('id')->on('users');
+            // $table->foreign('downline_id')->references('id')->on('users');
         });
     }
 

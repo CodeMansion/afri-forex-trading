@@ -26,9 +26,9 @@ class CreatePaymentTransactionsTable extends Migration
             $table->integer('status')->default(0);
             $table->timestamps();
 
-            $table->foreign('transaction_category_id')->references('id')->on('transaction_categories');
-            $table->foreign('platform_id')->references('id')->on('platforms');
-            $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('transaction_category_id')->references('id')->on('transaction_categories');
+            // $table->foreign('platform_id')->references('id')->on('platforms');
+            // $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

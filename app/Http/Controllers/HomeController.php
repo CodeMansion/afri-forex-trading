@@ -23,6 +23,7 @@ use App\ActivityLog;
 use App\PaymentTransaction;
 use App\Country;
 use Gate;
+use Mail;
 use Carbon\Carbon;
 use App\Notifications\NewMember;
 use App\UserWallet;
@@ -70,6 +71,7 @@ class HomeController extends Controller
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
             $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','desc')->limit(5)->get();
             $data['supports'] = Dispute::userDispute()->orderBy('id','desc')->limit(5)->get();
+            $data['earnings'] = User::find(auth()->user()->slug,'slug')->UserEarnings()->get();
             $data['balance'] = UserWallet::balance()->first()->amount;
             $data['debit'] = PaymentTransaction::userLatestDebit()->first();
             $data['credit'] = PaymentTransaction::userLatestCredit()->first();
@@ -147,7 +149,7 @@ class HomeController extends Controller
 
     public function registerIndex()
     {
-        $data['countries'] = Country::all();
+        $data['countries'] = Country::orderBy('name','ASC')->get();
         return view('register')->with($data);
     }
     
@@ -295,7 +297,7 @@ class HomeController extends Controller
                 $user = User::find($userId);
                 $user->assignRole(4);
                 
-                //\Mail::to($user->email)->send(new ConfirmRegistration($user));
+                Mail::to($user->email)->send(new ConfirmRegistration($user));
                 
                 $admin = User::find(1);
                 Notification::send($admin, new NewMember($profile));
@@ -310,6 +312,25 @@ class HomeController extends Controller
                 \DB::rollback();
                 return redirect()->back()->with("error", $e->getMessage());
             }
+        }
+    }
+
+    public function activateAccount($slug, $check) {
+        if(isset($slug) && $check == "true") {
+            $member = User::find($slug,'slug');
+            $is_active = $member->is_active;
+            if($is_active) {
+                \Session::flash("error","Has Account has already been activated. Please login");
+                return redirect(url('/login'));
+            } 
+
+            $member->is_active = true;
+            $member->save();
+
+            \Session::flash("success","Your account has been activated successfully. Please login");
+            return redirect(url('/login'));
+        } else {
+            return redirect(url('/404'));
         }
     }
 
@@ -332,12 +353,12 @@ class HomeController extends Controller
     }
 
     public function loadActivityLogs() {
-        $data['activities'] = ActivityLog::orderBy('id','DESC')->limit(10)->get();
-        return view('admin.partials.util._activity_logs')->with($data);
-    }
-
-    public function loadActivityLogsOne() {
-        $data['activities'] = ActivityLog::userActivities()->orderBy('id','DESC')->limit(10)->get();
+        if(auth()->user()->is_admin) {
+            $data['activities'] = ActivityLog::orderBy('id','DESC')->limit(10)->get();
+        } elseif(auth()->user()->is_admin == 0) {
+            $data['activities'] = ActivityLog::userActivities()->orderBy('id','DESC')->limit(10)->get();
+        }
+        
         return view('admin.partials.util._activity_logs')->with($data);
     }
 
@@ -346,12 +367,20 @@ class HomeController extends Controller
     }
 
     public function loadTransactions() {
-        $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
+        if(auth()->user()->is_admin) {
+            $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
+        } else if(auth()->user()->is_admin == 0) {
+            $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','DESC')->limit(10)->get();
+        }
+        
         return view('admin.partials.util._recent_transactions')->with($data);
     }
 
-    public function loadTransactionsOne() {
-        $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','DESC')->limit(10)->get();
-        return view('admin.partials.util._recent_transactions')->with($data);
+    public function loadEarnings() {
+        if(auth()->user()->is_admin == 0) {
+            $data['earnings'] = User::find(auth()->user()->slug, 'slug')->UserEarnings()->orderBy('id','DESC')->limit(10)->get();
+        }
+        
+        return view('members.partials.util._latest_earnings')->with($data);
     }
 }

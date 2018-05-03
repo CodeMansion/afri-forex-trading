@@ -69,9 +69,9 @@
                                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tr>
                                         <td align="left" style="font-family: Nunito, Helvetica, Arial,sans-serif; font-size: 14px; font-weight: normal; line-height: 24px;">
-                                            <p style="font-size: 18px; line-height: 24px;font-weight: bold; color: #58595b; margin: 0;">Hi Destiny,</p>
+                                            <p style="font-size: 18px; line-height: 24px;font-weight: bold; color: #58595b; margin: 0;">Hi {{ strtoupper($member['full_name']) }},</p>
                                             <p style="font-size: 14px; line-height: 24px; color: #72808e;">
-                                                <?php echo htmlspecialchars_decode($content['message']) ?>
+                                                Welcome to Afro Market. Click on the button below to activate your account.
                                             </p>
                                         </td>
                                     </tr>
@@ -83,13 +83,13 @@
                         <!-- Tipp -->
                         <tr>
                             <td align="center" height="100%" valign="top" width="100%" class="mobile_padding" bgcolor="#ffffff" style="padding: 20px 35px 35px 35px; background-color: #ffffff;">
-                                <table style="margin: auto; width: 230px;" border="0" cellspacing="0" cellpadding="0" align="center" width="230">
+                                <table style="margin: auto; width: 300px;" border="0" cellspacing="0" cellpadding="0" align="center" width="230">
                                     <tr>
                                         <td style="background-color: #35c190; border-radius: 2px; text-transform: uppercase; letter-spacing: 1px; background-clip: padding-box; font=
                                             -size: 14px; font-family: 'Nunito', Helvetica, arial, sans-serif; text-align: center; color: #ffffff; font-weight: normal; padding-left: 25px; padding
                                             -right: 25px; cursor: pointer;" align="center" height="40">
-                                            <a style="color: #ffffff!important; text-align: center; text-decoration: none!important;" target="_blank" id="ct7_2" href="">
-                                                <span style="color: #ffffff!important; font-weight: normal; white-space: nowrap;">Login</span>
+                                            <a style="color: #ffffff!important; text-align: center; text-decoration: none!important;" target="_blank" id="ct7_2" href="{{ URL::route('confirmRegistration', ['slug'=>$member->slug,'check'=>'true']) }}">
+                                                <span style="color: #ffffff!important; font-weight: normal; white-space: nowrap;">Activate Your Account</span>
                                             </a>
                                         </td>
                                     </tr>

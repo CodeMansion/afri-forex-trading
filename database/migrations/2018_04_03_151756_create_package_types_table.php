@@ -14,6 +14,7 @@ class CreatePackageTypesTable extends Migration
     public function up()
     {
         Schema::create('package_types', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('slug', 190)->unique();
             $table->string('name', 50)->unique();

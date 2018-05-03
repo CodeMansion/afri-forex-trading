@@ -37,6 +37,7 @@
                         <ul class="nav">
                             <li><a href="#" data-target="#change_password" data-toggle="modal"><i class="icon-home"></i> Change Password </a></li>
                             <li class="" data-target="#change_picture" data-toggle="modal"><a href="#"><i class="icon-settings"></i> Change Picture </a></li>
+                            <li><a href="#"><i class="icon-info"></i> View Upline Info </a></li>
                             <li data-target="#share_fund" data-toggle="modal"><a href="#"><i class="icon-info"></i> Share Funds </a></li>
                         </ul>
                     </div>
@@ -109,12 +110,12 @@
                                         @if(count($activities) < 1)
                                             <center><em>You don't have any activity at the moment</em></center>
                                         @else 
-                                            <table class="table table-striped table-hover activitylogs" id="sample_2">
+                                            <table class="table table-bordered table-hover activitylogs" id="sample_2">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Action</th>
-                                                        <th>Date</th>
+                                                        <th>MY ACTIONS</th>
+                                                        <th>DATE</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -148,6 +149,9 @@
 @section('extra_script')
     <script>
         var TOKEN = "{{csrf_token()}}";
+        var RESET = "{{URL::route('reset.store')}}";
+        var RESET_PASSWORD = "{{ URL::route('resetPassword') }}";
+        var USER_SLUG = "{{ auth()->user()->slug }}";
         var RESET = "{{URL::route('reset.password')}}";
         var UPDATE = "{{URL::route('users.update')}}";
         var USERDETAILS = "{{URL::route('users.FundInfo')}}";

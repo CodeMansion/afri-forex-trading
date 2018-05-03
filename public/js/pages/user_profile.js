@@ -1,39 +1,56 @@
 var AppUserProfile = function() {
+    
+    var loadComponents = function() {
+        $("#loader").hide();
+        $("#user_details_for_fund").hide();
+        $("#share_fund_btn").hide();
+    } 
 
-    $("#user_details_for_fund").hide();
-    $("#share_fund_btn").hide();
-    var ChangePassword = function(password, new_password) {
-        $("#change_password_btn").attr("disabled", true);
-        $("#change_password_btn").html("<i class='fa fa-refresh fa-spin'></i> Processing...");
-        $.ajax({
-            url: RESET,
-            method: "POST",
-            data: {
-                '_token': TOKEN,
-                'old_password': password,
-                'password': new_password
-            },
-            success: function(rst) {
-                if (rst.type == "true") {
-                    $("#change_password_btn").attr("disabled", false);
-                    $("#change_password_btn").html(
-                        "<i class='fa fa-check'></i> Submit!"
-                    );
-                    toastr.success(rst.msg);
-                    location.reload();
-                } else if (rst.type == "false") {
-                    $("#change_password_btn").attr("disabled", false);
-                    $("#change_password_btn").html(
-                        "<i class='fa fa-warning fa-spin'></i> Failed. Try Again!"
-                    );
-                    toastr.warning(rst.msg);
+    var ChangePassword = function() {
+        $("#errors").html("");
+        var old_password = $("#old_password").val();
+        var new_password = $("#new_password").val();
+        var confirm_password = $("#confirm_new_password").val();
+
+        if(old_password.length < 1) {
+            $("#errors").html("<div class='alert alert-danger'>Enter Old Password</div>");
+        } else if(new_password.length < 1) {
+            $("#errors").html("<div class='alert alert-danger'>Enter New Password</div>");
+        } else if(confirm_password.length < 1) {
+            $("#errors").html("<div class='alert alert-danger'>Confirm New Password</div>");
+        } else if(confirm_password != new_password) {
+            $("#errors").html("<div class='alert alert-danger'>Invalid password confirmation</div>");
+        } else {
+            $("#loader").show();
+            $("#change_password_btn").attr('disabled',true);
+
+            $.ajax({
+                url: RESET_PASSWORD,
+                method: "POST",
+                data: {
+                    'old_password': old_password,
+                    'new_password': new_password,
+                    'slug': USER_SLUG,
+                    '_token': TOKEN
+                },
+                success: function(rst) {
+                    if(rst.type == "true") {
+                        $("#loader").hide();
+                        $("#change_password_btn").attr('disabled',false);
+                        toastr.success(rst.msg);
+                        location.reload();
+                    } else if(rst.type == "false") {
+                        $("#loader").hide();
+                        $("#change_password_btn").attr('disabled',false);
+                        toastr.error(rst.msg);
+                    }
+                },
+                error: function(err, httpErr, ErrMsg) {
+                    toastr.error(ErrMsg);
                 }
-            },
-            error: function(alaxB, HTTerror, errorMsg) {
-                toastr.error(errorMsg);
-            }
-        });
-    };
+            });
+        }
+    }
 
     var UpdateProfile = function(full_name, telephone) {
         $("#update_profile_btn").attr("disabled", true);
@@ -152,6 +169,8 @@ var AppUserProfile = function() {
 
     return {
         init: function() {
+            loadComponents();
+
             $("#update_profile_btn").on("click", function() {
                 var full_name = $("#full_name").val();
                 var telephone = $("#telephone").val();
@@ -163,10 +182,11 @@ var AppUserProfile = function() {
                     UpdateProfile(full_name, telephone);
                 }
             });
+
             $("#get_detail_btn").on("click", function() {
                 var detail = $("#detail_field").val();
                 if (detail.length < 1) {
-                    toastr.warning("Please this text field can not be  empty!");
+                    toastr.warning("Please this text field can not be empty!");
                 } else {
                     GETUSERTRANSFERDETAIL(detail);
                 }
@@ -176,9 +196,9 @@ var AppUserProfile = function() {
                 var user_id = $("#receiver_user_id").val();
                 var amount = $("#amount_to_transfer").val();
                 if (user_id.length < 1) {
-                    toastr.warning("Please this text field can not be  empty!");
+                    toastr.warning("Please this text field can not be empty!");
                 } else if (amount.length < 1) {
-                    toastr.warning("Please this text field can not be  empty!");
+                    toastr.warning("Please this text field can not be empty!");
                 } else {
                     SHAREFUND(user_id, amount);
                 }
@@ -203,34 +223,22 @@ var AppUserProfile = function() {
             });
 
             $("#change_password_btn").on("click", function() {
-                //toastr.error("Sorry cannot perform this task at this time. Thank you!");
-                var password = $("#password").val();
-                var new_password = $("#new_password").val();
-                var confirm_new_password = $("#confirm_new_password").val();
-                if (password.length < 1) {
-                    $("#errors").html("<div class='alert alert-danger'>Please password can not be empty</div><br/>");
-                } else if (new_password.length < 1) {
-                    $("#errors").html("<div class='alert alert-danger'>Please new password can not be empty</div><br/>");
-                } else if (new_password != confirm_new_password) {
-                    $("#errors").html("<div class='alert alert-danger'>Password and Confirm password do not match</div><br/>");
-                } else {
-                    ChangePassword(password, new_password);
-                }
+                ChangePassword();
             });
 
             $("#activate_account").on("click", function() {
                 swal({
-                        title: "Are you sure?",
-                        text: "You are about to activate a new member account",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-danger",
-                        confirmButtonText: "Yes, activate!",
-                        closeOnConfirm: false
-                    },
-                    function() {
-                        ActivateAccount();
-                    });
+                    title: "Are you sure?",
+                    text: "You are about to activate a new member account",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes, activate!",
+                    closeOnConfirm: false
+                },
+                function() {
+                    ActivateAccount();
+                });
             });
         }
     }

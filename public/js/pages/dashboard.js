@@ -7,6 +7,7 @@ var AppDashboard = function() {
         $("#transaction_loader").hide();
         $("#activity_loader").hide();
         $("#latest_news_loader").hide();
+        $("#latest_earnings_loader").hide();
     }
 
     var showDispute = function() {
@@ -37,10 +38,10 @@ var AppDashboard = function() {
         });
     }
 
-    var showActivityLogs = function(type) {
+    var showActivityLogs = function() {
         $("#activity_loader").show();
         $.ajax({
-            url: (type == 'admin') ? ACTIVITY : ACTIVITY_ONE , 
+            url: ACTIVITY, 
             success: function(data) {
                 $("#activity_loader").hide();
                 $("#show_logs").html(data);
@@ -51,10 +52,10 @@ var AppDashboard = function() {
         });
     }
 
-    var showTransactions = function(type) {
+    var showTransactions = function() {
         $("#transaction_loader").show();
         $.ajax({
-            url: (type == 'admin') ? TRANSACTION : TRANSACTION_ONE, 
+            url: TRANSACTION, 
             success: function(data) {
                 $("#transaction_loader").hide();
                 $('#show_transaction').html(data);
@@ -65,13 +66,27 @@ var AppDashboard = function() {
         });
     }
 
-    var showLatestNews = function(type) {
+    var showLatestNews = function() {
         $("#transaction_loader").show();
         $.ajax({
-            url: (type == 'admin') ? TRANSACTION_ALL : TRANSACTION_ONE , 
+            url: TRANSACTION, 
             success: function(data) {
                 $("#transaction_loader").hide();
                 $('#show_transaction').html(data);
+            },
+            error: function(alaxB, HTTerror, errorMsg) {
+                console.log(errorMsg);
+            }
+        });
+    }
+
+    var showMembersEarnings = function() {
+        $("#latest_earnings_loader").show();
+        $.ajax({
+            url: EARNINGS, 
+            success: function(data) {
+                $("#latest_earnings_loader").hide();
+                $('#show_latest_earnings').html(data);
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 console.log(errorMsg);
@@ -85,6 +100,7 @@ var AppDashboard = function() {
         showNewMembers();
         showActivityLogs();
         showTransactions();
+        showMembersEarnings();
     }, 10000)
     
     return {    
@@ -92,8 +108,9 @@ var AppDashboard = function() {
             LoadComponent();
             showDispute();
             showNewMembers();
-            showActivityLogs('admin');
-            showTransactions('admin');
+            showActivityLogs();
+            showTransactions();
+            showMembersEarnings();
         }
     }
 }();

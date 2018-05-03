@@ -22,6 +22,7 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::post('/get-referrer-info', ["as"=>"getReferrerInfo", "uses"=>"HomeController@getReferrerInfo"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
 	Route::post('/process-payment/{type?}',["as" => "processPayment", "uses"  => "SubscriptionController@processPayment"]);
+	
 	//--- ADMIN NOTIFICATIONS ---//
 	Route::get('/dashboard-notify',["as"=>"dashboardNotify", "uses"=>"HomeController@indexNotify"]);
 	Route::get('/notifications',["as"=>"notifications", "uses"=>"HomeController@notifications"]);
@@ -31,11 +32,8 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::get('/load-support', ["as"=>"loadSupport", "uses"=>"HomeController@loadSupport"]);
 	Route::get('/load-chart', ["as"=>"loadChart", "uses"=>"HomeController@loadChart"]);
 	Route::get('/load-new-members', ["as"=>"loadMembers", "uses"=>"HomeController@loadMembers"]);
-
-	//--- USERS NOTIFICATIONS ---//
-	Route::get('/load-activity-logs-one', ["as"=>"loadActivityLogsOne", "uses"=>"HomeController@loadActivityLogsOne"]);
-	Route::get('/load-transactions-one', ["as"=>"loadTransactionsOne", "uses"=>"HomeController@loadTransactionsOne"]);
-
+	Route::get('/load-members-earnings', ["as"=>"loadEarnings", "uses"=>"HomeController@loadEarnings"]);
+	
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
         //-- ROLES AND PERMISSION --//
@@ -50,7 +48,12 @@ Route::group(['middleware'=>['auth']], function(){
         Route::get('/view/{slug?}',["as"=>"viewDispute", "uses"=>"DisputeController@show"]);
         Route::post('/create-dispute', ["as"=>"disputeAdd", "uses"=>"DisputeController@store"]);
         Route::post('/get-dispute', ["as"=>"getDispute", "uses"=>"DisputeController@getDisputes"]);
-    });
+	});
+	
+	// ----- MEMBER EARNINGS MANAGEMENT ------//
+	Route::group(['prefix' => 'earnings'], function () {
+		Route::get('/',["as"=>"earningsIndex", "uses"=>"EarningController@index"]);
+	});
 
     //-	--- REFERRER MANAGEMENT ----//	
 	Route::group(['prefix' => 'referrals'], function () {		
@@ -109,7 +112,8 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::post('/get-details', ["as"=>"users.editInfo", "uses"=>"UserController@getEditInfo"]);
 		Route::post('/get-user-fund-details', ["as" => "users.FundInfo", "uses" => "UserController@getUserDetails"]);
 		Route::post('/share-fund', ["as" => "users.sharefund", "uses" => "UserController@ShareFund"]);
-		Route::post('/activate-member-account', ["as"=>"activateMemberAccount", "uses"=>"UserController@activate"]);		
+		Route::post('/activate-member-account', ["as"=>"activateMemberAccount", "uses"=>"UserController@activate"]);
+		Route::post('/reset-password', ["as"=>"resetPassword", "uses"=>"UserController@resetPassword"]);		
 	});	
 	
 	//-	---- TRANSACTION CATEGORY MANAGEMENT ----//	
@@ -171,6 +175,7 @@ $this->post('login', 'Auth\LoginController@login')->name('login');
 Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerIndex"]);
 Route::get('/registration/{id?}', ["as"=>"register.ref", "uses"=>"HomeController@ref"]);
 Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
+Route::get('member-account-activation/{slug?}/confirmation={check?}', ['as'=>'confirmRegistration', 'uses'=>'HomeController@activateAccount']);
 Route::post('/forget-password', ['as' => 'forget_password', 'uses' => 'HomeController@forget_password']);
 Route::post('/reset/verify/{id?}',['as' => 'reset.store' ,'uses' => 'HomeController@reset_confirm']);
 Route::post('/reset/change',['as' => 'reset.password' ,'uses' => 'HomeController@change_oldpassword']);

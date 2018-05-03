@@ -14,6 +14,7 @@ class CreateNotificationsTable extends Migration
     public function up()
     {
         Schema::create('notifications', function (Blueprint $table) {
+            $table->engine = 'InnoDB';            
             $table->uuid('id')->primary();
             $table->string('type',190);
             $table->integer('notifiable_id')->unsigned();

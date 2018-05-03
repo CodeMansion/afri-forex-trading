@@ -23,7 +23,7 @@ class CreatePackagesTable extends Migration
             $table->decimal('monthly_charge', 10,2)->nullable();
             $table->timestamps();
 
-            $table->foreign('platform_id')->references('id')->on('platforms');
+            // $table->foreign('platform_id')->references('id')->on('platforms');
         });
     }
 

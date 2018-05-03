@@ -40,15 +40,17 @@
                             @if(count($downlines) < 1)
                                 <center><em>No Downline found </em></center> 
                             @else 
-                                <table class="table table-striped table-hover activitylogs" id="sample_2">
+                                <table class="table table-bordered table-hover activitylogs" id="sample_2">
                                     <thead>
                                         <tr>
-                                            <th>S/N</th>
-                                            <th>Platform</th>
-                                            <th>Username</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
+                                            <th width="30">S/N</th>
+                                            <th width="50"></th>
+                                            <th>NAME</th>
+                                            <th>USERNAME</th>
+                                            <th>EMAIL</th>
+                                            <th>PHONE</th>
+                                            <th>SERVICE</th>
+                                            <th>DOWNLINES</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -56,11 +58,19 @@
                                         @foreach($downlines as $downline)
                                             <tr>
                                                 <td>#</td>
-                                                <td><span class="label label-sm label-success">{{ $downline->Platform->name}}</span></td>
+                                                <td><img src="{{ asset('images/default.png') }}" width="30" height="30" /></td>
+                                                <td>{{ strtoupper($downline->User->full_name) }} </td> 
                                                 <td>{{ $downline->User->username}}</td>
-                                                <td>{{ $downline->User->full_name}} </td> 
                                                 <td>{{ $downline->User->email}} </td> 
-                                                <td>{{ $downline->User->telephone}} </td>  
+                                                <td>{{ $downline->User->Profile->telephone}} </td> 
+                                                <td>
+                                                    @if($downline->platform_id == null)
+                                                    <span class="badge badge-warning">Not Active</span>
+                                                    @else
+                                                    <span class="badge badge-success">{{ $downline->Platform->name}}</span>
+                                                    @endif
+                                                </td>
+                                                <td></td> 
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -74,14 +84,13 @@
     </div>
 @endsection
 @section('extra_script')    
-    <script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" ="text/javascript"></script>
-    <script src="{{ asset('assets/global/scripts/datatable.js') }}" ="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" ="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" ="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
     
-    <script src="{{ asset('assets/pages/admin/transactioncategories.js') }}" type="text/javascript"></script>
 @endsection
 @section('after_script')
-    <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" type="text/javascript"></script>
 @endsection

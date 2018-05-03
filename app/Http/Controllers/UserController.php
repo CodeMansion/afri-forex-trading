@@ -147,6 +147,37 @@ class UserController extends Controller
         }
     }
 
+
+    public function resetPassword(Request $request)
+    {
+        $data = $request->except('_token');
+        if($data) {
+            try {
+                $check = \Hash::check($data['old_password'],auth()->user()->password);
+                if(!$check) {
+                    return response()->json([
+                        "msg"   => "Incorrect old password!",
+                        "type"  =>  "false"
+                    ]);
+                }
+
+                $member = User::find($data['slug'],'slug');
+                $member->password = $data['new_password'];
+                $member->save();
+
+                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "$member->full_name changed password");
+                return response()->json([
+                    "msg"   => "Password changed successfully!",
+                    "type"  => "true"
+                ],200);
+
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+    }
+
+    
     protected function validator(array $data)
     {
         $custom_msg = [

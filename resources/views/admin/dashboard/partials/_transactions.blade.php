@@ -2,7 +2,7 @@
     <div class="portlet-title">
         <div class="caption caption-md">
             <i class="icon-bar-chart font-dark hide"></i>
-            <span class="caption-subject font-dark bold uppercase">Recent Transactions</span>
+            <span class="caption-subject font-dark bold uppercase"> <i class="icon-calculator"></i> Recent Transactions</span>
             <span class="caption-helper"><img src="{{ asset('images/loader.gif') }}" id="transaction_loader" /> </span>
         </div>
         <div class="inputs">
@@ -56,7 +56,7 @@
         </div>
         <div class="scroller-footer">
             <div class="btn-arrow-link pull-right">
-                <a href="javascript:;">See All Records</a>
+                <a href="{{ URL::route('transactioncategories.index') }}">See All Records</a>
                 <i class="icon-arrow-right"></i>
             </div>
         </div>

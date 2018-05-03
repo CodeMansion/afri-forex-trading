@@ -56,8 +56,6 @@
         var TRANSACTION = "{{ URL::route('loadTransactions') }}";
         var CHART = "{{ URL::route('loadChart') }}";
         var ACTIVITY = "{{ URL::route('loadActivityLogs') }}";
-        var TRANSACTION_ONE = "{{ URL::route('loadTransactionsOne') }}";
-        var ACTIVITY_ONE = "{{ URL::route('loadActivityLogsOne') }}";
     </script>
     <script src="{{ asset('js/pages/dashboard.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/pages/dashboard_chart.js') }}" type="text/javascript"></script>

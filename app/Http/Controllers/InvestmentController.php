@@ -14,8 +14,11 @@ use App\UserWallet;
 use App\Referral;
 use App\User;
 use Carbon\Carbon;
+use App\Notifications\MemberSubscription;
+use App\Mail\NewSubscription;
 
 use Gate;
+use Notification;
 
 class InvestmentController extends Controller
 {
@@ -75,46 +78,48 @@ class InvestmentController extends Controller
                         'type' => "false"
                     ];
                 }
-                $investment                  = new Investment();
-                $investment->slug            = bin2hex(random_bytes(64));
-                $investment->user_id         = auth()->user()->id;
-                $investment->platform_id     = $data['platform_id'];
-                $investment->package_id      = $data['package_id'];
+
+                $investment = new Investment();
+                $investment->slug = bin2hex(random_bytes(64));
+                $investment->user_id = auth()->user()->id;
+                $investment->platform_id = $data['platform_id'];
+                $investment->package_id = $data['package_id'];
                 $investment->package_type_id = $data['package_type_id'];
-                $investment->status          = 1;
+                $investment->status = 1;
                 $investment->save();
                 
-                $transaction                            = new PaymentTransaction();
-                $transaction->slug                      = bin2hex(random_bytes(64));
-                $transaction->user_id                   = auth()->user()->id;
-                $transaction->platform_id               = $data['platform_id'];
-                $transaction->transaction_category_id   = TransactionCategory::whereName('Debit')->first()->id;
-                $transaction->amount                    = Package::whereId($data['package_id'])->first()->investment_amount;
-                $transaction->is_paid                   = true;
-                $transaction->reference_no              = bin2hex(random_bytes(8));
+                $transaction = new PaymentTransaction();
+                $transaction->slug = bin2hex(random_bytes(64));
+                $transaction->user_id = auth()->user()->id;
+                $transaction->platform_id = $data['platform_id'];
+                $transaction->transaction_category_id = TransactionCategory::whereName('Debit')->first()->id;
+                $transaction->amount = Package::whereId($data['package_id'])->first()->investment_amount;
+                $transaction->is_paid = true;
+                $transaction->reference_no = date('Ymdhis');
                 $transaction->save();
 
                 $upline = UserDownline::whereDownlineId(auth()->user()->id)->first();
                 if(isset($upline)){
                     if($upline->platform_id == Null){
-                        $upline->platform_id        = $investment->platform_id;
-                        $upline->is_active          = 1;
+                        $upline->platform_id = $investment->platform_id;
+                        $upline->is_active = 1;
                         $upline->investment_amount  = $transaction->amount;
                         $upline->save();
                     }else{
                         // new platform downline
-                        $downline                   = new UserDownline();
-                        $downline->platform_id      = $investment->platform_id;
-                        $downline->upline_id 	    = $upline->upline_id;
-                        $downline->downline_id 	    = $investment->user_id;
-                        $downline->is_active        = 1;
-                        $downline->investment_amount= $transaction->amount;
+                        $downline  = new UserDownline();
+                        $downline->platform_id = $investment->platform_id;
+                        $downline->upline_id = $upline->upline_id;
+                        $downline->downline_id = $investment->user_id;
+                        $downline->is_active = 1;
+                        $downline->investment_amount = $transaction->amount;
                         $downline->save();
                     }
 
                 }
+
                 $check_wallet = CheckMemberWallet(auth()->user()->id);
-                if (!check_wallet) {
+                if (!$check_wallet) {
                     $wallet = UserWallet::insert([
                         'slug'          => bin2hex(random_bytes(64)),
                         'user_id'       => auth()->user()->id,
@@ -124,12 +129,17 @@ class InvestmentController extends Controller
                         'updated_at'    => Carbon::now()
                     ]);
                 }
-                //\Mail::to(auth()->user()->email)->send(new Investments($investment));
-                $ip = $_SERVER['REMOTE_ADDR'];
-                activity_logs(auth()->user()->id, $ip, "Payed for Investment");
-            \DB::commit();
+
+                $admin = User::find(1);
+                Notification::send($admin, new MemberSubscription($investment));
+
+                \Mail::to(auth()->user()->email)->send(new NewSubscription($data));
+
+                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribed for Investment service");
+                
+                \DB::commit();
                 return response()->json([
-                    'msg' => "You Have Successfully investment For Investment.",
+                    'msg' => "Your subscription was successful",
                     'type' => "true"
                 ],200);
 
@@ -157,21 +167,7 @@ class InvestmentController extends Controller
         $params['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
         $data['debit'] = PaymentTransaction::userLatestDebit()->first();
         $data['credit'] = PaymentTransaction::userLatestCredit()->first();
-        $earning = \App\Earning::whereUserId(auth()->user()->id)->wherePlatformId($subscription->platform_id)->first();
         
-        if(!empty($earning)){
-            $earning->amount = $params['downlines']->count()  * 25;
-            $earning->save();
-        }else{
-            $earning                = new \App\Earning();
-            $earning->slug           = bin2hex(random_bytes(64));
-            $earning->user_id       = auth()->user()->id;
-            $earning->platform_id   = $subscription->platform_id;
-            $earning->amount        = ($params['downlines']->count() - 2) * 5;
-            $earning->save();
-        }
-        
-        $params['earning'] = $earning;
     }
 
     /**

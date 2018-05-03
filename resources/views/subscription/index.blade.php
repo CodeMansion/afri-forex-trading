@@ -126,8 +126,6 @@
         var REFERRAL = "{{URL::route('referrals.add')}}";
         var INVEST = "{{URL::route('investments.add')}}";
         var MEMBERS = "{{ URL::route('loadMembers') }}";
-        var TRANSACTION_ONE = "{{ URL::route('loadTransactionsOne') }}";
-        var ACTIVITY_ONE = "{{ URL::route('loadActivityLogsOne') }}";
     </script>
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection

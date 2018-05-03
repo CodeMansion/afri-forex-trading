@@ -25,8 +25,8 @@ class CreateDisputesTable extends Migration
             $table->integer('dispute_priority_id')->unsigned()->index();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('dispute_priority_id')->references('id')->on('dispute_priorities');
+            // $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('dispute_priority_id')->references('id')->on('dispute_priorities');
         });
     }
 

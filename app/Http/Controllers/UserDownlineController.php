@@ -29,8 +29,10 @@ class UserDownlineController extends Controller
                 return redirect(route('packageSub'));
             }
 
+            $data['menu_id'] = 4.0;
             $member = User::find(auth()->user()->slug,'slug');
             $data['downlines'] = $member->UserDownline()->get(); 
+            
             return view('members.downlines.index')->with($data); 
         }
     }

@@ -85,8 +85,7 @@
     </div>
 
 @section('modals')
-    @include('admin.packagetypes.modals._new_packagetypes')
-    @include('admin.packagetypes.modals._edit_packagetypes')
+    
 @endsection
 @endsection
 @section('extra_script')

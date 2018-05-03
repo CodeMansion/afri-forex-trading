@@ -49,6 +49,7 @@ var AppServiceSubscription = function() {
                         toastr.error(errorMsg);
                     }
                 });
+                
             } else {
                 toastr.info("You selected Referrer!");
                 $.ajax({
@@ -85,13 +86,18 @@ var AppServiceSubscription = function() {
                 '_token': TOKEN
             },
             success: function(data) {
-                swal("Successful!", data.msg, "success");
-                setTimeout(() => {
-                    window.location.replace("/dashboard");
-                }, 3000);
+                if (data.type == "true") {
+                    swal("Successful!", data.msg, "success");
+                    setTimeout(() => {
+                        window.location.replace("/dashboard");
+                    }, 2000);
+                } else if (data.type == "false") {
+                    toastr.warning(data.msg);
+                }
             },
             error: function(alaxB, HTTerror, errorMsg) {
-                swal("Error", errorMsg, "error");
+                swal("Error",errorMsg,"error");
+                $("#payment_btn").attr('disabled', false);
             }
         });
     }
@@ -110,11 +116,14 @@ var AppServiceSubscription = function() {
                     swal("Successful!", rst.msg, "success");
                     setTimeout(() => {
                         window.location.replace("/dashboard");
-                    }, 3000);
-                } else if (rst.type == "false") {}
+                    }, 2000);
+                } else if (rst.type == "false") {
+                    toastr.warning(rst.msg);
+                }
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 swal("Error", errorMsg, "error");
+                $("#payment_btn").attr('disabled', false);
             }
         });
     }
@@ -135,11 +144,12 @@ var AppServiceSubscription = function() {
                     swal("Successful!", rst.msg, "success");
                     setTimeout(() => {
                         window.location.replace("/dashboard");
-                    }, 3000);
+                    }, 2000);
                 } else if (rst.type == "false") {}
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 swal("Error", errorMsg, "error");
+                $("#payment_btn").attr('disabled', false);
             }
         });
     }
@@ -203,34 +213,30 @@ var AppServiceSubscription = function() {
                 var amount = $("#amount").val();
                 var id = $("#select_packages").find("#platform_id").val();
                 swal({
-                        title: "Are you sure?",
-                        text: "You are about to make payment for a service",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-danger",
-                        confirmButtonText: "Yes, Make Payment!",
-                        closeOnConfirm: false
-                    },
-                    function() {
-                        processPayment(id, amount);
-                    });
+                    title: "Are you sure?",
+                    text: "You are about to make payment for a service",
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                }, function () {
+                    processPayment(id, amount);
+                });
             });
 
             $('body').find("#select_packages").on("click", "#referral", function() {
                 $(this).attr('disabled', true);
                 var id = $("#select_packages").find("#platform_id").val();
                 swal({
-                        title: "Are you sure?",
-                        text: "You are about to make payment for a service",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-danger",
-                        confirmButtonText: "Yes, Proceed!",
-                        closeOnConfirm: false
-                    },
-                    function() {
-                        Referrer(id);
-                    });
+                    title: "Are you sure?",
+                    text: "You are about to make payment for a service",
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                }, function () {
+                    Referrer(id);
+                });
             });
 
             $('body').find("#select_packages").on("click", "#invest", function() {
@@ -239,17 +245,15 @@ var AppServiceSubscription = function() {
                 var package_id = $("#select_packages").find("#package_id").val();
                 var package_type_id = $("#select_packages").find("#package_type_id").val();
                 swal({
-                        title: "Are you sure?",
-                        text: "You are about to make payment for a service",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-danger",
-                        confirmButtonText: "Yes, Proceed!",
-                        closeOnConfirm: false
-                    },
-                    function() {
-                        Invest(platform_id, package_id, package_type_id);
-                    });
+                    title: "Are you sure?",
+                    text: "You are about to make payment for a service",
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                }, function () {
+                    Invest(platform_id, package_id, package_type_id);
+                });
             });
         }
     }

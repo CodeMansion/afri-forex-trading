@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Earning;
 use Illuminate\Http\Request;
 
+use Gate;
+use App\User;
+
 class EarningController extends Controller
 {
     /**
@@ -14,7 +17,25 @@ class EarningController extends Controller
      */
     public function index()
     {
-        //
+        if(auth()->user()->is_admin == 0){
+            if(Gate::allows('is_account_active')) {
+                auth()->logout();	
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
+    
+            $user = strtoupper(auth()->user()->full_name);
+            if(!Gate::allows('has_member_paid')) {
+                \Session::flash('error',"Sorry $user, you are required to subscribe for a platform before proceeding. Thank you!");
+                return redirect(route('packageSub'));
+            }
+            
+            $data['menu_id'] = 8.0;
+            $user = User::find(auth()->user()->slug,'slug');
+            $data['earnings'] = $user->UserEarnings()->get();
+
+            return view('members.earnings.index')->with($data);
+        }
     }
 
     /**

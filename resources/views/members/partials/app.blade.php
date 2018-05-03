@@ -8,7 +8,7 @@
         <meta name="description" content="" />
         <link rel="shortcut icon" href="{{ asset('images/elect-ng-logo.png') }}" type="image/png" />
 
-        <title>Members | </title>
+        <title>{{ $config['application_name']}} :: Membership Page </title>
         
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
@@ -64,6 +64,8 @@
         <script>
             var NOTIFY = "{{ URL::route('dashboardNotify') }}";
             var NOTIFY_COUNT = parseInt(<?php echo count(auth()->user()->unreadNotifications); ?>);
+            var ENABLE_SOUND = parseInt(<?php echo $config['enable_sound_notification']; ?>);
+            var ENABLE_PUSH = parseInt(<?php echo $config['enable_push_notification']; ?>);
         </script>
         
         <script src="{{ asset('js/utilities.js') }}" type="text/javascript"></script>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Subscription;
 use Carbon\Carbon;
 use App\PaymentTransaction;
-use App\Mail\Subscriptions;
+use App\Mail\NewSubscription;
 use App\UserDownline;
 use App\Referral;
 use App\UserWallet;
@@ -71,6 +71,7 @@ class SubscriptionController extends Controller
     {
         $data = $request->except('_token');
         if(isset($type) && $type == 'ajax') {
+            \DB::beginTransaction();
             try {
 
                 $referral = Referral::UserReferrals()->count();
@@ -110,8 +111,9 @@ class SubscriptionController extends Controller
                     'created_at'    => Carbon::now(),
                     'updated_at'    => Carbon::now()
                 ]);
+
                 $check_wallet = CheckMemberWallet(auth()->user()->id);
-                if (!check_wallet) {
+                if (!$check_wallet) {
                     $wallet = UserWallet::insert([
                         'slug'          => bin2hex(random_bytes(64)),
                         'user_id'       => auth()->user()->id,
@@ -127,26 +129,28 @@ class SubscriptionController extends Controller
                     if($upline->platform_id == null){
                         $upline->platform_id = $data['id'];
                         $upline->investment_amount = (double)$data['amount'];
-                        $upline->is_active   = 1;
+                        $upline->is_active = 1;
                         $upline->save();
                     }else{
                         // new platform downline
-                        $downline               = new UserDownline();
+                        $downline  = new UserDownline();
                         $downline->platform_id  = $data['id'];
-                        $downline->upline_id 	= $upline->upline_id;
-                        $downline->downline_id 	= auth()->user()->id;
-                        $downline->investment_amount= (double)$data['amount'];
-                        $downline->is_active    = 1;
+                        $downline->upline_id = $upline->upline_id;
+                        $downline->downline_id	= auth()->user()->id;
+                        $downline->investment_amount = (double)$data['amount'];
+                        $downline->is_active = 1;
                         $downline->save();
                     }
 
                 }
 
-                //\Mail::to(auth()->user()->email)->send(new Subscriptions($subscribe));
-
                 #TODO - Send system message
                 $admin = User::find(1);
                 Notification::send($admin, new MemberSubscription($subscribe));
+
+                \DB::commit();
+
+                \Mail::to(auth()->user()->email)->send(new NewSubscription($data));
 
                 activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribed for Daily Signal");
                 return response()->json([
@@ -155,6 +159,7 @@ class SubscriptionController extends Controller
                 ],200);
 
             } catch(Exception $e) {
+                \DB::rollback();
                 return false;
             }
         }
