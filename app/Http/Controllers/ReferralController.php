@@ -131,7 +131,7 @@ class ReferralController extends Controller
                 $admin = User::find(1);
                 Notification::send($admin, new MemberSubscription($investment));
 
-                \Mail::to(auth()->user()->email)->send(new NewSubscription($data));
+                // \Mail::to(auth()->user()->email)->send(new NewSubscription($data));
 
                 $ip = $_SERVER['REMOTE_ADDR'];
                 activity_logs(auth()->user()->id, $ip, "Registered For Referral Service");

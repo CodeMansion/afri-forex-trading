@@ -133,7 +133,7 @@ class InvestmentController extends Controller
                 $admin = User::find(1);
                 Notification::send($admin, new MemberSubscription($investment));
 
-                \Mail::to(auth()->user()->email)->send(new NewSubscription($data));
+                // \Mail::to(auth()->user()->email)->send(new NewSubscription($data));
 
                 activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribed for Investment service");
                 
@@ -161,12 +161,6 @@ class InvestmentController extends Controller
      */
     public function show($id)
     {
-        $investment = Investment::UserInvestments()->whereId($id)->first();
-        $params['downlines'] = UserDownline::UserDownline()->wherePlatformId($investment->platform_id)->get();
-        $params['transactions'] = PaymentTransaction::UserTransactions()->wherePlatformId($investment->platform_id)->get();
-        $params['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
-        $data['debit'] = PaymentTransaction::userLatestDebit()->first();
-        $data['credit'] = PaymentTransaction::userLatestCredit()->first();
         
     }
 
