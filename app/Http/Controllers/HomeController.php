@@ -165,7 +165,7 @@ class HomeController extends Controller
     public function forget_password(Request $request)
     {
         $user = User::whereEmail($request->email)->first();
-        if(!$user){
+        if(empty($user)){
             return response()->json(['type' => 'false','msg' => 'user with this email address does not exist!'], 200);
         }
         //\Mail::to($user)->send(new ForgetPassword($user));
