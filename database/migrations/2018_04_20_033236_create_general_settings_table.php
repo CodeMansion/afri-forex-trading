@@ -27,6 +27,7 @@ class CreateGeneralSettingsTable extends Migration
             $table->string('currency_exchange_api')->nullable();
             $table->string('default_currency')->nullable();
             $table->boolean('enable_system_backup')->default(true);
+            $table->integer('system_status_id')->unsigned()->index();
             $table->timestamps();
         });
     }

@@ -33,5 +33,31 @@ class Investment extends Model
         return $query->where('user_id',auth()->user()->id);
     }
 
-    
+    public function scopeDailyInvestors($query) {
+        return $query->where([
+            'package_type_id'   => 1,
+            'status'            => 1
+        ]);
+    }
+
+    public function scopeWeeklyInvestors($query) {
+        return $query->where([
+            'package_type_id'   => 2,
+            'status'            => 1
+        ]);
+    }
+
+    public function scopeMonthlyInvestors($query) {
+        return $query->where([
+            'package_type_id'   => 3,
+            'status'            => 1
+        ]);
+    }
+
+    public function scopeQuarterlyInvestors($query) {
+        return $query->where([
+            'package_type_id'   => 4,
+            'status'            => 1
+        ]);
+    }
 }

@@ -11,6 +11,7 @@ var GeneralSettings = function() {
         var description = $("#description").val();
         var exchange_api = $("#exchange_api").val();
         var currency = $("#default_currency").val();
+        var system_status_id = $("#system_status_id").val();
         var sound_notification;
         var push_notification;
         var session_timeout;
@@ -41,7 +42,8 @@ var GeneralSettings = function() {
                 'push_notification': push_notification,
                 'session_timeout' : session_timeout,
                 'login_alert': login_alert,
-                'system_backup': system_backup
+                'system_backup': system_backup,
+                'system_status_id': system_status_id
             },
             success: function(rst) {
                 if(rst.type == "true") {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\MailSetting;
 use App\GeneralSetting;
+use App\SystemStatus;
 
 class SystemSettingsController extends Controller
 {
@@ -26,6 +27,7 @@ class SystemSettingsController extends Controller
     {
         $data['menu_id'] = 9.0;
         $data['settings'] = GeneralSetting::find(1);
+        $data['statuses'] = SystemStatus::all();
 
         return view('admin.settings.general_settings.index')->with($data);
     }
@@ -91,9 +93,8 @@ class SystemSettingsController extends Controller
                 $update->currency_exchange_api = $data['exchange_api'];
                 $update->default_currency = $data['currency'];
                 $update->enable_system_backup = ($data['system_backup'] == 'true') ? true : false;
+                $update->system_status_id = $data['system_status_id'];
                 $update->save();
-
-
 
                 return response()->json([
                     'msg'   => "General Settings Updated Successfully",
