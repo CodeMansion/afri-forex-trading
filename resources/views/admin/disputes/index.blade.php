@@ -113,7 +113,7 @@
                                     @foreach($disputes as $dispute)
                                         <tr>
                                             <td></td>
-                                            <td>{{ $dispute->user->Profile }}</td>
+                                            <td>{{ $dispute->user->Profile->full_name }}</td>
                                             <td>{{ $dispute->title }}</td>
                                             <td>{{ strip_tags(word_counter($dispute->message, 8,'...')) }}</td>
                                             <td><span class="badge badge-{{ dispute_status($dispute->status,'class') }}">{{ dispute_status($dispute->status,'name') }}</span></td>

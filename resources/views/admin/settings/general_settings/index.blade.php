@@ -67,6 +67,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">System Status</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" id="system_status_id">
+                                            @foreach($statuses as $status)
+                                                <option value="{{ $status->id }}" <?php echo ($status->id == $settings['system_status_id']) ? "selected" : ""; ?>>{{ $status->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-md-3 control-label">Enable Sound Notification</label>
                                     <div class="col-md-9">
                                         <div class="input-group">

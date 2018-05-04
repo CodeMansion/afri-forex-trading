@@ -46,6 +46,7 @@ return array(
     'App\\Http\\Controllers\\TransactionCategoryController' => $baseDir . '/app/Http/Controllers/TransactionCategoryController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
     'App\\Http\\Controllers\\UserDownlineController' => $baseDir . '/app/Http/Controllers/UserDownlineController.php',
+    'App\\Http\\Controllers\\WithdrawalController' => $baseDir . '/app/Http/Controllers/WithdrawalController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',
@@ -80,12 +81,17 @@ return array(
     'App\\SentMessage' => $baseDir . '/app/SentMessage.php',
     'App\\Subscription' => $baseDir . '/app/Subscription.php',
     'App\\SystemSetting' => $baseDir . '/app/SystemSetting.php',
+<<<<<<< HEAD
     'App\\Testimony' => $baseDir . '/app/Testimony.php',
+=======
+    'App\\SystemStatus' => $baseDir . '/app/SystemStatus.php',
+>>>>>>> e886198db3d25951b0e60ea44b36559c199b52a3
     'App\\TransactionCategory' => $baseDir . '/app/TransactionCategory.php',
     'App\\User' => $baseDir . '/app/User.php',
     'App\\UserDownline' => $baseDir . '/app/UserDownline.php',
     'App\\UserProfile' => $baseDir . '/app/UserProfile.php',
     'App\\UserWallet' => $baseDir . '/app/UserWallet.php',
+    'App\\Withdrawal' => $baseDir . '/app/Withdrawal.php',
     'ArithmeticError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
     'AssertionError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
@@ -2953,6 +2959,7 @@ return array(
     'Symfony\\Polyfill\\Php70\\Php70' => $vendorDir . '/symfony/polyfill-php70/Php70.php',
     'Symfony\\Thanks\\Command\\ThanksCommand' => $vendorDir . '/symfony/thanks/src/Command/ThanksCommand.php',
     'Symfony\\Thanks\\Thanks' => $vendorDir . '/symfony/thanks/src/Thanks.php',
+    'SystemStatusTableSeeder' => $baseDir . '/database/seeds/SystemStatusTableSeeder.php',
     'Tests\\CreatesApplication' => $baseDir . '/tests/CreatesApplication.php',
     'Tests\\Feature\\ExampleTest' => $baseDir . '/tests/Feature/ExampleTest.php',
     'Tests\\TestCase' => $baseDir . '/tests/TestCase.php',

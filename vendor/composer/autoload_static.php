@@ -349,6 +349,7 @@ class ComposerStaticInit07a90e05008e5905d7ae0fb31ee7f5cc
         'App\\Http\\Controllers\\TransactionCategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransactionCategoryController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Controllers\\UserDownlineController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserDownlineController.php',
+        'App\\Http\\Controllers\\WithdrawalController' => __DIR__ . '/../..' . '/app/Http/Controllers/WithdrawalController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
@@ -383,12 +384,17 @@ class ComposerStaticInit07a90e05008e5905d7ae0fb31ee7f5cc
         'App\\SentMessage' => __DIR__ . '/../..' . '/app/SentMessage.php',
         'App\\Subscription' => __DIR__ . '/../..' . '/app/Subscription.php',
         'App\\SystemSetting' => __DIR__ . '/../..' . '/app/SystemSetting.php',
+<<<<<<< HEAD
         'App\\Testimony' => __DIR__ . '/../..' . '/app/Testimony.php',
+=======
+        'App\\SystemStatus' => __DIR__ . '/../..' . '/app/SystemStatus.php',
+>>>>>>> e886198db3d25951b0e60ea44b36559c199b52a3
         'App\\TransactionCategory' => __DIR__ . '/../..' . '/app/TransactionCategory.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\UserDownline' => __DIR__ . '/../..' . '/app/UserDownline.php',
         'App\\UserProfile' => __DIR__ . '/../..' . '/app/UserProfile.php',
         'App\\UserWallet' => __DIR__ . '/../..' . '/app/UserWallet.php',
+        'App\\Withdrawal' => __DIR__ . '/../..' . '/app/Withdrawal.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
@@ -3256,6 +3262,7 @@ class ComposerStaticInit07a90e05008e5905d7ae0fb31ee7f5cc
         'Symfony\\Polyfill\\Php70\\Php70' => __DIR__ . '/..' . '/symfony/polyfill-php70/Php70.php',
         'Symfony\\Thanks\\Command\\ThanksCommand' => __DIR__ . '/..' . '/symfony/thanks/src/Command/ThanksCommand.php',
         'Symfony\\Thanks\\Thanks' => __DIR__ . '/..' . '/symfony/thanks/src/Thanks.php',
+        'SystemStatusTableSeeder' => __DIR__ . '/../..' . '/database/seeds/SystemStatusTableSeeder.php',
         'Tests\\CreatesApplication' => __DIR__ . '/../..' . '/tests/CreatesApplication.php',
         'Tests\\Feature\\ExampleTest' => __DIR__ . '/../..' . '/tests/Feature/ExampleTest.php',
         'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',

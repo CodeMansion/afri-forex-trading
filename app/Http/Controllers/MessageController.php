@@ -124,7 +124,10 @@ class MessageController extends Controller
                 ],200);
 
             } catch (Exception $e) {
-                return false;
+                return response()->json([
+                    "msg"   => $e->getMessage(),
+                    "type"  => "false"
+                ]);
             }
         }
     }

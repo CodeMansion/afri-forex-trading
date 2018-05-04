@@ -24,3 +24,27 @@ function CheckMemberWallet($field) {
 	$check = App\UserWallet::whereUserId($field)->first();
 	return ($check);
 }
+
+function earnings_formular($type,$percentage,$investment_amount) {
+	if(isset($type) && isset($percentage) && isset($investment_amount)) {
+		if($type == "daily") {
+			$earning = ((($percentage / 100) * $investment_amount) / 180);
+			return (double)$earning;
+		}
+
+		if($type == "weekly") {
+			$earning = ((($percentage / 100) * $investment_amount) / 180) * 7;
+			return (double)$earning;
+		}
+
+		if($type == "monthly") {
+			$earning = ((($percentage / 100) * $investment_amount) / 180) * 28;
+			return (double)$earning;
+		}
+
+		if($type == "quarterly") {
+			$earning = ($percentage / 100) * $investment_amount;
+			return (double)$earning;
+		}
+	}
+}

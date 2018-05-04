@@ -161,12 +161,6 @@ class InvestmentController extends Controller
      */
     public function show($id)
     {
-        $investment = Investment::UserInvestments()->whereId($id)->first();
-        $params['downlines'] = UserDownline::UserDownline()->wherePlatformId($investment->platform_id)->get();
-        $params['transactions'] = PaymentTransaction::UserTransactions()->wherePlatformId($investment->platform_id)->get();
-        $params['wallet'] = UserWallet::whereUserId(auth()->user()->id)->first();
-        $data['debit'] = PaymentTransaction::userLatestDebit()->first();
-        $data['credit'] = PaymentTransaction::userLatestCredit()->first();
         
     }
 
