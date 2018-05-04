@@ -36,7 +36,7 @@
             @include('members.dashboard.partials._earnings_chart')
         </div>
         <div class="col-lg-4 col-xs-12 col-sm-12">
-            @include('members.dashboard.partials._latest_earnings')
+            @//include('members.dashboard.partials._latest_earnings')
         </div>
     </div>
     <div class="row">

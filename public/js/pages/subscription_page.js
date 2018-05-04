@@ -49,7 +49,7 @@ var AppServiceSubscription = function() {
                         toastr.error(errorMsg);
                     }
                 });
-                
+
             } else {
                 toastr.info("You selected Referrer!");
                 $.ajax({
@@ -62,7 +62,6 @@ var AppServiceSubscription = function() {
                     success: function(data) {
                         $("#loader").hide();
                         $("#service_page").hide();
-                        $("#select_package_types").hide();
                         $("#select_packages").fadeIn();
                         $("#select_packages").html(data);
                     },
@@ -96,7 +95,7 @@ var AppServiceSubscription = function() {
                 }
             },
             error: function(alaxB, HTTerror, errorMsg) {
-                swal("Error",errorMsg,"error");
+                swal("Error", errorMsg, "error");
                 $("#payment_btn").attr('disabled', false);
             }
         });
@@ -154,6 +153,11 @@ var AppServiceSubscription = function() {
         });
     }
 
+    var cancel = function() {
+        $("#select_packages").hide();
+        $("#service_page").fadeIn();
+    }
+
     return {
         init: function() {
 
@@ -173,12 +177,30 @@ var AppServiceSubscription = function() {
             });
 
             $('body').find("#select_packages").on("click", "#package_type", function() {
-                $("#select_packages").hide();
-                $("#select_package_types").fadeIn();
+                $("#select_package_types").show();
+                $.ajax({
+                    url: PACKAGE_TYPE,
+                    method: "POST",
+                    data: {
+                        '_token': TOKEN
+                    },
+                    success: function(data) {
+                        $("#loader").hide();
+                        $("#service_page").hide();
+                        $("#select_packages").hide();
+                        $("#select_package_types").fadeIn();
+                        $("#select_package_types").html(data);
+                    },
+                    error: function(alaxB, HTTerror, errorMsg) {
+                        toastr.error(errorMsg);
+                    }
+                });
             });
+
 
             $('body').find("#select_package_types .package_types").each(function(index) {
                 $("#continue" + index).on("click", function() {
+                    alert();
                     //$(this).attr('disabled', true);
                     var platform_id = $("#select_packages").find("#platform_id").val();
                     var package_id = $("#select_packages").find("#package_id" + index).val();
@@ -217,9 +239,9 @@ var AppServiceSubscription = function() {
                     text: "You are about to make payment for a service",
                     type: "warning",
                     showCancelButton: true,
-                    closeOnConfirm: false,
+                    closeOnConfirm: cancel(),
                     showLoaderOnConfirm: true
-                }, function () {
+                }, function() {
                     processPayment(id, amount);
                 });
             });
@@ -232,9 +254,9 @@ var AppServiceSubscription = function() {
                     text: "You are about to make payment for a service",
                     type: "warning",
                     showCancelButton: true,
-                    closeOnConfirm: false,
+                    closeOnConfirm: cancel(),
                     showLoaderOnConfirm: true
-                }, function () {
+                }, function() {
                     Referrer(id);
                 });
             });
@@ -249,9 +271,9 @@ var AppServiceSubscription = function() {
                     text: "You are about to make payment for a service",
                     type: "warning",
                     showCancelButton: true,
-                    closeOnConfirm: false,
+                    closeOnConfirm: cancel(),
                     showLoaderOnConfirm: true
-                }, function () {
+                }, function() {
                     Invest(platform_id, package_id, package_type_id);
                 });
             });

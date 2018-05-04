@@ -70,15 +70,12 @@
                                 @php($index++)
                                 @endforeach
                             </div>
-                            <div id="select_packages">
-                                
+                            <div id="select_packages">                                
                             </div>
-                        </div>
-                        <div class="row">
                             <div id="select_package_types">
-                                @php($index=0)
-                                @foreach($package_types as $type)
-                                <div class="package_types">
+                                <div class="package_types">           
+                                    @php($index=0)       
+                                    @foreach($package_types as $type)
                                     <div class="col-lg-3 col-md-4 col-xs-12 col-sm-12">
                                         <div class="price-column-container border-active">
                                             <div class="price-table-head <?php if($index==0){ echo "bg-red"; }elseif($index==1){ echo "bg-green"; }else{echo "bg-blue";} ?> ">
@@ -101,10 +98,10 @@
                                                 <button type="button" id="continue{{ $index }}" class="btn green btn-outline btn-lg sbold uppercase price-button">Select</button>
                                             </div>
                                         </div>
-                                    </div>
-                                @php($index++)
+                                    </div>        
+                                    @php($index++)
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
                         </div>
                     </div>                
@@ -126,6 +123,7 @@
         var REFERRAL = "{{URL::route('referrals.add')}}";
         var INVEST = "{{URL::route('investments.add')}}";
         var MEMBERS = "{{ URL::route('loadMembers') }}";
+        var  PACKAGE_TYPE = "{{ URL::route('getPackageType') }}";
     </script>
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection

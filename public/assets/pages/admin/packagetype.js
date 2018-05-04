@@ -102,9 +102,9 @@ $('body').find("#packagetype_details").on("click ", "#edit-packagetype", functio
 });
 //});
 
-$('body').find("table.table-striped.table-hover.packagetype tbody tr").each(function(index) {
+$('body').find("table.table-striped.table-hover.package_type tbody tr").each(function(index) {
     $("#edit" + index).on("click", function() {
-        $("#edit_packagetype").modal();
+        $("#edit_package_type").modal();
         $("#loading").show();
         $("#packagetype_details").hide();
         var package_type_id = $("#package_type_id" + index).val();

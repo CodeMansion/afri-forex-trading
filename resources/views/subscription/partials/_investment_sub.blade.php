@@ -28,8 +28,3 @@
         @php($index++)
     @endforeach
 </div>
-<script>
-    $(document).ready(function(){
-        $("#loader").hide();
-    });
-</script>

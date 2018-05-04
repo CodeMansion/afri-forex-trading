@@ -19,6 +19,7 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::post('/get-daily-signal-info', ["as"=>"getDailySignalInfo", "uses"=>"HomeController@getDailySignalInfo"]);
 	Route::post('/get-investment-info', ["as"=>"getInvestmentInfo", "uses"=>"HomeController@getInvestmentInfo"]);
 	Route::post('/get-investment-payment-info', ["as"=>"getInvestmentPaymentInfo", "uses"=>"HomeController@getInvestmentPaymentInfo"]);
+	Route::post('/get-package-type', ["as"=> "getPackageType", "uses"=>"HomeController@getPackageType"]);
 	Route::post('/get-referrer-info', ["as"=>"getReferrerInfo", "uses"=>"HomeController@getReferrerInfo"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
 	Route::post('/process-payment/{type?}',["as" => "processPayment", "uses"  => "SubscriptionController@processPayment"]);
@@ -48,6 +49,17 @@ Route::group(['middleware'=>['auth']], function(){
         Route::get('/view/{slug?}',["as"=>"viewDispute", "uses"=>"DisputeController@show"]);
         Route::post('/create-dispute', ["as"=>"disputeAdd", "uses"=>"DisputeController@store"]);
         Route::post('/get-dispute', ["as"=>"getDispute", "uses"=>"DisputeController@getDisputes"]);
+	});
+
+	//---- TESTIMONY MANAGEMENT ----//
+    Route::group(['prefix' => 'testimonies'], function () {
+        Route::get('/',["as"=> "testimonies.index", "uses"=>"TestimonyController@index"]);
+		Route::post('/store', ["as" => "testimonies.add", 'uses' => 'TestimonyController@store']);
+		Route::get('/show/{id?}', ["as" => "testimonies.show", "uses" => "TestimonyController@show"]);
+		Route::post('/update', ["as" => "testimonies.update", 'uses' => 'TestimonyController@update']);
+		Route::get('/delete/{id?}', ["as" => "testimonies.delete", 'uses' => 'TestimonyController@destroy']);
+		Route::post('/get-details', ["as" => "testimonies.editInfo", "uses" => "TestimonyController@getEditInfo"]);
+		Route::get('/approve/{id?}', ["as" => "testimonies.approve", "uses" => "TestimonyController@approve"]);
 	});
 	
 	// ----- MEMBER EARNINGS MANAGEMENT ------//

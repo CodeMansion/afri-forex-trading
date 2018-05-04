@@ -42,7 +42,7 @@
                                         <i class="fa fa-warning"></i> <em>There are no package type available currently. Click on the button above to add a new package type.</em>
                                     </div>
                                 @else 
-                                    <table class="table table-striped table-hover packagetype" id="sample_2">
+                                    <table class="table table-striped table-hover package_type" id="sample_2">
                                         <thead>
                                             <tr>
                                                 <th>S/N</th>
@@ -85,7 +85,8 @@
     </div>
 
 @section('modals')
-    
+    @include('admin.package_types.modals._new_package_types')
+    @include('admin.package_types.modals._edit_package_types')
 @endsection
 @endsection
 @section('extra_script')

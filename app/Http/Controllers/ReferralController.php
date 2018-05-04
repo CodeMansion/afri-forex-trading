@@ -14,6 +14,7 @@ use App\Subscription;
 use App\Notifications\MemberSubscription;
 use App\Mail\NewSubscription;
 use Gate;
+use App\User;
 use Notification;
 
 class ReferralController extends Controller

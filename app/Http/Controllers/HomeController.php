@@ -116,7 +116,18 @@ class HomeController extends Controller
             $data = $request->except('_token');
             $params['investment'] = Platform::active()->where('id',$data['id'])->first();
             $params['packages'] = Package::wherePlatformId($data['id'])->get();
+            $params['package_types'] = PackageType::all();
             return view('subscription.partials._investment_sub')->with($params);
+        } catch(Exception $e) {
+            return false;
+        }
+    }
+
+    public function getPackageType(Request $request) {
+        try {
+            $data = $request->except('_token');
+            $params['package_types'] = PackageType::all();
+            return view('subscription.partials._select_packages')->with($params);
         } catch(Exception $e) {
             return false;
         }
