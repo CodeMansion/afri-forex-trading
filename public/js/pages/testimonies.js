@@ -1,12 +1,13 @@
 var AppTestimony = (function() {
     var loadComponents = function() {
         $("#loader").hide();
+        $("#loader1").hide();
         $("body").find("#loading").hide();
     };
 
     var CreateTestimony = function() {
         var subject = $("#title").val();
-        var message = tinymce.activeEditor.getContent();
+        var message = $("#test_message").val();
 
         $("#errors").html("");
 
@@ -33,6 +34,7 @@ var AppTestimony = (function() {
                         $("#errors").html(
                             "<div class='alert alert-success'>" + rst.msg + "</div>"
                         );
+                        toastr.success(rst.msg);
                         location.reload();
                     } else if (rst.type) {
                         App.scrollTop($("#errors"));
@@ -41,6 +43,7 @@ var AppTestimony = (function() {
                         $("#errors").html(
                             "<div class='alert alert-danger'>" + rst.msg + "</div>"
                         );
+                        toastr.warning(rst.msg);
                     }
                 },
                 error: function(rst, httpErr, errorMessage) {
@@ -49,6 +52,7 @@ var AppTestimony = (function() {
                     $("#errors").html(
                         "<div class='alert alert-danger'>" + errorMessage + "</div>"
                     );
+                    toastr.error(errorMessage);
                 }
             });
         }
@@ -84,7 +88,7 @@ var AppTestimony = (function() {
 
     var UpdateTestimony = function() {
         var subject = $("#title1").val();
-        var message = $('#message').val();
+        var message = $("#message1").val();
         var slug = $('#slug').val();
 
         $("#errors1").html("");
@@ -97,7 +101,7 @@ var AppTestimony = (function() {
             $("#loader").show();
 
             $.ajax({
-                url: SEND,
+                url: UPDATE,
                 method: "POST",
                 data: {
                     '_token': TOKEN,
@@ -113,6 +117,7 @@ var AppTestimony = (function() {
                         $("#errors1").html(
                             "<div class='alert alert-success'>" + rst.msg + "</div>"
                         );
+                        toastr.success(rst.msg);
                         location.reload();
                     } else if (rst.type) {
                         App.scrollTop($("#errors"));
@@ -121,6 +126,7 @@ var AppTestimony = (function() {
                         $("#errors1").html(
                             "<div class='alert alert-danger'>" + rst.msg + "</div>"
                         );
+                        toastr.warning(rst.msg);
                     }
                 },
                 error: function(rst, httpErr, errorMessage) {
@@ -129,10 +135,126 @@ var AppTestimony = (function() {
                     $("#errors1").html(
                         "<div class='alert alert-danger'>" + errorMessage + "</div>"
                     );
+                    toastr.error(errorMessage);
                 }
             });
         }
     }
+
+    var DeleteTestimony = function(index) {
+        $("#btn_testimony_delete" + index).attr("disabled", true);
+        $("#btn_testimony_delete" + index).html("<i class='fa fa-refresh fa-spin'></i> Deleting this Testimony...");
+
+        //deleting Testimony
+        $.ajax({
+            url: $("#btn_testimony_delete" + index).data("href"),
+            method: "GET",
+            data: {},
+            success: function(rst) {
+                if (rst.type == "true") {
+                    $("#btn_testimony_delete" + index).attr(
+                        "disabled",
+                        false
+                    );
+                    $("#btn_testimony_delete" + index).html(
+                        "<i class='fa fa-check'></i> deleted."
+                    );
+                    toastr.success(rst.msg);
+                    location.reload();
+                } else if (rst.type == "false") {
+                    $("#btn_testimony_delete" + index).attr(
+                        "disabled",
+                        false
+                    );
+                    $("#btn_testimony_delete" + index).html(
+                        "<i class='fa fa-warning'></i> Failed! Try Again."
+                    );
+                    toastr.warning(rst.msg);
+                }
+            },
+            error: function(rst) {
+                $("#btn_testimony_delete" + index).attr("disabled", false);
+                $("#btn_testimony_delete" + index).html(
+                    "<i class='fa fa-warning fa-spin'></i> Failed. Try Again!"
+                );
+                toastr.error(rst.msg);
+            }
+        });
+    }
+
+    var ActivateTestimony = function(index) {
+        $("#activate" + index).attr("disabled", true);
+        $("#activate" + index).html("<i class='fa fa-refresh fa-spin'></i> Approving this Testimony...");
+
+        //deleting Testimony
+        $.ajax({
+            url: $("#activate" + index).data("href"),
+            method: "GET",
+            data: {
+                '_token': TOKEN
+            },
+            success: function(rst) {
+                if (rst.type == "true") {
+                    $("#activate" + index).attr("disabled", false);
+                    $("#activate" + index).html(
+                        "<i class='fa fa-check'></i> Approved."
+                    );
+                    toastr.success(rst.msg);
+                    location.reload();
+                } else if (rst.type == "false") {
+                    $("#activate" + index).attr("disabled", false);
+                    $("#activate" + index).html(
+                        "<i class='fa fa-warning'></i> Failed! Try Again."
+                    );
+                    toastr.warning(rst.msg);
+                }
+            },
+            error: function(rst) {
+                $("#activate" + index).attr("disabled", false);
+                $("#activate" + index).html(
+                    "<i class='fa fa-warning fa-spin'></i> Failed. Try Again!"
+                );
+                toastr.error(rst.msg);
+            }
+        });
+    };
+
+    var DeclineTestimony = function(index) {
+        $("#decline" + index).attr("disabled", true);
+        $("#decline" + index).html("<i class='fa fa-refresh fa-spin'></i> Approving this Testimony...");
+
+        //deleting Testimony
+        $.ajax({
+            url: $("#decline" + index).data("href"),
+            method: "GET",
+            data: {
+                '_token': TOKEN
+            },
+            success: function(rst) {
+                if (rst.type == "true") {
+                    $("#decline" + index).attr("disabled", false);
+                    $("#decline" + index).html(
+                        "<i class='fa fa-check'></i> Approved."
+                    );
+                    toastr.success(rst.msg);
+                    location.reload();
+                } else if (rst.type == "false") {
+                    $("#decline" + index).attr("disabled", false);
+                    $("#decline" + index).html(
+                        "<i class='fa fa-warning'></i> Failed! Try Again."
+                    );
+                    toastr.warning(rst.msg);
+                }
+            },
+            error: function(rst) {
+                $("#decline" + index).attr("disabled", false);
+                $("#decline" + index).html(
+                    "<i class='fa fa-warning fa-spin'></i> Failed. Try Again!"
+                );
+                toastr.error(rst.msg);
+            }
+        });
+    };
 
     return {
         init: function() {
@@ -152,44 +274,24 @@ var AppTestimony = (function() {
                 UpdateTestimony();
             });
 
-            $('body').find("table.table-striped.table-hover.platforms tbody tr").each(function(index) {
-                $("#btn_platform_delete" + index).on("click", function() {
+            $('body').find("table.table-striped.table-hover.testimonies_list tbody tr").each(function(index) {
+                $("#btn_testimony_delete" + index).on("click", function() {
                     $("#serverErrors").html("");
-                    $(this).attr("disabled", true);
-                    $(this).html("<i class='fa fa-refresh fa-spin'></i> Deleting this Platform...");
+                    DeleteTestimony(index);
+                });
+            });
 
-                    //deleting Platform
-                    $.ajax({
-                        url: $(this).data("href"),
-                        method: "GET",
-                        data: {
-                            '_token': TOKEN,
-                            'req': "platform_delete"
-                        },
-                        success: function(rst) {
-                            if (rst.type == "true") {
-                                $("#btn_platform_delete").attr("disabled", false);
-                                $("#btn_platform_delete").html("<i class='fa fa-check'></i> deleted.");
-                                $("#serverErrors").html(
-                                    "<div class='success-alert'>" + rst.msg + "</div><br/>"
-                                );
-                                location.reload();
-                            } else if (rst.type == "false") {
-                                $("#btn_platform_delete").attr("disabled", false);
-                                $("#btn_platform_delete").html("<i class='fa fa-warning'></i> Failed! Try Again.");
-                                $("#serverErrors").html(
-                                    "<div class='danger-alert'>" + rst.msg + "</div><br/>"
-                                );
-                            }
-                        },
-                        error: function(rst) {
-                            $("#btn_platform_delete").attr("disabled", false);
-                            $("#btn_platform_delete").html("<i class='fa fa-warning fa-spin'></i> Failed. Try Again!");
-                            $("#serverErrors").html(
-                                "<div class='danger-alert'>" + rst.msg + "</div><br/>"
-                            );
-                        }
-                    });
+            $('body').find("table.table-striped.table-hover.testimonies_list tbody tr").each(function(index) {
+                $("#activate" + index).on("click", function() {
+                    $("#serverErrors").html("");
+                    ActivateTestimony(index);
+                });
+            });
+
+            $('body').find("table.table-striped.table-hover.testimonies_list tbody tr").each(function(index) {
+                $("#decline" + index).on("click", function() {
+                    $("#serverErrors").html("");
+                    DeclineTestimony(index);
                 });
             });
         }

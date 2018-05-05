@@ -29,7 +29,7 @@ class TestimonyController extends Controller
                 return redirect(route('packageSub'));
             }
 
-            $params['menu_id'] = 7;
+            $params['menu_id'] = 10;
             $params['testimonies'] = Testimony::Testimony()->get();
             return view('members.testimony.index')->with($params);
         }
@@ -130,6 +130,30 @@ class TestimonyController extends Controller
         }
     }
 
+    public function decline($id)
+    {
+        \DB::beginTransaction();
+        try {
+            $testimony = Testimony::find($id);
+            $testimony->status = 2;
+            $testimony->save();
+            $ip = $_SERVER['REMOTE_ADDR'];
+            activity_logs(auth()->user()->id, $ip, "Delined Testimony");
+            \DB::commit();
+            return response()->json([
+                'msg' => "Testimony Delined Successfully.",
+                'type' => "true"
+            ],200);            
+
+        } catch (Exception $e) {
+            \DB::rollback();
+            return response()->json([
+                "msg" => $e->getMessage(),
+                "type" => "false"
+            ]);
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -150,7 +174,28 @@ class TestimonyController extends Controller
      */
     public function update(Request $request)
     {
-        
+        $data = $request->except("_token");
+        if ($data) {
+            try {
+                $testimony = Testimony::find($data['id'], 'slug');
+                $testimony->title = $data['title'];
+                $testimony->message = $data['message'];
+                $testimony->save();
+
+                //send notification to admin
+                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Update Testimony");
+                return response()->json([
+                    "msg" => "Testimony Updated successfully",
+                    "type" => "true"
+                ],200);
+
+            } catch (Exception $e) {
+                return response()->json([
+                    "msg" => $e->getMessage(),
+                    "type" => "false"
+                ]);
+            }
+        }
     }
 
     /**
@@ -160,27 +205,24 @@ class TestimonyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)
-    {
-        $data = $request->except('_token');
-        if ($data) {
-            try {
-                $testimony = Testimony::find($id, 'slug');
-                $testimony->delete();
+    {        
+        try {
+            $testimony = Testimony::find($id, 'slug');
+            $testimony->delete();
 
-                $ip = $_SERVER['REMOTE_ADDR'];
-                activity_logs(auth()->user()->id, $ip, "Delete Testimony");
+            $ip = $_SERVER['REMOTE_ADDR'];
+            activity_logs(auth()->user()->id, $ip, "Delete Testimony");
 
-                return response()->json([
-                    'msg' => 'Testimony Deleted successfully',
-                    'type' => 'true'
-                ],200);
+            return response()->json([
+                'msg' => 'Testimony Deleted successfully',
+                'type' => 'true'
+            ],200);
 
-            } catch (Exception $e) {
-                return response()->json([
-                    "msg" => $e->getMessage(),
-                    "type" => "false"
-                ]);
-            }
+        } catch (Exception $e) {
+            return response()->json([
+                "msg" => $e->getMessage(),
+                "type" => "false"
+            ]);
         }
     }
 }

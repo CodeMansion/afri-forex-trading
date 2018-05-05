@@ -84,7 +84,6 @@ class HomeController extends Controller
     {
         $data['platforms'] = Platform::active()->get();
         $data['package_types'] = PackageType::all();
-        
         return view('subscription.index')->with($data);
     }
 
@@ -126,6 +125,7 @@ class HomeController extends Controller
     public function getPackageType(Request $request) {
         try {
             $data = $request->except('_token');
+            $params['package'] = Package::whereId($data['id'])->first();
             $params['package_types'] = PackageType::all();
             return view('subscription.partials._select_packages')->with($params);
         } catch(Exception $e) {

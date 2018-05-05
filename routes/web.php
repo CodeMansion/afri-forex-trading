@@ -60,6 +60,7 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::get('/delete/{id?}', ["as" => "testimonies.delete", 'uses' => 'TestimonyController@destroy']);
 		Route::post('/get-details', ["as" => "testimonies.editInfo", "uses" => "TestimonyController@getEditInfo"]);
 		Route::get('/approve/{id?}', ["as" => "testimonies.approve", "uses" => "TestimonyController@approve"]);
+		Route::get('/decline/{id?}', ["as" => "testimonies.decline", "uses" => "TestimonyController@decline"]);
 	});
 	
 	// ----- MEMBER EARNINGS MANAGEMENT ------//

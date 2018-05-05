@@ -9,8 +9,7 @@
                 <form action="#">
                     <div id="errors"></div>
                     <div class="form-group username_detail_filed">
-                        <label class="control-label">Username | Email</label>
-                        <input id="detail_field" type="text" class="form-control" /> 
+                        <input id="detail_field" type="text" class="form-control" placeholder="Enter username or email" /> 
                     </div>
                     <div id="user_details_for_fund">
                         

@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title"><span class="icon-envelope font-green"></span>Create Testimony</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-y: scroll;height:600px;">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">

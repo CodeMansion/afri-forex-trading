@@ -85,7 +85,15 @@ class ReferralController extends Controller
                 $subscription = Subscription::UserSubscriptions()->count();
                 if($investment > 0 || $subscription > 0){
                     return $response = [
-                        'msg' => "Error.",
+                        'msg' => "You can not subscribe to referrer! User already exist on other service..",
+                        'type' => "false"
+                    ];
+                }
+
+                $referral_count = Referral::UserReferrals()->count();
+                if($referral_count > 0 ){
+                    return $response = [
+                        'msg' => "User already exist on referrer service.",
                         'type' => "false"
                     ];
                 }

@@ -1,4 +1,4 @@
-@extends('members.partials.app')
+@extends('admin.partials.app')
 
 @section('extra_style')
     <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
@@ -34,9 +34,9 @@
                             <i class="icon-envelope font-dark"></i>
                             <span class="caption-subject font-dark sbold uppercase">List of Testimony</span>
                         </div>
-                        <div class="actions">
+                        <!--div class="actions">
                             <button class="btn btn-xs green pull-right" data-toggle="modal" data-target="#new-testimony" type="button" ><i class="icon-envelope"></i> Create Testimony</button>
-                        </div>
+                        </div-->
                     </div>
                     <div class="portlet-body form">
                         @if(count($testimonies) < 1)
@@ -72,8 +72,8 @@
                                                     <button class="btn btn-xs green dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-expanded="false"> Actions<i class="fa fa-angle-down"></i></button>
                                                     <ul class="dropdown-menu pull-left" role="menu">
                                                         <input type="hidden" id="testimony_id{{$index}}" value="{{$testimony->slug}}">
-                                                        <li><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i>Edit</a></li>
-                                                        <li><a data-href="{{ URL::route('testimonies.delete',$testimony->slug)}}" id="btn_testimony_delete{{$index}}"><i class="fa fa-trash"></i> Delete</a></li>
+                                                        <li><a href="#" data-href="{{ URL::route('testimonies.approve', $testimony->id) }}" id="activate{{$index}}">Approve</li>
+                                                        <li><a href="#" data-href="{{ URL::route('testimonies.decline', $testimony->id) }}" id="decline{{$index}}">Decline</li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -91,8 +91,6 @@
     </div>
 @endsection
 @section('modals')
-    @include('members.testimony.modals._add_testimony')
-    @include('members.testimony.modals._edit_testimony')
 @endsection
 @section('extra_script')
     <script src="{{ asset('assets/global/plugins/jquery.sparkline.min.js') }}" type="text/javascript"></script>
@@ -105,7 +103,41 @@
     <script src="{{ asset('assets/pages/scripts/profile.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
-    
+    <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script> 
+    <script>
+        tinymce.init({
+            selector: '#editor1',
+            height: 300,
+            theme: 'modern',
+            plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount spellchecker imagetools contextmenu colorpicker textpattern help',
+            toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+            image_advtab: true,
+            templates: [
+              { title: 'Test template 1', content: 'Test 1' },
+              { title: 'Test template 2', content: 'Test 2' }
+            ],
+            content_css: [
+              '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+              '//www.tinymce.com/css/codepen.min.css'
+            ]
+        });
+        tinymce.init({
+            selector: '#editor2',
+            height: 300,
+            theme: 'modern',
+            plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount spellchecker imagetools contextmenu colorpicker textpattern help',
+            toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+            image_advtab: true,
+            templates: [
+              { title: 'Test template 1', content: 'Test 1' },
+              { title: 'Test template 2', content: 'Test 2' }
+            ],
+            content_css: [
+              '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+              '//www.tinymce.com/css/codepen.min.css'
+            ]
+        });
+    </script>
     <script>
         var SEND = "{{ URL::route('testimonies.add') }}";
         var TOKEN = "{{ csrf_token() }}";

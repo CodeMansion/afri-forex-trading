@@ -92,6 +92,10 @@ var AppServiceSubscription = function() {
                     }, 2000);
                 } else if (data.type == "false") {
                     toastr.warning(data.msg);
+                    swal("error!", data.msg, "error");
+                    setTimeout(() => {
+                        window.location.replace("/dashboard");
+                    }, 2000);
                 }
             },
             error: function(alaxB, HTTerror, errorMsg) {
@@ -118,6 +122,10 @@ var AppServiceSubscription = function() {
                     }, 2000);
                 } else if (rst.type == "false") {
                     toastr.warning(rst.msg);
+                    swal("error!", rst.msg, "error");
+                    setTimeout(() => {
+                        window.location.replace("/dashboard");
+                    }, 2000);
                 }
             },
             error: function(alaxB, HTTerror, errorMsg) {
@@ -177,30 +185,13 @@ var AppServiceSubscription = function() {
             });
 
             $('body').find("#select_packages").on("click", "#package_type", function() {
+                $("#select_packages").hide();
                 $("#select_package_types").show();
-                $.ajax({
-                    url: PACKAGE_TYPE,
-                    method: "POST",
-                    data: {
-                        '_token': TOKEN
-                    },
-                    success: function(data) {
-                        $("#loader").hide();
-                        $("#service_page").hide();
-                        $("#select_packages").hide();
-                        $("#select_package_types").fadeIn();
-                        $("#select_package_types").html(data);
-                    },
-                    error: function(alaxB, HTTerror, errorMsg) {
-                        toastr.error(errorMsg);
-                    }
-                });
             });
 
 
             $('body').find("#select_package_types .package_types").each(function(index) {
                 $("#continue" + index).on("click", function() {
-                    alert();
                     //$(this).attr('disabled', true);
                     var platform_id = $("#select_packages").find("#platform_id").val();
                     var package_id = $("#select_packages").find("#package_id" + index).val();

@@ -1,4 +1,3 @@
- 
 <div class="package_types">           
     @php($index=0)       
     @foreach($package_types as $type)
@@ -20,6 +19,7 @@
             </div>
             <div class="arrow-down arrow-grey"></div>
             <div class="price-table-footer">
+                <input type="hidden" id="package_id{{ $index }}" value="{{ $package->id }}" />
                 <input type="hidden" id="package_type_id{{ $index }}" value="{{ $type->id }}" />
                 <button type="button" id="continue{{ $index }}" class="btn green btn-outline btn-lg sbold uppercase price-button">Select</button>
             </div>

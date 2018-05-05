@@ -19,8 +19,9 @@
 </div>
 <div class="form-group">
     <label>Message <span class="required">*</span></label>
-    <textarea class="form-control" id="message1">{{ strip_tags($testimony->message) }}</textarea> 
+    <textarea class="form-control" id="editor2 message">{{ strip_tags($testimony->message) }}</textarea> 
 </div>
 <hr/>
 <div id="errors1"></div> 
+<img src="{{ asset('images/loader.gif') }}" id="loader1" /> 
 <button type="button" class="btn green" id="update_testimony_btn"> Update</button>

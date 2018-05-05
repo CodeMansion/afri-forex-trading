@@ -346,6 +346,7 @@ class ComposerStaticInit07a90e05008e5905d7ae0fb31ee7f5cc
         'App\\Http\\Controllers\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/RoleController.php',
         'App\\Http\\Controllers\\SubscriptionController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubscriptionController.php',
         'App\\Http\\Controllers\\SystemSettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/SystemSettingsController.php',
+        'App\\Http\\Controllers\\TestimonyController' => __DIR__ . '/../..' . '/app/Http/Controllers/TestimonyController.php',
         'App\\Http\\Controllers\\TransactionCategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransactionCategoryController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Controllers\\UserDownlineController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserDownlineController.php',
@@ -384,11 +385,8 @@ class ComposerStaticInit07a90e05008e5905d7ae0fb31ee7f5cc
         'App\\SentMessage' => __DIR__ . '/../..' . '/app/SentMessage.php',
         'App\\Subscription' => __DIR__ . '/../..' . '/app/Subscription.php',
         'App\\SystemSetting' => __DIR__ . '/../..' . '/app/SystemSetting.php',
-<<<<<<< HEAD
-        'App\\Testimony' => __DIR__ . '/../..' . '/app/Testimony.php',
-=======
         'App\\SystemStatus' => __DIR__ . '/../..' . '/app/SystemStatus.php',
->>>>>>> e886198db3d25951b0e60ea44b36559c199b52a3
+        'App\\Testimony' => __DIR__ . '/../..' . '/app/Testimony.php',
         'App\\TransactionCategory' => __DIR__ . '/../..' . '/app/TransactionCategory.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\UserDownline' => __DIR__ . '/../..' . '/app/UserDownline.php',

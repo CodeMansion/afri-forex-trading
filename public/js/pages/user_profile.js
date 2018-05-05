@@ -125,13 +125,19 @@ var AppUserProfile = function() {
                 'detail': detail
             },
             success: function(rst) {
-                $("#get_detail_btn").attr("disabled", false);
-                $("#get_detail_btn").html("<i class='fa fa-check'></i> Continue!");
-                $("#get_detail_btn").hide();
-                $(".username_detail_filed").fadeOut();
-                $("#user_details_for_fund").fadeIn();
-                $("#user_details_for_fund").html(rst);
-                $("#share_fund_btn").show();
+                if(rst =="false"){
+                    toastr.error("this user "+detail+" does not exist");
+                    $("#get_detail_btn").attr("disabled", false);
+                    $("#get_detail_btn").html("Continue");
+                }else{
+                    $("#get_detail_btn").attr("disabled", false);
+                    $("#get_detail_btn").html("<i class='fa fa-check'></i> Continue");
+                    $("#get_detail_btn").hide();
+                    $(".username_detail_filed").fadeOut();
+                    $("#user_details_for_fund").fadeIn();
+                    $("#user_details_for_fund").html(rst);
+                    $("#share_fund_btn").show();
+                }
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 toastr.error(errorMsg);
@@ -186,7 +192,7 @@ var AppUserProfile = function() {
             $("#get_detail_btn").on("click", function() {
                 var detail = $("#detail_field").val();
                 if (detail.length < 1) {
-                    toastr.warning("Please this text field can not be empty!");
+                    toastr.error("Please this text field can not be empty!");
                 } else {
                     GETUSERTRANSFERDETAIL(detail);
                 }

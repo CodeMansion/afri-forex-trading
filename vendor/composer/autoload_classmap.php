@@ -80,12 +80,9 @@ return array(
     'App\\RoleUser' => $baseDir . '/app/RoleUser.php',
     'App\\SentMessage' => $baseDir . '/app/SentMessage.php',
     'App\\Subscription' => $baseDir . '/app/Subscription.php',
-    'App\\SystemSetting' => $baseDir . '/app/SystemSetting.php',
-<<<<<<< HEAD
-    'App\\Testimony' => $baseDir . '/app/Testimony.php',
-=======
     'App\\SystemStatus' => $baseDir . '/app/SystemStatus.php',
->>>>>>> e886198db3d25951b0e60ea44b36559c199b52a3
+    'App\\SystemSetting' => $baseDir . '/app/SystemSetting.php',
+    'App\\Testimony' => $baseDir . '/app/Testimony.php',
     'App\\TransactionCategory' => $baseDir . '/app/TransactionCategory.php',
     'App\\User' => $baseDir . '/app/User.php',
     'App\\UserDownline' => $baseDir . '/app/UserDownline.php',
