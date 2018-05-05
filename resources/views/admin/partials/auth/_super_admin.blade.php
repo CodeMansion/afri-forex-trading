@@ -6,7 +6,7 @@
             <span class="arrow open"></span>
         </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item {{menu_active($menu_id, 2)}}">
         <a href="{{ URL::route('platforms.index') }}" class="nav-link nav-toggle">
             <i class="icon-diamond"></i>
             <span class="title">Services</span>
@@ -36,6 +36,12 @@
         <a href="{{ URL::route('disputeIndex') }}">
             <i class="icon-envelope"></i>
             <span class="title">Disputes</span>
+        </a>
+    </li>
+    <li class="nav-item {{menu_active($menu_id, 10)}}">
+        <a href="{{ URL::route('WithdrawalIndex') }}">
+            <i class="icon-wallet"></i>
+            <span class="title">Withdrawals</span>
         </a>
     </li>
     <li class="nav-item {{menu_active($menu_id, 5)}}">

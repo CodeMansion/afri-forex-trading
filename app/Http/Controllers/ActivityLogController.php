@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\ActivityLog;
+
 class ActivityLogController extends Controller
 {
     /**
@@ -14,8 +16,10 @@ class ActivityLogController extends Controller
     public function index()
     {
         if(\Auth::user()->is_admin == 1) {
-            $params['activitylogs'] = \App\ActivityLog::all();
-            return view('admin.activity_logs.index')->with($params);
+            $data['menu_id'] = 7;
+            $data['activitylogs'] = ActivityLog::orderBy('id','DESC')->get();
+
+            return view('admin.activity_logs.index')->with($data);
         }        
 
         if(auth()->user()->is_admin == 0) {

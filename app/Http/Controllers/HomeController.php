@@ -9,6 +9,7 @@ use App\User;
 use App\UserProfile;
 use App\UserDownline;
 use App\Mail\ConfirmRegistration;
+use App\Mail\ForgetPassword;
 use DB;
 use Validator;
 use App\Platform;
@@ -26,6 +27,7 @@ use Mail;
 use Carbon\Carbon;
 use App\Notifications\NewMember;
 use App\UserWallet;
+use App\Withdrawal;
 
 class HomeController extends Controller
 {
@@ -46,6 +48,7 @@ class HomeController extends Controller
             $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
             $data['transactions_count'] = PaymentTransaction::all()->count();
             $data['members_count'] = User::members()->count();
+            $data['withdrawal'] = Withdrawal::all()->count();
 
             return view('admin.dashboard.index')->with($data);
         }
@@ -70,9 +73,11 @@ class HomeController extends Controller
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
             $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','desc')->limit(5)->get();
             $data['supports'] = Dispute::userDispute()->orderBy('id','desc')->limit(5)->get();
+            $data['earnings'] = User::find(auth()->user()->slug,'slug')->UserEarnings()->get();
             $data['balance'] = UserWallet::balance()->first()->amount;
             $data['debit'] = PaymentTransaction::userLatestDebit()->first();
             $data['credit'] = PaymentTransaction::userLatestCredit()->first();
+            $data['withdrawal'] = Withdrawal::memberWithdrawal();
 
             return view('members.dashboard.index')->with($data);
         }
@@ -97,6 +102,19 @@ class HomeController extends Controller
         }
     }
 
+    public function getPackageTypes(Request $request)
+    {
+        try {
+            $data = $request->except('_token');
+            $param['package_types'] = PackageType::all();
+            $param['package_id'] = $data['package_id'];
+
+            return view('subscription.partials._get_package_types')->with($param);
+        } catch(Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
     public function getReferrerInfo(Request $request) {
         try {
             $data = $request->except('_token');
@@ -114,6 +132,7 @@ class HomeController extends Controller
             $data = $request->except('_token');
             $params['investment'] = Platform::active()->where('id',$data['id'])->first();
             $params['packages'] = Package::wherePlatformId($data['id'])->get();
+
             return view('subscription.partials._investment_sub')->with($params);
         } catch(Exception $e) {
             return false;
@@ -124,8 +143,9 @@ class HomeController extends Controller
         try {
             $data = $request->except('_token');
             $params['investment'] = Platform::active()->where('id',$data['platform_id'])->first();
-            $params['package'] = Package::whereId($data['package_id'])->first();
-            $params['type'] = PackageType::whereId($data['package_type_id'])->first();
+            $params['package'] = Package::find($data['package_id']);
+            $params['type'] = PackageType::find($data['package_type_id']);
+
             return view('subscription.partials._subscribe_investment')->with($params);
         } catch(Exception $e) {
             return false;
@@ -147,7 +167,7 @@ class HomeController extends Controller
 
     public function registerIndex()
     {
-        $data['countries'] = Country::all();
+        $data['countries'] = Country::orderBy('name','ASC')->get();
         return view('register')->with($data);
     }
     
@@ -164,12 +184,12 @@ class HomeController extends Controller
 
     public function forget_password(Request $request)
     {
-        $user = User::whereEmail($request('email'))->first();
+        $user = User::whereEmail($request->email)->first();
         if(!$user){
-            return response()->json(['warning' => 'user with this email address does not exist!'], 200);
+            return response()->json(['type' => 'false','msg' => 'user with this email address does not exist!'], 200);
         }
-        \Mail::to($user)->send(new Forget($user));
-        return response()->json(['success' => 'password reset link has beeen sent to your mail!'], 200);
+        //\Mail::to($user)->send(new ForgetPassword($user));
+        return response()->json(['type' => 'true','msg' => 'password reset link has beeen sent to your mail!'], 200);
     }
     
     public function reset($confirm)
@@ -177,16 +197,20 @@ class HomeController extends Controller
         return view('reset');
     }
 
-    public function check_oldpasword(Request $request)
+    public function change_oldpassword(Request $request)
     {
-        $user = User::wherePassword($request->password)->first();
-        if(!$user){
+        $user = User::whereId(auth()->user()->id)->first();
+        if($user->password != bcrypt($request->old_password)){
             return $response = [
-                'msg' => "your password not correct.",
+                'msg' => "your current password not correct.",
                 'type' => "false"
             ];
         }
+        $user->is_active = 1;
+        $user->password = $request->password;
+        $user->save();
         return $response = [
+            'msg' => "your password reset has been made successfully.",
             'type' => "true"
         ];
     }
@@ -368,5 +392,13 @@ class HomeController extends Controller
         }
         
         return view('admin.partials.util._recent_transactions')->with($data);
+    }
+
+    public function loadEarnings() {
+        if(auth()->user()->is_admin == 0) {
+            $data['earnings'] = User::find(auth()->user()->slug, 'slug')->UserEarnings()->orderBy('id','DESC')->limit(10)->get();
+        }
+        
+        return view('members.partials.util._latest_earnings')->with($data);
     }
 }

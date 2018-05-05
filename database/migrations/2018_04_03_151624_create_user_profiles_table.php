@@ -25,8 +25,8 @@ class CreateUserProfilesTable extends Migration
             $table->integer('state_id')->nullable();
             $table->timestamps();
             
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('country_id')->references('id')->on('countries');
+            // $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('country_id')->references('id')->on('countries');
         });
         
     }

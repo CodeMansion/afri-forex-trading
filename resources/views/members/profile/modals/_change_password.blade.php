@@ -8,6 +8,7 @@
             <div class="modal-body">
             <div id="errors"></div>
                 <form action="#">
+                    <div id="errors"></div>
                     <div class="form-group">
                         <label class="control-label">Old Password</label>
                         <input type="password" class="form-control" id="old_password" placeholder="Enter Old Password"/> 

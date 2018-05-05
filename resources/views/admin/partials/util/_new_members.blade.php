@@ -8,8 +8,10 @@
                             <i class="icon-user"></i>
                         </div>
                         <div class="mt-action-details ">
-                            <span class="mt-action-author">{{ strtoupper($member->full_name) }}</span>
-                            <p class="mt-action-desc">{{ $member->email }}</p>
+                            <a href="{{ URL::route('showMember', $member->slug) }}">
+                                <span class="mt-action-author">{{ strtoupper($member->full_name) }}</span>
+                                <p class="mt-action-desc">{{ $member->email }}</p>
+                            </a>
                         </div>
                     </div>
                     <div class="mt-action-datetime ">

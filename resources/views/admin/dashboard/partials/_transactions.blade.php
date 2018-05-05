@@ -2,7 +2,7 @@
     <div class="portlet-title">
         <div class="caption caption-md">
             <i class="icon-bar-chart font-dark hide"></i>
-            <span class="caption-subject font-dark bold uppercase">Recent Transactions</span>
+            <span class="caption-subject font-dark bold uppercase"> <i class="icon-calculator"></i> Recent Transactions</span>
             <span class="caption-helper"><img src="{{ asset('images/loader.gif') }}" id="transaction_loader" /> </span>
         </div>
         <div class="inputs">
@@ -35,8 +35,14 @@
                             @foreach($transactions as $transaction)
                                 <tr>
                                     <td class="fit"><img class="user-pic rounded" src="{{ asset('images/default.png') }}"> </td>
-                                    <td><a href="javascript:;" class="primary-link">{{ $transaction->user->full_name }}</a></td>
-                                    <td> <span class="badge badge-success">{{ $transaction->Platform->name }}</span> </td>
+                                    <td><a href="{{ URL::route('showMember', $transaction->user->slug) }}" class="primary-link">{{ $transaction->user->full_name }}</a></td>
+                                    <td> <span class="badge badge-success">
+                                        @if(isset($transaction->Platform->name))
+                                        {{  $transaction->Platform->name }}</span> 
+                                        @else
+                                         Transfer
+                                        @endif
+                                    </td>
                                     <td> ${{ number_format($transaction->amount,2) }} </td>
                                     <td><span class="badge badge-primary">{{ $transaction->Category->name }}</span></td>
                                     <td><span class="bold theme-font">{{ $transaction->created_at->diffForHumans() }}</span></td>

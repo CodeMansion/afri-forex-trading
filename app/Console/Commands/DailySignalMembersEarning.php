@@ -72,7 +72,7 @@ class DailySignalMembersEarning extends Command
                         'platform_id'   => 1,
                         'earning_type_id'   => EarningType::where('name','Referral')->first()->id,
                         'amount'        => (double)$earning_amount,
-                        'status'        => true,
+                        'status'        => 1,
                         'created_at'    => Carbon::now(),
                         'updated_at'    => Carbon::now()
                     ]);
@@ -100,10 +100,6 @@ class DailySignalMembersEarning extends Command
                     //send notification to each member
                     $user = User::find($member->user_id);
                     Notification::send($user, new MemberEarning($new_earning));
-
-                    //send mail to member 
-
-                    echo "Successfull";
                 }
             }
 

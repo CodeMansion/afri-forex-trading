@@ -20,7 +20,7 @@ class PlatformTableSeeder extends Seeder
                 'slug' => bin2hex(random_bytes(64)),
                 'name' => 'Daily Signal',
                 'is_multiple' => false,
-                'price' => 72.00,
+                'price' => 128.00,
                 'description' => null,
                 'is_active' => true,
                 'created_at' => Carbon::now(),

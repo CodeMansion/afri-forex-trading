@@ -34,7 +34,6 @@
                         <ul class="dropdown-menu">
                             <li class="external">
                                 <h3>You have <span class="bold">1 New</span> Messages</h3>
-                                <!-- <a href="app_inbox.html">view all</a> -->
                             </li>
                             <li>
                                 
@@ -49,8 +48,8 @@
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
-                            <li><a href="#"><i class="icon-user"></i> My Profile </a></li>
-                            <li><a href="#"><i class="icon-envelope-open"></i> My Inbox<span class="badge badge-danger"> 3 </span></a></li>
+                            <li><a href="{{ URL::route('membersIndex') }}"><i class="icon-user"></i> My Profile </a></li>
+                            <!-- <li><a href="#"><i class="icon-envelope-open"></i> My Inbox</a></li> -->
                             <li class="divider"> </li>
                             <li><a href="{{ url('/logout') }}"><i class="icon-key"></i> Log Out </a></li>
                         </ul>

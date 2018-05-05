@@ -22,6 +22,7 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::post('/get-referrer-info', ["as"=>"getReferrerInfo", "uses"=>"HomeController@getReferrerInfo"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
 	Route::post('/process-payment/{type?}',["as" => "processPayment", "uses"  => "SubscriptionController@processPayment"]);
+	Route::post('get-package-types', ["as"=>"getPackageTypes", "uses"=>"HomeController@getPackageTypes"]);
 	
 	//--- ADMIN NOTIFICATIONS ---//
 	Route::get('/dashboard-notify',["as"=>"dashboardNotify", "uses"=>"HomeController@indexNotify"]);
@@ -32,6 +33,11 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::get('/load-support', ["as"=>"loadSupport", "uses"=>"HomeController@loadSupport"]);
 	Route::get('/load-chart', ["as"=>"loadChart", "uses"=>"HomeController@loadChart"]);
 	Route::get('/load-new-members', ["as"=>"loadMembers", "uses"=>"HomeController@loadMembers"]);
+	Route::get('/load-members-earnings', ["as"=>"loadEarnings", "uses"=>"HomeController@loadEarnings"]);
+
+	//---WITHDRAWALS ----//
+	Route::post('/request-withdrawal', ["as"=>"makeWithdrawal", "uses"=>"WithdrawalController@store"]);
+	Route::get('/withdrawals', ["as"=>"WithdrawalIndex", "uses"=>"WithdrawalController@index"]);
 	
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
@@ -46,8 +52,15 @@ Route::group(['middleware'=>['auth']], function(){
         Route::get('/',["as"=>"disputeIndex", "uses"=>"DisputeController@index"]);
         Route::get('/view/{slug?}',["as"=>"viewDispute", "uses"=>"DisputeController@show"]);
         Route::post('/create-dispute', ["as"=>"disputeAdd", "uses"=>"DisputeController@store"]);
-        Route::post('/get-dispute', ["as"=>"getDispute", "uses"=>"DisputeController@getDisputes"]);
-    });
+		Route::post('/get-dispute', ["as"=>"getDispute", "uses"=>"DisputeController@getDisputes"]);
+		Route::post('/reply-dispute', ["as"=>"replyDispute", "uses"=>"DisputeController@ReplyDispute"]);
+		Route::post('/resolved-dispute', ["as"=>"resolveDispute", "uses"=>"DisputeController@ResolveDispute"]);
+	});
+	
+	// ----- MEMBER EARNINGS MANAGEMENT ------//
+	Route::group(['prefix' => 'earnings'], function () {
+		Route::get('/',["as"=>"earningsIndex", "uses"=>"EarningController@index"]);
+	});
 
     //-	--- REFERRER MANAGEMENT ----//	
 	Route::group(['prefix' => 'referrals'], function () {		
@@ -103,9 +116,11 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::get('/show/{slug?}', ["as"=>"showMember", "uses"=>"UserController@show"]);		
 		Route::post('/update',["as"=>"users.update",'uses'=> 'UserController@update']);		
 		Route::get('/delete/{id?}',["as"=>"users.delete",'uses'=> 'UserController@destroy']);		
-		Route::post('/get-details', ["as"=>"users.editInfo", "uses"=>"UserController@getEditInfo"]);		
+		Route::post('/get-details', ["as"=>"users.editInfo", "uses"=>"UserController@getEditInfo"]);
+		Route::post('/get-user-fund-details', ["as" => "users.FundInfo", "uses" => "UserController@getUserDetails"]);
+		Route::post('/share-fund', ["as" => "users.sharefund", "uses" => "UserController@ShareFund"]);
 		Route::post('/activate-member-account', ["as"=>"activateMemberAccount", "uses"=>"UserController@activate"]);
-		Route::post('/password-reset', ["as"=>"resetPassword", "uses"=>"UserController@resetPassword"]);		
+		Route::post('/reset-password', ["as"=>"resetPassword", "uses"=>"UserController@resetPassword"]);		
 	});	
 	
 	//-	---- TRANSACTION CATEGORY MANAGEMENT ----//	
@@ -168,7 +183,9 @@ Route::get('/registration', ["as"=>"register", "uses"=>"HomeController@registerI
 Route::get('/registration/{id?}', ["as"=>"register.ref", "uses"=>"HomeController@ref"]);
 Route::post('/register',['as' =>'register.store','uses'=>'HomeController@store']);
 Route::get('member-account-activation/{slug?}/confirmation={check?}', ['as'=>'confirmRegistration', 'uses'=>'HomeController@activateAccount']);
+Route::post('/forget-password', ['as' => 'forget_password', 'uses' => 'HomeController@forget_password']);
 Route::post('/reset/verify/{id?}',['as' => 'reset.store' ,'uses' => 'HomeController@reset_confirm']);
+Route::post('/reset/change',['as' => 'reset.password' ,'uses' => 'HomeController@change_oldpassword']);
 
 Route::get('/logout', function () {	
 	auth()->logout();	

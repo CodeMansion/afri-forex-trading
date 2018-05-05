@@ -4,7 +4,12 @@
     <link href="{{ asset('assets/global/plugins/icheck/skins/all.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-    <h1 class="page-title"> Genenel System Settings <small></small> </h1>
+    <h1 class="page-title"> 
+        <i class="icon-wallet"></i> General System Settings<small></small> 
+        <span class="pull-right">
+            <i class="fa fa-calendar"></i> <?php echo date('l, F d, Y', strtotime(now())); ?>
+        </span>
+    </h1>
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
@@ -63,6 +68,16 @@
                                     <div class="col-md-9">
                                         <select class="form-control" id="default_currency">
                                         
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">System Status</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" id="system_status_id">
+                                            @foreach($statuses as $status)
+                                                <option value="{{ $status->id }}" <?php echo ($status->id == $settings['system_status_id']) ? "selected" : ""; ?>>{{ $status->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

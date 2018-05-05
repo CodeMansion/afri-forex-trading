@@ -29,9 +29,11 @@ class PackageController extends Controller
                 return redirect(route('packageSub'));
             }
         }
-            
+        
+        $data['menu_id'] = 2;
         $data['packages'] = Package::all();
         $data['platforms'] = Platform::whereIsActive(true)->get();
+        
         return view('admin.packages.index')->with($data);
     }
 

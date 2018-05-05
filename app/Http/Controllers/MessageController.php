@@ -81,6 +81,7 @@ class MessageController extends Controller
                 if($data['type'] == 'individuals') {
                     $filter_email_address = [];
                     $recipients = explode(';', $data['to']);
+                    
                     foreach($recipients as $recipient) {
                         if(filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
                             array_push($filter_email_address, $recipient);
@@ -124,7 +125,10 @@ class MessageController extends Controller
                 ],200);
 
             } catch (Exception $e) {
-                return false;
+                return response()->json([
+                    "msg"   => $e->getMessage(),
+                    "type"  => "false"
+                ]);
             }
         }
     }

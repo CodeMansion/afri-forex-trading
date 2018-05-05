@@ -4,10 +4,13 @@ var AppServiceSubscription = function() {
         $("#service_page").show();
         $("#select_packages").hide();
         $("#select_package_types").hide();
+        $("#loading").hide();
     }
 
     var selectPlatform = function(id, type) {
-
+        $("#service_page").fadeOut();
+        $("#loading").show();
+        
         if (type == 1) {
             toastr.info("You selected Investment!");
             $.ajax({
@@ -18,7 +21,7 @@ var AppServiceSubscription = function() {
                     '_token': TOKEN
                 },
                 success: function(data) {
-                    $("#loader").hide();
+                    $("#loading").hide();
                     $("#service_page").hide();
                     $("#select_packages").fadeIn();
                     $("#select_packages").html(data);
@@ -40,7 +43,7 @@ var AppServiceSubscription = function() {
                         _token: TOKEN
                     },
                     success: function(data) {
-                        $("#loader").hide();
+                        $("#loading").hide();
                         $("#service_page").hide();
                         $("#select_packages").fadeIn();
                         $("#select_packages").html(data);
@@ -60,7 +63,7 @@ var AppServiceSubscription = function() {
                         _token: TOKEN
                     },
                     success: function(data) {
-                        $("#loader").hide();
+                        $("#loading").hide();
                         $("#service_page").hide();
                         $("#select_package_types").hide();
                         $("#select_packages").fadeIn();
@@ -123,6 +126,7 @@ var AppServiceSubscription = function() {
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 swal("Error", errorMsg, "error");
+                $("#payment_btn").attr('disabled', false);
             }
         });
     }
@@ -148,6 +152,7 @@ var AppServiceSubscription = function() {
             },
             error: function(alaxB, HTTerror, errorMsg) {
                 swal("Error", errorMsg, "error");
+                $("#payment_btn").attr('disabled', false);
             }
         });
     }
@@ -169,42 +174,6 @@ var AppServiceSubscription = function() {
                 $("#select_packages").hide();
                 $("#service_page").fadeIn();
             });
-
-            $('body').find("#select_packages").on("click", "#package_type", function() {
-                $("#select_packages").hide();
-                $("#select_package_types").fadeIn();
-            });
-
-            $('body').find("#select_package_types .package_types").each(function(index) {
-                $("#continue" + index).on("click", function() {
-                    //$(this).attr('disabled', true);
-                    var platform_id = $("#select_packages").find("#platform_id").val();
-                    var package_id = $("#select_packages").find("#package_id" + index).val();
-                    var package_type_id = $("#select_package_types").find("#package_type_id" + index).val();
-                    toastr.info("Proceeding To Payment!");
-                    $.ajax({
-                        url: IN_PAYMENT_INFO_URL,
-                        method: "POST",
-                        data: {
-                            'platform_id': platform_id,
-                            'package_id': package_id,
-                            'package_type_id': package_type_id,
-                            '_token': TOKEN
-                        },
-                        success: function(data) {
-                            $("#loader").hide();
-                            $("#service_page").hide();
-                            $("#select_package_types").hide();
-                            $("#select_packages").hide();
-                            $("#select_packages").fadeIn();
-                            $("#select_packages").html(data);
-                        },
-                        error: function(alaxB, HTTerror, errorMsg) {
-                            toastr.error(errorMsg);
-                        }
-                    });
-                });
-            })
 
             $('body').find("#select_packages").on("click", "#payment_btn", function() {
                 $(this).attr('disabled', true);

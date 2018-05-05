@@ -16,9 +16,14 @@ class MailSettingsTableSeeder extends Seeder
         \App\MailSetting::insert([
             [
                 'id' => 1,
-                'from_name' => 'Afro Marketers',
-                'from_email' => 'support@afromarketers.com',
-                'reply_to' => 'noreply@afromarketers.com',
+                'from_name'     => 'Profits Markets',
+                'from_email'    => 'support@profitsmarkets.com',
+                'reply_to'      => 'noreply@profitsmarkets.com',
+                'host'          => 'smtp.gmail.com',
+                'username'      => 'brainajax@gmail.com',
+                'password'      => 'PhilliPiansPhilliPians$413',
+                'encryption'    => 'TLS',
+                'port'          => 587
             ],
         ]);
     }

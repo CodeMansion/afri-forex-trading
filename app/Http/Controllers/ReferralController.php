@@ -11,7 +11,11 @@ use App\UserWallet;
 use Carbon\Carbon;
 use App\Investment;
 use App\Subscription;
+use App\Notifications\MemberSubscription;
+use App\Mail\NewSubscription;
+use App\User;
 use Gate;
+use Notification;
 
 class ReferralController extends Controller
 {
@@ -85,11 +89,12 @@ class ReferralController extends Controller
                         'type' => "false"
                     ];
                 }
-                $referral                  = new Referral();
-                $referral->slug            = bin2hex(random_bytes(64));
-                $referral->user_id         = auth()->user()->id;
-                $referral->platform_id     = $data['platform_id'];
-                $referral->status          = 1;
+
+                $referral = new Referral();
+                $referral->slug = bin2hex(random_bytes(64));
+                $referral->user_id = auth()->user()->id;
+                $referral->platform_id = $data['platform_id'];
+                $referral->status = 1;
                 $referral->save();  
                 
                 //Update Platform id in user downline                
@@ -110,21 +115,28 @@ class ReferralController extends Controller
                     }
 
                 }
+
+                $check_wallet = CheckMemberWallet(auth()->user()->id);
+                if (!$check_wallet) {
+                    $wallet = UserWallet::insert([
+                        'slug'          => bin2hex(random_bytes(64)),
+                        'user_id'       => auth()->user()->id,
+                        'amount'        => 0.00,
+                        'status'        => 1,
+                        'created_at'    => Carbon::now(),
+                        'updated_at'    => Carbon::now()
+                    ]);
+                }
                 
-                $wallet = UserWallet::insert([
-                    'slug'          => bin2hex(random_bytes(64)),
-                    'user_id'       => auth()->user()->id,
-                    'amount'        => 0.00,
-                    'status'        => 1,
-                    'created_at'    => Carbon::now(),
-                    'updated_at'    => Carbon::now()
-                ]);
-                
-                
-                //\Mail::to(auth()->user()->email)->send(new Referrer($referral));
+                $admin = User::find(1);
+                Notification::send($admin, new MemberSubscription($investment));
+
+                // \Mail::to(auth()->user()->email)->send(new NewSubscription($data));
+
                 $ip = $_SERVER['REMOTE_ADDR'];
-                activity_logs(auth()->user()->id, $ip, "Register For Referral");
-            \DB::commit();
+                activity_logs(auth()->user()->id, $ip, "Registered For Referral Service");
+                
+                \DB::commit();
                 return $response = [
                     'msg' => "You Have Successfully Register For Referral.",
                     'type' => "true"

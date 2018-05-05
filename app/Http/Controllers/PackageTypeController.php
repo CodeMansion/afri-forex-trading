@@ -14,7 +14,9 @@ class PackageTypeController extends Controller
      */
     public function index()
     {
+        $data['menu_id'] = 2;
         $data['packagetypes'] = PackageType::all();
+        
         return view('admin.package_types.index')->with($data);
     }
 

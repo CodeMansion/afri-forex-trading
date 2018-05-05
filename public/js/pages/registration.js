@@ -54,10 +54,10 @@ var AppRegistration = function() {
                         toastr.error(rst.msg);
                     }
                 },
-                error: function(rst, trowHTTP, error) {
+                error: function(rst, trowHTTP, errorRun) {
                     $("#register_member_btn").attr("disabled", false);
                     $("#register_member_btn").html("Submit");
-                    toastr.error(error);
+                    toastr.error(errorRun);
                 }
             });
         }

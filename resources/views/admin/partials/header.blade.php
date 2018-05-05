@@ -9,18 +9,18 @@
         <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
         <div class="page-actions">
             <div class="btn-group">
-                <button type="button" class="btn btn-circle btn-outline green dropdown-toggle" data-toggle="dropdown">
+                <button type="button" class="btn btn-circle red dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-plus"></i>&nbsp;
                     <span class="hidden-sm hidden-xs">Quick Actions&nbsp;</span>&nbsp;
                     <i class="fa fa-angle-down"></i>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="javascript:;"><i class="icon-docs"></i> New Post </a> </li>
-                    <li><a href="javascript:;"><i class="icon-tag"></i> New Comment </a></li>
-                    <li><a href="javascript:;"><i class="icon-share"></i> Share </a></li>
+                    <li><a href="javascript:;"><i class="icon-docs"></i> View Withdrawals </a> </li>
+                    <li><a href="javascript:;"><i class="icon-tag"></i> Post News </a></li>
+                    <li><a href="javascript:;"><i class="icon-share"></i> Send Messages </a></li>
                     <li class="divider"> </li>
-                    <li><a href="javascript:;"><i class="icon-flag"></i> Comments<span class="badge badge-success">4</span></a></li>
-                    <li><a href="javascript:;"><i class="icon-users"></i> Feedbacks<span class="badge badge-danger">2</span></a></li>
+                    <li><a href="javascript:;"><i class="icon-flag"></i> Register</a></li>
+                    <li><a href="javascript:;"><i class="icon-users"></i> Members</a></li>
                 </ul>
             </div>
         </div>
@@ -54,12 +54,6 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li><a href="#"><i class="icon-user"></i> My Profile </a></li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-envelope-open"></i> My Inbox
-                                    <span class="badge badge-danger"> 3 </span>
-                                </a>
-                            </li>
                             <li class="divider"> </li>
                             <li><a href="{{ url('/logout') }}"><i class="icon-key"></i> Log Out </a></li>
                         </ul>

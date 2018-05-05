@@ -20,4 +20,8 @@ class UserDownline extends Model
     public function Platform() {
         return $this->belongsTo('App\Platform', 'platform_id');
     }
+
+    public function scopeUserDownline($query){
+        return $query->whereUplineId(auth()->user()->id);
+    }
 }

@@ -55,6 +55,42 @@ var AppDisputes = function() {
         }
     }
 
+
+    var ReplyDispute = function() {
+        var dispute_id = $("#dispute_id").val();
+        var message = tinymce.activeEditor.getContent();
+
+        $("#loader").show();
+        $("#reply_dispute_btn").attr('disabled',true);
+
+        $.ajax({
+            url: REPLY,
+            method: "POST",
+            data:{
+                '_token': TOKEN,
+                'dispute_id' : dispute_id,
+                'message' : message,
+            },
+            success: function(rst){
+                if(rst.type == "true") {
+                    $("#reply_dispute_btn").attr('disabled',false);
+                    $("#loader").hide();
+                    swal("Successful!", rst.msg, "success");
+                    location.reload();
+                } else if(rst.type) {
+                    $("reply_dispute_btn").attr('disabled',false);
+                    $("#loader").hide();
+                    swal("An Error Occur", rst.msg, "error");
+                }
+            },
+            error: function(rst, httpErr, errorMessage){
+                $("#reply_dispute_btn").attr('disabled',false);
+                $("#loader").hide();
+                swal("An Error Occured", errorMessage, "error");
+            }
+        });
+    }
+
     var getDisputeDetails = function(index) {
 
         $("#disputeErrors").html("");
@@ -85,6 +121,34 @@ var AppDisputes = function() {
         });
     }
 
+    var ResolveDispute = function() {
+        var dispute_id = $("#dispute_id").val();
+
+        $.ajax({
+            url: RESOLVE,
+            method: "POST",
+            data: {
+                '_token': TOKEN,
+                'dispute_id': dispute_id,
+                'req': "resolve_dispute"
+            },
+            success: function(rst) {
+                if (rst.type == "true") {
+                    swal("Successful!", rst.msg, "success");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else if (rst.type == "false") {
+                    swal("Error",rst.msg,"error");
+                }
+            },
+            error: function(jqXHR, textStatus, errorMessage) {
+                swal("Error",errorMessage,"error");
+                $("#resolve_dispute_btn").attr('disabled', false);
+            }
+        });
+    }
+
     return {
         init: function() {
             loadComponents();
@@ -93,9 +157,26 @@ var AppDisputes = function() {
                 CreateDispute();
             });
 
+            $("#reply_dispute_btn").on("click", function() {
+                ReplyDispute();
+            });
+
             $('body').find("table.table-striped.table-bordered.table-hover.disputes_list tbody tr").each(function(index) {
                 $("#manage_dispute_" + index).on("click", function() {
                     getDisputeDetails(index);
+                });
+            });
+
+            $("#resolve_dispute_btn").on("click", function() {
+                swal({
+                    title: "Are you sure?",
+                    text: "You are about to mark this dispute as resolved. Do want to proceed?",
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                }, function () {
+                    ResolveDispute();
                 });
             });
         }

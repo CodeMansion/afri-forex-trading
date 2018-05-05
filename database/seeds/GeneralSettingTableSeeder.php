@@ -15,8 +15,9 @@ class GeneralSettingTableSeeder extends Seeder
         \DB::table("general_settings")->truncate();
         \App\GeneralSetting::insert([
             [
-                'id'                    => 1,
-                'application_name'      => 'Afro Marketers',
+                'id'                => 1,
+                'application_name'  => 'Markets Profits',
+                'system_status_id'  => 1
             ],
         ]);
     }

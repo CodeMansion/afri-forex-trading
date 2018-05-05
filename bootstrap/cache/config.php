@@ -2,13 +2,13 @@
   'app' => 
   array (
     'name' => 'Laravel',
-    'env' => 'local',
-    'debug' => true,
+    'env' => 'production',
+    'debug' => false,
     'url' => 'http://localhost',
     'timezone' => 'UTC',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => 'base64:rw03OybLjBbIAX9QJcf9qRVa5DEVbibISJkuCmbpAMI=',
+    'key' => NULL,
     'cipher' => 'AES-256-CBC',
     'log' => 'single',
     'log_level' => 'debug',
@@ -119,18 +119,18 @@
   ),
   'broadcasting' => 
   array (
-    'default' => 'log',
+    'default' => 'null',
     'connections' => 
     array (
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => '',
-        'secret' => '',
-        'app_id' => '',
+        'key' => NULL,
+        'secret' => NULL,
+        'app_id' => NULL,
         'options' => 
         array (
-          'cluster' => 'mt1',
+          'cluster' => NULL,
           'encrypted' => true,
         ),
       ),
@@ -215,7 +215,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'afrimarket',
+        'database' => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1.1\\database\\database.sqlite',
         'prefix' => '',
       ),
       'mysql' => 
@@ -223,9 +223,9 @@
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'afrimarket',
-        'username' => 'root',
-        'password' => 'PhilliPians$413',
+        'database' => 'forge',
+        'username' => 'forge',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
@@ -237,10 +237,10 @@
       array (
         'driver' => 'pgsql',
         'host' => '127.0.0.1',
-        'port' => '3306',
-        'database' => 'afrimarket',
-        'username' => 'root',
-        'password' => 'PhilliPians$413',
+        'port' => '5432',
+        'database' => 'forge',
+        'username' => 'forge',
+        'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
         'schema' => 'public',
@@ -249,11 +249,11 @@
       'sqlsrv' => 
       array (
         'driver' => 'sqlsrv',
-        'host' => '127.0.0.1',
-        'port' => '3306',
-        'database' => 'afrimarket',
-        'username' => 'root',
-        'password' => 'PhilliPians$413',
+        'host' => 'localhost',
+        'port' => '1433',
+        'database' => 'forge',
+        'username' => 'forge',
+        'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
       ),
@@ -266,7 +266,7 @@
       array (
         'host' => '127.0.0.1',
         'password' => NULL,
-        'port' => '6379',
+        'port' => 6379,
         'database' => 0,
       ),
     ),
@@ -286,7 +286,7 @@
       array (
         'driver' => 'local',
         'root' => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1.1\\storage\\app/public',
-        'url' => 'http://localhost/storage',
+        'url' => '/storage',
         'visibility' => 'public',
       ),
       's3' => 
@@ -301,17 +301,17 @@
   ),
   'mail' => 
   array (
-    'driver' => 'smtp',
-    'host' => 'smtp.mailtrap.io',
-    'port' => 25,
+    'driver' => 'sendmail',
+    'host' => 'smtp.mailgun.org',
+    'port' => 587,
     'from' => 
     array (
-      'address' => 'support@afromarketers.com',
-      'name' => 'Afro Marketers',
+      'address' => 'hello@example.com',
+      'name' => 'Example',
     ),
-    'encryption' => 'TLS',
-    'username' => '3d7504a2bedc3d',
-    'password' => '6c1205c12632af',
+    'encryption' => 'tls',
+    'username' => NULL,
+    'password' => NULL,
     'sendmail' => '/usr/sbin/sendmail -bs',
     'markdown' => 
     array (
@@ -319,6 +319,15 @@
       'paths' => 
       array (
         0 => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1.1\\resources\\views/vendor/mail',
+      ),
+    ),
+    'stream' => 
+    array (
+      'ssl' => 
+      array (
+        'allow_self_signed' => true,
+        'verify_peer' => false,
+        'verify_peer_name' => false,
       ),
     ),
   ),
@@ -395,7 +404,7 @@
   'session' => 
   array (
     'driver' => 'file',
-    'lifetime' => '120',
+    'lifetime' => 120,
     'expire_on_close' => false,
     'encrypt' => false,
     'files' => 'C:\\Users\\Destiny\\Desktop\\Enter\\CLOUD\\Dropbox (Personal)\\Apps\\Laravel\\afri-trading\\v1.1\\storage\\framework/sessions',

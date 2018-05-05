@@ -14,6 +14,7 @@ class CreatePlatformsTable extends Migration
     public function up()
     {
         Schema::create('platforms', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('slug', 190)->unique();
             $table->string('name', 100)->unique();

@@ -39,6 +39,7 @@ class PaymentTransactionController extends Controller
         }
 
         if(\Auth::user()->is_admin) {
+            $data['menu_id'] = 6.0;
             $data['transactions'] = PaymentTransaction::all();
             return view('admin.transactions.index')->with($data);
         }

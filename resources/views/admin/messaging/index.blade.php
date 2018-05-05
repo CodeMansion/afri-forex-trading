@@ -9,7 +9,11 @@
 @endsection
 
 @section('content')
-    <h1 class="page-title"> System Bulk Messaging <small></small> </h1>
+    <h1 class="page-title"> System Bulk Messaging <small></small> 
+        <span class="pull-right">
+            <i class="fa fa-calendar"></i> <?php echo date('l, F d, Y', strtotime(now())); ?>
+        </span>
+    </h1>
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>

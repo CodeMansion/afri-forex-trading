@@ -35,13 +35,13 @@
         </div>
         <div class="portlet-body util-btn-margin-bottom-5">
             <div class="row">
-                <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                     <div class="tab-content">
                         <div class="tab-pane active">
                             @if(count($transactions) < 1)
                                 <center><em>There are no recent transactions</em></center> 
                             @else 
-                                <table class="table table-bordered transaction" id="sample_2">
+                                <table class="table table-bordered table-hover transaction" id="sample_2">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -49,10 +49,11 @@
                                             <th>Amount</th>
                                             <th>Type</th>
                                             <th>Date</th>
-                                            <th colspan="2">Actions</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php($counter=1)
                                         @php($index=0)
                                         @foreach($transactions as $transaction)
                                             <tr>
@@ -61,9 +62,10 @@
                                                 <td>{{ number_format($transaction->amount,'2') }}</td> 
                                                 <td><span class="badge badge-success">{{ $transaction->Category->name }}</span></td>
                                                 <td>{{ $transaction->created_at }}</td>                                                   
-                                                <td><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i> View</a></td>  
-                                                <td><a href="javascript:;" id="btn_transaction_delete{{$index}}"><i class="fa fa-trash"></i> Delete</a></td>
+                                                <td><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i> View</a>&nbsp;<a href="javascript:;" id="btn_transaction_delete{{$index}}"><i class="fa fa-trash"></i> Delete</a></td>  
+                                                
                                             </tr>
+                                        @php($counter++)
                                         @php($index++)
                                         @endforeach
                                     </tbody>
@@ -80,11 +82,14 @@
     <script>
         var TOKEN = "{{csrf_token()}}"; 
     </script>
-    <script src="{{ asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+    
+    
 @endsection
 @section('after_script')
     <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection
