@@ -40,6 +40,7 @@ class PlatformController extends Controller
         }
         
         if(\Auth::user()->is_admin) {
+            $data['menu_id'] = 2;
             $data['platforms'] = Platform::all();
             return view('admin.platforms.index')->with($data);
         }

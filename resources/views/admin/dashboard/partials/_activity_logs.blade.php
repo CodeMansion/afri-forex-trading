@@ -44,11 +44,13 @@
                 </ul>
             </div>
         </div>
+        @if(auth()->user()->is_admin)
         <div class="scroller-footer">
             <div class="btn-arrow-link pull-right">
                 <a href="{{ URL::route('activity.index') }}">See All Records</a>
                 <i class="icon-arrow-right"></i>
             </div>
         </div>
+        @endif
     </div>
 </div>

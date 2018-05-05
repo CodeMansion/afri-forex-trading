@@ -50,56 +50,23 @@ class DailySignalMembersEarning extends Command
      */
     public function handle()
     {
+        $members = User::subscriptionMembers();
+        $earning_fee = 25;
+
         DB::beginTransaction();
         try {
             ini_set('max_execution_time', 0);
-            $members = User::subscriptionMembers();
-            $setting = GeneralSetting::find(1);
-            $earning_fee = 25;
-            
-            //loop through each members
-            foreach($members as $member) {
-                $downlines = User::find($member->user_id)->UserDownline(1)->get();
-                $downline_count = count($downlines);
-                
-                if(isset($downline_count) && $downline_count == 2) {
-                    $earning_amount = (double)$downline_count * $earning_fee;
-                   
-                    //insert new earning record
-                    $new_earning = DB::table("earnings")->insert([
-                        'slug'          => bin2hex(random_bytes(64)),
-                        'user_id'       => $member->user_id,
-                        'platform_id'   => 1,
-                        'earning_type_id'   => EarningType::where('name','Referral')->first()->id,
-                        'amount'        => (double)$earning_amount,
-                        'status'        => 1,
-                        'created_at'    => Carbon::now(),
-                        'updated_at'    => Carbon::now()
-                    ]);
-
-                    //update member wallet with new earning amount
-                    $member_wallet = UserWallet::where('user_id', $member->user_id)->first();
-                    $member_wallet->amount = (double)$member_wallet->amount + $earning_amount;
-                    $member_wallet->save();
-
-                    //insert transaction record as credit
-                    $transaction = DB::table("payment_transactions")->insert([
-                        'slug'          => bin2hex(random_bytes(64)),
-                        'user_id'       => $member->user_id,
-                        'platform_id'   => 1,
-                        'transaction_category_id'   => TransactionCategory::where('name','Credit')->first()->id,
-                        'amount'        => (double)$earning_amount,
-                        'is_paid'       => true,
-                        'reference_no'  => date('Ymdhis'),
-                        'created_at'    => Carbon::now(),
-                        'updated_at'    => Carbon::now()
-                    ]);
-
-                    DB::commit();
-
-                    //send notification to each member
-                    $user = User::find($member->user_id);
-                    Notification::send($user, new MemberEarning($new_earning));
+            if(count($members) > 0) {
+                foreach($members as $member) {
+                    if(EarningsEligibilityCheck($member,'monthly')) {
+                        $downlines = User::find($member->user_id)->UserDownline(1)->get();
+                        $downline_count = count($downlines);
+                        
+                        if(isset($downline_count) && $downline_count == 2) {
+                            $earning_amount = (double)$downline_count * $earning_fee;
+                            $this->InsertEarnings($member,$earning_amount);
+                        } else {echo "no downline";}
+                    } else {echo "not eligible";}
                 }
             }
 
@@ -107,5 +74,41 @@ class DailySignalMembersEarning extends Command
             DB::rollback();
             echo $e->getMessage();
         }
+    }
+
+
+    protected function InsertEarnings($member,$earning_amount) {
+        $new_earning = DB::table("earnings")->insert([
+            'slug'          => bin2hex(random_bytes(64)),
+            'user_id'       => $member->user_id,
+            'platform_id'   => 1,
+            'earning_type_id'   => EarningType::where('name','Referral')->first()->id,
+            'amount'        => (double)$earning_amount,
+            'status'        => 1,
+            'created_at'    => Carbon::now(),
+            'updated_at'    => Carbon::now()
+        ]);
+
+        $member_wallet = UserWallet::where('user_id', $member->user_id)->first();
+        $member_wallet->amount = (double)$member_wallet->amount + $earning_amount;
+        $member_wallet->save();
+
+        $transaction = DB::table("payment_transactions")->insert([
+            'slug'          => bin2hex(random_bytes(64)),
+            'user_id'       => $member->user_id,
+            'platform_id'   => 1,
+            'transaction_category_id'   => TransactionCategory::where('name','Credit')->first()->id,
+            'amount'        => (double)$earning_amount,
+            'is_paid'       => true,
+            'reference_no'  => date('Ymdhis'),
+            'created_at'    => Carbon::now(),
+            'updated_at'    => Carbon::now()
+        ]);
+
+        DB::commit();
+        $user = User::find($member->user_id);
+        Notification::send($user, new MemberEarning($new_earning));
+
+        echo "successfulq";
     }
 }

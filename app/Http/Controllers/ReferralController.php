@@ -13,6 +13,7 @@ use App\Investment;
 use App\Subscription;
 use App\Notifications\MemberSubscription;
 use App\Mail\NewSubscription;
+use App\User;
 use Gate;
 use App\User;
 use Notification;
@@ -135,7 +136,6 @@ class ReferralController extends Controller
                         'updated_at'    => Carbon::now()
                     ]);
                 }
-                
                 
                 $admin = User::find(1);
                 Notification::send($admin, new MemberSubscription($investment));

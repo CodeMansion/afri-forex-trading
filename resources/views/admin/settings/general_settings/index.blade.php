@@ -4,7 +4,12 @@
     <link href="{{ asset('assets/global/plugins/icheck/skins/all.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-    <h1 class="page-title"> Genenel System Settings <small></small> </h1>
+    <h1 class="page-title"> 
+        <i class="icon-wallet"></i> General System Settings<small></small> 
+        <span class="pull-right">
+            <i class="fa fa-calendar"></i> <?php echo date('l, F d, Y', strtotime(now())); ?>
+        </span>
+    </h1>
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>

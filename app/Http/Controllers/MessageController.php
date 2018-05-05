@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\MailSetting;
 use App\SentMessage;
+use App\Subscription;
 use Mail;
 use Validator;
 
@@ -22,6 +23,7 @@ class MessageController extends Controller
     {
         $data['menu_id'] = 3;
         $data['sentMessages'] = SentMessage::all();
+        $data['signals'] = Subscription::subscriptionMembers()->get();
 
         return view('admin.messaging.index')->with($data);
 
@@ -81,6 +83,7 @@ class MessageController extends Controller
                 if($data['type'] == 'individuals') {
                     $filter_email_address = [];
                     $recipients = explode(';', $data['to']);
+                    
                     foreach($recipients as $recipient) {
                         if(filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
                             array_push($filter_email_address, $recipient);

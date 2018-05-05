@@ -16,7 +16,7 @@ class CreateWithdrawalsTable extends Migration
         Schema::create('withdrawals', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
-            $table->integer('platform_id')->unsigned()->index();
+            $table->string('slug', 190)->unique();
             $table->decimal('amount',10,2);
             $table->integer('user_id')->unsigned()->index();
             $table->string('remarks')->nullable();

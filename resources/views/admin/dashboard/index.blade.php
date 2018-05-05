@@ -25,12 +25,12 @@
             @include('admin.dashboard.partials._revenue_chart')
         </div>
         <div class="col-lg-4 col-xs-12 col-sm-12">
-            @include('admin.dashboard.partials._support')
+            @include('admin.dashboard.partials._new_members')
         </div>
     </div>
     <div class="row">
         <div class="col-lg-4 col-xs-12 col-sm-12">
-            @include('admin.dashboard.partials._new_members')
+            @include('admin.dashboard.partials._support')
         </div>
         <div class="col-lg-4 col-xs-12 col-sm-12">
             @include('admin.dashboard.partials._activity_logs')
@@ -42,12 +42,7 @@
     <div class="clearfix"></div>
 @endsection
 @section('extra_script')
-    <script src="{{ asset('assets/global/plugins/counterup/jquery.waypoints.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/counterup/jquery.counterup.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/flot/jquery.flot.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/flot/jquery.flot.pie.min.js') }}" type="text/javascript"></script>
-    <!-- <script src="{{ asset('assets/pages/scripts/charts-flotcharts.min.js') }}" type="text/javascript"></script> -->
 @endsection
 @section('after_script')
     <script>
@@ -56,8 +51,10 @@
         var TRANSACTION = "{{ URL::route('loadTransactions') }}";
         var CHART = "{{ URL::route('loadChart') }}";
         var ACTIVITY = "{{ URL::route('loadActivityLogs') }}";
+        var EARNINGS = "{{ URL::route('loadEarnings') }}";
+        var WITHDRAW = "{{ URL::route('makeWithdrawal') }}";
     </script>
     <script src="{{ asset('js/pages/dashboard.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/pages/dashboard_chart.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/pages/scripts/dashboard.min.js') }}" type="text/javascript"></script>
+    <!-- <script src="{{ asset('assets/pages/scripts/dashboard.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ asset('assets/pages/scripts/charts-echarts.js') }}" type="text/javascript"></script>
 @endsection

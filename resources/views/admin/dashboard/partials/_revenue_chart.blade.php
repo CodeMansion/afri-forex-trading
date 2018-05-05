@@ -9,10 +9,6 @@
         </div>
     </div>
     <div class="portlet-body">
-        <div id="site_activities_loading">
-            <img src="../assets/global/img/loading.gif" alt="loading" /> </div>
-        <div id="site_activities_content" class="display-none">
-            <div id="site_activities" style="height: 228px;"> </div>
-        </div>
+        <div id="member_chart" style="height:280px;"></div>
     </div>
 </div>

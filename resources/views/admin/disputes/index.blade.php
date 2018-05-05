@@ -8,7 +8,11 @@
 @endsection
 
 @section('content')
-    <h1 class="page-title"> Disputes <small></small> </h1>
+    <h1 class="page-title"> Disputes <small></small> 
+        <span class="pull-right">
+            <i class="fa fa-calendar"></i> <?php echo date('l, F d, Y', strtotime(now())); ?>
+        </span>
+    </h1>
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
@@ -88,7 +92,6 @@
                             <span class="caption-subject font-dark sbold uppercase">List of Disputes</span>
                         </div>
                         <div class="actions">
-                            <button class="btn btn-xs green pull-right" data-toggle="modal" data-target="#new-dispute" type="button" ><i class="icon-envelope"></i> Open Ticket</button>
                         </div>
                     </div>
                     <div class="portlet-body form">
@@ -105,6 +108,7 @@
                                         <th>Status</th>
                                         <th>Created</th>
                                         <th>Last Updated</th>
+                                        <th>Replies</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -119,6 +123,7 @@
                                             <td><span class="badge badge-{{ dispute_status($dispute->status,'class') }}">{{ dispute_status($dispute->status,'name') }}</span></td>
                                             <td>{{ $dispute->created_at }}</td>
                                             <td>{{ $dispute->updated_at }}</td>
+                                            <td>{{ count($dispute->reply()->get()) }}</td>
                                             <td><a href="{{ URL::route('viewDispute', $dispute->slug) }}"><i class="icon-note"></i> View </a></td>
                                         </tr>
                                     @php($index++)

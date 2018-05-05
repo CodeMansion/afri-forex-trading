@@ -27,6 +27,7 @@ use Mail;
 use Carbon\Carbon;
 use App\Notifications\NewMember;
 use App\UserWallet;
+use App\Withdrawal;
 
 class HomeController extends Controller
 {
@@ -47,6 +48,7 @@ class HomeController extends Controller
             $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->limit(10)->get();
             $data['transactions_count'] = PaymentTransaction::all()->count();
             $data['members_count'] = User::members()->count();
+            $data['withdrawal'] = Withdrawal::all()->count();
 
             return view('admin.dashboard.index')->with($data);
         }
@@ -65,7 +67,8 @@ class HomeController extends Controller
             }
 
             $data['platforms'] = Platform::whereIsActive(true)->get();
-            $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
+            $data['subscription'] = Subscription::userSubscriptions()->count();
+            $data['userSub'] = Subscription::userSubscriptions()->first();
             $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
             $data['referrals'] = Referral::whereUserId(auth()->user()->id)->count();
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
@@ -75,6 +78,8 @@ class HomeController extends Controller
             $data['balance'] = UserWallet::balance()->first()->amount;
             $data['debit'] = PaymentTransaction::userLatestDebit()->first();
             $data['credit'] = PaymentTransaction::userLatestCredit()->first();
+            $data['withdrawal'] = Withdrawal::memberWithdrawal();
+            $data['userplatforms'] = User::find(auth()->user()->id)->Platform()->get();
 
             return view('members.dashboard.index')->with($data);
         }
@@ -98,6 +103,19 @@ class HomeController extends Controller
         }
     }
 
+    public function getPackageTypes(Request $request)
+    {
+        try {
+            $data = $request->except('_token');
+            $param['package_types'] = PackageType::all();
+            $param['package_id'] = $data['package_id'];
+
+            return view('subscription.partials._get_package_types')->with($param);
+        } catch(Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
     public function getReferrerInfo(Request $request) {
         try {
             $data = $request->except('_token');
@@ -115,7 +133,6 @@ class HomeController extends Controller
             $data = $request->except('_token');
             $params['investment'] = Platform::active()->where('id',$data['id'])->first();
             $params['packages'] = Package::wherePlatformId($data['id'])->get();
-            $params['package_types'] = PackageType::all();
             return view('subscription.partials._investment_sub')->with($params);
         } catch(Exception $e) {
             return false;
@@ -137,8 +154,9 @@ class HomeController extends Controller
         try {
             $data = $request->except('_token');
             $params['investment'] = Platform::active()->where('id',$data['platform_id'])->first();
-            $params['package'] = Package::whereId($data['package_id'])->first();
-            $params['type'] = PackageType::whereId($data['package_type_id'])->first();
+            $params['package'] = Package::find($data['package_id']);
+            $params['type'] = PackageType::find($data['package_type_id']);
+
             return view('subscription.partials._subscribe_investment')->with($params);
         } catch(Exception $e) {
             return false;

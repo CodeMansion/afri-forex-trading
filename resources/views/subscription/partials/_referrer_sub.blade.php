@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12"></div>
     <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12" style="border: 1px solid grey;padding:10px;">
+    <div class="alert alert-info">
         <center>
             <h1 style="text-align:center;">{{ strtoupper($referrer['name']) }}</h1>
             <h3 style="color:red;font-weight:600;">Subscription fee: ${{ number_format($referrer['price'],2) }}</h3><hr/>
@@ -9,6 +10,7 @@
             <button type="button" id="referral" class="btn btn-lg green">PROCEED </button>
             <button type="button" id="return_back" class="btn btn-lg red">CANCEL</button>
         </center>    
+    </div>
     </div>
     <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12"></div>
 </div>

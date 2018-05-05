@@ -36,7 +36,7 @@
                         <div class="caption">
                             <i class="icon-envelope font-dark"></i>
                             <span class="caption-subject font-dark sbold uppercase">{{ $dispute->ticket_no }}</span>
-                            <span class="badge badge-{{ dispute_status('class',$dispute->status) }}">{{ dispute_status('name', $dispute->status) }}</span>
+                            <span class="badge badge-{{ dispute_status($dispute->status,'class') }}">{{ dispute_status($dispute->status,'name') }}</span>
                         </div>
                         <div class="actions"></div>
                     </div>
@@ -69,15 +69,20 @@
                                             </li>
                                         </ul>
                                         <div class="panel-footer">
-                                            <button class="btn btn-sm btn-success" type="button" data-toggle="collapse" data-parent="#accordion3" href="#collapse_3_1"><i class="fa fa-pencil"></i> Reply</button>
-                                            <button class="btn btn-sm btn-danger" type="button"><i class="fa fa-close"></i> Close</button>
+                                            @if($dispute->status == 2)
+                                            @else
+                                                <button class="btn btn-sm btn-success" type="button" data-toggle="collapse" data-parent="#accordion3" href="#collapse_3_1"><i class="fa fa-pencil"></i> Reply</button>
+                                            @endif
+                                            <a href="{{ URL::route('dashboard') }}"><button class="btn btn-sm btn-danger" type="button"><i class="fa fa-close"></i> Close</button></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class='col-md-7'>
+                                @if($dispute->status == 2)
+                                @else
                                 <div class="panel-group accordion" id="accordion3">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion3" href="#collapse_3_1"><i class="fa fa-pencil"></i> Reply </a>
@@ -103,33 +108,21 @@
                                                     <div class="form-group">
                                                         <label>Message <span class="required">*</span></label>
                                                         <textarea class="form-control" style="height:50px;" id="editor1"></textarea> 
-                                                    </div>
-                                                    <hr/>
-                                                    <div id="errors"></div> 
+                                                    </div> <hr/>
                                                     <img src="{{ asset('images/loader.gif') }}" id="loader" /> 
-                                                    <button type="button" class="btn green" id="create_new_dispute_btn" disabled> Submit</button>
+                                                    <input type="hidden" value="{{ $dispute->id }}" id="dispute_id" />
+                                                    <button type="button" class="btn green" id="reply_dispute_btn"> Submit</button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @foreach($replies as $reply)
-                                <div class="panel panel-default">
+                                @endif
+                                
+                                <div class="panel panel-success">
                                     <div class="panel-heading">
                                         <h3 class="panel-title">
-                                            <i class="fa fa-user"></i> <strong></strong> (Client) 
-                                            <span class="pull-right"></span>
-                                        </h3>
-                                    </div>
-                                    <div class="panel-body">
-                                       
-                                    </div>
-                                </div>
-                                @endforeach
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">
-                                            <i class="fa fa-user"></i> <strong>{{ $dispute->user->Profile->full_name }}</strong> (Client) 
+                                            <i class="fa fa-user"></i> <strong>{{ $dispute->user->full_name }}</strong> ({{ $dispute->ticket_no }}) 
                                             <span class="pull-right" style="font-size:12px;">{{ $dispute->created_at }}</span>
                                         </h3>
                                     </div>
@@ -137,6 +130,20 @@
                                         <?php echo htmlspecialchars_decode($dispute->message); ?>
                                     </div>
                                 </div>
+
+                                @foreach($replies as $reply)
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <i class="fa fa-user"></i> <strong>{{ $reply->user->full_name }}</strong>
+                                            <span class="pull-right" style="font-size:12px;">{{ $reply->created_at }}</span>
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <?php echo htmlspecialchars_decode($reply->message); ?>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -173,9 +180,8 @@
         });
     </script>
     <script>
-        var SEND = "{{ URL::route('disputeAdd') }}";
+        var REPLY = "{{ URL::route('replyDispute') }}";
         var TOKEN = "{{ csrf_token() }}";
-        var GET_DETAILS = "{{ URL::route('getDispute') }}";
     </script>
     <script src="{{ asset('js/pages/disputes.js') }}"></script>
 @endsection

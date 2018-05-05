@@ -30,7 +30,7 @@ jQuery(document).ready(function() {
         ],
         function(ec) {
             //--- BAR ---
-            var myChart = ec.init(document.getElementById('echarts_bar'));
+            var myChart = ec.init(document.getElementById('member_chart'));
             myChart.setOption({
                 tooltip: {
                     trigger: 'axis'

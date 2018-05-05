@@ -6,7 +6,6 @@
 <ul class="dropdown-menu" >
     <li class="external">
         <h3><span class="bold">{{ count(auth()->user()->unreadNotifications)}} pending</span> notifications</h3>
-        <a href="#">view all</a>
     </li>
     <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
         @php($index=0)

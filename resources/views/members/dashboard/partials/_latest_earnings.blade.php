@@ -45,11 +45,11 @@
                 @endif
             </div>
         </div>
-        <div class="scroller-footer">
+        <!-- <div class="scroller-footer">
             <div class="btn-arrow-link pull-right">
                 <a href="{{ URL::route('earningsIndex') }}">See All Records</a>
                 <i class="icon-arrow-right"></i>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

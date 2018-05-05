@@ -35,7 +35,7 @@
                             @foreach($transactions as $transaction)
                                 <tr>
                                     <td class="fit"><img class="user-pic rounded" src="{{ asset('images/default.png') }}"> </td>
-                                    <td><a href="javascript:;" class="primary-link">{{ $transaction->user->full_name }}</a></td>
+                                    <td><a href="{{ URL::route('showMember', $transaction->user->slug) }}" class="primary-link">{{ $transaction->user->full_name }}</a></td>
                                     <td> <span class="badge badge-success">
                                         @if(isset($transaction->Platform->name))
                                         {{  $transaction->Platform->name }}</span> 
@@ -54,11 +54,13 @@
                 @endif
             </div>
         </div>
+        @if(auth()->user()->is_admin)
         <div class="scroller-footer">
             <div class="btn-arrow-link pull-right">
                 <a href="{{ URL::route('transactioncategories.index') }}">See All Records</a>
                 <i class="icon-arrow-right"></i>
             </div>
         </div>
+        @endif
     </div>
 </div>

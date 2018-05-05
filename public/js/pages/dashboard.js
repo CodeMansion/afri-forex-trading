@@ -8,6 +8,7 @@ var AppDashboard = function() {
         $("#activity_loader").hide();
         $("#latest_news_loader").hide();
         $("#latest_earnings_loader").hide();
+        $("#loader").hide();
     }
 
     var showDispute = function() {
@@ -94,6 +95,47 @@ var AppDashboard = function() {
         });
     }
 
+    var MakeWithdrawal = function() {
+        var amount = $("#amount").val();
+
+        if(amount.length < 1) {
+            toastr.error("Provide an amount for withdrawal");
+        } else {
+            $("#loader").show();
+            $("#make_withdrawal_btn").attr('disabled',true);
+            
+            $.ajax({
+                url: WITHDRAW, 
+                type: "POST",
+                data: {
+                    '_token': TOKEN,
+                    'amount': amount
+                },
+                success: function(data) {
+                    if (data.type == "true") {
+                        $("#loader").hide();
+                        $("#make_withdrawal_btn").attr('disabled',false);
+
+                        toastr.success(data.msg);
+
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else if (data.type == "false") {
+                        toastr.error(data.msg);
+                        $("#loader").hide();
+                        $("#make_withdrawal_btn").attr('disabled',false);
+                    }
+                },
+                error: function(alaxB, HTTerror, errorMsg) {
+                    toastr.error(errorMsg);
+                    $("#loader").hide();
+                    $("#make_withdrawal_btn").attr('disabled',false);
+                }
+            });
+        }
+    }
+
 
     setInterval(() => {
         showDispute();
@@ -111,6 +153,10 @@ var AppDashboard = function() {
             showActivityLogs();
             showTransactions();
             showMembersEarnings();
+
+            $("#make_withdrawal_btn").on("click", function() {
+                MakeWithdrawal();
+            });
         }
     }
 }();

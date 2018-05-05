@@ -4,7 +4,7 @@
             <div class="number">
                 <h3 class="font-green-sharp">
                     <small class="font-green-sharp">$</small>
-                    <span data-counter="counterup" data-value="7800">0</span>
+                    <span>0</span>
                 </h3>
                 <small>TOTAL PROFIT</small>
             </div>
@@ -19,10 +19,9 @@
         <div class="display">
             <div class="number">
                 <h3 class="font-green-sharp">
-                    <small class="font-green-sharp">$</small>
-                    <span data-counter="counterup" data-value="7800">0</span>
+                    <span>{{ $withdrawal }}</span>
                 </h3>
-                <small>TOTAL PAYOUT</small>
+                <small>TOTAL WITHDRAWALS</small>
             </div>
             <div class="icon">
                 <i class="icon-like"></i>
@@ -35,7 +34,7 @@
         <div class="display">
             <div class="number">
                 <h3 class="font-blue-sharp">
-                    <span data-counter="counterup" data-value="{{ $transactions_count }}"></span>
+                    <span>{{ $transactions_count }}</span>
                 </h3>
                 <small>TOTAL TRANSACTIONS</small>
             </div>
@@ -50,7 +49,7 @@
         <div class="display">
             <div class="number">
                 <h3 class="font-purple-soft">
-                    <span data-counter="counterup" data-value="{{ $members_count }}"></span>
+                    <span>{{ $members_count }}</span>
                 </h3>
                 <small>TOTAL MEMBERS</small>
             </div>

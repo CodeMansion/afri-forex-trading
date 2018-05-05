@@ -7,7 +7,14 @@ use Illuminate\Http\Request;
 use App\Dispute;
 use App\DisputePriority;
 use App\DisputeReply;
+use App\User;
+use App\Notifications\NewDispute;
+use App\Notifications\ReplyDispute;
+
 use Gate;
+use Notification;
+use DB;
+use Carbon\Carbon;
 
 class DisputeController extends Controller
 {
@@ -86,7 +93,8 @@ class DisputeController extends Controller
                 $dispute->message = $data['message'];
                 $dispute->save();
 
-                //send notification to admin
+                $admin = User::find(1);
+                Notification::send($admin, new NewDispute($dispute));
 
                 return response()->json([
                     "msg"  => "Dispute created successfully",
@@ -99,6 +107,62 @@ class DisputeController extends Controller
                     "type"  => "false"
                 ]);
             } 
+        }
+    }
+
+
+    public function ReplyDispute(Request $request) 
+    {
+        $data = $request->except("_token");
+        if(isset($data)) {
+            DB::beginTransaction();
+            try {
+
+                $DisputeReply = DisputeReply::insert([
+                    'slug'          => bin2hex(random_bytes(64)),
+                    'user_id'       => auth()->user()->id,
+                    'dispute_id'    => $data['dispute_id'],
+                    'message'       => $data['message'],
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
+                
+                if(auth()->user()->is_admin == 0) {
+                    $admin = User::find(1);
+                    Notification::send($admin, new ReplyDispute($DisputeReply));
+                }
+                
+                DB::commit();
+
+                return response()->json([
+                    "msg"  => "Dispute replied successfully",
+                    "type"  => "true"
+                ]);
+
+            } catch (Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    "msg"  => $e->getMessage(),
+                    "type"  => "false"
+                ]);
+            }
+        }
+    }
+
+
+    public function ResolveDispute(Request $request)
+    {
+        $data = $request->except('_token');
+        if(isset($data)) {
+
+            $dispute = Dispute::find($data['dispute_id']);
+            $dispute->status = 2;
+            $dispute->save();
+
+            return response()->json([
+                "msg"  => "Dispute resolved",
+                "type"  => "true"
+            ]);
         }
     }
 

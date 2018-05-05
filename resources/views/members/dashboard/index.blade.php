@@ -7,6 +7,7 @@
             <i class="fa fa-calendar"></i> <?php echo date('l, F d, Y', strtotime(now())); ?>
         </span>
     </h1>
+    @include('members.dashboard.partials._service_notice')
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
@@ -25,7 +26,7 @@
             <ul class="dropdown-menu" role="menu">                                   
                 <li><a href="{{ URL::route('packageSub') }}"><i class="icon-note"></i>Add Service</a></li> 
                 <li><a href="{{ URL::route('register') }}/{{ auth()->user()->slug }}" target="_blank"><i class="icon-note"></i> Add new Member</a></li>
-                <li><a href="#"><i class="icon-note"></i> Make Withdrawal</a></li>
+                <li><a href="#" data-target="#make_withdrawal" data-toggle="modal"><i class="icon-note"></i> Make Withdrawal</a></li>
             </ul>
         </div>
     </div>
@@ -55,6 +56,7 @@
 </div>
 @endsection
 @section('modals')
+    @include('members.dashboard.modals._make_withdrawal')
 @endsection
 @section('extra_script')
     <script>
@@ -67,8 +69,11 @@
         var EARNINGS = "{{ URL::route('loadEarnings') }}";
         var ACTIVITY = "{{ URL::route('loadActivityLogs') }}";
         var TRANSACTION = "{{ URL::route('loadTransactions') }}";
+        var WITHDRAW = "{{ URL::route('makeWithdrawal') }}";
     </script>
     <script src="{{ asset('js/pages/dashboard.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script>
 @endsection
 @section('after_script')
+    <script src="{{ asset('assets/pages/scripts/charts-echarts.js') }}" type="text/javascript"></script>
 @endsection

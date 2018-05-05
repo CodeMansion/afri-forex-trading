@@ -2,7 +2,7 @@
     <div class="portlet-title">
         <div class="caption caption-md">
             <i class="icon-bar-chart font-dark hide"></i>
-            <span class="caption-subject font-dark bold uppercase"><i class="icon-users"></i>New Members</span>
+            <span class="caption-subject font-dark bold uppercase"><i class="icon-users"></i> New Members</span>
             <span class="caption-helper"><img src="{{ asset('images/loader.gif') }}" id="members_loader" /> </span>
         </div>
         <div class="inputs">
@@ -27,8 +27,10 @@
                                             <i class="icon-user"></i>
                                         </div>
                                         <div class="mt-action-details ">
-                                            <span class="mt-action-author">{{ strtoupper($member->full_name) }}</span>
-                                            <p class="mt-action-desc">{{ $member->email }}</p>
+                                            <a href="{{ URL::route('showMember', $member->slug) }}">
+                                                <span class="mt-action-author">{{ strtoupper($member->full_name) }}</span>
+                                                <p class="mt-action-desc">{{ $member->email }}</p>
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="mt-action-datetime ">

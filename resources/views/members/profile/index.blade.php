@@ -37,7 +37,7 @@
                         <ul class="nav">
                             <li><a href="#" data-target="#change_password" data-toggle="modal"><i class="icon-home"></i> Change Password </a></li>
                             <li class="" data-target="#change_picture" data-toggle="modal"><a href="#"><i class="icon-settings"></i> Change Picture </a></li>
-                            <li><a href="#"><i class="icon-info"></i> View Upline Info </a></li>
+                            <!-- <li><a href="#"><i class="icon-info"></i> View Upline Info </a></li> -->
                             <li data-target="#share_fund" data-toggle="modal"><a href="#"><i class="icon-info"></i> Share Funds </a></li>
                         </ul>
                     </div>
@@ -56,81 +56,26 @@
                                     <li class="active"><a href="#tab_1_1" data-toggle="tab">Personal Info</a></li>
                                     <li> <a href="#tab_1_3" data-toggle="tab">Payment Account Info</a></li>
                                     <li><a href="#tab_1_4" data-toggle="tab">Activity Logs</a></li>
+                                    <li><a href="#tab_1_5" data-toggle="tab">Earnings</a></li>
+                                    <li><a href="#tab_1_6" data-toggle="tab">Transactions</a></li>
                                 </ul>
                             </div>
                             <div class="portlet-body">
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab_1_1">
-                                        <form role="form" action="#">
-                                            <div class="form-group">
-                                                <label class="control-label">Full Name</label>
-                                                <input type="text" placeholder="Full Name" id="full_name" value="{{ $profile['full_name'] }}" class="form-control" /> 
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Email Address</label>
-                                                <input type="email" placeholder="Email Address" id="email" value="{{ $profile['email'] }}" class="form-control" disabled/> 
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Username</label>
-                                                <input type="email" placeholder="Username" id="username" value="{{ $profile['username'] }}" class="form-control" disabled/> 
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Telephone</label>
-                                                <input type="text" placeholder="Telephone" id="telephone" value="{{ $profile->Profile['telephone'] }}" class="form-control" /> 
-                                            </div><hr/>
-                                            <div class="margiv-top-10">
-                                                <a href="javascript:;" id="update_profile_btn" class="btn green"> Save Changes </a>
-                                            </div>
-                                        </form>
+                                        @include('members.profile.partials._profile')
                                     </div>
                                     <div class="tab-pane" id="tab_1_3">
-                                        <form role="form" action="#">
-                                            <div class="form-group">
-                                                <label class="control-label">Account Name</label>
-                                                <input type="text" id="account_name" class="form-control"> 
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Account Username</label>
-                                                <input type="text" id="account_username" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Account Email</label>
-                                                <input type="email" id="account_email" class="form-control"> 
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Account Token</label>
-                                                <input type="text" id="account_token" class="form-control"> 
-                                            </div><hr/>
-                                            <div class="margiv-top-10">
-                                                <a href="javascript:;" id="update_account_btn" class="btn green" disabled> Save Changes </a>
-                                            </div>
-                                        </form>
+                                        @include('members.profile.partials._account_info')
                                     </div>
                                     <div class="tab-pane" id="tab_1_4">
-                                        @if(count($activities) < 1)
-                                            <center><em>You don't have any activity at the moment</em></center>
-                                        @else 
-                                            <table class="table table-bordered table-hover activitylogs" id="sample_2">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>MY ACTIONS</th>
-                                                        <th>DATE</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach($activities as $activity)
-                                                    <tr>
-                                                        <td>#</td>
-                                                        <td>{{ $activity->action }}</td>
-                                                        <td>{{ $activity->created_at }}</td>
-                                                        <td></td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        @endif
+                                        @include('members.profile.partials._activity_logs')
+                                    </div>
+                                    <div class="tab-pane" id="tab_1_5">
+                                        @include('members.profile.partials._earnings')
+                                    </div>
+                                    <div class="tab-pane" id="tab_1_6">
+                                        @include('members.profile.partials._transactions')
                                     </div>
                                 </div>
                             </div>

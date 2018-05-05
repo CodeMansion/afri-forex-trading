@@ -1,7 +1,7 @@
 <div class="page-header navbar navbar-fixed-top">
     <div class="page-header-inner ">
         <div class="page-logo">
-            <a href="index.html"> 
+            <a href="{{ URL::route('dashboard') }}"> 
                 <img src="{{ asset('assets/layouts/layout2/img/logo-default.png') }}" alt="logo" class="logo-default" /> 
             </a>
             <div class="menu-toggler sidebar-toggler"></div>
@@ -26,7 +26,7 @@
                             
                         </ul>
                     </li>
-                    <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                    <!-- <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-envelope-open"></i>
                             <span class="badge badge-danger"> 0 </span>
@@ -34,13 +34,10 @@
                         <ul class="dropdown-menu">
                             <li class="external">
                                 <h3>You have <span class="bold">1 New</span> Messages</h3>
-                                
                             </li>
-                            <li>
-                                
-                            </li>
+                            <li></li>
                         </ul>
-                    </li>
+                    </li> -->
                     
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -50,14 +47,9 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li><a href="{{ URL::route('membersIndex') }}"><i class="icon-user"></i> My Profile </a></li>
-                            <li><a href="#"><i class="icon-envelope-open"></i> My Inbox</a></li>
-                            <li class="divider"> </li>
+                            <!-- <li><a href="#"><i class="icon-envelope-open"></i> My Inbox</a></li> -->
                             <li><a href="{{ url('/logout') }}"><i class="icon-key"></i> Log Out </a></li>
                         </ul>
-                    </li>
-                    <li class="dropdown dropdown-extended quick-sidebar-toggler">
-                        <span class="sr-only">Toggle Quick Sidebar</span>
-                        <i class="icon-logout"></i>
                     </li>
                 </ul>
             </div>

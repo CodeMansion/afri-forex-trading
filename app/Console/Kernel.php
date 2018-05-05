@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('WeeklyInvestment:shoot')->weekly();
         $schedule->command('MonthlyInvestment:shoot')->monthly();
         $schedule->command('QuarterlyInvestment:shoot')->quarterly();
+        $schedule->command('Unsubscribe:run')->daily();
     }
 
     /**

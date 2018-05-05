@@ -23,6 +23,7 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::post('/get-referrer-info', ["as"=>"getReferrerInfo", "uses"=>"HomeController@getReferrerInfo"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
 	Route::post('/process-payment/{type?}',["as" => "processPayment", "uses"  => "SubscriptionController@processPayment"]);
+	Route::post('get-package-types', ["as"=>"getPackageTypes", "uses"=>"HomeController@getPackageTypes"]);
 	
 	//--- ADMIN NOTIFICATIONS ---//
 	Route::get('/dashboard-notify',["as"=>"dashboardNotify", "uses"=>"HomeController@indexNotify"]);
@@ -34,6 +35,10 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::get('/load-chart', ["as"=>"loadChart", "uses"=>"HomeController@loadChart"]);
 	Route::get('/load-new-members', ["as"=>"loadMembers", "uses"=>"HomeController@loadMembers"]);
 	Route::get('/load-members-earnings', ["as"=>"loadEarnings", "uses"=>"HomeController@loadEarnings"]);
+
+	//---WITHDRAWALS ----//
+	Route::post('/request-withdrawal', ["as"=>"makeWithdrawal", "uses"=>"WithdrawalController@store"]);
+	Route::get('/withdrawals', ["as"=>"WithdrawalIndex", "uses"=>"WithdrawalController@index"]);
 	
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
@@ -48,7 +53,9 @@ Route::group(['middleware'=>['auth']], function(){
         Route::get('/',["as"=>"disputeIndex", "uses"=>"DisputeController@index"]);
         Route::get('/view/{slug?}',["as"=>"viewDispute", "uses"=>"DisputeController@show"]);
         Route::post('/create-dispute', ["as"=>"disputeAdd", "uses"=>"DisputeController@store"]);
-        Route::post('/get-dispute', ["as"=>"getDispute", "uses"=>"DisputeController@getDisputes"]);
+		Route::post('/get-dispute', ["as"=>"getDispute", "uses"=>"DisputeController@getDisputes"]);
+		Route::post('/reply-dispute', ["as"=>"replyDispute", "uses"=>"DisputeController@ReplyDispute"]);
+		Route::post('/resolved-dispute', ["as"=>"resolveDispute", "uses"=>"DisputeController@ResolveDispute"]);
 	});
 
 	//---- TESTIMONY MANAGEMENT ----//
