@@ -78,12 +78,12 @@ class SubscriptionController extends Controller
                 $subscription = Subscription::UserSubscriptions()->count();
                 if($referral > 0 ){
                     return $response = [
-                        'msg' => "You can not subscribe to daily signal! User already exist on referrer service.",
+                        'msg' => "Sorry! You are not eligible for this service.",
                         'type' => "false"
                     ];
                 }else if($subscription > 0){
                     return $response = [
-                        'msg' => "User already exist on this service.",
+                        'msg' => "You're already a member of this service",
                         'type' => "false"
                     ];
                 }
@@ -132,7 +132,6 @@ class SubscriptionController extends Controller
                         $upline->is_active = 1;
                         $upline->save();
                     }else{
-                        // new platform downline
                         $downline  = new UserDownline();
                         $downline->platform_id  = $data['id'];
                         $downline->upline_id = $upline->upline_id;
@@ -141,16 +140,13 @@ class SubscriptionController extends Controller
                         $downline->is_active = 1;
                         $downline->save();
                     }
-
                 }
 
-                #TODO - Send system message
                 $admin = User::find(1);
                 Notification::send($admin, new MemberSubscription($subscribe));
 
+                //\Mail::to(auth()->user()->email)->send(new NewSubscription($data));
                 \DB::commit();
-
-                \Mail::to(auth()->user()->email)->send(new NewSubscription($data));
 
                 activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribed for Daily Signal");
                 return response()->json([

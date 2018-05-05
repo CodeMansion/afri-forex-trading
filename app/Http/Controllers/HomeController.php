@@ -67,7 +67,8 @@ class HomeController extends Controller
             }
 
             $data['platforms'] = Platform::whereIsActive(true)->get();
-            $data['subscription'] = Subscription::whereUserId(auth()->user()->id)->count();
+            $data['subscription'] = Subscription::userSubscriptions()->count();
+            $data['userSub'] = Subscription::userSubscriptions()->first();
             $data['investment'] = Investment::whereUserId(auth()->user()->id)->count();
             $data['referrals'] = Referral::whereUserId(auth()->user()->id)->count();
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->limit(5)->get();
@@ -78,6 +79,7 @@ class HomeController extends Controller
             $data['debit'] = PaymentTransaction::userLatestDebit()->first();
             $data['credit'] = PaymentTransaction::userLatestCredit()->first();
             $data['withdrawal'] = Withdrawal::memberWithdrawal();
+            $data['userplatforms'] = User::find(auth()->user()->id)->Platform()->get();
 
             return view('members.dashboard.index')->with($data);
         }

@@ -7,15 +7,7 @@
             <i class="fa fa-calendar"></i> <?php echo date('l, F d, Y', strtotime(now())); ?>
         </span>
     </h1>
-    @if(isset($withdrawal->status))
-        <div class="alert alert-warning" style="font-size:17px;">
-            <p>
-                You made a withdrawal request | 
-                <span class="badge badge-{{ withdrawal_status($withdrawal->status,'class') }}">{{ withdrawal_status($withdrawal->status,'name') }}</span> |
-                {{ $withdrawal->created_at->diffForHumans() }}
-            </p>
-        </div>
-    @endif
+    @include('members.dashboard.partials._service_notice')
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>

@@ -14,7 +14,7 @@
                 </div>
                 <div class="price-table-content">
                     <div class="">
-                        <center>CHARGES: ${{ $package->monthly_charge }}</center>
+                        <center>CHARGES: {{ $package->monthly_charge }}%</center>
                     </div>
                 </div>
                 <div class="arrow-down arrow-grey"></div>

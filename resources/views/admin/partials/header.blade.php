@@ -54,13 +54,8 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li><a href="#"><i class="icon-user"></i> My Profile </a></li>
-                            <li class="divider"> </li>
                             <li><a href="{{ url('/logout') }}"><i class="icon-key"></i> Log Out </a></li>
                         </ul>
-                    </li>
-                    <li class="dropdown dropdown-extended quick-sidebar-toggler">
-                        <span class="sr-only">Toggle Quick Sidebar</span>
-                        <i class="icon-logout"></i>
                     </li>
                 </ul>
             </div>

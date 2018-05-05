@@ -114,7 +114,7 @@ class User extends Authenticatable
     }
 
     public function Platform(){
-        return $this->hasMany('App\Platform','user_id');
+        return $this->belongsToMany('App\Platform','member_services','platform_id');
     }    
 
     public function UserWallet(){
@@ -148,7 +148,10 @@ class User extends Authenticatable
     }
 
     public static function SubscriptionMembers() {
-        $members = Subscription::all();
+        $members = Subscription::where([
+            'status'    => 1
+        ])->get();
+        
         return $members;
     }
 }

@@ -38,7 +38,7 @@ function earnings_formular($type,$percentage,$investment_amount) {
 		}
 
 		if($type == "monthly") {
-			$earning = ((($percentage / 100) * $investment_amount) / 180) * 28;
+			$earning = ((($percentage / 100) * $investment_amount) / 180) * 30;
 			return (double)$earning;
 		}
 
@@ -46,5 +46,31 @@ function earnings_formular($type,$percentage,$investment_amount) {
 			$earning = ($percentage / 100) * $investment_amount;
 			return (double)$earning;
 		}
+	}
+}
+
+function EarningsEligibilityCheck($member,$type) {
+	if($type == "daily") {
+		if(isset($member)) {
+			$registered_date = strtotime($member->created_at);
+			$today = time() + 86400;
+			return ($registered_date >= $today);
+		}
+	}
+	
+	if($type == 'weekly') {
+
+	}
+
+	if($type == 'monthly') {
+		if(isset($member)) {
+			$registered_date = new \DateTime($member->created_at);
+			$now = new \DateTime();
+			return ($registered_date->diff($now)->days >= 30);
+		}
+	}
+
+	if($type == 'quarterly') {
+
 	}
 }

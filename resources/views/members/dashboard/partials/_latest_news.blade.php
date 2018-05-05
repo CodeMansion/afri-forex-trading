@@ -2,7 +2,7 @@
     <div class="portlet-title">
         <div class="caption caption-md">
             <i class="icon-bar-chart font-dark hide"></i>
-            <span class="caption-subject font-dark bold uppercase"> <i class=" icon-feed"></i> Latest News</span>
+            <span class="caption-subject font-dark bold uppercase"> <i class=" icon-feed"></i> My Withdrawals</span>
             <span class="caption-helper"><img src="{{ asset('images/loader.gif') }}" id="latest_news_loader" /> </span>
         </div>
         <div class="inputs">
@@ -26,11 +26,11 @@
                 @endif
             </div>
         </div>
-        <div class="scroller-footer">
+        <!-- <div class="scroller-footer">
             <div class="btn-arrow-link pull-right">
                 <a href="javascript:;">See All Records</a>
                 <i class="icon-arrow-right"></i>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

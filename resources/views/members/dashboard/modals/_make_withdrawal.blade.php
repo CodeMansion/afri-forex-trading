@@ -1,4 +1,4 @@
-<div id="make_withdrawal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+<div id="make_withdrawal" class="modal fade" tabindex="-1" data-backdrop="static" >
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">

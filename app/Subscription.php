@@ -24,4 +24,10 @@ class Subscription extends Model
     public function scopeUserSubscriptions($query){
         return $query->where('user_id',auth()->user()->id);
     }
+
+    public function scopeSubscriptionMembers($query) {
+        return $query->where([
+            'status' => 1
+        ]);
+    }
 }

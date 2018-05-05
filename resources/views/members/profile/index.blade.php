@@ -37,7 +37,7 @@
                         <ul class="nav">
                             <li><a href="#" data-target="#change_password" data-toggle="modal"><i class="icon-home"></i> Change Password </a></li>
                             <li class="" data-target="#change_picture" data-toggle="modal"><a href="#"><i class="icon-settings"></i> Change Picture </a></li>
-                            <li><a href="#"><i class="icon-info"></i> View Upline Info </a></li>
+                            <!-- <li><a href="#"><i class="icon-info"></i> View Upline Info </a></li> -->
                             <li data-target="#share_fund" data-toggle="modal"><a href="#"><i class="icon-info"></i> Share Funds </a></li>
                         </ul>
                     </div>
