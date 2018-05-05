@@ -2,7 +2,11 @@
     <div class="portlet-title">
         <div class="caption caption-md">
             <i class="icon-bar-chart font-dark hide"></i>
+<<<<<<< HEAD
             <span class="caption-subject font-dark bold uppercase"><i class="icon-users"></i> New Members</span>
+=======
+            <span class="caption-subject font-dark bold uppercase"><i class="icon-users"></i>New Members</span>
+>>>>>>> e886198db3d25951b0e60ea44b36559c199b52a3
             <span class="caption-helper"><img src="{{ asset('images/loader.gif') }}" id="members_loader" /> </span>
         </div>
         <div class="inputs">
