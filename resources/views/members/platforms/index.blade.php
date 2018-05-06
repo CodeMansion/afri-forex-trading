@@ -34,7 +34,9 @@
                         <div class="icon">
                             <i class="icon-pie-chart"></i>
                         </div>
-                    </div>
+                    </div><hr/>
+                    <span class="badge badge-{{subscription_status($subscription->status,'class')}}">{{subscription_status($subscription->status,'name')}}</span> | 
+                    <span>{{ $subscription->created_at->diffForHumans() }}</span>
                 </div>
             </div>
         </a>
@@ -54,7 +56,9 @@
                         <div class="icon">
                             <i class="icon-pie-chart"></i>
                         </div>
-                    </div>
+                    </div><hr/>
+                    <span class="badge badge-{{investment_status($investment->status,'class')}}">{{investment_status($investment->status,'name')}}</span> | 
+                    <span>{{ $investment->created_at->diffForHumans() }}</span>
                 </div>
             </div>
         </a>
@@ -74,7 +78,9 @@
                         <div class="icon">
                             <i class="icon-pie-chart"></i>
                         </div>
-                    </div>
+                    </div><hr/>
+                    <span class="badge badge-{{referral_status($referral->status,'class')}}">{{referral_status($referral->status,'name')}}</span> |
+                    <span>{{ $referral->created_at->diffForHumans() }}</span>
                 </div>
             </div>
         </a>

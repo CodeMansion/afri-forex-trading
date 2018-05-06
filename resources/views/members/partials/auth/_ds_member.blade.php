@@ -48,7 +48,7 @@
     </a>
 </li>
 <li class="nav-item {{menu_active($menu_id, 7)}}">
-    <a href="{{ URL::route('transactions.index') }}" class="nav-link nav-toggle">
+    <a href="{{ URL::route('testimonies.index') }}" class="nav-link nav-toggle">
         <i class="icon-speech"></i>
         <span class="title">My Testimonies</span>
         <span class="arrow"></span>

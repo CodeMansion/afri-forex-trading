@@ -21,7 +21,7 @@
                     <select class="form-control" id="type" style="border: 0;">
                         <option value="">--recipient type--</option>
                         <option value="individuals">Individuals</option>
-                        <option value="ds_members">DS Members</option>
+                        <option value="ds_members">Daily Signal Subscribers</option>
                         <option value="all_members">All Members</option>
                     </select>
                     <!-- <span class="inbox-cc-bcc">
@@ -63,8 +63,8 @@
             <div class="inbox-compose-btn">
                 <img src="{{ asset('images/loader.gif') }}" id="loader" /> 
                 <button class="btn green" id="send_message" type="button"><i class="fa fa-send"></i>Send</button>
-                <button class="btn default" id="discard">Discard</button>
-                <button class="btn default" id="draft">Draft</button>
+                <!-- <button class="btn default" id="discard">Discard</button>
+                <button class="btn default" id="draft">Draft</button> -->
             </div>
         </form>
     </div>

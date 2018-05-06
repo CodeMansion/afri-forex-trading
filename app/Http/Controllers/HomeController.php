@@ -10,8 +10,6 @@ use App\UserProfile;
 use App\UserDownline;
 use App\Mail\ConfirmRegistration;
 use App\Mail\ForgetPassword;
-use DB;
-use Validator;
 use App\Platform;
 use App\Package;
 use App\PackageType;
@@ -22,12 +20,15 @@ use App\Dispute;
 use App\ActivityLog;
 use App\PaymentTransaction;
 use App\Country;
-use Gate;
-use Mail;
-use Carbon\Carbon;
 use App\Notifications\NewMember;
 use App\UserWallet;
 use App\Withdrawal;
+
+use Gate;
+use Mail;
+use DB;
+use Validator;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {

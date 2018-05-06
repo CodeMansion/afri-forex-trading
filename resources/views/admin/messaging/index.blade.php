@@ -33,9 +33,8 @@
                         <i class="fa fa-edit"></i> Compose </a>
                     <ul class="inbox-nav">
                         <li><a href="javascript:;" id="btn_sent" class="sbold uppercase" data-type="sent" data-title="Sent"> Sent </a> </li>
-                        <li><a href="javascript:;" id="btn_draft" class="sbold uppercase" data-type="draft" data-title="Draft"> Draft<span class="badge badge-danger">8</span></a></li>
-                        <li class="divider"></li>
-                        <li><a href="javascript:;" id="btn_trash" class="sbold uppercase" data-title="Trash"> Trash<span class="badge badge-info">23</span></a></li>
+                        <li><a href="javascript:;" id="btn_draft" class="sbold uppercase" data-type="draft" data-title="Draft"> Draft</a></li>
+                        <li><a href="javascript:;" id="btn_trash" class="sbold uppercase" data-title="Trash"> Trash</a></li>
                     </ul>
                 </div>
             </div>

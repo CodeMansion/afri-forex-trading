@@ -56,6 +56,18 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::post('/reply-dispute', ["as"=>"replyDispute", "uses"=>"DisputeController@ReplyDispute"]);
 		Route::post('/resolved-dispute', ["as"=>"resolveDispute", "uses"=>"DisputeController@ResolveDispute"]);
 	});
+
+	//---- TESTIMONY MANAGEMENT ----//
+    Route::group(['prefix' => 'testimonies'], function () {
+        Route::get('/',["as"=> "testimonies.index", "uses"=>"TestimonyController@index"]);
+		Route::post('/store', ["as" => "testimonies.add", 'uses' => 'TestimonyController@store']);
+		Route::get('/show/{id?}', ["as" => "testimonies.show", "uses" => "TestimonyController@show"]);
+		Route::post('/update', ["as" => "testimonies.update", 'uses' => 'TestimonyController@update']);
+		Route::get('/delete/{id?}', ["as" => "testimonies.delete", 'uses' => 'TestimonyController@destroy']);
+		Route::post('/get-details', ["as" => "testimonies.editInfo", "uses" => "TestimonyController@getEditInfo"]);
+		Route::get('/approve/{id?}', ["as" => "testimonies.approve", "uses" => "TestimonyController@approve"]);
+		Route::get('/decline/{id?}', ["as" => "testimonies.decline", "uses" => "TestimonyController@decline"]);
+	});
 	
 	// ----- MEMBER EARNINGS MANAGEMENT ------//
 	Route::group(['prefix' => 'earnings'], function () {

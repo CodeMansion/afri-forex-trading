@@ -24,9 +24,9 @@
                 <i class="fa fa-angle-down"></i>
             </button>
             <ul class="dropdown-menu" role="menu">                                   
-                <li><a href="{{ URL::route('packageSub') }}"><i class="icon-note"></i>Add Service</a></li> 
+                <li><a href="{{ URL::route('packageSub') }}"><i class="icon-plus"></i>Add Service</a></li> 
                 <li><a href="{{ URL::route('register') }}/{{ auth()->user()->slug }}" target="_blank"><i class="icon-note"></i> Add new Member</a></li>
-                <li><a href="#" data-target="#make_withdrawal" data-toggle="modal"><i class="icon-note"></i> Make Withdrawal</a></li>
+                <li><a href="#" data-target="#make_withdrawal" data-toggle="modal"><i class="icon-wallet"></i> Make Withdrawal</a></li>
             </ul>
         </div>
     </div>
@@ -42,7 +42,7 @@
     </div>
     <div class="row">
         <div class="col-lg-4 col-xs-12 col-sm-12">
-            @include('members.dashboard.partials._latest_news')
+            @include('members.dashboard.partials._withdrawals')
         </div>
         <div class="col-lg-4 col-xs-12 col-sm-12">
             @include('admin.dashboard.partials._activity_logs')
