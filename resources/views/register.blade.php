@@ -1,3 +1,4 @@
+<?php $config = \App\GeneralSetting::find(1); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,7 +7,7 @@
         <meta name="author" content="">
         <meta name="description" content="" />
 
-        <title>AfriMarket | New Member Registration</title>
+        <title>{{ $config['application_name']}} :: New Member Registration</title>
         
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
@@ -38,7 +39,7 @@
                         <center>
                             <h3>New Member Registration Form</h3><hr/>
                             <div class="col-md-12 form-group">   
-                                <input type="text" class="form-control" name="upline_id" id="upline_id" value="<?php if(isset($referral)): ?> {{ $referral->username }} <?php else: ?>Afri-Forex<?php endif ?>" disabled>
+                                <input type="text" class="form-control" name="upline_id" id="upline_id" value="<?php if(isset($referral)): ?> {{ $referral->username }} <?php else: ?>MarketsProfits<?php endif ?>" disabled>
                             </div>
                             <div class="col-md-12 form-group">
                                 <input type="text" class="form-control" placeholder="FULL NAME" name="full_name" id="full_name">
@@ -69,9 +70,15 @@
                                 </div>
                             </div>
                             <div class="col-md-12 form-group">
+                                <label class="rememberme check mt-checkbox mt-checkbox-outline">
+                                    <input type="checkbox" id="accepted" /> I have read and agreed to the <a href="http://marketsprofits.com/term-of-use/" target="_blank">Terms and Conditions</a> of MarketsProfits
+                                    <span></span>
+                                </label>
+                            </div>
+                            <div class="col-md-12 form-group">
                                 <button type="button" id="register_member_btn" class="btn btn-lg btn-success form-control">Submit</button>
                             </div>
-                            <p>Are you a Register User? <a href="{{ url('/login') }}">Sign In Here</a></p>
+                            <p>Are You a Register Member? <a href="{{ url('/login') }}">Sign In Here</a></p>
                         </center>
                     </form>
                 </div>

@@ -55,5 +55,5 @@
         </div>
     </form>
 </div>
-<div class="copyright"> Powered By: <a href="https:://www.codemansion.org">CodeMansion Technology</a> </div>
+<!-- <div class="copyright"> Powered By: <a href="https:://www.codemansion.org">CodeMansion Technology</a> </div> -->
 @endsection

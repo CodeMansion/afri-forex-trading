@@ -20,21 +20,17 @@
     <div class="row">
         @include('admin.dashboard.partials._cards')
     </div>
+    
     <div class="row">
-        <div class="col-lg-8 col-xs-12 col-sm-12">
-            @include('admin.dashboard.partials._revenue_chart')
-        </div>
         <div class="col-lg-4 col-xs-12 col-sm-12">
             @include('admin.dashboard.partials._new_members')
         </div>
-    </div>
-    <div class="row">
         <div class="col-lg-4 col-xs-12 col-sm-12">
             @include('admin.dashboard.partials._support')
         </div>
-        <div class="col-lg-4 col-xs-12 col-sm-12">
+        <!-- <div class="col-lg-4 col-xs-12 col-sm-12">
             @include('admin.dashboard.partials._activity_logs')
-        </div>
+        </div> -->
         <div class="col-lg-4 col-xs-12 col-sm-12">
             @include('admin.dashboard.partials._transactions')
         </div>

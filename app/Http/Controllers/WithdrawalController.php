@@ -54,8 +54,36 @@ class WithdrawalController extends Controller
             DB::beginTransaction();
             try {
                 $member_wallet = UserWallet::balance()->first()->amount;
+                $new_withdrawal = $member_wallet - (double)$data['amount'];
+                $withdrawal_charge = 5.00;
+
+                $old_withdrawal = Withdrawal::where([
+                    'user_id'   => auth()->user()->id,
+                    'status'    => 0
+                ])->first();
+
+                if($old_withdrawal) {
+                    return response()->json([
+                        "msg"   => "You have a pending withdrawal request. Please try again after request has been attended to.",
+                        "type"  => "false"
+                    ]);
+                }
 
                 if($member_wallet < 10.00) {
+                    return response()->json([
+                        "msg"   => "Insuffient fund. You cant make withdrawal!",
+                        "type"  => "false"
+                    ]);
+                }
+
+                if((double)$data['amount'] < $member_wallet && $new_withdrawal < 5.55) {
+                    return response()->json([
+                        "msg"   => "Insuffient withdrawal charge. You cant make withdrawal!",
+                        "type"  => "false"
+                    ]);
+                } 
+
+                if((double)$data['amount'] == $member_wallet || (double)$data['amount'] > $member_wallet) {
                     return response()->json([
                         "msg"   => "Insuffient fund. You cant make withdrawal!",
                         "type"  => "false"
@@ -66,7 +94,7 @@ class WithdrawalController extends Controller
                     'user_id'       => auth()->user()->id,
                     'slug'          => bin2hex(random_bytes(64)),
                     'status'        => 0,
-                    'amount'        => (double)$data['amount'],
+                    'amount'        => (double)$data['amount'] + $withdrawal_charge,
                     'created_at'    => Carbon::now(),
                     'updated_at'    => Carbon::now()
                 ]);
@@ -77,7 +105,7 @@ class WithdrawalController extends Controller
                 Notification::send($admin, new WithdrawalRequest($withdrawal));
 
                 return response()->json([
-                    "msg"   => "Message Sent Successfully",
+                    "msg"   => "Your Withdrawal Request has been sent successfully.",
                     "type"  => "true"
                 ],200);
 
