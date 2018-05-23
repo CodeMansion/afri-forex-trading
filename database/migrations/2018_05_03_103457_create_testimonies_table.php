@@ -14,6 +14,7 @@ class CreateTestimoniesTable extends Migration
     public function up()
     {
         Schema::create('testimonies', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('slug', 190)->unique();
             $table->integer('user_id')->unsigned()->index();
@@ -22,7 +23,7 @@ class CreateTestimoniesTable extends Migration
             $table->integer('status')->default(0);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

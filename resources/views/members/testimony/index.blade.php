@@ -42,11 +42,10 @@
                         @if(count($testimonies) < 1)
                             <center><em>There are no testimonies</em></center>
                         @else
-                            <table class="table table-striped table-hover table-bordered testimonies_list" id="sample_2">
+                            <table class="table table-striped table-bordered table-hover table-bordered testimonies_list" id="sample_2">
                                 <thead>
                                     <tr>
-                                        <th></th>
-                                        <th>Member</th>
+                                        <th width="50"></th>
                                         <th>Title</th>
                                         <th>Message</th>
                                         <th>Status</th>
@@ -60,13 +59,12 @@
                                     @php($counter = 1)
                                     @foreach($testimonies as $testimony)
                                         <tr>
-                                            <td>{{ $counter }}</td>
-                                            <td>{{ $testimony->user->Profile->full_name }}</td>
+                                            <td>#</td>
                                             <td>{{ $testimony->title }}</td>
                                             <td>{{ strip_tags(word_counter($testimony->message, 8,'...')) }}</td>
                                             <td><span class="badge badge-{{ testimony_status($testimony->status,'class') }}">{{ testimony_status($testimony->status,'name') }}</span></td>
-                                            <td>{{ $testimony->created_at }}</td>
-                                            <td>{{ $testimony->updated_at }}</td>
+                                            <td>{{ $testimony->created_at->diffForHumans() }}</td>
+                                            <td>{{ $testimony->updated_at->diffForHumans() }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <button class="btn btn-xs green dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-expanded="false"> Actions<i class="fa fa-angle-down"></i></button>

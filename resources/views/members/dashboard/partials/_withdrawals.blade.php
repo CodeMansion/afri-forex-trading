@@ -18,7 +18,7 @@
         <div class="scroller" style="height: 228px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
             <div class="" id="show_latest_news">
                 @if(count($transactions) < 1)
-                    <center><em>There are no Latest News</em></center>
+                    <center><em>There are no withdrawals</em></center>
                 @else
                 <div class="table-scrollable table-scrollable-borderless">
                     

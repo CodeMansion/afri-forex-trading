@@ -32,7 +32,9 @@
                             <span class="step-title"></span>
                         </span>
                     </div>
-                    <div class="actions"></div>
+                    <div class="actions">
+                        <button class="btn btn-xs red" id="return_back" type="button"><i class="fa fa-arrow-left"></i> Return Back</button>
+                    </div>
                 </div>
                 <div class="portlet-body form">
                     <div class="pricing-content-1">

@@ -90,3 +90,10 @@
             </li>
         </ul>
     </li>
+    <li class="nav-item {{menu_active($menu_id, 11)}}">
+    <a href="{{ URL::route('testimonies.index') }}" class="nav-link nav-toggle">
+        <i class="icon-speech"></i>
+        <span class="title">Testimonies</span>
+        <span class="arrow"></span>
+    </a>
+</li>

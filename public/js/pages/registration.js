@@ -22,44 +22,48 @@ var AppRegistration = function() {
         } else if (telephone.length < 1) {
             toastr.error("Telephone field is required");
         } else {
-
-            $("#register_member_btn").attr("disabled", true);
-            $("#register_member_btn").html("<i class='fa fa-spinner fa-spin'></i> Processing...");
-    
-            $.ajax({
-                url: REGISTER_URL,
-                method: "POST",
-                data: {
-                    '_token': TOKEN,
-                    'upline_id': upline,
-                    'full_name': fullname,
-                    'email': email,
-                    'username': username,
-                    'password': password,
-                    'country_id': country_id,
-                    'telephone': telephone,
-                    'req': 'register_new_user'
-                },
-                success: function(rst) {
-                    if (rst.type == "true") {
+            if($("#accepted").is(':checked')) {
+                $("#register_member_btn").attr("disabled", true);
+                $("#register_member_btn").html("<i class='fa fa-spinner fa-spin'></i> Processing...");
+        
+                $.ajax({
+                    url: REGISTER_URL,
+                    method: "POST",
+                    data: {
+                        '_token': TOKEN,
+                        'upline_id': upline,
+                        'full_name': fullname,
+                        'email': email,
+                        'username': username,
+                        'password': password,
+                        'country_id': country_id,
+                        'telephone': telephone,
+                        'req': 'register_new_user'
+                    },
+                    success: function(rst) {
+                        if (rst.type == "true") {
+                            $("#register_member_btn").attr("disabled", false);
+                            $("#register_member_btn").html("Submit");
+                            toastr.success("Registration was successfully. A link has been sent to your email for confirmation. Thank you!");
+                            setTimeout(() => {
+                                window.location.replace("/login");
+                            }, 3000);
+                        } else if (rst.type == "false") {
+                            $("#register_member_btn").attr("disabled", false);
+                            $("#register_member_btn").html("Submit");
+                            toastr.error(rst.msg);
+                        }
+                    },
+                    error: function(rst, trowHTTP, errorRun) {
                         $("#register_member_btn").attr("disabled", false);
                         $("#register_member_btn").html("Submit");
-                        toastr.success("Registration was successfully. A link has been sent to your email for confirmation. Thank you!");
-                        setTimeout(() => {
-                            window.location.replace("/login");
-                        }, 3000);
-                    } else if (rst.type == "false") {
-                        $("#register_member_btn").attr("disabled", false);
-                        $("#register_member_btn").html("Submit");
-                        toastr.error(rst.msg);
+                        toastr.error(errorRun);
                     }
-                },
-                error: function(rst, trowHTTP, errorRun) {
-                    $("#register_member_btn").attr("disabled", false);
-                    $("#register_member_btn").html("Submit");
-                    toastr.error(errorRun);
-                }
-            });
+                });
+            } else {
+                toastr.error("Please you are required to read and accept the terms and condition before submitting.");
+            }
+            
         }
     }
 

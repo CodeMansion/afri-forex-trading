@@ -5,6 +5,14 @@ var AppServiceSubscription = function() {
         $("#select_packages").hide();
         $("#select_package_types").hide();
         $("#loading").hide();
+        $("#return_back").hide();
+    }
+
+    var ReturnBack = function() {
+        $("#select_packages").hide();
+        $("#select_package_types").hide();
+        $("#return_back").hide();
+        $("#service_page").show();
     }
 
     var selectPlatform = function(id, type) {
@@ -23,6 +31,7 @@ var AppServiceSubscription = function() {
                 success: function(data) {
                     $("#loading").hide();
                     $("#service_page").hide();
+                    $("#return_back").show();
                     $("#select_packages").fadeIn();
                     $("#select_packages").html(data);
                 },
@@ -46,6 +55,7 @@ var AppServiceSubscription = function() {
                         $("#loading").hide();
                         $("#service_page").hide();
                         $("#select_packages").fadeIn();
+                        $("#return_back").show();
                         $("#select_packages").html(data);
                     },
                     error: function(alaxB, HTTerror, errorMsg) {
@@ -66,6 +76,7 @@ var AppServiceSubscription = function() {
                         $("#loading").hide();
                         $("#service_page").hide();
                         $("#select_packages").fadeIn();
+                        $("#return_back").show();
                         $("#select_packages").html(data);
                     },
                     error: function(alaxB, HTTerror, errorMsg) {
@@ -173,6 +184,10 @@ var AppServiceSubscription = function() {
         init: function() {
 
             loadServices();
+
+            $('body').find("#return_back").on("click", function() {
+                ReturnBack();
+            });
 
             $('body').find("#service_page .platform").each(function(index) {
                 $("#select_platform_" + index).on("click", function() {

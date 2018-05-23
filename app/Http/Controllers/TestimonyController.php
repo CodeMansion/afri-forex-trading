@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Testimony;
 use Illuminate\Http\Request;
+
+use App\Testimony;
+use App\Notifications\NewTestimony;
+use App\User;
+
 use Gate;
+use DB;
 use Session;
+use Notification;
+use Carbon\Carbon;
 
 class TestimonyController extends Controller
 {
@@ -29,13 +36,16 @@ class TestimonyController extends Controller
                 return redirect(route('packageSub'));
             }
 
-            $params['menu_id'] = 10;
-            $params['testimonies'] = Testimony::Testimony()->get();
+            $params['menu_id'] = 7;
+            $params['testimonies'] = Testimony::memberTestimonies()->orderBy('id','DESC')->get();
+
             return view('members.testimony.index')->with($params);
         }
 
         if (\Auth::user()->is_admin) {
-            $data['testimonies'] = Testimony::all();
+            $data['menu_id'] = 11;
+            $data['testimonies'] = Testimony::orderBy('id','DESC')->get();
+
             return view('admin.testimony.index')->with($data);
         }
     }
@@ -71,22 +81,31 @@ class TestimonyController extends Controller
     {
         $data = $request->except("_token");
         if ($data) {
+            DB::beginTransaction();
             try {
-                $testimony = new Testimony();
-                $testimony->user_id = \Auth::user()->id;
-                $testimony->slug = bin2hex(random_bytes(64));
-                $testimony->title = $data['title'];
-                $testimony->message = $data['message'];
-                $testimony->save();
 
-                //send notification to admin
-                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Create Testimony");
+                $new_testmony = Testimony::insert([
+                    'user_id'   => auth()->user()->id,
+                    'slug'      => bin2hex(random_bytes(64)),
+                    'title'     => $data['title'],
+                    'message'   => $data['message'],
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
+                
+                $admin = User::find(1);
+                Notification::send($admin, new NewTestimony($new_testmony));
+                
+                DB::commit();
+
+                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Submitted New Testimony");
                 return response()->json([
                     "msg" => "Testimony created successfully",
                     "type" => "true"
                 ],200);
 
             } catch (Exception $e) {
+                DB::rollback();
                 return response()->json([
                     "msg" => $e->getMessage(),
                     "type" => "false"
@@ -113,9 +132,10 @@ class TestimonyController extends Controller
             $testimony = Testimony::find($id);
             $testimony->status = 1;
             $testimony->save();
-            $ip = $_SERVER['REMOTE_ADDR'];
-            activity_logs(auth()->user()->id, $ip, "Approved Testimony");
+            
             \DB::commit();
+
+            activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Approved Member Testimony");
             return response()->json([
                 'msg' => "Testimony Approved Successfully.",
                 'type' => "true"
@@ -137,9 +157,10 @@ class TestimonyController extends Controller
             $testimony = Testimony::find($id);
             $testimony->status = 2;
             $testimony->save();
-            $ip = $_SERVER['REMOTE_ADDR'];
-            activity_logs(auth()->user()->id, $ip, "Delined Testimony");
+
             \DB::commit();
+
+            activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Declined Member Testimony");
             return response()->json([
                 'msg' => "Testimony Delined Successfully.",
                 'type' => "true"
@@ -182,8 +203,7 @@ class TestimonyController extends Controller
                 $testimony->message = $data['message'];
                 $testimony->save();
 
-                //send notification to admin
-                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Update Testimony");
+                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Updated a Testimony");
                 return response()->json([
                     "msg" => "Testimony Updated successfully",
                     "type" => "true"

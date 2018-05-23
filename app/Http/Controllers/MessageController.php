@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use App\MailSetting;
 use App\SentMessage;
 use App\Subscription;
-use Mail;
-use Validator;
-
+use App\User;
 use App\Mail\BulkMail;
+
+use Mail;
+use DB;
+use Validator;
+use Carbon\Carbon;
 
 class MessageController extends Controller
 {
@@ -42,23 +45,24 @@ class MessageController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    protected function MailSettingCheck() {
+        $setting = MailSetting::find(1);
+        return (empty($setting['host']) || empty($setting['username']) || empty($setting['password']));
     }
 
-    protected function settingsCheck() {
-        $setting = MailSetting::find(1);
-        if(empty($setting['host']) || empty($setting['username']) || empty($setting['password'])) {
-            return false;
+    protected function SentMail($recipients,$data,$type) {
+        foreach($recipients as $recipient) {
+            Mail::to($recipient)->queue(new BulkMail($data));
         }
 
-        return true;
+        $sent_msg = SentMessage::insert([
+            'slug'      => bin2hex(random_bytes(64)),
+            'subject'   => $data['subject'],
+            'message'   => htmlspecialchars_decode($data['message']),
+            'type'      => $type,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
     }
 
     /**
@@ -71,22 +75,25 @@ class MessageController extends Controller
     {
         $data = $request->except('_token');
         if($data) {
+            DB::beginTransaction();
             try {
+                exec("php artisan queue:work --daemon --tries=3");
+                ini_set('max_execution_time', 0);
 
-                if(!$this->settingsCheck()) {
+                if($this->MailSettingCheck()) {
                     return response()->json([
                         'msg'  => "Invalid Mail Settings",
                         'type' => "false"
                     ]);
                 }
-
+                
                 if($data['type'] == 'individuals') {
                     $filter_email_address = [];
                     $recipients = explode(';', $data['to']);
                     
                     foreach($recipients as $recipient) {
                         if(filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
-                            array_push($filter_email_address, $recipient);
+                            array_push($filter_email_address,$recipient);
                         } else {
                             return response()->json([
                                 "msg"   => "Invalid email address $recipient",
@@ -94,32 +101,37 @@ class MessageController extends Controller
                             ]);
                         }
                     }
-
-                    foreach($filter_email_address as $key => $email) {
-                        Mail::to($email)->send(new BulkMail($data));
-                    }
-
-                    $new = new SentMessage();
-                    $new->slug = bin2hex(random_bytes(64));
-                    $new->subject = $data['subject'];
-                    $new->message = htmlspecialchars_decode($data['message']);
-                    $new->type = "Individuals";
-                    $new->save();
+                    
+                    $this->SentMail($filter_email_address,$data,"Individuals");
                 }
 
                 if($data['type'] == 'ds_members') {
-                    return response()->json([
-                        "msg"   => "This feature is not ready",
-                        "type"  => "false"
-                    ]);
+                    $filter_email_address = [];
+                    $subscribers = User::subscriptionMembers();
+
+                    foreach($subscribers as $recipient) {
+                        if(filter_var($recipient->User->email, FILTER_VALIDATE_EMAIL)) {
+                            array_push($filter_email_address,$recipient->User->email);
+                        }
+                    }
+
+                    $this->SentMail($filter_email_address,$data,'Subscribers');
                 }
 
                 if($data['type'] == 'all_members') {
-                    return response()->json([
-                        "msg"   => "This feature is not ready",
-                        "type"  => "false"
-                    ]);
+                    $filter_email_address = [];
+                    $all_members = User::members()->get();
+
+                    foreach($all_members as $member) {
+                        if(filter_var($member->email, FILTER_VALIDATE_EMAIL)) {
+                            array_push($filter_email_address,$member->email);
+                        }
+                    }
+
+                    $this->SentMail($filter_email_address,$data,'All Members');
                 }
+
+                DB::commit();
 
                 return response()->json([
                     "msg"   => "Message Sent Successfully",
@@ -127,56 +139,12 @@ class MessageController extends Controller
                 ],200);
 
             } catch (Exception $e) {
+                DB::rollback();
                 return response()->json([
                     "msg"   => $e->getMessage(),
                     "type"  => "false"
                 ]);
             }
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

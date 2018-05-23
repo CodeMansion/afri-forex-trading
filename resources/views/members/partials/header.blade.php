@@ -10,7 +10,7 @@
         
         <div class="page-top">
             <div class="col-md-4" style="padding:15px;">
-                <input type="text" id="mt-target-1" style="width:400px;height: 30px;border: 1px solid grey;padding: 10px;" value="{{ URL::route('register') }}/{{ auth()->user()->slug }}">
+                <input type="text" class="" id="mt-target-1" style="width:400px;height: 30px;border: 1px solid grey;padding: 10px;" value="{{ URL::route('register') }}/{{ auth()->user()->slug }}">
                 <a href="javascript:;" style="padding: 5px;" class="mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-1" target="Copy Link to clipboard">
                     <i class="icon-note"></i>
                 </a>
@@ -22,23 +22,8 @@
                             <i class="icon-bell"></i>
                             <span class="badge badge-danger"> 0 </span>
                         </a>
-                        <ul class="dropdown-menu">
-                            
-                        </ul>
+                        <ul class="dropdown-menu"></ul>
                     </li>
-                    <!-- <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <i class="icon-envelope-open"></i>
-                            <span class="badge badge-danger"> 0 </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="external">
-                                <h3>You have <span class="bold">1 New</span> Messages</h3>
-                            </li>
-                            <li></li>
-                        </ul>
-                    </li> -->
-                    
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <img alt="" class="img-circle" src="{{ asset('images/default.png') }}" />
@@ -47,7 +32,6 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li><a href="{{ URL::route('membersIndex') }}"><i class="icon-user"></i> My Profile </a></li>
-                            <!-- <li><a href="#"><i class="icon-envelope-open"></i> My Inbox</a></li> -->
                             <li><a href="{{ url('/logout') }}"><i class="icon-key"></i> Log Out </a></li>
                         </ul>
                     </li>

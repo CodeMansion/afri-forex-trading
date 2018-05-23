@@ -15,12 +15,11 @@
                     <i class="fa fa-angle-down"></i>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="javascript:;"><i class="icon-docs"></i> View Withdrawals </a> </li>
-                    <li><a href="javascript:;"><i class="icon-tag"></i> Post News </a></li>
-                    <li><a href="javascript:;"><i class="icon-share"></i> Send Messages </a></li>
-                    <li class="divider"> </li>
-                    <li><a href="javascript:;"><i class="icon-flag"></i> Register</a></li>
-                    <li><a href="javascript:;"><i class="icon-users"></i> Members</a></li>
+                    <li><a href="{{ URL::route('WithdrawalIndex') }}"><i class="icon-docs"></i> View Withdrawals </a> </li>
+                    <!-- <li><a href="javascript:;"><i class="icon-tag"></i> Post News </a></li> -->
+                    <li><a href="{{ URL::route('msgIndex') }};"><i class="icon-share"></i> Send Messages </a></li>
+                    <li><a href="{{ url('/registration') }}"><i class="icon-flag"></i> Register</a></li>
+                    <li><a href="{{ URL::route('membersIndex') }}"><i class="icon-users"></i> Members</a></li>
                 </ul>
             </div>
         </div>

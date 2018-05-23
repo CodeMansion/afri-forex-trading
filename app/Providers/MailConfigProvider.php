@@ -17,13 +17,13 @@ class MailConfigProvider extends ServiceProvider
         // if(Schema::hasTable('mail_settings')){
         //     $setting = \DB::table("mail_settings")->first();
         //     if(isset($setting->host)){
-        //         config(['mail.host' => $setting->host]);
-        //         config(['mail.port' => $setting->port]);
-        //         config(['mail.username' => $setting->username]);
-        //         config(['mail.password' => $setting->password]);
-        //         config(['mail.encryption' => $setting->encryption]);
+        //         config(['mail.host'         => $setting->host]);
+        //         config(['mail.port'         => $setting->port]);
+        //         config(['mail.username'     => $setting->username]);
+        //         config(['mail.password'     => $setting->password]);
+        //         config(['mail.encryption'   => $setting->encryption]);
         //         config(['mail.from.address' => $setting->from_email]);
-        //         config(['mail.from.name' => $setting->from_name]);
+        //         config(['mail.from.name'    => $setting->from_name]);
         //     }
         // }
     }
