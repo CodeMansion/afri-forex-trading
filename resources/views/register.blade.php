@@ -37,6 +37,10 @@
                     <div id="errors"></div>
                     <form action="#" method="#">
                         <center>
+                            <a href="http://marketsprofits.com" target="_blank">
+                                <img src="{{ asset('images/logo.png') }}" width="150" alt="markets-profits" title="Markets Profits"/>
+                            </a>
+                           
                             <h3>New Member Registration Form</h3><hr/>
                             <div class="col-md-12 form-group">   
                                 <input type="text" class="form-control" name="upline_id" id="upline_id" value="<?php if(isset($referral)): ?> {{ $referral->username }} <?php else: ?>MarketsProfits<?php endif ?>" disabled>
@@ -53,7 +57,7 @@
                                 </select>
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="phone" class="form-control" placeholder="+234(0)80 1111 2222" name="telephone" id="telephone"> 
+                                <input type="phone" class="form-control" placeholder="+41 80 1111 2222" name="telephone" id="telephone"> 
                             </div>
                             <div class="col-md-12 form-group">
                                 <input type="text" class="form-control" placeholder="USERNAME" name="username" id="username">

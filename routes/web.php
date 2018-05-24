@@ -205,3 +205,7 @@ Route::get('/logout', function () {
 	return redirect('/login');	
 });
 
+Route::get('/mark-as-read', function() {
+
+});
+

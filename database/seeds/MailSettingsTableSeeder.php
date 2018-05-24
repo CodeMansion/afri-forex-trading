@@ -16,12 +16,12 @@ class MailSettingsTableSeeder extends Seeder
         \App\MailSetting::insert([
             [
                 'id' => 1,
-                'from_name'     => 'Profits Markets',
+                'from_name'     => 'Markets Profits',
                 'from_email'    => 'support@profitsmarkets.com',
                 'reply_to'      => 'noreply@profitsmarkets.com',
-                'host'          => 'smtp.gmail.com',
-                'username'      => 'brainajax@gmail.com',
-                'password'      => 'PhilliPiansPhilliPians$413',
+                'host'          => 'mail.marketsprofits.com',
+                'username'      => 'admin@marketsprofits.com',
+                'password'      => 'Welcome007!@#$',
                 'encryption'    => 'TLS',
                 'port'          => 587
             ],

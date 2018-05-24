@@ -38,6 +38,7 @@
                         <thead>
                             <tr>
                                 <th width="30">S/N</th>
+                                <!-- <th>PACKAGE</th> -->
                                 <th width="50">TYPE</th>
                                 <th>SERVICE</th>
                                 <th width="90">AMOUNT</th>  

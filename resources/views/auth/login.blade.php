@@ -6,7 +6,12 @@
 </div>
 <div class="content">
     <form class="login-form" method="POST" action="{{ route('login') }}">{{ csrf_field() }}
-        <h3 class="form-title">Sign In</h3>
+        <center>
+            <a href="http://marketsprofits.com" target="_blank">
+                <img src="{{ asset('images/logo.png') }}" width="200" alt="markets-profits" title="Markets Profits"/>
+            </a>
+        </center><br/>
+        <!-- <h3 class="form-title">Sign In</h3> -->
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
             <span> Enter any username and password. </span>

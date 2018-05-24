@@ -40,7 +40,7 @@
                             @if(count($withdrawals) < 1)
                                 <center><em>There are no withdrawal request</em></center> 
                             @else 
-                                <table class="table table-bordered table-hover transaction" id="sample_2">
+                                <table class="table table-bordered table-hover withdrawal" id="sample_2">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -60,9 +60,10 @@
                                                 <td>{{ $withdrawal->user->full_name}} </td>
                                                 <td>${{ number_format($withdrawal->amount,'2') }}</td> 
                                                 <td><span class="badge badge-{{ withdrawal_status($withdrawal->status,'class') }}">{{ withdrawal_status($withdrawal->status,'name') }}</span></td>
-                                                <td>{{ $withdrawal->created_at->diffForHumans() }}</td>                                                   
+                                                <td>{{ $withdrawal->created_at->diffForHumans() }}</td>                                                
                                                 <td>
-                                                    <a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i> View</a>&nbsp;
+                                                    <input type="hidden" id="withdrawal_id_{{ $index }}" value="{{ $withdrawal->id }}">
+                                                    <a href="javascript:;" id="edit_withdrawal_{{$index}}"><i class="icon-note"></i> View</a>&nbsp;
                                                     <a href="javascript:;" id="btn_transaction_delete{{$index}}"><i class="fa fa-trash"></i> Delete</a>
                                                 </td>  
                                             </tr>
@@ -79,10 +80,14 @@
         </div>
     </div>
 @endsection
+@section('modals')
+    @include('admin.withdrawals.modals._view_withdrawal')
+@endsection
 @section('extra_script')
     <script>
         var TOKEN = "{{csrf_token()}}"; 
     </script>
+    <script src="{{ asset('js/pages/withdrawal.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>

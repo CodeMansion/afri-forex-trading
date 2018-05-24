@@ -16,8 +16,8 @@ body {
 }
 
 #register .register-card .form-control {
-    height: 50px;
-    font-size: 19px;
+    height: 40px;
+    font-size: 16px;
 }
 
 #register .register-card p a {
@@ -41,7 +41,7 @@ body {
     color: yellowgreen;
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 6em;
+    font-size: 4em;
     border-bottom: 1px solid white;
     -webkit-text-stroke: 2px white;
     padding: 10px;

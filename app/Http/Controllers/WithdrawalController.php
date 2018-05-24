@@ -76,7 +76,7 @@ class WithdrawalController extends Controller
                     ]);
                 }
 
-                if((double)$data['amount'] < $member_wallet && $new_withdrawal < 5.55) {
+                if((double)$data['amount'] < $member_wallet) {
                     return response()->json([
                         "msg"   => "Insuffient withdrawal charge. You cant make withdrawal!",
                         "type"  => "false"
