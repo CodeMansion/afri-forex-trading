@@ -160,37 +160,6 @@ function referral_status($value,$type) {
 	}
 }
 
-function testimony_status($value,$type) {
-	if($value == 0){
-		if($type == 'name') {
-			return 'Pending';
-		}
-
-		if($type == 'class') {
-			return 'warning';
-		}
-	}
-
-	if($value == 1){
-		if($type == 'name') {
-			return 'Approved';
-		}
-
-		if($type == 'class') {
-			return 'success';
-		}
-	}
-
-	if($value == 2){
-		if($type == 'name') {
-			return 'Declined';
-		}
-
-		if($type == 'class') {
-			return 'danger';
-		}
-	}
-}
 
 function earnings_status($value,$type) {
 	if($value == 0){
@@ -224,6 +193,40 @@ function earnings_status($value,$type) {
 	}
 }
 
+
+function testimony_status($value,$type) {
+	if($value == 0){
+		if($type == 'name') {
+			return 'Pending';
+		}
+
+		if($type == 'class') {
+			return 'default';
+		}
+	}
+
+	if($value == 1){
+		if($type == 'name') {
+			return 'Aprroved';
+		}
+
+		if($type == 'class') {
+			return 'success';
+		}
+	}
+    
+    if($value == 2){
+		if($type == 'name') {
+			return 'Decline';
+		}
+
+		if($type == 'class') {
+			return 'danger';
+		}
+	}
+	
+}
+
 function withdrawal_status($value,$type) {
 	if($value == 0){
 		if($type == 'name') {
@@ -231,13 +234,13 @@ function withdrawal_status($value,$type) {
 		}
 
 		if($type == 'class') {
-			return 'warning';
+			return 'default';
 		}
 	}
 
 	if($value == 1){
 		if($type == 'name') {
-			return 'Approved';
+			return 'Aprroved';
 		}
 
 		if($type == 'class') {
@@ -254,7 +257,7 @@ function withdrawal_status($value,$type) {
 			return 'success';
 		}
 	}
-
+	
 	if($value == 3){
 		if($type == 'name') {
 			return 'Rejected';

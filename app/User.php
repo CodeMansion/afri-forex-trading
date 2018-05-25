@@ -129,6 +129,11 @@ class User extends Authenticatable
         return $this->hasMany('App\ActivityLog','user_id');
     }
 
+    public function Testimony()
+    {
+        return $this->hasMany('App\Testimony', 'user_id');
+    }
+
     public function scopeMembers($query) {
         return $query->where('is_admin',false);
     }

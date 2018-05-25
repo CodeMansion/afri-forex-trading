@@ -54,7 +54,7 @@
                                 <td>{{ $transaction->reference_no }}</td>
                                 <td><span class="badge badge-success"> {{ $transaction->Category->name }} </span> </td>
                                 <td>
-                                    @if(isset($trnsaction->Platform->name))
+                                    @if(isset($transaction->Platform->name))
                                         <span class="badge badge-default">{{ $transaction->Platform->name }}</span>
                                     @else   
                                         <span class="badge badge-warning">Transfer</span>

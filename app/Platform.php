@@ -14,7 +14,7 @@ class Platform extends Model
     }
 
     public function Package(){
-        return $this->hasMany('App\Packages','platform_id');
+        return $this->hasMany('App\Package','platform_id');
     }
 
     public function scopeActive($query){

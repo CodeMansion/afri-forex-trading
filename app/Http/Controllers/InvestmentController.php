@@ -133,7 +133,7 @@ class InvestmentController extends Controller
                 $admin = User::find(1);
                 Notification::send($admin, new MemberSubscription($investment));
 
-                // \Mail::to(auth()->user()->email)->send(new NewSubscription($data));
+                //\Mail::to(auth()->user()->email)->send(new NewSubscription($data));
 
                 activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Subscribed for Investment service");
                 

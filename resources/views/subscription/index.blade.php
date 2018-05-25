@@ -93,6 +93,7 @@
         var TOKEN = "{{csrf_token()}}";
         var DS_URL = "{{URL::route('getDailySignalInfo')}}";
         var IN_URL = "{{URL::route('getInvestmentInfo')}}";
+        var USER_EMAIL =  "{{ auth()->user()->email }}";
         var IN_PAYMENT_INFO_URL = "{{URL::route('getInvestmentPaymentInfo')}}";
         var REF_URL = "{{URL::route('getReferrerInfo')}}";
         var PAYMENT = "{{ URL::route('processPayment', 'ajax') }}";
@@ -104,6 +105,8 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection
 @section('after_script')
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
     <script src="{{ asset('js/pages/subscription_page.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection

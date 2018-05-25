@@ -18,96 +18,99 @@
         </ul>
     </div>
 <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-6">
-        <!-- BEGIN SAMPLE TABLE PORTLET-->
-        <div class="portlet light tasks-widget">
-            <div class="portlet-title">
-                <div class="caption">
-                    <span class="caption-subject font-green-haze bold uppercase">Daily Signal Transactions</span>
-                    <span class="caption-helper">Displaying list of transactions</span>  
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="table-scrollable">
-                    @if(count($transactions) < 1)
-                        <div class="danger-alert">
-                            <i class="fa fa-warning"></i> <em>There are no Transactions available currently.</em>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="profile-content">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="portlet light ">
+                        <div class="portlet-title tabbable-line">
+                            <div class="caption caption-md">
+                                <i class="icon-globe theme-font hide"></i>
+                                <span class="caption-subject font-blue-madison bold uppercase">Daily Signal</span>
+                            </div>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab_1_1" data-toggle="tab">Transactions</a></li>
+                                <li> <a href="#tab_1_3" data-toggle="tab">Downlines </a></li>
+                            </ul>
                         </div>
-                    @else 
-                    <table class="table table-striped table-hover" id="sample_3">
-                        <thead>
-                            <tr>
-                                <th> S/No. </th>
-                                <th> Reference No. </th>
-                                <th> Category </th>
-                                <th> Amount </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php($counter=1)
-                            @forelse($transactions as $tranc)
-                                <tr>
-                                    <td>{{ $counter++}}</td>
-                                    <th>{{ $tranc->reference_no }}</th>
-                                    <th>
-                                        <label class="label label-success btn-sm">{{ $tranc->Category->name }}</label>
-                                    </th>
-                                    <th>{{ $tranc->amount }}</th>
-                                </tr>
-                            @empty
-                            @endforelse
-                        </tbody>
-                    </table>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <!-- END SAMPLE TABLE PORTLET-->
-    </div>
-    <div class="col-md-6 col-sm-6 col-xs-6">
-        <!-- BEGIN SAMPLE TABLE PORTLET-->
-        <div class="portlet light tasks-widget">
-            <div class="portlet-title">
-                <div class="caption">
-                    <span class="caption-subject font-green-haze bold uppercase">Downlines </span>
-                    <span class="caption-helper">Displaying list of Downline </span>                        
-                </div>
-            </div>
-            <div class="portlet-body downlines">
-                <div class="table">
-                    @if(count($downlines) < 1)
-                        <div class="danger-alert">
-                            <i class="fa fa-warning"></i> <em>There are no Downline available currently. Please Share Your Referral Link To Get Downlines.</em>
-                        </div>
-                    @else 
-                    <table class="table table-striped table-hover" id="sample_2">
-                        <thead>
-                            <tr>
-                                <th> S/No. </th>
-                                <th> FullName </th>
-                                <th> Username </th>
-                                <th> Status </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php($counter=1)
-                            @foreach($downlines as $down)
-                                <tr>
-                                    <td>{{ $counter++}}</td>
-                                    <td>{{ $down->User->username}} </td>                                                    
-                                    <td>{{ $down->User->full_name}}</td>
-                                    <td>
-                                        @if($down->is_active == 1)
-                                            <label class="label label-success btn-sm"> Active</label>
-                                        @else
-                                            <label class="label label-warning btn-sm"> Not Active</label>
+                        <div class="portlet-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1_1">
+                                    <div class="table">
+                                        @if(count($transactions) < 1)
+                                            <div class="danger-alert">
+                                                <i class="fa fa-warning"></i> <em>There are no Transactions available currently.</em>
+                                            </div>
+                                        @else 
+                                        <table class="table table-striped table-hover" id="sample_3">
+                                            <thead>
+                                                <tr>
+                                                    <th> S/No. </th>
+                                                    <th> Reference No. </th>
+                                                    <th> Category </th>
+                                                    <th> Amount </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php($counter=1)
+                                                @forelse($transactions as $tranc)
+                                                    <tr>
+                                                        <td>{{ $counter++}}</td>
+                                                        <th>{{ $tranc->reference_no }}</th>
+                                                        <th>
+                                                            <label class="label label-success btn-sm">{{ $tranc->Category->name }}</label>
+                                                        </th>
+                                                        <th>{{ $tranc->amount }}</th>
+                                                    </tr>
+                                                @empty
+                                                @endforelse
+                                            </tbody>
+                                        </table>
                                         @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    @endif
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_1_3">
+                                    <div class="table">
+                                        @if(count($downlines) < 1)
+                                            <div class="danger-alert">
+                                                <i class="fa fa-warning"></i> <em>There are no Downline available currently. Please Share Your Referral Link To Get Downlines.</em>
+                                            </div>
+                                        @else 
+                                        <table class="table table-striped table-hover" id="sample_2">
+                                            <thead>
+                                                <tr>
+                                                    <th> S/No. </th>
+                                                    <th> FullName </th>
+                                                    <th> Username </th>
+                                                    <th> Status </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php($counter=1)
+                                                @foreach($downlines as $down)
+                                                    <tr>
+                                                        <td>{{ $counter++}}</td>
+                                                        <td>{{ $down->User->username}} </td>                                                    
+                                                        <td>{{ $down->User->full_name}}</td>
+                                                        <td>
+                                                            @if($down->is_active == 1)
+                                                                <label class="label label-success btn-sm"> Active</label>
+                                                            @else
+                                                                <label class="label label-warning btn-sm"> Not Active</label>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
                 </div>
             </div>
         </div>
@@ -122,7 +125,6 @@
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" ="text/javascript"></script>
-
 @endsection
 @section('after_script')
     <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" ="text/javascript"></script>
