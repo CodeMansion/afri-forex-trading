@@ -46,7 +46,7 @@
                                          <em>There are no package types </em>
                                     </center>
                                 @else 
-                                    <table class="table table-striped table-bordered table-hover packagetype" id="sample_2">
+                                    <table class="table table-striped table-hover package_type" id="sample_2">
                                         <thead>
                                             <tr>
                                                 <th width="50">S/N</th>

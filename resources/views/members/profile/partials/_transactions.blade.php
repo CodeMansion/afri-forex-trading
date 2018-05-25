@@ -15,7 +15,12 @@
             <tr>
                 <td>#</td>
                 <td>{{ $transaction->reference_no }}</td>
-                <td>{{ $transaction->Platform->name }}</td>
+                <td> @if(isset($transaction->Platform->name))
+                        {{ $transaction->Platform->name }}
+                    @else
+                        Transfer
+                    @endif
+                </td>
                 <td>${{ number_format($transaction->amount,2) }}</td>
             </tr>
             @endforeach

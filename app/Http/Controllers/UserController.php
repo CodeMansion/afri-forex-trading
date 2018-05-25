@@ -68,7 +68,7 @@ class UserController extends Controller
             if($params['detail']){
                 return view('members.profile.modals._user_detail_')->with($params);
             } 
-            return "<span class='text-danger'> User with this name <h4>$request->detail</h4> do not exist!</span>";          
+            return "false";          
         } catch (Exception $e) {
             return false;
         }

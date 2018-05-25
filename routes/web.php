@@ -16,9 +16,11 @@ Route::get('/', function () {return redirect()->route('login');});
 Route::group(['middleware'=>['auth']], function(){
 	Route::get('/dashboard', ["as"=>"dashboard", "uses"=>"HomeController@index"]);
 	Route::get('/service-subscribe', ["as"=>"packageSub", "uses"=>"HomeController@packageSubIndex"]);
+	Route::post('confirm_payment',['as' => 'payment.store-d' ,'uses' => 'SubscriptionController@Confirm_Payment']);
 	Route::post('/get-daily-signal-info', ["as"=>"getDailySignalInfo", "uses"=>"HomeController@getDailySignalInfo"]);
 	Route::post('/get-investment-info', ["as"=>"getInvestmentInfo", "uses"=>"HomeController@getInvestmentInfo"]);
 	Route::post('/get-investment-payment-info', ["as"=>"getInvestmentPaymentInfo", "uses"=>"HomeController@getInvestmentPaymentInfo"]);
+	Route::post('/get-package-type', ["as"=> "getPackageType", "uses"=>"HomeController@getPackageType"]);
 	Route::post('/get-referrer-info', ["as"=>"getReferrerInfo", "uses"=>"HomeController@getReferrerInfo"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
 	Route::post('/process-payment/{type?}',["as" => "processPayment", "uses"  => "SubscriptionController@processPayment"]);

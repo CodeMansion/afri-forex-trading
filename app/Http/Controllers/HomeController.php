@@ -90,7 +90,6 @@ class HomeController extends Controller
     {
         $data['platforms'] = Platform::active()->get();
         $data['package_types'] = PackageType::all();
-        
         return view('subscription.index')->with($data);
     }
 
@@ -135,8 +134,18 @@ class HomeController extends Controller
             $data = $request->except('_token');
             $params['investment'] = Platform::active()->where('id',$data['id'])->first();
             $params['packages'] = Package::wherePlatformId($data['id'])->get();
-
             return view('subscription.partials._investment_sub')->with($params);
+        } catch(Exception $e) {
+            return false;
+        }
+    }
+
+    public function getPackageType(Request $request) {
+        try {
+            $data = $request->except('_token');
+            $params['package'] = Package::whereId($data['id'])->first();
+            $params['package_types'] = PackageType::all();
+            return view('subscription.partials._select_packages')->with($params);
         } catch(Exception $e) {
             return false;
         }
@@ -188,7 +197,7 @@ class HomeController extends Controller
     public function forget_password(Request $request)
     {
         $user = User::whereEmail($request->email)->first();
-        if(!$user){
+        if(empty($user)){
             return response()->json(['type' => 'false','msg' => 'user with this email address does not exist!'], 200);
         }
         //\Mail::to($user)->send(new ForgetPassword($user));

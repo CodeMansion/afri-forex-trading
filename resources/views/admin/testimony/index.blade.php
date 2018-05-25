@@ -45,7 +45,11 @@
                             <table class="table table-striped table-hover table-bordered testimonies_list" id="sample_2">
                                 <thead>
                                     <tr>
+<<<<<<< HEAD
+                                        <th></th>
+=======
                                         <th width="30"></th>
+>>>>>>> d877e9e48e10abd16d666944a8104e7b3fea5420
                                         <th>Member</th>
                                         <th>Title</th>
                                         <th>Message</th>
@@ -60,11 +64,26 @@
                                     @php($counter = 1)
                                     @foreach($testimonies as $testimony)
                                         <tr>
+<<<<<<< HEAD
+                                            <td>{{ $counter }}</td>
+=======
                                             <td>#</td>
+>>>>>>> d877e9e48e10abd16d666944a8104e7b3fea5420
                                             <td>{{ $testimony->user->Profile->full_name }}</td>
                                             <td>{{ $testimony->title }}</td>
                                             <td>{{ strip_tags(word_counter($testimony->message, 8,'...')) }}</td>
                                             <td><span class="badge badge-{{ testimony_status($testimony->status,'class') }}">{{ testimony_status($testimony->status,'name') }}</span></td>
+<<<<<<< HEAD
+                                            <td>{{ $testimony->created_at }}</td>
+                                            <td>{{ $testimony->updated_at }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-xs green dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-expanded="false"> Actions<i class="fa fa-angle-down"></i></button>
+                                                    <ul class="dropdown-menu pull-left" role="menu">
+                                                        <input type="hidden" id="testimony_id{{$index}}" value="{{$testimony->slug}}">
+                                                        <li><a href="#" data-href="{{ URL::route('testimonies.approve', $testimony->id) }}" id="activate{{$index}}">Approve</li>
+                                                        <li><a href="#" data-href="{{ URL::route('testimonies.decline', $testimony->id) }}" id="decline{{$index}}">Decline</li>
+=======
                                             <td>{{ $testimony->created_at->diffForHumans() }}</td>
                                             <td>{{ $testimony->updated_at->diffForHumans() }}</td>
                                             <td>
@@ -74,6 +93,7 @@
                                                     <ul class="dropdown-menu pull-left" role="menu">
                                                         <li><a href="#" data-href="{{ URL::route('testimonies.approve', $testimony->id) }}" id="activate{{$index}}"><i class="fa fa-check"></i> Approve</li>
                                                         <li><a href="#" data-href="{{ URL::route('testimonies.decline', $testimony->id) }}" id="decline{{$index}}"><i class="fa fa-close"></i> Decline</li>
+>>>>>>> d877e9e48e10abd16d666944a8104e7b3fea5420
                                                     </ul>
                                                 </div>
                                             </td>
@@ -89,7 +109,10 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+=======
     <div class="row"></div>
+>>>>>>> d877e9e48e10abd16d666944a8104e7b3fea5420
 @endsection
 @section('modals')
 @endsection
@@ -104,7 +127,45 @@
     <script src="{{ asset('assets/pages/scripts/profile.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
+<<<<<<< HEAD
+    <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script> 
+    <script>
+        tinymce.init({
+            selector: '#editor1',
+            height: 300,
+            theme: 'modern',
+            plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount spellchecker imagetools contextmenu colorpicker textpattern help',
+            toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+            image_advtab: true,
+            templates: [
+              { title: 'Test template 1', content: 'Test 1' },
+              { title: 'Test template 2', content: 'Test 2' }
+            ],
+            content_css: [
+              '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+              '//www.tinymce.com/css/codepen.min.css'
+            ]
+        });
+        tinymce.init({
+            selector: '#editor2',
+            height: 300,
+            theme: 'modern',
+            plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount spellchecker imagetools contextmenu colorpicker textpattern help',
+            toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+            image_advtab: true,
+            templates: [
+              { title: 'Test template 1', content: 'Test 1' },
+              { title: 'Test template 2', content: 'Test 2' }
+            ],
+            content_css: [
+              '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+              '//www.tinymce.com/css/codepen.min.css'
+            ]
+        });
+    </script>
+=======
     
+>>>>>>> d877e9e48e10abd16d666944a8104e7b3fea5420
     <script>
         var SEND = "{{ URL::route('testimonies.add') }}";
         var TOKEN = "{{ csrf_token() }}";
