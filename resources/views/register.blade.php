@@ -19,6 +19,7 @@
         <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/pages/css/register.css') }}" rel="stylesheet" type="text/css" />
+        <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body id="register">
         <div class="row">
@@ -78,6 +79,9 @@
                                     <input type="checkbox" id="accepted" /> I have read and agreed to the <a href="http://marketsprofits.com/term-of-use/" target="_blank">Terms and Conditions</a> of MarketsProfits
                                     <span></span>
                                 </label>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <div class="g-recaptcha" data-sitekey="6LeyblsUAAAAAMmgCVBmtPG70D6s7apgdb1d05aP"></div>
                             </div>
                             <div class="col-md-12 form-group">
                                 <button type="button" id="register_member_btn" class="btn btn-lg btn-success form-control">Submit</button>

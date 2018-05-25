@@ -36,6 +36,9 @@
                 </span>
             @endif
         </div>
+        <div class="col-md-12 form-group">
+            <div class="g-recaptcha" data-sitekey="6LeyblsUAAAAAMmgCVBmtPG70D6s7apgdb1d05aP"></div>
+        </div>
         <div class="form-actions">
             <button type="submit" class="btn green uppercase">Login</button>
             <label class="rememberme check mt-checkbox mt-checkbox-outline">

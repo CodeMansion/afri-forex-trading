@@ -21,6 +21,7 @@
         <link href="{{ asset('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
         <link href="{{ asset('assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/pages/css/login.css') }}" rel="stylesheet" type="text/css" />
+        <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body class="login">
         
