@@ -160,37 +160,6 @@ function referral_status($value,$type) {
 	}
 }
 
-function testimony_status($value,$type) {
-	if($value == 0){
-		if($type == 'name') {
-			return 'Pending';
-		}
-
-		if($type == 'class') {
-			return 'warning';
-		}
-	}
-
-	if($value == 1){
-		if($type == 'name') {
-			return 'Approved';
-		}
-
-		if($type == 'class') {
-			return 'success';
-		}
-	}
-
-	if($value == 2){
-		if($type == 'name') {
-			return 'Declined';
-		}
-
-		if($type == 'class') {
-			return 'danger';
-		}
-	}
-}
 
 function earnings_status($value,$type) {
 	if($value == 0){
