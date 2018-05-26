@@ -31,7 +31,7 @@ class UnsubscribeMembers extends Command
      *
      * @var string
      */
-    protected $description = 'Unsubscribe Members that are not that have reached their subscription threshold';
+    protected $description = 'Unsubscribe Members that are that have reached their subscription threshold';
 
     /**
      * Create a new command instance.
@@ -65,8 +65,11 @@ class UnsubscribeMembers extends Command
                             $user = User::find($member->user_id);
                             Notification::send($user, new UnsubscriptionNotice($subscription));
 
+                            //send mail
+
                             echo "Successful";
                         } else{echo "Not eligible"; }
+
                     } else {
                         if($this->CheckExpiryDate($member,'recurring')) {
                             $subscription = Subscription::find($member->id);
@@ -75,6 +78,8 @@ class UnsubscribeMembers extends Command
         
                             $user = User::find($member->user_id);
                             Notification::send($user, new UnsubscriptionNotice($subscription));
+
+                            //send mail
 
                             echo "Successful";
                         } else{echo "Not eligible"; }
@@ -104,5 +109,9 @@ class UnsubscribeMembers extends Command
                 return ($registered_date->diff($now)->days >= 30);
             }
         }
+    }
+
+    protected function SendMail() {
+
     }
 }

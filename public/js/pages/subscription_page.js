@@ -181,6 +181,7 @@ var AppServiceSubscription = function() {
     }
 
     var SubscribeWithPaystack = function(id, amount, email) {
+        toastr.success("Payment is processing...");
         var handler = PaystackPop.setup({
             key: 'pk_test_dd3e598daa02068d4a06e54a86e9dc0cd4f244ea',
             email: email,

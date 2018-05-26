@@ -59,7 +59,7 @@ class MonthlyInvestmentMembers extends Command
             ini_set('max_execution_time', 0);
             if(count($investors) > 0) {
                 foreach($investors as $investor) {
-                    if(EarningsEligibilityCheck($investor)) {
+                    if(EarningsEligibilityCheck($investor,'monthly')) {
                         $investment_amount = (double)$investor->Package->investment_amount;
                         $percentage = (double)$investor->PackageType->percentage;
                         $earning_amount = earnings_formular('monthly',$percentage,$investment_amount);

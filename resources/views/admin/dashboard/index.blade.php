@@ -26,14 +26,14 @@
             @include('admin.dashboard.partials._new_members')
         </div>
         <div class="col-lg-4 col-xs-12 col-sm-12">
+            @include('admin.dashboard.partials._transactions')
+        </div>
+        <div class="col-lg-4 col-xs-12 col-sm-12">
             @include('admin.dashboard.partials._support')
         </div>
         <!-- <div class="col-lg-4 col-xs-12 col-sm-12">
             @include('admin.dashboard.partials._activity_logs')
         </div> -->
-        <div class="col-lg-4 col-xs-12 col-sm-12">
-            @include('admin.dashboard.partials._transactions')
-        </div>
     </div>
     <div class="clearfix"></div>
 @endsection
@@ -51,6 +51,5 @@
         var WITHDRAW = "{{ URL::route('makeWithdrawal') }}";
     </script>
     <script src="{{ asset('js/pages/dashboard.js') }}" type="text/javascript"></script>
-    <!-- <script src="{{ asset('assets/pages/scripts/dashboard.min.js') }}" type="text/javascript"></script> -->
     <script src="{{ asset('assets/pages/scripts/charts-echarts.js') }}" type="text/javascript"></script>
 @endsection

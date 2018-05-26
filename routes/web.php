@@ -208,6 +208,8 @@ Route::get('/logout', function () {
 });
 
 Route::get('/mark-as-read', function() {
-
+	$user = \App\User::find(auth()->user()->id);
+	$user->unreadNotifications->markAsRead();
+	return redirect(url('/dashboard'));
 });
 

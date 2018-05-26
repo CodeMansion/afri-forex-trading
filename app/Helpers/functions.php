@@ -59,7 +59,11 @@ function EarningsEligibilityCheck($member,$type) {
 	}
 	
 	if($type == 'weekly') {
-
+		if(isset($member)) {
+			$registered_date = new \DateTime($member->created_at);
+			$now = new \DateTime();
+			return ($registered_date->diff($now)->days >= 7);
+		}
 	}
 
 	if($type == 'monthly') {

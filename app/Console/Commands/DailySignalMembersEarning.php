@@ -66,6 +66,7 @@ class DailySignalMembersEarning extends Command
                             $earning_amount = (double)$downline_count * $earning_fee;
                             $this->InsertEarnings($member,$earning_amount);
                         } else {echo "no downline";}
+                        
                     } else {echo "not eligible";}
                 }
             }
