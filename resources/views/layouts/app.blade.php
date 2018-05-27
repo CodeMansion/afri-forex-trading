@@ -1,3 +1,4 @@
+<?php $config = \App\GeneralSetting::find(1); ?>
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
@@ -7,7 +8,7 @@
         <meta name="description" content="" />
         <link rel="shortcut icon" href="{{ asset('images/elect-ng-logo.png') }}" type="image/png" />
 
-        <title>AfriMarket | @yield('title')</title>
+        <title>{{ $config['application_name']}} | @yield('title')</title>
         
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
@@ -41,7 +42,7 @@
         <script src="{{ asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/pages/scripts/login.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/pages/scripts/ui-toastr.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('js/utilities.js') }}" type="text/javascript"></script>
+        <!-- <script src="{{ asset('js/utilities.js') }}" type="text/javascript"></script> -->
        
         @if($errors->has('email') || $errors->has('password'))
             <script type="text/javascript">
@@ -97,7 +98,7 @@
                                     toastr.success(rst.msg);
                                     setTimeout(() => {
                                         location.reload();
-                                    }, 5000);
+                                    }, 2000);
                                 } else if (rst.type == "false") {
                                     $("#forget_password").attr("disabled", false);
                                     $("#forget_password").html("<i class='fa fa-warning fa-spin'></i> Failed. Try Again!");
@@ -105,6 +106,8 @@
                                 }
                             },
                             error: function(alaxB, HTTerror, errorMsg) {
+                                $("#forget_password").attr("disabled", false);
+                                $("#forget_password").html("Try Again!");
                                 toastr.error(errorMsg);
                             }
                         });

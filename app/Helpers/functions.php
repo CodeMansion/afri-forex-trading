@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use Carbon\Carbon; 
 
 function menu_active($current,$id1,$id2=null){
 	$active = ($id2) ? (($current[0]==$id1) && isset($current[1]) && ($current[1]==$id2)) : ($current[0]==$id1);
@@ -53,24 +55,24 @@ function EarningsEligibilityCheck($member,$type) {
 	if($type == "daily") {
 		if(isset($member)) {
 			$registered_date = strtotime($member->created_at);
-			$today = time() + 86400;
+			$today = strtoupper(Carbon::today());
 			return ($registered_date >= $today);
 		}
 	}
 	
 	if($type == 'weekly') {
 		if(isset($member)) {
-			$registered_date = new \DateTime($member->created_at);
-			$now = new \DateTime();
-			return ($registered_date->diff($now)->days >= 7);
+			$registered_date = strtotime($member->created_at);
+			$now = Carbon::now();
+			return ($registered_date >= strtotime($now->day = 7));
 		}
 	}
 
 	if($type == 'monthly') {
 		if(isset($member)) {
-			$registered_date = new \DateTime($member->created_at);
-			$now = new \DateTime();
-			return ($registered_date->diff($now)->days >= 30);
+			$registered_date = strtotime($member->created_at);
+			$now = Carbon::now();
+			return ($registered_date >= strtotime($now->day = 28));
 		}
 	}
 

@@ -43,7 +43,7 @@ class DailyCleanUp extends Command
 
             exec("php artisan config:cache");
             exec("php artisan view:clear");
-            exce("php artisan optimize");
+            exec("php artisan optimize");
 
         } catch(Exception $e) {
             return false;

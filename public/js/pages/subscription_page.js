@@ -180,7 +180,7 @@ var AppServiceSubscription = function() {
         $("#service_page").fadeIn();
     }
 
-    var SubscribeWithPaystack = function(id, amount, email) {
+    var SubscribeWithPaystack = function(id, amount, fee, email) {
         toastr.success("Payment is processing...");
         var handler = PaystackPop.setup({
             key: 'pk_test_dd3e598daa02068d4a06e54a86e9dc0cd4f244ea',
@@ -194,7 +194,7 @@ var AppServiceSubscription = function() {
                 }, ]
             },
             callback: function(response) {
-                processPayment(id, amount);
+                processPayment(id, fee);
                 //alert('success. transaction ref is ' + response.reference);                
             },
             onClose: function() {
@@ -271,7 +271,7 @@ var AppServiceSubscription = function() {
                         my_destination = "NGN";
                         amount = amount;
                         converted_amount = (amount / json.rates[my_base]) * json.rates[my_destination];
-                        SubscribeWithPaystack(id, Math.round(converted_amount), USER_EMAIL);
+                        SubscribeWithPaystack(id, Math.round(converted_amount), $("#amount").val(), USER_EMAIL);
                     }, "jsonp");
 
                 });

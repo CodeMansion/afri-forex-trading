@@ -198,17 +198,47 @@ class HomeController extends Controller
     {
         $user = User::whereEmail($request->email)->first();
         if(empty($user)){
-            return response()->json(['type' => 'false','msg' => 'user with this email address does not exist!'], 200);
+            return response()->json([
+                'type' => 'false',
+                'msg' => 'user with this email address does not exist!'
+            ]);
         }
-        //\Mail::to($user)->send(new ForgetPassword($user));
-        return response()->json(['type' => 'true','msg' => 'password reset link has beeen sent to your mail!'], 200);
-    }
-    
-    public function reset($confirm)
-    {
-        return view('reset');
+
+        if($user) {
+            $new_password = $this->NewPassword();
+            $user->password = $new_password;
+            $user->save();
+
+            $param['new_password'] = $new_password;
+            $param['email'] = $user->email;
+
+            $this->SendEmail($param);
+
+            return response()->json([
+                'type' => 'true',
+                'msg' => 'Your new password has been sent to your email successfully.'
+            ], 200);
+
+        } else {
+            return response()->json([
+                'type' => 'false',
+                'msg' => 'Invalid email address'
+            ]);
+        }
     }
 
+    protected function SendEmail($param) {
+        if($param) {
+            Mail::to($param['email'])->send(new ForgetPassword($param));
+        }
+    }
+
+    protected function NewPassword() {
+        $new_password = str_random(15);
+        return $new_password;
+    }
+    
+   
     public function change_oldpassword(Request $request)
     {
         $user = User::whereId(auth()->user()->id)->first();

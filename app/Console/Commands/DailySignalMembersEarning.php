@@ -58,7 +58,7 @@ class DailySignalMembersEarning extends Command
             ini_set('max_execution_time', 0);
             if(count($members) > 0) {
                 foreach($members as $member) {
-                    if(EarningsEligibilityCheck($member,'monthly')) {
+                    //if(EarningsEligibilityCheck($member,'monthly')) {
                         $downlines = User::find($member->user_id)->UserDownline(1)->get();
                         $downline_count = count($downlines);
                         
@@ -67,7 +67,7 @@ class DailySignalMembersEarning extends Command
                             $this->InsertEarnings($member,$earning_amount);
                         } else {echo "no downline";}
                         
-                    } else {echo "not eligible";}
+                    //} else {echo "not eligible";}
                 }
             }
 
