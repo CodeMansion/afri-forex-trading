@@ -55,7 +55,7 @@ function EarningsEligibilityCheck($member,$type) {
 	if($type == "daily") {
 		if(isset($member)) {
 			$registered_date = strtotime($member->created_at);
-			$today = strtoupper(Carbon::today());
+			$today = strtoupper(Carbon::today()->day = 2);
 			return ($registered_date >= $today);
 		}
 	}
