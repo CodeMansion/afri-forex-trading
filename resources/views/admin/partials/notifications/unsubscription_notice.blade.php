@@ -1,4 +1,4 @@
-<a href="{{ url('/mark-as-read') }}" id="mark_{{ $index }}">
+<a href="{{ url('mark-as-read', ['id'=>$notification->id, 'type'=>'unsubscribe']) }}" id="mark_{{ $index }}">
     <span class="time">{{ $notification->created_at->diffForHumans() }}</span>
     <span class="details">
         

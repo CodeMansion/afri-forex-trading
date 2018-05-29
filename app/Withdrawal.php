@@ -19,6 +19,6 @@ class Withdrawal extends Model
     public function scopeMemberWithdrawal($query) {
         return $query->where([
             'user_id'   => auth()->user()->id
-        ])->orderBy('id','DESC')->first();
+        ])->orderBy('id','DESC');
     }
 }

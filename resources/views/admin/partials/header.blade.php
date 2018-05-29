@@ -43,6 +43,7 @@
                             <i class="icon-bell"></i>
                             <span class="badge badge-danger"> 0 </span>
                         </a>
+                        
                     </li>
                     
                     <li class="dropdown dropdown-user">

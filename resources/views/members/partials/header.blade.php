@@ -2,7 +2,7 @@
     <div class="page-header-inner ">
         <div class="page-logo">
             <a href="{{ URL::route('dashboard') }}"> 
-                <img src="{{ asset('assets/layouts/layout2/img/logo-default.png') }}" alt="logo" class="logo-default" /> 
+                
             </a>
             <div class="menu-toggler sidebar-toggler"></div>
         </div>     
@@ -10,8 +10,8 @@
         
         <div class="page-top">
             <div class="col-md-4" style="padding:15px;">
-                <input type="text" class="" id="mt-target-1" style="width:400px;height: 30px;border: 1px solid grey;padding: 10px;" value="{{ URL::route('register') }}/{{ auth()->user()->slug }}">
-                <a href="javascript:;" style="padding: 5px;" class="mt-clipboard" data-clipboard-action="copy" data-clipboard-target="#mt-target-1" target="Copy Link to clipboard">
+                <input type="text" class="" id="mt-target-1" style="width:400px;height: 30px;border: 1px solid grey;padding: 10px;" value="{{ URL::route('register') }}/{{ auth()->user()->username }}">
+                <a href="javascript:;" style="padding: 5px;" class="mt-clipboard" id="copy_link" data-clipboard-action="copy" data-clipboard-target="#mt-target-1" target="Copy Link to clipboard">
                     <i class="icon-note"></i>
                 </a>
             </div>    

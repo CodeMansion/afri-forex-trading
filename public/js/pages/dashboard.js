@@ -9,6 +9,7 @@ var AppDashboard = function() {
         $("#latest_news_loader").hide();
         $("#latest_earnings_loader").hide();
         $("#loader").hide();
+        $("#withdrawal_loader").hide();
     }
 
     var showDispute = function() {
@@ -81,6 +82,20 @@ var AppDashboard = function() {
         });
     }
 
+    var showLatestWithdrawals = function() {
+        $("#withdrawal_loader").show();
+        $.ajax({
+            url: WITHDRAWAL, 
+            success: function(data) {
+                $("#withdrawal_loader").hide();
+                $('#show_withdrawals').html(data);
+            },
+            error: function(alaxB, HTTerror, errorMsg) {
+                console.log(errorMsg);
+            }
+        });
+    }
+
     var showMembersEarnings = function() {
         $("#latest_earnings_loader").show();
         $.ajax({
@@ -143,6 +158,7 @@ var AppDashboard = function() {
         showActivityLogs();
         showTransactions();
         showMembersEarnings();
+        showLatestWithdrawals();
     }, 10000)
     
     return {    
@@ -153,6 +169,7 @@ var AppDashboard = function() {
             showActivityLogs();
             showTransactions();
             showMembersEarnings();
+            showLatestWithdrawals();
 
             $("#make_withdrawal_btn").on("click", function() {
                 MakeWithdrawal();

@@ -27,6 +27,12 @@
         <span class="arrow"></span>
     </a>
 </li>
+<li class="nav-item {{menu_active($menu_id, 9)}}">
+    <a href="{{ URL::route('WithdrawalIndex') }}">
+        <i class="icon-wallet"></i>
+        <span class="title">My Withdrawals</span>
+    </a>
+</li>
 <li class="nav-item {{menu_active($menu_id, 4)}}">
     <a href="{{ URL::route('downlines.index') }}">
         <i class="icon-puzzle"></i>

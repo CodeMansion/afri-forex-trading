@@ -70,12 +70,15 @@ var AppUtilities = function() {
                 pushNotification();
             }
 
-            $('body').find("#header_notification_bar li #mark_notification_as_read li").each(function(index) {
+            $('body').find("#header_notification_bar #not_nav .scroller li").each(function(index) {
                 $("#mark_" + index).on("click", function() {
                     alert('hello');
                 });
             });
-            
+
+            $("#copy_link").on("click", function() {
+                toastr.success("Copied to clipboard!");
+            });
         }
     }
 }();

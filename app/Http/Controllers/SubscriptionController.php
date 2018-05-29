@@ -16,6 +16,7 @@ use Gate;
 use DB;
 use Notification;
 use App\User;
+use App\Earning; 
 
 class SubscriptionController extends Controller
 {
@@ -39,9 +40,12 @@ class SubscriptionController extends Controller
                 return redirect(route('packageSub'));
             }
 
+            $params['menu_id'] = 3.0;
             $subscription = Subscription::UserSubscriptions()->first();
-            $params['downlines'] = UserDownline::UserDownline()->wherePlatformId($subscription->platform_id)->get();
-            $params['transactions'] = PaymentTransaction::UserTransactions()->wherePlatformId($subscription->platform_id)->get();
+            $params['downlines'] = User::find(auth()->user()->id)->UserDownlines($subscription->platform_id)->get();
+            $params['transactions'] = PaymentTransaction::SubTransactions()->get();
+            $params['earnings'] = Earning::SubscriptionEarnings()->get();
+
             return view('members.platforms.subscriptions.index')->with($params);
         }
     }

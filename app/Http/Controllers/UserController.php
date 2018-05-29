@@ -225,6 +225,8 @@ class UserController extends Controller
         if(\Auth::user()->is_admin) {
             $data['menu_id'] = 5;
             $data['profile'] = User::find($slug,'slug');
+            $data['earnings'] = User::find($slug,'slug')->UserEarnings()->orderBy('id','DESC')->get();
+            $data['transactions'] =  User::find($slug,'slug')->UserTransactions()->orderBy('id','DESC')->get();
             $data['activities'] = ActivityLog::where('user_id',$data['profile']->id)->orderBy('id','desc')->get();
 
             return view('admin.members.show')->with($data);

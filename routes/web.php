@@ -36,6 +36,8 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::get('/load-chart', ["as"=>"loadChart", "uses"=>"HomeController@loadChart"]);
 	Route::get('/load-new-members', ["as"=>"loadMembers", "uses"=>"HomeController@loadMembers"]);
 	Route::get('/load-members-earnings', ["as"=>"loadEarnings", "uses"=>"HomeController@loadEarnings"]);
+	Route::get('/withdrawal-requests', ["as"=>"loadWithdrawals", "uses"=>"HomeController@loadWithdrawals"]);
+	Route::get('/mark-as-read/{id?}/{type?}', ["as"=>"MarkAsRead", "uses"=>"HomeController@MarkNotification"]);
 
 	//---WITHDRAWALS ----//
 	Route::post('/request-withdrawal', ["as"=>"makeWithdrawal", "uses"=>"WithdrawalController@store"]);
@@ -71,7 +73,7 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::get('/decline/{id?}', ["as" => "testimonies.decline", "uses" => "TestimonyController@decline"]);
 	});
 	
-	// ----- MEMBER EARNINGS MANAGEMENT ------//
+	// ----- EARNINGS MANAGEMENT ------//
 	Route::group(['prefix' => 'earnings'], function () {
 		Route::get('/',["as"=>"earningsIndex", "uses"=>"EarningController@index"]);
 	});
@@ -206,10 +208,3 @@ Route::get('/logout', function () {
 	\Session::flash('success', 'Your have successfully logged out. Have a nice time!');
 	return redirect('/login');	
 });
-
-Route::get('/mark-as-read', function() {
-	$user = \App\User::find(auth()->user()->id);
-	$user->unreadNotifications->markAsRead();
-	return redirect(url('/dashboard'));
-});
-

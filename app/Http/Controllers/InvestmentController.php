@@ -16,6 +16,7 @@ use App\User;
 use Carbon\Carbon;
 use App\Notifications\MemberSubscription;
 use App\Mail\NewSubscription;
+use App\Earning;
 
 use Gate;
 use Notification;
@@ -42,9 +43,13 @@ class InvestmentController extends Controller
                 return redirect(route('packageSub'));
             }
 
+            $params['menu_id'] = 3.0;
             $investment = Investment::UserInvestments()->first();
             $params['investments'] = Investment::UserInvestments()->get();
-            $params['downlines'] = UserDownline::UserDownline()->wherePlatformId($investment->platform_id)->get();
+            $params['downlines'] = User::find(auth()->user()->id)->UserDownlines($investment->platform_id)->get();
+            $params['earnings'] = Earning::InvestmentEarnings()->get();
+            $params['transactions'] = PaymentTransaction::InvestmentTransactions()->get();
+
             return view('members.platforms.investments.index')->with($params);
         }
     }

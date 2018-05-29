@@ -29,6 +29,13 @@ class WithdrawalController extends Controller
 
             return view('admin.withdrawals.index')->with($data);
         }
+
+        if(auth()->user()->is_admin == 0) {
+            $data['menu_id'] = 9;
+            $data['withdrawals'] = Withdrawal::memberWithdrawal()->get();
+
+            return view('members.withdrawals.index')->with($data);
+        }
     }
 
     /**

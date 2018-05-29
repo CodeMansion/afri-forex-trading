@@ -3,7 +3,7 @@
         <div class="caption caption-md">
             <i class="icon-bar-chart font-dark hide"></i>
             <span class="caption-subject font-dark bold uppercase"> <i class=" icon-feed"></i> My Withdrawals</span>
-            <span class="caption-helper"><img src="{{ asset('images/loader.gif') }}" id="latest_news_loader" /> </span>
+            <span class="caption-helper"><img src="{{ asset('images/loader.gif') }}" id="withdrawal_loader" /> </span>
         </div>
         <div class="inputs">
             <div class="portlet-input input-inline input-small ">
@@ -16,12 +16,29 @@
     </div>
     <div class="portlet-body">
         <div class="scroller" style="height: 228px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
-            <div class="" id="show_latest_news">
-                @if(count($transactions) < 1)
-                    <center><em>There are no withdrawals</em></center>
+            <div class="" id="show_withdrawals">
+                @if(count($withdrawals) < 1)
+                    <center><em>There are no withdrawal request</em></center>
                 @else
                 <div class="table-scrollable table-scrollable-borderless">
-                    
+                    <table class="table table-hover table-light">
+                        <thead>
+                            <tr class="uppercase">
+                                <th> AMOUNT </th>
+                                <th> STATUS </th>
+                                <th> DATE </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($withdrawals as $withdrawal)
+                                <tr>
+                                    <td> ${{ number_format($withdrawal->amount,2) }} </td>
+                                    <td><span class="badge badge{{ withdrawal_status($withdrawal->status,'class') }}">{{ withdrawal_status($withdrawal->status,'name') }}</span></td>
+                                    <td><span class="bold theme-font">{{ $withdrawal->created_at->diffForHumans() }}</span></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
                 @endif
             </div>

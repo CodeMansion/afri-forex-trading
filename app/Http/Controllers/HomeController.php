@@ -79,7 +79,8 @@ class HomeController extends Controller
             $data['balance'] = UserWallet::balance()->first()->amount;
             $data['debit'] = PaymentTransaction::userLatestDebit()->first();
             $data['credit'] = PaymentTransaction::userLatestCredit()->first();
-            $data['withdrawal'] = Withdrawal::memberWithdrawal();
+            $data['withdrawal'] = Withdrawal::memberWithdrawal()->first();
+            $data['withdrawals'] = Withdrawal::memberWithdrawal()->get();
             $data['userplatforms'] = User::find(auth()->user()->id)->Platform()->get();
 
             return view('members.dashboard.index')->with($data);
@@ -184,7 +185,7 @@ class HomeController extends Controller
     }
     
     public function ref($ref){
-        $referral = User::whereSlug($ref)->first();
+        $referral = User::whereUsername($ref)->first();
         $data['countries'] = Country::all();
         if(!$referral){
             return redirect()->route('register');
@@ -412,6 +413,11 @@ class HomeController extends Controller
         return view('admin.partials.util._new_members')->with($data);
     }
 
+    public function loadWithdrawals() {
+        $data['withdrawals'] = Withdrawal::memberWithdrawal()->get();
+        return view('members.partials.util._latest_withdrawals')->with($data);
+    }
+
     public function loadActivityLogs() {
         if(auth()->user()->is_admin) {
             $data['activities'] = ActivityLog::orderBy('id','DESC')->limit(10)->get();
@@ -442,5 +448,54 @@ class HomeController extends Controller
         }
         
         return view('members.partials.util._latest_earnings')->with($data);
+    }
+
+
+    public function MarkNotification($id, $type) {
+        switch ($type) {
+            case 'new-dispute':
+                $this->mark_as_read($id);
+                return redirect(url('/disputes'));
+                break;
+
+            case 'earnings':
+                $this->mark_as_read($id);
+                return redirect(url('/earnings'));
+
+            case 'subscription':
+                $this->mark_as_read($id);
+                return redirect(url('/transactions'));
+
+            case 'new-member':
+                $this->mark_as_read($id);
+                return redirect(url('/members'));
+
+            case 'new-testimony':
+                $this->mark_as_read($id);
+                return redirect(url('/testimonies'));
+
+            case 'reply-dispute':
+                $this->mark_as_read($id);
+                return redirect(url('/disputes'));
+
+            case 'withdrawal':
+                $this->mark_as_read($id);
+                return redirect(url('/withdrawals'));
+
+            case 'unsubscribe':
+                $this->mark_as_read($id);
+                return redirect(url('/transactions'));
+            
+            default:
+                return redirect(url('/404'));
+                break;
+        }
+    }
+
+    protected function mark_as_read($id) {
+        $notification = \DB::table('notifications')->where('id',$id)
+        ->update([
+            'read_at' => Carbon::now(),
+        ]);
     }
 }

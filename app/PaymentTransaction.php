@@ -29,6 +29,20 @@ class PaymentTransaction extends Model
         return $query->where('user_id',auth()->user()->id);
     }
 
+    public function scopeSubTransactions($query) {
+        return $query->where([
+            'user_id'       => auth()->user()->id,
+            'platform_id'   => 1
+        ])->orderBy('id','DESC');
+    }
+
+    public function scopeInvestmentTransactions($query) {
+        return $query->where([
+            'user_id'       => auth()->user()->id,
+            'platform_id'   => 2
+        ])->orderBy('id','DESC');
+    }
+
     public function scopeUserLatestDebit($query) {
         return $query->where([
             'user_id' => auth()->user()->id,

@@ -1,5 +1,10 @@
 @extends('members.partials.app')
 
+@section('extra_style')
+    <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
 @section('content')
 <h1 class="page-title"> 
         <i class="fa fa-dashboard"></i> Hello, <strong>{{ strtoupper(\Auth::user()->full_name) }} | </strong> <small>MY Signal</small> 
@@ -21,7 +26,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="profile-content">
             <div class="row">
-                <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="portlet light ">
                         <div class="portlet-title tabbable-line">
                             <div class="caption caption-md">
@@ -29,88 +34,25 @@
                                 <span class="caption-subject font-blue-madison bold uppercase">Daily Signal</span>
                             </div>
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tab_1_1" data-toggle="tab">Transactions</a></li>
-                                <li> <a href="#tab_1_3" data-toggle="tab">Downlines </a></li>
+                                <li class="active"><a href="#transactions" data-toggle="tab">My Transactions</a></li>
+                                <li> <a href="#downlines" data-toggle="tab">My Downlines </a></li>
+                                <li> <a href="#earnings" data-toggle="tab">My Earnings </a></li>
                             </ul>
                         </div>
                         <div class="portlet-body">
                             <div class="tab-content">
-                                <div class="tab-pane active" id="tab_1_1">
-                                    <div class="table">
-                                        @if(count($transactions) < 1)
-                                            <div class="danger-alert">
-                                                <i class="fa fa-warning"></i> <em>There are no Transactions available currently.</em>
-                                            </div>
-                                        @else 
-                                        <table class="table table-striped table-hover" id="sample_3">
-                                            <thead>
-                                                <tr>
-                                                    <th> S/No. </th>
-                                                    <th> Reference No. </th>
-                                                    <th> Category </th>
-                                                    <th> Amount </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php($counter=1)
-                                                @forelse($transactions as $tranc)
-                                                    <tr>
-                                                        <td>{{ $counter++}}</td>
-                                                        <th>{{ $tranc->reference_no }}</th>
-                                                        <th>
-                                                            <label class="label label-success btn-sm">{{ $tranc->Category->name }}</label>
-                                                        </th>
-                                                        <th>{{ $tranc->amount }}</th>
-                                                    </tr>
-                                                @empty
-                                                @endforelse
-                                            </tbody>
-                                        </table>
-                                        @endif
-                                    </div>
+                                <div class="tab-pane active" id="transactions">
+                                    @include('members.platforms.subscriptions.partials._transactions')
                                 </div>
-                                <div class="tab-pane" id="tab_1_3">
-                                    <div class="table">
-                                        @if(count($downlines) < 1)
-                                            <div class="danger-alert">
-                                                <i class="fa fa-warning"></i> <em>There are no Downline available currently. Please Share Your Referral Link To Get Downlines.</em>
-                                            </div>
-                                        @else 
-                                        <table class="table table-striped table-hover" id="sample_2">
-                                            <thead>
-                                                <tr>
-                                                    <th> S/No. </th>
-                                                    <th> FullName </th>
-                                                    <th> Username </th>
-                                                    <th> Status </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php($counter=1)
-                                                @foreach($downlines as $down)
-                                                    <tr>
-                                                        <td>{{ $counter++}}</td>
-                                                        <td>{{ $down->User->username}} </td>                                                    
-                                                        <td>{{ $down->User->full_name}}</td>
-                                                        <td>
-                                                            @if($down->is_active == 1)
-                                                                <label class="label label-success btn-sm"> Active</label>
-                                                            @else
-                                                                <label class="label label-warning btn-sm"> Not Active</label>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        @endif
-                                    </div>
+                                <div class="tab-pane" id="downlines">
+                                    @include('members.platforms.subscriptions.partials._downlines')
+                                </div>
+                                <div class="tab-pane" id="earnings">
+                                    @include('members.platforms.subscriptions.partials._earnings')
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12">
                 </div>
             </div>
         </div>

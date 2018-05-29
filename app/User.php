@@ -96,7 +96,6 @@ class User extends Authenticatable
             'user_id'   => $this->id,
             'role_id'   => $roleID->id,
         ]);
-
     }
     
     public function UserDownline($platform_id=null){
@@ -106,6 +105,12 @@ class User extends Authenticatable
         return $this->hasMany('App\UserDownline','upline_id')->where([
             'platform_id'   => $platform_id,
             'is_active'     => true
+        ]);
+    }
+
+    public function UserDownlines($platform_id=null){
+        return $this->hasMany('App\UserDownline','upline_id')->where([
+            'platform_id'   => $platform_id
         ]);
     }
 
@@ -158,5 +163,13 @@ class User extends Authenticatable
         ])->get();
         
         return $members;
+    }
+
+    public function UserWithdrawals() {
+        return $this->hasMany('App\Withdrawal', 'user_id');
+    }
+
+    public function UserTransactions() {
+        return $this->hasMany('App\PaymentTransaction','user_id');
     }
 }
