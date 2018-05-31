@@ -61,13 +61,11 @@ class WithdrawalController extends Controller
             DB::beginTransaction();
             try {
                 $member_wallet = UserWallet::balance()->first()->amount;
-                $new_withdrawal = $member_wallet - (double)$data['amount'];
-                $withdrawal_charge = 5.00;
+                $withdrawal_charge = (5 / 100) * (double)$data['amount'];
+                $ledger_balance = $member_wallet - 10.00;
+                $eligible_amount = $withdrawal_charge + (double)$data['amount'];
 
-                $old_withdrawal = Withdrawal::where([
-                    'user_id'   => auth()->user()->id,
-                    'status'    => 0
-                ])->first();
+                $old_withdrawal = Withdrawal::where(['user_id'=>auth()->user()->id,'status'=>0])->first();
 
                 if($old_withdrawal) {
                     return response()->json([
@@ -83,22 +81,22 @@ class WithdrawalController extends Controller
                     ]);
                 }
                 
-
-                if((double)$data['amount'] == $member_wallet || (double)$data['amount'] > $member_wallet) {
+                if($ledger_balance >= $eligible_amount) {
+                    $withdrawal = Withdrawal::insert([
+                        'user_id'       => auth()->user()->id,
+                        'slug'          => bin2hex(random_bytes(64)),
+                        'status'        => 0,
+                        'amount'        => (double)$data['amount'],
+                        'created_at'    => Carbon::now(),
+                        'updated_at'    => Carbon::now()
+                    ]);
+                } else {
                     return response()->json([
-                        "msg"   => "Insuffient fund. You cant make withdrawal!",
+                        "msg"   => "We were unable to deduct your withdrawal charge. No enough fund.",
+                        'head'  => "Insuffient Fund!",
                         "type"  => "false"
                     ]);
                 }
-
-                $withdrawal = Withdrawal::insert([
-                    'user_id'       => auth()->user()->id,
-                    'slug'          => bin2hex(random_bytes(64)),
-                    'status'        => 0,
-                    'amount'        => (double)$data['amount'] + $withdrawal_charge,
-                    'created_at'    => Carbon::now(),
-                    'updated_at'    => Carbon::now()
-                ]);
 
                 DB::commit();
 

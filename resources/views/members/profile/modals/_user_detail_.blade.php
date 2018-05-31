@@ -9,7 +9,10 @@
     <label class="control-label">{{ $detail->email }}</label><br/>
     <label class="control-label">{{ $detail->Profile->telephone }}</label><br/>
 </div>
-<label class="pull-right control-label text-danger" style="margin-bottom:10px;"><span class="text-success">Wallet Balance</span>: ${{ (number_format(auth()->user()->UserWallet->amount,2)) ? number_format(auth()->user()->UserWallet->amount,2) : 0.00 }}</label>
+<label class="pull-right control-label text-danger" style="margin-bottom:10px;">
+	<span class="text-success">Ledger Balance</span>: ${{ number_format(auth()->user()->UserWallet->amount,2) }}<br/>
+	<span class="text-success">Available Balance</span>: ${{ number_format(auth()->user()->UserWallet->amount - 10.00,2) }}
+</label>
 <input id="receiver_user_id" type="hidden" class="form-control" value="{{ $detail->id }}" />
 <input id="amount_to_transfer" type="number" class="form-control" placeholder="Enter Fund to share" /> 
                         

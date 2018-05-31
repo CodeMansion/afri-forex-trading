@@ -10,6 +10,8 @@ use Gate;
 use App\PaymentTransaction;
 use App\TransactionCategory;
 use App\ActivityLog;
+use App\Withdrawal;
+
 use Validator;
 
 class UserController extends Controller
@@ -78,53 +80,71 @@ class UserController extends Controller
     {
         $data = $request->except('_token');
         $member_wallet = UserWallet::balance()->first()->amount;
+        $ledger_balance = $member_wallet - 10.00;
         \DB::beginTransaction();
         try {
-            //replace 10 with settings variable of minimum balance
-            if($member_wallet < 10.00) {
+
+            $old_withdrawal = Withdrawal::where(['user_id'=>auth()->user()->id,'status'=>0])->first();
+            if($old_withdrawal) {
                 return response()->json([
-                    "msg"   => "Insuffient fund. You cant make withdrawal!",
+                    "msg"   => "You have a pending withdrawal request. Please try again after request has been attended to.",
                     "type"  => "false"
                 ]);
             }
 
-            // adding to reciever account
-            $add = UserWallet::whereUserId($data['user_id'])->first();
-            $add->amount += $data['amount'];
-            $add->save();
+            //replace 10 with settings variable of minimum balance
+            if($member_wallet < 10.00) {
+                return response()->json([
+                    "msg"   => "Insuffient fund. Unable to transfer fund!",
+                    "type"  => "false"
+                ]);
+            }
 
-            //deducting from giver account
-            $deduct = UserWallet::whereUserId(auth()->user()->id)->first();
-            $deduct->amount -= $data['amount'];
-            $deduct->save();
+            if($ledger_balance >= (double)$data['amount']) {
+                // adding to reciever account
+                $add = UserWallet::where('user_id',$data['user_id'])->first();
+                $add->amount += (double)$data['amount'];
+                $add->save();
 
-            //debit transaction to giver
-            $debit = new PaymentTransaction();
-            $debit->slug = bin2hex(random_bytes(64));
-            $debit->user_id = auth()->user()->id;
-            $debit->transaction_category_id = TransactionCategory::whereName('Debit')->first()->id;
-            $debit->amount = $data['amount'];
-            $debit->is_paid = true;
-            $debit->reference_no = bin2hex(random_bytes(8));
-            $debit->save();
+                //deducting from giver account
+                $deduct = UserWallet::activeMember();
+                $deduct->amount -= (double)$data['amount'];
+                $deduct->save();
 
-            //credit transaction to user
-            $credit = new PaymentTransaction();
-            $credit->slug = bin2hex(random_bytes(64));
-            $credit->user_id = $data['user_id'];
-            $credit->transaction_category_id = TransactionCategory::whereName('Credit')->first()->id;
-            $credit->amount = $data['amount'];
-            $credit->is_paid = true;
-            $credit->reference_no = bin2hex(random_bytes(8));
-            $credit->save();
+                //debit transaction to giver
+                $debit = new PaymentTransaction();
+                $debit->slug = bin2hex(random_bytes(64));
+                $debit->user_id = auth()->user()->id;
+                $debit->transaction_category_id = TransactionCategory::whereName('Debit')->first()->id;
+                $debit->amount = (double)$data['amount'];
+                $debit->is_paid = true;
+                $debit->reference_no = bin2hex(random_bytes(8));
+                $debit->save();
 
-            activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Share fund with ". User::whereId( $data['user_id'])->first()->full_name);
+                //credit transaction to user
+                $credit = new PaymentTransaction();
+                $credit->slug = bin2hex(random_bytes(64));
+                $credit->user_id = $data['user_id'];
+                $credit->transaction_category_id = TransactionCategory::whereName('Credit')->first()->id;
+                $credit->amount = (double)$data['amount'];
+                $credit->is_paid = true;
+                $credit->reference_no = bin2hex(random_bytes(8));
+                $credit->save();
 
-            \DB::commit();
-            return response()->json([
-                "type" => "true",
-                "msg" => "Fund Shared Successfully!"
-            ], 200);
+                activity_logs(auth()->user()->id, $_SERVER['REMOTE_ADDR'], "Did fund transfer to a member");
+
+                \DB::commit();
+                return response()->json([
+                    "type" => "true",
+                    "msg" => "Fund transferred Successfully!"
+                ], 200);
+
+            } else {
+                return response()->json([
+                    "msg"   => "Insuffient Fund!. You cannot make transfer at this time.",
+                    "type"  => "false"
+                ]);
+            }
             
         } catch (Exception $e) {
             \DB::rollback();

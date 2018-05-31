@@ -160,7 +160,7 @@ class User extends Authenticatable
     public static function SubscriptionMembers() {
         $members = Subscription::where([
             'status'    => 1
-        ])->where('created_at', '<=', Carbon::now()->subDays(28)->toDateTimeString()->get();
+        ])->where('created_at', '<=', Carbon::now()->subDays(28)->toDateTimeString()->get());
         
         return $members;
     }

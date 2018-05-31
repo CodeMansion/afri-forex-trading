@@ -16,4 +16,8 @@ class UserWallet extends Model
     public function scopeBalance($query) {
         return $query->where('user_id',auth()->user()->id);
     }
+
+    public function scopeActiveMember($query) {
+    	return $query->where('user_id',auth()->user()->id)->first();
+    }
 }

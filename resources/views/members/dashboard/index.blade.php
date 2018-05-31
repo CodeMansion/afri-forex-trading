@@ -18,12 +18,12 @@
             <li><span>Dashboard</span></li>
         </ul>
         <div class="btn-group pull-right">
-            <button type="button" class="btn btn-circle red" data-target="#make_withdrawal" data-toggle="modal"><i class="icon-wallet"></i> Make Withdrawal</button>
+            <button type="button" class="btn btn-circle btn-sm red" data-target="#make_withdrawal" data-toggle="modal"><i class="icon-wallet"></i> Make Withdrawal</button>
             <a href="{{ URL::route('register') }}/{{ auth()->user()->username }}" target="_blank">
-                <button type="button" class="btn btn-circle green"><i class="icon-plus"></i> New Downline</button>
+                <button type="button" class="btn btn-sm btn-circle green"><i class="icon-plus"></i> New Downline</button>
             </a>
             <a href="{{ URL::route('packageSub') }}">
-                <button type="button" class="btn btn-circle green"><i class="icon-wallet"></i> New Service</button>
+                <button type="button" class="btn btn-sm btn-circle green"><i class="icon-wallet"></i> New Service</button>
             </a>
         </div>
     </div>

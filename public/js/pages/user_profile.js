@@ -87,7 +87,7 @@ var AppUserProfile = function() {
 
     var SHAREFUND = function(user_id, amount) {
         $("#share_fund_btn").attr("disabled", true);
-        $("#share_fund_btn").html("<i class='fa fa-refresh fa-spin'></i> Processing...");
+        $("#share_fund_btn").html("<i class='fa fa-spinner fa-spin'></i> Processing...");
         $.ajax({
             url: SHARE_FUND,
             method: "POST",
@@ -99,16 +99,18 @@ var AppUserProfile = function() {
             success: function(rst) {
                 if (rst.type == "true") {
                     $("#share_fund_btn").attr("disabled", false);
-                    $("#share_fund_btn").html("<i class='fa fa-check'></i> Submit!");
+                    $("#share_fund_btn").html(" Submit");
                     toastr.success(rst.msg);
                     location.reload();
                 } else if (rst.type == "false") {
                     $("#share_fund_btn").attr("disabled", false);
-                    $("#share_fund_btn").html("<i class='fa fa-warning fa-spin'></i> Failed. Try Again!");
-                    toastr.warning(rst.msg);
+                    $("#share_fund_btn").html("Try Again");
+                    toastr.error(rst.msg);
                 }
             },
             error: function(alaxB, HTTerror, errorMsg) {
+                $("#share_fund_btn").attr("disabled", false);
+                $("#share_fund_btn").html("Try Again");
                 toastr.error(errorMsg);
             }
         });
@@ -116,7 +118,7 @@ var AppUserProfile = function() {
 
     var GETUSERTRANSFERDETAIL = function(detail) {
         $("#get_detail_btn").attr("disabled", true);
-        $("#get_detail_btn").html("<i class='fa fa-refresh fa-spin'></i> Processing...");
+        $("#get_detail_btn").html("<i class='fa fa-spinner fa-spin'></i> Processing...");
         $.ajax({
             url: USERDETAILS,
             method: "POST",
@@ -202,9 +204,9 @@ var AppUserProfile = function() {
                 var user_id = $("#receiver_user_id").val();
                 var amount = $("#amount_to_transfer").val();
                 if (user_id.length < 1) {
-                    toastr.warning("Please this text field can not be empty!");
+                    toastr.error("Please this text field can not be empty!");
                 } else if (amount.length < 1) {
-                    toastr.warning("Please this text field can not be empty!");
+                    toastr.error("Please this text field can not be empty!");
                 } else {
                     SHAREFUND(user_id, amount);
                 }
