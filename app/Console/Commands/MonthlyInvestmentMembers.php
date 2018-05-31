@@ -59,44 +59,44 @@ class MonthlyInvestmentMembers extends Command
             ini_set('max_execution_time', 0);
             if(count($investors) > 0) {
                 foreach($investors as $investor) {
-                    if(strtotime($investor->created_at) + 28 * 24 * 60 * 60 <= time()) {
-                        $investment_amount = (double)$investor->Package->investment_amount;
-                        $percentage = (double)$investor->PackageType->percentage;
-                        $earning_amount = earnings_formular('monthly',$percentage,$investment_amount);
+                   
+                    $investment_amount = (double)$investor->Package->investment_amount;
+                    $percentage = (double)$investor->PackageType->percentage;
+                    $earning_amount = earnings_formular('monthly',$percentage,$investment_amount);
 
-                        $new_earning = DB::table("earnings")->insert([
-                            'slug'          => bin2hex(random_bytes(64)),
-                            'user_id'       => $investor->user_id,
-                            'platform_id'   => 2,
-                            'earning_type_id'   => EarningType::where('name','Monthly')->first()->id,
-                            'amount'        => (double)$earning_amount,
-                            'status'        => 1,
-                            'created_at'    => Carbon::now(),
-                            'updated_at'    => Carbon::now()
-                        ]);
+                    $new_earning = DB::table("earnings")->insert([
+                        'slug'          => bin2hex(random_bytes(64)),
+                        'user_id'       => $investor->user_id,
+                        'platform_id'   => 2,
+                        'earning_type_id'   => EarningType::where('name','Monthly')->first()->id,
+                        'amount'        => (double)$earning_amount,
+                        'status'        => 1,
+                        'created_at'    => Carbon::now(),
+                        'updated_at'    => Carbon::now()
+                    ]);
 
-                        $member_wallet = UserWallet::where('user_id', $investor->user_id)->first();
-                        $member_wallet->amount = (double)$member_wallet->amount + $earning_amount;
-                        $member_wallet->save();
+                    $member_wallet = UserWallet::where('user_id', $investor->user_id)->first();
+                    $member_wallet->amount = (double)$member_wallet->amount + $earning_amount;
+                    $member_wallet->save();
 
-                        $transaction = DB::table("payment_transactions")->insert([
-                            'slug'          => bin2hex(random_bytes(64)),
-                            'user_id'       => $investor->user_id,
-                            'platform_id'   => 2,
-                            'transaction_category_id'   => TransactionCategory::where('name','Credit')->first()->id,
-                            'amount'        => (double)$earning_amount,
-                            'is_paid'       => true,
-                            'reference_no'  => date('Ymdhis'),
-                            'created_at'    => Carbon::now(),
-                            'updated_at'    => Carbon::now()
-                        ]);
+                    $transaction = DB::table("payment_transactions")->insert([
+                        'slug'          => bin2hex(random_bytes(64)),
+                        'user_id'       => $investor->user_id,
+                        'platform_id'   => 2,
+                        'transaction_category_id'   => TransactionCategory::where('name','Credit')->first()->id,
+                        'amount'        => (double)$earning_amount,
+                        'is_paid'       => true,
+                        'reference_no'  => date('Ymdhis'),
+                        'created_at'    => Carbon::now(),
+                        'updated_at'    => Carbon::now()
+                    ]);
 
-                        DB::commit();
-                        $user = User::find($investor->user_id);
-                        Notification::send($user, new MemberEarning($new_earning));
+                    DB::commit();
+                    $user = User::find($investor->user_id);
+                    Notification::send($user, new MemberEarning($new_earning));
 
-                        echo "Successful";
-                    } else {echo "not eligible";}
+                    echo "Successful";
+                    
                 }
             } else{echo "No members";}
 

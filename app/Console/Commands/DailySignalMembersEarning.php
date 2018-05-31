@@ -58,16 +58,13 @@ class DailySignalMembersEarning extends Command
             ini_set('max_execution_time', 0);
             if(count($members) > 0) {
                 foreach($members as $member) {
-                    if(strtotime($member->created_at) + 28 * 24 * 60 * 60 <= time()) {
-                        $downlines = User::find($member->user_id)->UserDownline(1)->get();
-                        $downline_count = count($downlines);
-                        
-                        if(isset($downline_count) && $downline_count == 2) {
-                            $earning_amount = (double)$downline_count * $earning_fee;
-                            $this->InsertEarnings($member,$earning_amount);
-                        } else {echo "no downline";}
-                        
-                    } else {echo "not eligible";}
+                    $downlines = User::find($member->user_id)->UserDownline(1)->get();
+                    $downline_count = count($downlines);
+                    
+                    if(isset($downline_count) && $downline_count == 2) {
+                        $earning_amount = (double)$downline_count * $earning_fee;
+                        $this->InsertEarnings($member,$earning_amount);
+                    } else {echo "no downline";} 
                 }
             }
 

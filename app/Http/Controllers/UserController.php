@@ -77,16 +77,17 @@ class UserController extends Controller
     public function ShareFund(Request $request)
     {
         $data = $request->except('_token');
+        $member_wallet = UserWallet::balance()->first()->amount;
         \DB::beginTransaction();
         try {
             //replace 10 with settings variable of minimum balance
-            if (auth()->user()->UserWallet->amount < 10) {
-                
+            if($member_wallet < 10.00) {
                 return response()->json([
-                    "type" => "false",
-                    "msg" => "Insufficient Balance, You can not make a transfer!"
-                ], 200);
+                    "msg"   => "Insuffient fund. You cant make withdrawal!",
+                    "type"  => "false"
+                ]);
             }
+
             // adding to reciever account
             $add = UserWallet::whereUserId($data['user_id'])->first();
             $add->amount += $data['amount'];
@@ -124,6 +125,7 @@ class UserController extends Controller
                 "type" => "true",
                 "msg" => "Fund Shared Successfully!"
             ], 200);
+            
         } catch (Exception $e) {
             \DB::rollback();
             return false;

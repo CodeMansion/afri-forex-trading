@@ -19,16 +19,12 @@
         </ul>
         <div class="btn-group pull-right">
             <button type="button" class="btn btn-circle red" data-target="#make_withdrawal" data-toggle="modal"><i class="icon-wallet"></i> Make Withdrawal</button>
-            <button type="button" class="btn btn-circle btn-outline green dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-plus"></i>&nbsp;
-                <span class="hidden-sm hidden-xs">Quick Actions&nbsp;</span>&nbsp;
-                <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu" role="menu">                                   
-                <li><a href="{{ URL::route('packageSub') }}"><i class="icon-plus"></i> Add Service</a></li> 
-                <li><a href="{{ URL::route('register') }}/{{ auth()->user()->username }}" target="_blank"><i class="icon-note"></i> Add new Member</a></li>
-<!--                 <li><a href="#" data-target="#make_withdrawal" data-toggle="modal"><i class="icon-wallet"></i> Make Withdrawal</a></li>
- -->            </ul>
+            <a href="{{ URL::route('register') }}/{{ auth()->user()->username }}" target="_blank">
+                <button type="button" class="btn btn-circle green"><i class="icon-plus"></i> New Downline</button>
+            </a>
+            <a href="{{ URL::route('packageSub') }}">
+                <button type="button" class="btn btn-circle green"><i class="icon-wallet"></i> New Service</button>
+            </a>
         </div>
     </div>
     @include('members.dashboard.partials._cards')

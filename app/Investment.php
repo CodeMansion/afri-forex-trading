@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 class Investment extends Model
 {
     public static function find($id, $field = null){
@@ -37,27 +39,27 @@ class Investment extends Model
         return $query->where([
             'package_type_id'   => 1,
             'status'            => 1
-        ]);
+        ])->where('created_at', '<=', Carbon::now()->subHours(48)->toDateTimeString());
     }
 
     public function scopeWeeklyInvestors($query) {
         return $query->where([
             'package_type_id'   => 2,
             'status'            => 1
-        ]);
+        ])->where('created_at', '<=', Carbon::now()->subDays(7)->toDateTimeString());
     }
 
     public function scopeMonthlyInvestors($query) {
         return $query->where([
             'package_type_id'   => 3,
             'status'            => 1
-        ]);
+        ])->where('created_at', '<=', Carbon::now()->subDays(28)->toDateTimeString());
     }
 
     public function scopeQuarterlyInvestors($query) {
         return $query->where([
             'package_type_id'   => 4,
             'status'            => 1
-        ]);
+        ])->where('created_at', '<=', Carbon::now()->subQuarter()->toDateTimeString());
     }
 }

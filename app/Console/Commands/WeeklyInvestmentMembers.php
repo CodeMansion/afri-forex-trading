@@ -59,7 +59,7 @@ class WeeklyInvestmentMembers extends Command
             ini_set('max_execution_time', 0);
             if(count($investors) > 0) {
                 foreach($investors as $investor) {
-                    if(strtotime($investor->created_at) + 7 * 24 * 60 * 60 <= time()) {
+                    
                         $investment_amount = (double)$investor->Package->investment_amount;
                         $percentage = (double)$investor->PackageType->percentage;
                         $earning_amount = earnings_formular('weekly',$percentage,$investment_amount);
@@ -96,7 +96,7 @@ class WeeklyInvestmentMembers extends Command
                         Notification::send($user, new MemberEarning($new_earning));
 
                         echo "Successful";
-                    } else {echo "not eligible";}
+                    
                 }
             } else{echo "No members";}
             
