@@ -1,57 +1,41 @@
-<div class="row">
-    @php($index=0)
-    @foreach($packages as $package)
-    <div class="all_packages">
-        <div class="col-lg-2 col-md-4 col-xs-12 col-sm-12">
-            <div class="price-column-container border-active" style="margin-bottom:10px;">
-                <div class="price-table-head bg-green">
-                    <h2 class="no-margin">{{ $package->name }} </h2>
-                </div>
-                <div class="arrow-down border-top-default"></div>
-                <div class="price-table-pricing">
-                    <h4 style="font-size:30px;">${{ number_format($package->investment_amount,2) }}</h4>
-                    <p>Subscription Fee</p>
-                </div>
-                <div class="price-table-content">
-                    <div class="">
-                        <center>CHARGES: {{ $package->monthly_charge }}%</center>
-                    </div>
-                </div>
-                <div class="arrow-down arrow-grey"></div>
-                <div class="price-table-footer">
-                    <input type="hidden" id="platform_id" value="{{ $investment->id }}" />
-                    <input type="hidden" id="package_id_{{ $index }}" value="{{ $package->id }}" />
-                    <button type="button" id="package_type_{{$index}}" class="btn green btn-outline btn-lg sbold uppercase price-button">Select</button>
-                </div>
-            </div>
+<div class="portlet-title">
+    <div class="caption"><i class="fa fa-cogs"></i>Investment Summary </div>
+</div>
+<div class="portlet-body">
+    <div class="row static-info">
+        <div class="col-md-5 name"> Service: </div>
+        <div class="col-md-7 value"> {{ strtoupper($platform->name) }}</div>
+    </div>
+    <div class="row static-info">
+        <div class="col-md-5 name"> Service Type: </div>
+        <div class="col-md-7 value"> {{ strtoupper($package->name) }} </div>
+    </div>
+    <div class="row static-info">
+        <div class="col-md-5 name"> Investment Amount: </div>
+        <div class="col-md-7 value">
+            ${{ number_format($package->investment_amount,2) }}
         </div>
     </div>
-    @php($index++)
-    @endforeach
+    <div class="row static-info">
+        <div class="col-md-5 name"> Monthly Charges: </div>
+        <div class="col-md-7 value"> {{ $package->monthly_charge }}% </div>
+    </div>
+    <div class="row static-info">
+        <div class="col-md-5 name"> Earning Type: </div>
+        <div class="col-md-7 value"> {{ strtoupper($package_type->name) }} </div>
+    </div>
+    <div class="row static-info">
+        <div class="col-md-5 name"> Return On Investment: </div>
+        <div class="col-md-7 value"> {{ strtoupper($package_type->percentage) }}% </div>
+    </div><hr/>
+    <center>
+        <input type="hidden" id="amount" value="$package->investment_amount" />
+        <input type="hidden" id="payment_description" value="Payment for investment" />
+        <input type="hidden" id="package_id" value="{{ $package->id }}" />
+        <input type="hidden" id="package_type_id" value="{{ $package_type->id }}" />
+        <input type='image' name="InvestWithVoguePay" src='https://voguepay.com/images/buttons/make_payment_blue.png' alt='Submit' />
+        @if(isset($balance) && $balance > 10.00)
+        <button class="btn btn-md green" type="button" >Pay With Wallet</button>
+        @endif
+    </center>
 </div>
-<script>
-    $(document).ready(function(){
-        $('body').find("#select_packages .all_packages").each(function(index) {
-            $("#package_type_" + index).on("click", function() {
-                var package_id = $("#package_id_" + index).val();
-                $.ajax({
-                        url: GET_TYPES,
-                        method: "POST",
-                        data: {
-                            'package_id': package_id,
-                            '_token': TOKEN
-                        },
-                        success: function(data) {
-                            $('body').find("#select_packages").hide();
-                            $('body').find("#select_package_types").fadeIn();
-                            $('body').find("#select_package_types").html(data);
-                        },
-                        error: function(alaxB, HTTerror, errorMsg) {
-                            toastr.error(errorMsg);
-                        }
-                    });
-                
-            });
-        });
-    });
-</script>

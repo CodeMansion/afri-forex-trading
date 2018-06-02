@@ -58,9 +58,9 @@
                         
                     <!-- header -->
                         <tr>
-                            <td align="center" valign="top" width="100%" bgcolor="#f0f0f0" style="background: #f0f0f0;">
-                            <img src="http://lp.ryte.com/imgs/email/crash/bg_welcome2017.png" width="600" border="0" alt="Ryte Welcome Guide" 
-                            style="max-width:100%!important;display: block; font-family: sans-serif; font-size: 24px;height:auto!important;" class="bigimage"></td>
+                            <td align="center" valign="top" width="100%" bgcolor="#f0f0f0" style="background: white;">
+                            <img src="{{ asset('images/logo.png') }}"  border="0" alt="Market Profits" 
+                                style="max-width:100%!important;display: block; font-family: sans-serif; font-size: 24px;height:auto!important;" class="bigimage"></td>
                         </tr>
 
                         <!-- white block with heading -->
@@ -106,9 +106,7 @@
                                     <tr>
                                         <td align="center" style="font-family: Nunito, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: normal; line-height: 16px;">
                                             <p style="font-size: 11px; font-weight: normal; line-height: 16px; color: #8fa0ac;">
-                                                <a style="color:#8fa0ac!important;text-decoration:none!important;" id="ct10_0" href="#">&copy; 2018 Ryte.</a> 
-                                                <a style="color:#8fa0ac!important;text-decoration:none!important;" href="">You don't want to receive any further emails from Ryte?</a> 
-                                                <a href=""><span style="color:#8fa0ac">click here</span></a> to unsubscribe from our content. By the way,we are sending content to the email address destinyajakaiye@gmail.com.<br><br>
+                                                <a style="color:#8fa0ac!important;text-decoration:none!important;" id="ct10_0" href="#">&copy; 2018 Market Profits.</a>
                                                 <a style="text-decoration: underline; color: #8fa0ac" target="_bl" id="ct4_0" href="#">
                                                     <span color="#8fa0ac">About</span>
                                                 </a> |  

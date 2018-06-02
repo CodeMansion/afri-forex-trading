@@ -136,7 +136,9 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::post('/get-user-fund-details', ["as" => "users.FundInfo", "uses" => "UserController@getUserDetails"]);
 		Route::post('/share-fund', ["as" => "users.sharefund", "uses" => "UserController@ShareFund"]);
 		Route::post('/activate-member-account', ["as"=>"activateMemberAccount", "uses"=>"UserController@activate"]);
-		Route::post('/reset-password', ["as"=>"resetPassword", "uses"=>"UserController@resetPassword"]);		
+		Route::post('/reset-password', ["as"=>"resetPassword", "uses"=>"UserController@resetPassword"]);	
+		Route::post('/create-administrator', ["as"=>"CreateNewAdmin", "uses"=>"UserController@AddNewAdministrator"]);
+		Route::post('/delete-member', ["as"=>"DeleteMember", "uses"=>"UserController@DeleteMember"]);
 	});	
 	
 	//-	---- TRANSACTION CATEGORY MANAGEMENT ----//	
@@ -152,8 +154,11 @@ Route::group(['middleware'=>['auth']], function(){
 	
 	//-	---- SUBSCRIPTION MANAGEMENT ----//	
 	Route::group(['prefix' => 'subscriptions'], function () {		
-		Route::get('/', ["as"=>"subscriptions.index", "uses"=>"SubscriptionController@index"]);		
+		Route::get('/', ["as"=>"subscriptions.index", "uses"=>"SubscriptionController@index"]);	
+		Route::get('/select-package/{id?}', ["as"=>"SelectPackage", "uses"=>"SubscriptionController@show"]);	
+		Route::get('/select-package-types/{id?}', ["as"=>"SelectPackageType", "uses"=>"SubscriptionController@showPackageTypes"]);
 		Route::post('/store',["as" => "subscriptions.add", "uses"  => "SubscriptionController@store"]);	
+		Route::get('/view-payment/{package?}/{type?}/{platform?}', ["as"=>"ViewPayment", "uses"=>"SubscriptionController@ViewPayment"]);
 	});	
 
     //---- BULK MESSAGING MANAGEMENT ----//

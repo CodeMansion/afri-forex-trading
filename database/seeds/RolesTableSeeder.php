@@ -28,26 +28,20 @@ class RolesTableSeeder extends Seeder
 
         \App\Role::insert([
             'id'        => 3,
-            'name'      => 'support-admin',
-            'label'     => 'Support Admin',
+            'name'      => 'support',
+            'label'     => 'Support Manager',
         ]);
 
         \App\Role::insert([
             'id'        => 4,
-            'name'      => 'ds-member',
-            'label'     => 'Student',
+            'name'      => 'testimony',
+            'label'     => 'Testimony Manager',
         ]);
 
         \App\Role::insert([
             'id'        => 5,
-            'name'      => 'investment-member',
-            'label'     => 'Imvestment Member',
-        ]);
-
-        \App\Role::insert([
-            'id'        => 6,
-            'name'      => 'inactive-member',
-            'label'     => 'Inactive Member',
+            'name'      => 'ds-member',
+            'label'     => 'DS Member',
         ]);
 
         \DB::table("role_user")->insert([

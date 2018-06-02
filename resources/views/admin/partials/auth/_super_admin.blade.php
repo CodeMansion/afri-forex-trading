@@ -47,7 +47,7 @@
 <li class="nav-item {{menu_active($menu_id, 5)}}">
     <a href="{{ URL::route('membersIndex') }}" class="nav-link nav-toggle">
         <i class="icon-users"></i>
-        <span class="title">Members</span>
+        <span class="title">All Users</span>
         <span class="arrow"></span>
     </a>
 </li>

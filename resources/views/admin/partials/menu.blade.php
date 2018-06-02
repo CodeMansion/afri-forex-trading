@@ -9,6 +9,10 @@
             @if(\Auth::user()->isA('super-admin'))
                 @include('admin.partials.auth._super_admin')
             @endif
+
+            @if(\Auth::user()->isA('support'))
+                @include('admin.partials.auth._support_manager')
+            @endif
         </ul>
     </div>
 </div>

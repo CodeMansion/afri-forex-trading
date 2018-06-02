@@ -143,6 +143,10 @@ class User extends Authenticatable
         return $query->where('is_admin',false);
     }
 
+    public function scopeAdministrators($query) {
+        return $query->where('is_admin',true);
+    }
+
     public static function hasEmail($field) {
         $check = self::where('email',$field)->first();
         return ($check);

@@ -56,11 +56,12 @@
                 <td align="center" style="padding: 15px 10px; background-color: #f0f0f0;" bgcolor="#f0f0f0">
                     <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" class="devicewidth">
                         
-                    <!-- header -->
+                        <!-- header -->
                         <tr>
                             <td align="center" valign="top" width="100%" bgcolor="#f0f0f0" style="background: white;">
-                            <img src="{{ asset('images/logo.png') }}"  border="0" alt="Market Profits" 
-                                style="max-width:100%!important;display: block; font-family: sans-serif; font-size: 24px;height:auto!important;" class="bigimage"></td>
+                                <img src="{{ asset('images/logo.png') }}"  border="0" alt="Market Profits" 
+                                style="max-width:100%!important;display: block; font-family: sans-serif; font-size: 24px;height:auto!important;" class="bigimage">
+                            </td>
                         </tr>
 
                         <!-- white block with heading -->
@@ -69,15 +70,31 @@
                                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tr>
                                         <td align="left" style="font-family: Nunito, Helvetica, Arial,sans-serif; font-size: 14px; font-weight: normal; line-height: 24px;">
-                                            <p style="font-size: 18px; line-height: 24px;font-weight: bold; color: #58595b; margin: 0;">Hello {{ $email }},</p>
-                                            <p style="font-size: 14px; line-height: 24px; color: #72808e;">
-                                                Find below your new generated password. Please ensure to reset your password after you login.<br><br>
-
-                                                <span style="font-size:20px;">{{ $new_password }}</span>
+                                            <p style="font-size: 18px; line-height: 24px;font-weight: bold; color: #58595b; margin: 0;">Hello {{ strtoupper($full_name) }},</p>
+                                            <p style="font-size: 18px; line-height: 24px; color: #72808e;">
+                                                You have been registered has an Administrator at Markets Profits. <br/><br/>Find below your password and click on the activation link to activate your account
                                             </p>
+                                            <p style="font-size:20px;color: #72808e;">Password: {{ $password }}</p>
                                         </td>
                                     </tr>
 
+                                </table>
+                            </td>
+                        </tr>
+                        
+                        <!-- Tipp -->
+                        <tr>
+                            <td align="center" height="100%" valign="top" width="100%" class="mobile_padding" bgcolor="#ffffff" style="padding: 20px 35px 35px 35px; background-color: #ffffff;">
+                                <table style="margin: auto; width: 300px;" border="0" cellspacing="0" cellpadding="0" align="center" width="230">
+                                    <tr>
+                                        <td style="background-color: #35c190; border-radius: 2px; text-transform: uppercase; letter-spacing: 1px; background-clip: padding-box; font=
+                                            -size: 14px; font-family: 'Nunito', Helvetica, arial, sans-serif; text-align: center; color: #ffffff; font-weight: normal; padding-left: 25px; padding
+                                            -right: 25px; cursor: pointer;" align="center" height="40">
+                                            <a target="_blank" id="ct7_2" href="{{ URL::route('confirmRegistration', ['slug'=>$slug,'check'=>'true']) }}">
+                                                Activate Your Account
+                                            </a>
+                                        </td>
+                                    </tr>
                                 </table>
                             </td>
                         </tr>

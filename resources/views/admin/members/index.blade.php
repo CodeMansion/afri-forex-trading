@@ -31,45 +31,27 @@
                 <span class="caption-helper">Displaying list of registered Members</span>                        
             </div>
             <div class="actions">
-                
+                <a class="btn btn-sm green" data-toggle="modal" data-target="#new-admin-member"><i class="icon-plus"></i> New Administrator</a>
             </div>
         </div>
         <div class="portlet-body util-btn-margin-bottom-5">
             <div id="serverErrors"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <div class="tab-content">
-                            <div class="tab-pane active">
-                                @if(count($members) < 1)
-                                    <center><em>There are no members</em></center> 
-                                @else 
-                                    <table class="table table-bordered table-hover users" id="sample_2">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>NAME</th> 
-                                                <th>EMAIL</th>
-                                                <th>USERNAME</th>
-                                                <th>STATUS</th>
-                                                <th>ACTION</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php($index=0)
-                                            @foreach($members as $member)
-                                                <tr>
-                                                    <td>#</td>
-                                                    <td>{{ $member->full_name}} </td>
-                                                    <td>{{ $member->email}} </td>
-                                                    <td>{{ $member->username}}</td>
-                                                    <td><span class="badge badge-{{ member_status($member->is_active,'class') }}">{{ member_status($member->is_active,'name') }}</span></td>
-                                                    <td><a href="{{ URL::route('showMember', $member->slug) }}"><i class="icon-note"></i> Manage</a></td>
-                                                </tr>
-                                            @php($index++)
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                @endif
+                        <div class="portlet-title tabbable-line">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#admin" data-toggle="tab">Administrators</a></li>
+                                <li><a href="#members" data-toggle="tab">Members</a></li
+                            </ul>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="admin">
+                                    @include('admin.members.partials._administrators')
+                                </div>
+                                <div class="tab-pane" id="members">
+                                    @include('admin.members.partials._members')
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -78,19 +60,20 @@
         </div>
     </div>
 @endsection
+@section('modals')
+    @include('admin.members.modals._new_admin_member')
+@endsection
 @section('extra_script')
     <script>
         var TOKEN = "{{csrf_token()}}";
-        var UPDATE_URL = "{{URL::route('users.update')}}";
-        var GET_EDIT_INFO = "{{URL::route('users.editInfo')}}";
-        var ADDPLATFORM = "{{URL::route('users.add')}}";
+        var create_administrator = "{{URL::route('CreateNewAdmin')}}";
+        var delete_member = "{{ URL::route('DeleteMember') }}";
     </script>
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-    
-    <script src="{{ asset('assets/pages/admin/user.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/pages/all_users.js') }}" type="text/javascript"></script>
 @endsection
 @section('after_script')
     <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" type="text/javascript"></script>

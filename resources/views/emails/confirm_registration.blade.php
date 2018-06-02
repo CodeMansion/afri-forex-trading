@@ -58,8 +58,8 @@
                         
                         <!-- header -->
                         <tr>
-                            <td align="center" valign="top" width="100%" bgcolor="#f0f0f0" style="background: #f0f0f0;">
-                            <img src="http://lp.ryte.com/imgs/email/crash/bg_welcome2017.png" width="600" border="0" alt="Ryte Welcome Guide" 
+                            <td align="center" valign="top" width="100%" bgcolor="#f0f0f0" style="background: white;">
+                            <img src="{{ asset('images/logo.png') }}" width="600" border="0" alt="market profit" 
                             style="max-width:100%!important;display: block; font-family: sans-serif; font-size: 24px;height:auto!important;" class="bigimage"></td>
                         </tr>
 
@@ -71,7 +71,7 @@
                                         <td align="left" style="font-family: Nunito, Helvetica, Arial,sans-serif; font-size: 14px; font-weight: normal; line-height: 24px;">
                                             <p style="font-size: 18px; line-height: 24px;font-weight: bold; color: #58595b; margin: 0;">Hi {{ strtoupper($member['full_name']) }},</p>
                                             <p style="font-size: 14px; line-height: 24px; color: #72808e;">
-                                                Welcome to Afro Market. Click on the button below to activate your account.
+                                                Welcome to Market Profits. Click on the button below to activate your account.
                                             </p>
                                         </td>
                                     </tr>
@@ -88,8 +88,8 @@
                                         <td style="background-color: #35c190; border-radius: 2px; text-transform: uppercase; letter-spacing: 1px; background-clip: padding-box; font=
                                             -size: 14px; font-family: 'Nunito', Helvetica, arial, sans-serif; text-align: center; color: #ffffff; font-weight: normal; padding-left: 25px; padding
                                             -right: 25px; cursor: pointer;" align="center" height="40">
-                                            <a style="color: #ffffff!important; text-align: center; text-decoration: none!important;" target="_blank" id="ct7_2" href="{{ URL::route('confirmRegistration', ['slug'=>$member->slug,'check'=>'true']) }}">
-                                                <span style="color: #ffffff!important; font-weight: normal; white-space: nowrap;">Activate Your Account</span>
+                                            <a target="_blank" id="ct7_2" href="{{ URL::route('confirmRegistration', ['slug'=>$member->slug,'check'=>'true']) }}">
+                                                Activate Your Account
                                             </a>
                                         </td>
                                     </tr>
@@ -119,9 +119,7 @@
                         <tr>
                             <td align="center" style="font-family: Nunito, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: normal; line-height: 16px;">
                                 <p style="font-size: 11px; font-weight: normal; line-height: 16px; color: #8fa0ac;">
-                                    <a style="color:#8fa0ac!important;text-decoration:none!important;" id="ct10_0" href="#">&copy; 2018 Ryte.</a> 
-                                    <a style="color:#8fa0ac!important;text-decoration:none!important;" href="">You don't want to receive any further emails from Ryte?</a> 
-                                    <a href=""><span style="color:#8fa0ac">click here</span></a> to unsubscribe from our content. By the way,we are sending content to the email address destinyajakaiye@gmail.com.<br><br>
+                                    <a style="color:#8fa0ac!important;text-decoration:none!important;" id="ct10_0" href="#">&copy; 2018 Markets Profits.</a> 
                                     <a style="text-decoration: underline; color: #8fa0ac" target="_bl" id="ct4_0" href="#">
                                         <span color="#8fa0ac">About</span>
                                     </a> |  

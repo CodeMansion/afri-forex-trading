@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\User;
+use App\Role;
 use App\UserProfile;
 use App\UserWallet;
-use Gate;
 use App\PaymentTransaction;
 use App\TransactionCategory;
 use App\ActivityLog;
 use App\Withdrawal;
+use App\Mail\NewAdministrator;
 
 use Validator;
+use Gate;
+use Mail;
 
 class UserController extends Controller
 {
@@ -47,7 +51,9 @@ class UserController extends Controller
             
         if(\Auth::user()->is_admin) {
             $data['menu_id'] = 5;
-            $data['members'] = User::all()->except(1);
+            $data['members'] = User::members()->get();
+            $data['administrators'] = User::administrators()->get();
+            $data['roles'] = Role::all();
 
             return view('admin.members.index')->with($data);
         }
@@ -166,6 +172,7 @@ class UserController extends Controller
             return response()->json([
                 "msg"   => "Account activated successfully!"
             ],200);
+
         } catch(Exception $e) {
             return false;
         }
@@ -201,18 +208,122 @@ class UserController extends Controller
         }
     }
 
+    public function AddNewAdministrator(Request $request)
+    {
+        $data = $request->except('_token');
+        if($data) {
+            \DB::beginTransaction();
+            try {
+
+                $validator = $this->validator($data);
+                if($validator->fails()) {
+                    return $response = [
+                        'msg'   => "Some of the entries your entered are invalid. Try again",
+                        'head'  => "Invalid entries!",
+                        'type'  => 'false'
+                    ];
+                }
+
+                if($this->CheckEmail($data['email'])) {
+                    return $response = [
+                       'msg'   => "This email already exist!",
+                       'head'  => "Duplicate Email Address!",
+                       'type'  => 'false'
+                   ];
+                }
+
+                if($this->CheckUsername($data['username'])) {
+                    return $response = [
+                        'msg'   => "This username already exist!",
+                        'head'  => "Duplicate Username!",
+                        'type'  => 'false'
+                    ];
+                }
+
+                $password = $this->NewPassword();
+
+                $user = new User();
+                $user->slug = bin2hex(random_bytes(16));
+                $user->email = $data['email'];
+                $user->username = $data['username'];
+                $user->full_name = $data['full_name'];
+                $user->is_admin = true;
+                $user->password = $password;
+                $user->save();
+
+                $profile = new UserProfile();
+                $profile->user_id = $user->id;
+                $profile->slug = bin2hex(random_bytes(16));
+                $profile->full_name = $user->full_name;
+                $profile->telephone = $data['telephone'];
+                $profile->email = $user->email;
+                $profile->country_id = 87;
+                $profile->save();
+
+                $role = User::find($user->id);
+                $role->assignRole($data['role_id']);
+
+                $param['full_name'] = $user->full_name;
+                $param['password'] = $password;
+                $param['email'] = $user->email;
+                $param['slug'] = $user->slug;
+
+                $this->SendEmail($param);
+
+                \DB::commit();
+                return $response = [
+                    'msg'   => "New Administrator has been created successfully",
+                    'head'  => "Successful",
+                    'type'  => 'true'
+                ];
+
+            } catch(Exception $e) {
+                \DB::rollback();
+                return redirect()->back()->with("error", $e->getMessage());
+            }
+        }
+    }
+
+
+    protected function NewPassword() {
+    	$new_password = str_random(10);
+    	return $new_password;
+    }
+
+    protected function CheckEmail($data)
+    {
+        $check = User::hasEmail($data);
+        if($check) 
+           return true;
+        
+        return false;
+    }
+
+    protected function CheckUsername($data)
+    {
+        $check = User::hasUsername($data);
+        if($check) 
+           return true;
+        
+        return false;
+    }
+
+    protected function SendEmail($param) {
+    	if($param) {
+    		Mail::to($param['email'])->send(new NewAdministrator($param));
+    	}
+    }
+
     
     protected function validator(array $data)
     {
-        $custom_msg = [
-            'full_name' => 'Fullname is Required',
-            'telephone' => 'Telephone Number is Required',
-        ];
-
         return Validator::make($data, [
-            'full_name' => 'bail|required|string|max:255',
-            'telephone' => 'bail|required|string|max:15',
-        ], $custom_msg);
+            'full_name' => 'bail|required|string|min:6',
+            'telephone' => 'bail|required|string|max:15|min:11',
+            'email'     => 'bail|required|email|min:10',
+            'username'  => 'bail|required|min:6',
+            'role_id'   => 'bail|required'
+        ]);
     }
 
     /**
@@ -276,34 +387,35 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $data = $request->except('_except');
-            \DB::beginTransaction();
-            try {
-                $validate = $this->validator($request->except('_token'));
-                if($validate->fails()) {
-                    return $response = [
-                        'msg' => "Invalid Input",
-                        'type' => 'false'
-                    ];
-                }                
+        \DB::beginTransaction();
+        try {
+            $validate = $this->validator($request->except('_token'));
+            if($validate->fails()) {
+                return $response = [
+                    'msg' => "Invalid Input",
+                    'type' => 'false'
+                ];
+            }                
 
-                $user = User::UserProfile();
-                $user->full_name = $data['full_name'];
-                $user->save();
+            $user = User::UserProfile();
+            $user->full_name = $data['full_name'];
+            $user->save();
 
-                $profile = UserProfile::whereUserId(auth()->user()->id)->first();
-                $profile->full_name = $data['full_name'];
-                $profile->telephone = $data['telephone'];
-                $profile->save();
+            $profile = UserProfile::whereUserId(auth()->user()->id)->first();
+            $profile->full_name = $data['full_name'];
+            $profile->telephone = $data['telephone'];
+            $profile->save();
 
-                $ip = $_SERVER['REMOTE_ADDR'];
-                activity_logs(auth()->user()->id, $ip, "Update Profile");
+            $ip = $_SERVER['REMOTE_ADDR'];
+            activity_logs(auth()->user()->id, $ip, "Update Profile");
 
-                \DB::commit();
-                return response()->json([
-                    'msg'   => "Update Successfull!.",
-                    'type'  => "true"
-                ],200);
-            } catch (Exception $e) {
+            \DB::commit();
+            return response()->json([
+                'msg'   => "Update Successfull!.",
+                'type'  => "true"
+            ],200);
+
+        } catch (Exception $e) {
             \DB::rollback();
             return redirect()->back()->with("error", $e->getMessage());
         }
@@ -315,8 +427,42 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function DeleteMember(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        if($data) {
+            try {
+                
+                $userID = User::find($data['slug'],'slug')->id;
+                $user = \DB::table('users')->where('id',$userID)->delete();
+                $profile = \DB::table('user_profiles')->where('user_id',$userID)->delete();
+                $activity = \DB::table('activity_logs')->where('user_id',$userID)->delete();
+                $earning = \DB::table('earnings')->where('user_id',$userID)->delete();
+                $transaction = \DB::table('payment_transactions')->where('user_id',$userID)->delete();
+                $testimony = \DB::table('testimonies')->where('user_id',$userID)->delete();
+                $role = \DB::table('role_user')->where('user_id',$userID)->delete();
+                $dispute = \DB::table('disputes')->where('user_id',$userID)->delete();
+                $dispute_reply = \DB::table('dispute_replies')->where('user_id',$userID)->delete();
+                $investment = \DB::table('investments')->where('user_id',$userID)->delete();
+                $subscription = \DB::table('subscriptions')->where('user_id',$userID)->delete();
+                $referral = \DB::table('referrals')->where('user_id',$userID)->delete();
+                $wallet = \DB::table('user_wallets')->where('user_id',$userID)->delete();
+                $withdrawal = \DB::table('withdrawals')->where('user_id',$userID)->delete();
+                $service = \DB::table('member_services')->where('user_id',$userID)->delete();
+                
+                activity_logs(auth()->user()->id,$_SERVER['REMOTE_ADDR'],"Deleted a member");
+
+                return response()->json([
+                    'msg'   => "Member records deleted Successfully!",
+                    'type'  => "true"
+                ], 200);
+                
+            } catch(Exception $e) {
+                return response()->json([
+                    'msg'   => $e->getMessage(),
+                    'type'  => "false"
+                ]);
+            }
+        }
     }
 }

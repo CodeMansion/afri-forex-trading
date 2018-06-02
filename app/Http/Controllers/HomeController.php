@@ -356,7 +356,7 @@ class HomeController extends Controller
                 $downline->save();
                 
                 $user = User::find($userId);
-                $user->assignRole(4);
+                $user->assignRole(5);
                 
                 Mail::to($user->email)->send(new ConfirmRegistration($user));
                 

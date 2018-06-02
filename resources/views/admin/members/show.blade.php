@@ -41,7 +41,7 @@
                     </div><hr/>
                     <div class="profile-usermenu">
                         <ul class="nav">
-                            <li>
+                            <li style="margin-bottom: 10px;">
                                 <center><a href="">Status: <span class="badge badge-{{ member_status($profile->is_active,'class') }}">{{ member_status($profile->is_active,'name') }}</span></a></center>
                             </li>
                             <li>
@@ -64,10 +64,12 @@
                                 </div>
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#tab_1_1" data-toggle="tab">Personal Info</a></li>
-                                    <li> <a href="#tab_1_3" data-toggle="tab">Payment Account Info</a></li>
                                     <li><a href="#tab_1_4" data-toggle="tab">Activity Logs</a></li>
+                                    @if(auth()->user()->is_admin == 0)
+                                    <li> <a href="#tab_1_3" data-toggle="tab">Payment Account Info</a></li>
                                     <li><a href="#tab_1_5" data-toggle="tab">Earnings</a></li>
                                     <li><a href="#tab_1_6" data-toggle="tab">Transactions</a></li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="portlet-body">
@@ -75,11 +77,12 @@
                                     <div class="tab-pane active" id="tab_1_1">
                                         @include('members.profile.partials._profile')
                                     </div>
-                                    <div class="tab-pane" id="tab_1_3">
-                                        @include('members.profile.partials._account_info')
-                                    </div>
                                     <div class="tab-pane" id="tab_1_4">
                                         @include('members.profile.partials._activity_logs')
+                                    </div>
+                                    @if(auth()->user()->is_admin == 0)
+                                    <div class="tab-pane" id="tab_1_3">
+                                        @include('members.profile.partials._account_info')
                                     </div>
                                     <div class="tab-pane" id="tab_1_5">
                                         @include('members.profile.partials._earnings')
@@ -87,6 +90,7 @@
                                     <div class="tab-pane" id="tab_1_6">
                                         @include('members.profile.partials._transactions')
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

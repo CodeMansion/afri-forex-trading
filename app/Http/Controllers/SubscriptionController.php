@@ -17,6 +17,9 @@ use DB;
 use Notification;
 use App\User;
 use App\Earning; 
+use App\Package;
+use App\PackageType;
+use App\Platform;
 
 class SubscriptionController extends Controller
 {
@@ -77,20 +80,6 @@ class SubscriptionController extends Controller
         if(isset($type) && $type == 'ajax') {
             \DB::beginTransaction();
             try {
-
-                $referral = Referral::UserReferrals()->count();
-                $subscription = Subscription::UserSubscriptions()->count();
-                if($referral > 0 ){
-                    return $response = [
-                        'msg' => "Sorry! You are not eligible for this service.",
-                        'type' => "false"
-                    ];
-                }else if($subscription > 0){
-                    return $response = [
-                        'msg' => "You're already a member of this service",
-                        'type' => "false"
-                    ];
-                }
 
                 $subscribe = Subscription::insert([
                     'slug'          => bin2hex(random_bytes(64)),
@@ -177,68 +166,83 @@ class SubscriptionController extends Controller
      */
     public function show($id)
     {
-        
-    }
+        if(auth()->user()->is_admin == 0) {
+            $wallet_balance = UserWallet::balance()->first()->amount;
+            if(Gate::allows('is_account_active')) {
+                auth()->logout(); 
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
 
-    public function Confirm_Payment(Request $request){
-        $result = array();
-        //The parameter after verify/ is the transaction reference to be verified
-        $url = 'https://api.paystack.co/transaction/verify/'.$request->name;
+            if(isset($id)) {
+                $type = Platform::find($id,'slug');
+                if($type->id == 1) {
+                    $subscription = Subscription::UserSubscriptions()->count();
+                    if($subscription > 0){
+                        return redirect()->back()->with('error',"You're already a member of this service");
+                    }
+                    
+                    $data['platform'] = Platform::find(1);
+                    $data['balance'] = $wallet_balance;
+                    $data['type'] = 1;
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt(
-          $ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer SECRET_KEY']
-        );
-        $request = curl_exec($ch);
-        if(curl_error($ch)){
-         echo 'error:' . curl_error($ch);
-         }
-        curl_close($ch);
+                    return view('subscription.payment')->with($data);
+                }
 
-        if ($request) {
-          $result = json_decode($request, true);
+                if($type->id == 2) {
+                    $data['packages'] = Package::all();
+                    $data['balance'] = $wallet_balance;
+
+                    return view('subscription.view')->with($data);
+                }
+
+                if($type->id == 3) {
+                    $referral = Referral::UserReferrals()->count();
+                    if($referral > 0 ){
+                        return redirect()->back()->with('error',"Sorry! You are not eligible for this service.");
+                    } 
+
+
+                }
+            }
         }
+    }
 
-        if (array_key_exists('data', $result) && array_key_exists('status', $result['data']) && ($result['data']['status'] === 'success')) {
-          //echo "Transaction was successful";
-          //return response()->json(['results' => $result ,'success' => 'Transaction was successful!'], 200);
+
+    public function showPackageTypes($id)
+    {
+        if(auth()->user()->is_admin == 0) {
+            if(Gate::allows('is_account_active')) {
+                auth()->logout(); 
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
+
+            if(isset($id)) {
+                $data['package'] = Package::find($id,'slug');
+                $data['types'] = PackageType::all();
+
+                return view('subscription.view_types')->with($data);
+            }
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function ViewPayment($package,$type,$platform)
     {
-        //
-    }
+        if(auth()->user()->is_admin == 0) {
+            if(Gate::allows('is_account_active')) {
+                auth()->logout(); 
+                \Session::flash('error', 'Your account is not activated! Please check your email and activate your account');
+                return redirect('/login');
+            }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            $data['platform'] = Platform::find($platform);
+            $data['package_type'] = PackageType::find($type);
+            $data['package'] = Package::find($package,'slug');
+            $data['type'] = 2;
+
+            return view('subscription.payment')->with($data);
+        }
     }
 }
