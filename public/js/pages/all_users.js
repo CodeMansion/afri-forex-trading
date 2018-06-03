@@ -90,6 +90,23 @@ const AllUsers = function() {
                     });
                 });
             });
+
+
+            $(".table.table-bordered.table-hover.administrators tbody tr").each(function(index) {
+                $("#delete_admin_" + index).on("click", function() {
+                    let member_slug = $("#admin_slug_" + index).val();
+                    swal({
+                        title: "Are you sure?",
+                        text: "You are about to delete the records of this member",
+                        type: "warning",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        showLoaderOnConfirm: true
+                    }, function() {
+                        DeleteMember(member_slug);
+                    });
+                });
+            });
         }
     }
 }();

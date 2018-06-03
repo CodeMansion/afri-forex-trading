@@ -42,7 +42,6 @@
                                 <th width="50">TYPE</th>
                                 <th>SERVICE</th>
                                 <th width="90">AMOUNT</th>  
-                                <th width="50">STATUS</th> 
                                 <th>DATE</th>                             
                             </tr>
                         </thead>
@@ -61,8 +60,7 @@
                                     @endif
                                 </td>
                                 <td>${{ number_format($transaction->amount,2) }}</td>
-                                <td></td>
-                                <td>{{ $transaction->created_at }}</td>
+                                <td>{{ $transaction->created_at->diffForHumans() }}</td>
                             </tr>
                             @endforeach
                         </tbody>

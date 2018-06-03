@@ -61,7 +61,7 @@
                                                 <td>{{ $transaction->user->full_name}} </td>
                                                 <td>{{ number_format($transaction->amount,'2') }}</td> 
                                                 <td><span class="badge badge-success">{{ $transaction->Category->name }}</span></td>
-                                                <td>{{ $transaction->created_at }}</td>                                                   
+                                                <td>{{ $transaction->created_at->diffForHumans() }}</td>                                                   
                                                 <td><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i> View</a>&nbsp;<a href="javascript:;" id="btn_transaction_delete{{$index}}"><i class="fa fa-trash"></i> Delete</a></td>  
                                                 
                                             </tr>

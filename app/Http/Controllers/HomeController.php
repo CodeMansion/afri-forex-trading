@@ -331,7 +331,7 @@ class HomeController extends Controller
                 }
 
                 $userId = User::insertGetId([
-                    'slug'      => bin2hex(random_bytes(64)),
+                    'slug'      => bin2hex(random_bytes(16)),
                     'full_name' => ucwords($data['full_name']),
                     'username'  => $data['username'],
                     'email'     => preg_replace('/\s/', '', strtolower($data['email'])),
@@ -343,7 +343,7 @@ class HomeController extends Controller
                 
                 $profile = new UserProfile();
                 $profile->user_id = $userId;
-                $profile->slug = bin2hex(random_bytes(64));
+                $profile->slug = bin2hex(random_bytes(16));
                 $profile->full_name = $data['full_name'];
                 $profile->email = $data['email'];
                 $profile->telephone = $data['telephone'];

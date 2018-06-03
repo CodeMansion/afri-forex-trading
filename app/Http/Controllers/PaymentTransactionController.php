@@ -30,7 +30,7 @@ class PaymentTransactionController extends Controller
             }
 
             $data['menu_id'] = 6.0;
-            $data['transactions'] = PaymentTransaction::userTransactions()->get();
+            $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','DESC')->get();
             $data['debit']  = PaymentTransaction::userLatestDebit()->first();
             $data['credit']  = PaymentTransaction::userLatestCredit()->first();
             $data['wallet'] = UserWallet::balance()->first();
@@ -40,7 +40,8 @@ class PaymentTransactionController extends Controller
 
         if(\Auth::user()->is_admin) {
             $data['menu_id'] = 6.0;
-            $data['transactions'] = PaymentTransaction::all();
+            $data['transactions'] = PaymentTransaction::orderBy('id','DESC')->get();
+            
             return view('admin.transactions.index')->with($data);
         }
     }

@@ -35,6 +35,12 @@ class Investment extends Model
         return $query->where('user_id',auth()->user()->id);
     }
 
+    public function scopeAllInvestors($query) {
+        return $query->where([
+            'status' => 1
+        ])->where('created_at', '<=', Carbon::now()->subDays(28)->toDateTimeString());
+    }
+
     public function scopeDailyInvestors($query) {
         return $query->where([
             'package_type_id'   => 1,

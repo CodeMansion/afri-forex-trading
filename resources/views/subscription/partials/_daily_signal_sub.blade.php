@@ -25,12 +25,11 @@
         <div class="col-md-7 value"> Daily Investment Tips </div>
     </div><hr/>
     <center>
-        <input type="hidden" id="amount" value="$platform->price" />
+        <input type="hidden" id="amount" value="{{ $platform->price }}" />
         <input type="hidden" id="payment_description" value="Daily Signal Subscription" />
-        <input type="hidden" id="type" value="" />
-        <input type='image' name="SubscribeWithVoguePay" src='https://voguepay.com/images/buttons/make_payment_blue.png' alt='Submit' />
-        @if(isset($balance) && $balance > 10.00)
-        <button class="btn btn-md green" type="button" >Pay With Wallet</button>
+        <input type='image' name="SubscribeWithVoguePay" src='https://voguepay.com/images/buttons/make_payment_blue.png' alt='Submit' /><br/>
+        @if(isset($balance->amount) && $balance->amount > 10.00)
+        <button class="btn btn-md green" type="button" id="PayWithWallet" >Pay With Wallet</button>
         @endif
     </center>
 </div>

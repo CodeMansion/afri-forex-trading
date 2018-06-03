@@ -60,7 +60,7 @@
                         <tr>
                             <td align="center" valign="top" width="100%" bgcolor="#f0f0f0" style="background: white;">
                             <img src="{{ asset('images/logo.png') }}"  border="0" alt="Market Profits" 
-                                style="max-width:100%!important;display: block; font-family: sans-serif; font-size: 24px;height:auto!important;" class="bigimage"></td>
+                                style="width:200px!important;display: block; font-family: sans-serif; height:auto!important;" class="bigimage"></td>
                         </tr>
 
                         <!-- white block with heading -->

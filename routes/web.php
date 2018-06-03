@@ -24,6 +24,7 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::post('/get-referrer-info', ["as"=>"getReferrerInfo", "uses"=>"HomeController@getReferrerInfo"]);
     Route::get('/select_package',["as" => "package", "uses"  => "HomeController@package"]);
 	Route::post('/process-payment/{type?}',["as" => "processPayment", "uses"  => "SubscriptionController@processPayment"]);
+	Route::post('/pay-with-wallet',["as" => "PayWithWallet", "uses"  => "SubscriptionController@PayWithWallet"]);
 	Route::post('get-package-types', ["as"=>"getPackageTypes", "uses"=>"HomeController@getPackageTypes"]);
 	
 	//--- ADMIN NOTIFICATIONS ---//

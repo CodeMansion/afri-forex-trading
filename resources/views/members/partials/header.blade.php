@@ -1,8 +1,8 @@
 <div class="page-header navbar navbar-fixed-top">
     <div class="page-header-inner ">
         <div class="page-logo">
-            <a href="{{ URL::route('dashboard') }}"> 
-                
+            <a href="http://marketsprofits.com" target="_blank"> 
+                <img src="{{ asset('images/logo.png') }}" style="width:100px !important;" alt="logo" /> 
             </a>
             <div class="menu-toggler sidebar-toggler"></div>
         </div>     

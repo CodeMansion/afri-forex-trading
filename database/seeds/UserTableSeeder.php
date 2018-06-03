@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder
         \App\User::insert([
             [
                 'id' => 1,
-                'slug' => bin2hex(random_bytes(64)),
+                'slug' => bin2hex(random_bytes(16)),
                 'username' => 'MarketsProfits',
                 'email' => 'admin@marketsprofits.com',
                 'password' => bcrypt('admin1234'),

@@ -17,15 +17,22 @@ class TransactionCategoryTableSeeder extends Seeder
         TransactionCategory::insert([
             [
                 'id' => 1,
-                'slug' => bin2hex(random_bytes(64)),
+                'slug' => bin2hex(random_bytes(16)),
                 'name' => 'Credit',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()->addMinute(10),
             ],
             [
                 'id' => 2,
-                'slug' => bin2hex(random_bytes(64)),
+                'slug' => bin2hex(random_bytes(16)),
                 'name' => 'Debit',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()->addMinute(10),
+            ],
+            [
+                'id' => 3,
+                'slug' => bin2hex(random_bytes(16)),
+                'name' => 'Monthly Charge',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()->addMinute(10),
             ]

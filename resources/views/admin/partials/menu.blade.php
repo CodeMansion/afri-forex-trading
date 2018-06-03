@@ -13,6 +13,10 @@
             @if(\Auth::user()->isA('support'))
                 @include('admin.partials.auth._support_manager')
             @endif
+
+            @if(\Auth::user()->isA('testimony'))
+                @include('admin.partials.auth._testimony_manager')
+            @endif
         </ul>
     </div>
 </div>

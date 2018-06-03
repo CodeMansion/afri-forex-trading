@@ -69,6 +69,8 @@
 @section('extra_script')
     <script>
         var TOKEN = "{{csrf_token()}}";
+        var pay_with_wallet = "{{ URL::route('PayWithWallet') }}";
+        var PAYMENT = "{{ URL::route('processPayment', 'ajax') }}";
     </script>
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection

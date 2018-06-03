@@ -29,13 +29,13 @@
         <div class="col-md-7 value"> {{ strtoupper($package_type->percentage) }}% </div>
     </div><hr/>
     <center>
-        <input type="hidden" id="amount" value="$package->investment_amount" />
-        <input type="hidden" id="payment_description" value="Payment for investment" />
+        <input type="hidden" id="invest_amount" value="{{ $package->investment_amount }}" />
+        <input type="hidden" id="invest_payment_description" value="Payment for investment" />
         <input type="hidden" id="package_id" value="{{ $package->id }}" />
         <input type="hidden" id="package_type_id" value="{{ $package_type->id }}" />
-        <input type='image' name="InvestWithVoguePay" src='https://voguepay.com/images/buttons/make_payment_blue.png' alt='Submit' />
-        @if(isset($balance) && $balance > 10.00)
-        <button class="btn btn-md green" type="button" >Pay With Wallet</button>
+        <input type='image' name="InvestWithVoguePay" src='https://voguepay.com/images/buttons/make_payment_blue.png' alt='Submit' /><br/>
+        @if(isset($balance->amount) && $balance->amount > 10.00)
+        <button class="btn btn-bg green" type="button" id="PayWithWalletInvest">Pay With Wallet</button>
         @endif
     </center>
 </div>

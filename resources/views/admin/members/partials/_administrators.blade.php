@@ -22,6 +22,7 @@
                     <td>{{ $member->username}}</td>
                     <td><span class="badge badge-{{ member_status($member->is_active,'class') }}">{{ member_status($member->is_active,'name') }}</span></td>
                     <td>
+                        <input type="hidden" id="admin_slug_{{ $index }}" value="{{$member->slug}}" />
                         <a href="{{ URL::route('showMember', $member->slug) }}"><i class="icon-note"></i> Manage</a> |
                         <a style="color:red;" href="javascript:;" id="delete_admin_{{ $index }}"><i class="icon-trash"></i> Delete</a>
                     </td>

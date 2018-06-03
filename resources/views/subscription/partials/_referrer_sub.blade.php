@@ -1,22 +1,22 @@
-<div class="row">
-    <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12"></div>
-    <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12" style="border: 1px solid grey;padding:10px;">
-    <div class="alert alert-info">
-        <center>
-            <h1 style="text-align:center;">{{ strtoupper($referrer['name']) }}</h1>
-            <h3 style="color:red;font-weight:600;">Subscription fee: ${{ number_format($referrer['price'],2) }}</h3><hr/>
-            <img src="{{ asset('images/loader.gif') }}" id="loader" /> 
-            <input type="hidden" id="platform_id" value="{{ $referrer['id'] }}" />
-            <button type="button" id="referral" class="btn btn-lg green">PROCEED </button>
-            <button type="button" id="return_back" class="btn btn-lg red">CANCEL</button>
-        </center>    
-    </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12"></div>
+<div class="portlet-title">
+    <div class="caption"><i class="fa fa-cogs"></i>Referral Service Summary </div>
 </div>
-
-<script>
-    $(document).ready(function(){
-        $("#loader").hide();
-    });
-</script>
+<div class="portlet-body">
+    <div class="row static-info">
+        <div class="col-md-5 name"> Service: </div>
+        <div class="col-md-7 value"> {{ strtoupper($platform->name) }}</div>
+    </div>
+    <div class="row static-info">
+        <div class="col-md-5 name"> Investment Amount: </div>
+        <div class="col-md-7 value">
+            ${{ number_format($platform->price,2) }}
+        </div>
+    </div>
+    <div class="row static-info">
+        <div class="col-md-5 name"> Return On Investment: </div>
+        <div class="col-md-7 value"> Downline Commission </div>
+    </div><hr/>
+    <center>
+        <button class="btn btn-bg green" type="button" id="ConfirmReferral">Proceed</button>
+    </center>
+</div>
