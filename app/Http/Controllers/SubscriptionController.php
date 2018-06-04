@@ -74,7 +74,7 @@ class SubscriptionController extends Controller
                 }
 
                 $this->CreateNewPaymentTransaction($data['platform'],$data['amount']);
-                $this->CreateNewWallet();
+                // $this->CreateNewWallet();
                 $this->CreateDownline($data['platform'],$data['amount']);
                 $this->SendNotification($data);
 

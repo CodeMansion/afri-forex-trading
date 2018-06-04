@@ -388,10 +388,28 @@ class HomeController extends Controller
             $member->is_active = true;
             $member->save();
 
+            $this->CreateNewWallet($member->id);
+
             \Session::flash("success","Your account has been activated successfully. Please login");
             return redirect(url('/login'));
         } else {
             return redirect(url('/404'));
+        }
+    }
+
+
+    protected function CreateNewWallet($id)
+    {
+        $check_wallet = CheckMemberWallet(auth()->user()->id);
+        if (!$check_wallet) {
+            $wallet = UserWallet::insert([
+                'slug'          => bin2hex(random_bytes(16)),
+                'user_id'       => $id,
+                'amount'        => 0.00,
+                'status'        => 1,
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now()
+            ]);
         }
     }
 

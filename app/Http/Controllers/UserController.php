@@ -87,8 +87,16 @@ class UserController extends Controller
         $data = $request->except('_token');
         $member_wallet = UserWallet::balance()->first()->amount;
         $ledger_balance = $member_wallet - 10.00;
+        
         \DB::beginTransaction();
         try {
+            $me = User::find($data['user_id']);
+            if($me->email == auth()->user()->email) {
+                return response()->json([
+                    "msg"   => "You cannot refund your own account",
+                    "type"  => "false"
+                ]);
+            }
 
             $old_withdrawal = Withdrawal::where(['user_id'=>auth()->user()->id,'status'=>0])->first();
             if($old_withdrawal) {
