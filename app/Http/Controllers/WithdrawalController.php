@@ -39,16 +39,6 @@ class WithdrawalController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -124,42 +114,83 @@ class WithdrawalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        if($data) {
+            $data['withdrawal'] = Withdrawal::find($data['withdrawal_id']);
+            $data['wallet'] = UserWallet::where('user_id',$data['withdrawal']->user_id)->first();
+            $data['ledger_balance'] = (double)$data['wallet']->amount - 10.00;
+            $data['withdrawal_charge'] = (5 / 100) * (double)$data['withdrawal']->amount;
+
+            return view('admin.withdrawals.partials._get_details')->with($data);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function approve(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        if($data) {
+            try {
+
+                $withdrawal = Withdrawal::find($data['withdrawal_id']);
+                $withdrawal->status = 1;
+                $withdrawal->created_at = Carbon::now();
+                $withdrawal->save();
+
+                activity_logs(
+                    auth()->user()->id, 
+                    $_SERVER['REMOTE_ADDR'], 
+                    "Approved a withdrawal request"
+                );
+
+                // $admin = User::find(1);
+                // Notification::send($admin, new WithdrawalRequest($withdrawal));
+
+                return response()->json([
+                    "msg"   => "Withdrawal request has been approved",
+                    "type"  => "true"
+                ],200);
+
+            } catch(Exception $e) {
+                return response()->json([
+                    "errors"   => $e->getMessage(),
+                ],422);
+            }
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function decline(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        if($data) {
+            try {
+
+                $withdrawal = Withdrawal::find($data['withdrawal_id']);
+                $withdrawal->status = 3;
+                $withdrawal->created_at = Carbon::now();
+                $withdrawal->save();
+
+                activity_logs(
+                    auth()->user()->id, 
+                    $_SERVER['REMOTE_ADDR'], 
+                    "Declined a withdrawal request"
+                );
+
+                // $admin = User::find(1);
+                // Notification::send($admin, new WithdrawalRequest($withdrawal));
+
+                return response()->json([
+                    "msg"   => "Withdrawal request has been declined",
+                    "type"  => "true"
+                ],200);
+
+            } catch(Exception $e) {
+                return response()->json([
+                    "errors"   => $e->getMessage(),
+                ],422);
+            }
+        }
     }
 }

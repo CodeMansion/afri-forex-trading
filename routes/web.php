@@ -43,6 +43,9 @@ Route::group(['middleware'=>['auth']], function(){
 	//---WITHDRAWALS ----//
 	Route::post('/request-withdrawal', ["as"=>"makeWithdrawal", "uses"=>"WithdrawalController@store"]);
 	Route::get('/withdrawals', ["as"=>"WithdrawalIndex", "uses"=>"WithdrawalController@index"]);
+	Route::post('/withdrawal-details', ["as"=>"WithdrawalDetails", "uses"=>"WithdrawalController@show"]);
+	Route::post('/approve-withdrawal', ["as"=>"ApproveWithdrawal", "uses"=>"WithdrawalController@approve"]);
+	Route::post('/decline-withdrawal', ["as"=>"DeclineWithdrawal", "uses"=>"WithdrawalController@decline"]);
 	
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
@@ -140,6 +143,8 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::post('/reset-password', ["as"=>"resetPassword", "uses"=>"UserController@resetPassword"]);	
 		Route::post('/create-administrator', ["as"=>"CreateNewAdmin", "uses"=>"UserController@AddNewAdministrator"]);
 		Route::post('/delete-member', ["as"=>"DeleteMember", "uses"=>"UserController@DeleteMember"]);
+		Route::post('/confirm-password', ["as"=>"ConfirmPassword", "uses"=>"UserController@ConfirmPassword"]);
+		Route::post('/refund-wallet', ["as"=>"RefundWallet", "uses"=>"UserController@RefundWallet"]);
 	});	
 	
 	//-	---- TRANSACTION CATEGORY MANAGEMENT ----//	

@@ -17,7 +17,6 @@
                 <tr>
                     <td>#</td>
                     <td>{{ $earning->type->name }}</td>
-                    <td><label class="badge badge-success">{{ $transaction->Category->name }}</label></td>
                     <td>${{ number_format($earning->amount,2) }}</td>
                     <td><span class="badge badge-{{ earnings_status($earning->status,'class') }}">{{ earnings_status($earning->status,'name') }}</span></td>
                     <td>{{ $earning->created_at->diffForHumans() }}</td>

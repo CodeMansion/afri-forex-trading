@@ -24,8 +24,11 @@
                     <td>{{ $withdrawal->created_at->diffForHumans() }}</td>                                                
                     <td>
                         <input type="hidden" id="withdrawal_id_{{ $index }}" value="{{ $withdrawal->id }}">
-                        <a href="javascript:;" id="edit_withdrawal_{{$index}}"><i class="icon-note"></i> View</a>&nbsp;
-                        <a href="javascript:;" id="btn_transaction_delete{{$index}}"><i class="fa fa-trash"></i> Delete</a>
+                        <a href="javascript:;" id="edit_withdrawal_{{$index}}"><i class="icon-note"></i> View</a>&nbsp; |
+                        @if($withdrawal->status == 0)
+                        <a href="javascript:;" id="approve_withdrawal_{{ $index }}"><i class="icon-check"></i> Approve</a>&nbsp; |
+                        <a href="javascript:;" style="color:red;" id="decline_withdrawal_{{ $index }}"><i class="fa fa-close"></i> Decline</a> |
+                        @endif
                     </td>  
                 </tr>
             @php($counter++)

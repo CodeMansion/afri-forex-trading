@@ -4,6 +4,10 @@ var AppUserProfile = function() {
         $("#loader").hide();
         $("#user_details_for_fund").hide();
         $("#share_fund_btn").hide();
+        $("#password_loader").hide();
+        $("#password_div").show();
+        $("#wallet_div").hide();
+        $("#wallet_loader").hide();
     } 
 
     var ChangePassword = function() {
@@ -175,6 +179,67 @@ var AppUserProfile = function() {
         });
     }
 
+    const ConfirmPassword = function(password) {
+        $("#password_loader").show();
+        $("#create_confirm_password").attr('disabled', true);
+
+        $.ajax({
+            url: confirm_password,
+            method: "POST",
+            data: {
+                'password': password,
+                '_token': TOKEN
+            },
+            success: function(rst) {
+                if(rst.type == "true") {
+                    $("#password_loader").hide();
+                    $("#create_confirm_password").attr('disabled',false);
+                    $("#password_div").hide();
+                    $("#wallet_div").fadeIn();
+                    toastr.success(rst.msg);
+                } else if(rst.type == "false") {
+                    $("#password_loader").hide();
+                    $("#create_confirm_password").attr('disabled',false);
+                    toastr.error(rst.msg);
+                }
+            },
+            error: function(err, httpErr, ErrMsg) {
+                toastr.error(ErrMsg);
+            }
+        });
+    }
+
+
+    const RefundWallet = function(amount,user_id) {
+        $("#wallet_loader").show();
+        $("#wallet_refund_btn").attr('disabled', true);
+
+        $.ajax({
+            url: refund_wallet,
+            method: "POST",
+            data: {
+                'amount': amount,
+                'user_id': user_id,
+                '_token': TOKEN
+            },
+            success: function(rst) {
+                if(rst.type == "true") {
+                    $("#wallet_loader").hide();
+                    $("#wallet_refund_btn").attr('disabled',false);
+                    toastr.success(rst.msg);
+                    location.reload();
+                } else if(rst.type == "false") {
+                    $("#wallet_loader").hide();
+                    $("#wallet_refund_btn").attr('disabled',false);
+                    toastr.error(rst.msg);
+                }
+            },
+            error: function(err, httpErr, ErrMsg) {
+                toastr.error(ErrMsg);
+            }
+        });
+    }
+
     return {
         init: function() {
             loadComponents();
@@ -248,6 +313,28 @@ var AppUserProfile = function() {
                     ActivateAccount();
                 });
             });
+
+
+            $("#create_confirm_password").on("click", function() {
+                let password = $("#password").val();
+                if (password.length < 1) {
+                    toastr.error("Please this text field can not be empty!");
+                } else {
+                    ConfirmPassword(password);
+                }
+            }); 
+            
+            $("#wallet_refund_btn").on("click", function() {
+                let amount = parseFloat($("#amount").val());
+                let user_id = $("#user_id").val();
+                if (amount.length < 1) {
+                    toastr.error("Please this text field can not be empty!");
+                } else if(amount < 1) {
+                    toastr.error("Invalid amount");
+                } else {
+                    RefundWallet(amount,user_id);
+                }
+            }); 
         }
     }
 }();

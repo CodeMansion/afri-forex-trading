@@ -3,6 +3,7 @@
 @section('extra_style')
     <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -57,6 +58,9 @@
 @section('extra_script')
     <script>
         var TOKEN = "{{csrf_token()}}"; 
+        var view_withdrawal =  "{{ URL::route('WithdrawalDetails') }}";
+        var approve_withdrawal = "{{ URL::route('ApproveWithdrawal') }}";
+        var decline_withdrawal = "{{ URL::route('DeclineWithdrawal') }}";
     </script>
     <script src="{{ asset('js/pages/withdrawal.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>

@@ -38,6 +38,11 @@
                         <div class="profile-usertitle-job"> 
                             <span>Member</span> 
                         </div>
+                        @if(isset($balance->amount))
+                        <h3 style="color:red;">
+                            <strong>Balance: ${{ number_format($balance->amount) }}</strong>
+                        </h3>
+                        @endif
                     </div><hr/>
                     <div class="profile-usermenu">
                         <ul class="nav">
@@ -49,6 +54,9 @@
                                     <a href="#" id="activate_account" class="btn red btn-xs">Activate This Member</a>
                                 @endif
                             </li>
+                            @if($profile['is_admin'] == 0)
+                            <li data-target="#refund-wallet" data-toggle="modal"><a href="#"><i class="icon-wallet"></i> Fund Wallet </a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -65,11 +73,11 @@
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#tab_1_1" data-toggle="tab">Personal Info</a></li>
                                     <li><a href="#tab_1_4" data-toggle="tab">Activity Logs</a></li>
-                                    @if(auth()->user()->is_admin == 0)
-                                    <li> <a href="#tab_1_3" data-toggle="tab">Payment Account Info</a></li>
+                                    
+                                    <!-- <li> <a href="#tab_1_3" data-toggle="tab">Payment Account Info</a></li> -->
                                     <li><a href="#tab_1_5" data-toggle="tab">Earnings</a></li>
                                     <li><a href="#tab_1_6" data-toggle="tab">Transactions</a></li>
-                                    @endif
+                                    
                                 </ul>
                             </div>
                             <div class="portlet-body">
@@ -80,17 +88,17 @@
                                     <div class="tab-pane" id="tab_1_4">
                                         @include('members.profile.partials._activity_logs')
                                     </div>
-                                    @if(auth()->user()->is_admin == 0)
-                                    <div class="tab-pane" id="tab_1_3">
+                                    
+                                    <!-- <div class="tab-pane" id="tab_1_3">
                                         @include('members.profile.partials._account_info')
-                                    </div>
+                                    </div> -->
                                     <div class="tab-pane" id="tab_1_5">
                                         @include('members.profile.partials._earnings')
                                     </div>
                                     <div class="tab-pane" id="tab_1_6">
                                         @include('members.profile.partials._transactions')
                                     </div>
-                                    @endif
+                                   
                                 </div>
                             </div>
                         </div>
@@ -103,13 +111,16 @@
 @section('modals')
     @include('members.profile.modals._change_password')
     @include('members.profile.modals._change_picture')
+    @include('admin.members.modals._refund_wallet')
 @endsection
 @section('extra_script')
     <script>
         var TOKEN = "{{csrf_token()}}";
         var RESET = "{{URL::route('reset.store')}}";
         var SLUG = "{{ $profile['slug'] }}";
-        var ACTIVATE = "{{ URL::route('activateMemberAccount') }}"
+        var ACTIVATE = "{{ URL::route('activateMemberAccount') }}";
+        var confirm_password = "{{ URL::route('ConfirmPassword') }}";
+        var refund_wallet = "{{ URL::route('RefundWallet') }}";
     </script>
     <script src="{{ asset('js/pages/user_profile.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>

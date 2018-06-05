@@ -240,7 +240,7 @@ function withdrawal_status($value,$type) {
 
 	if($value == 1){
 		if($type == 'name') {
-			return 'Aprroved';
+			return 'Processing';
 		}
 
 		if($type == 'class') {

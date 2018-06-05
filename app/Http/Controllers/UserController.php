@@ -216,6 +216,67 @@ class UserController extends Controller
         }
     }
 
+
+    public function ConfirmPassword(Request $request)
+    {
+        $data = $request->except('_token');
+        if($data) {
+            $check = \Hash::check($data['password'],auth()->user()->password);
+            if(!$check) {
+                return response()->json([
+                    "msg"   => "Invalid password check",
+                    "type"  =>  "false"
+                ]);
+
+            } else {
+                return response()->json([
+                    'msg' => "Check was successful. Proceed with wallet refund",
+                    'type' => "true"
+                ],200);
+            }
+        }
+    }
+
+
+    public function RefundWallet(Request $request)
+    {
+        $data = $request->except('_token');
+        if($data) {
+            try {
+                if((double)$data['amount'] > 0) {
+                    $user = UserWallet::where('user_id',$data['user_id'])->first();
+                    $user->amount += (double)$data['amount'];
+                    $user->save();
+
+                    $credit = new PaymentTransaction();
+                    $credit->slug = bin2hex(random_bytes(26));
+                    $credit->user_id = $data['user_id'];
+                    $credit->transaction_category_id = TransactionCategory::whereName('Credit')->first()->id;
+                    $credit->amount = (double)$data['amount'];
+                    $credit->is_paid = true;
+                    $credit->reference_no = date('Ymdhis');
+                    $credit->save();
+
+                    activity_logs(
+                        auth()->user()->id, 
+                        $_SERVER['REMOTE_ADDR'], 
+                        "Refunded a member wallet"
+                    );
+
+                    return response()->json([
+                        "type" => "true",
+                        "msg" => "Wallet refunded successfully"
+                    ], 200);
+                }
+            } catch(Exception $e) {
+                return response()->json([
+                    "error" => $e->getMessage()
+                ], 422);
+            }
+
+        }
+    }
+
     public function AddNewAdministrator(Request $request)
     {
         $data = $request->except('_token');
@@ -369,6 +430,7 @@ class UserController extends Controller
             $data['earnings'] = User::find($slug,'slug')->UserEarnings()->orderBy('id','DESC')->get();
             $data['transactions'] =  User::find($slug,'slug')->UserTransactions()->orderBy('id','DESC')->get();
             $data['activities'] = ActivityLog::where('user_id',$data['profile']->id)->orderBy('id','desc')->get();
+            $data['balance'] = UserWallet::where('user_id',$data['profile']->id)->first();
 
             return view('admin.members.show')->with($data);
         }

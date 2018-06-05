@@ -249,9 +249,11 @@ class HomeController extends Controller
                 'type' => "false"
             ];
         }
+
         $user->is_active = 1;
         $user->password = $request->password;
         $user->save();
+
         return $response = [
             'msg' => "your password reset has been made successfully.",
             'type' => "true"
@@ -412,6 +414,7 @@ class HomeController extends Controller
             ]);
         }
     }
+
 
     public function indexNotify(){
         return view('admin.partials.util._notification');
