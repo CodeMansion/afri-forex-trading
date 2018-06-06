@@ -91,79 +91,10 @@ class HomeController extends Controller
     {
         $data['platforms'] = Platform::active()->get();
         $data['package_types'] = PackageType::all();
+
         return view('subscription.index')->with($data);
     }
 
-    public function getDailySignalInfo(Request $request) {
-        try {
-            $data = $request->except('_token');
-            $param['daily_signal'] = Platform::active()->where('id',$data['id'])->first();
-
-            return view('subscription.partials._daily_signal_sub')->with($param);
-        } catch(Exception $e) {
-            return false;
-        }
-    }
-
-    public function getPackageTypes(Request $request)
-    {
-        try {
-            $data = $request->except('_token');
-            $param['package_types'] = PackageType::all();
-            $param['package_id'] = $data['package_id'];
-
-            return view('subscription.partials._get_package_types')->with($param);
-        } catch(Exception $e) {
-            return $e->getMessage();
-        }
-    }
-
-    public function getReferrerInfo(Request $request) {
-        try {
-            $data = $request->except('_token');
-            $param['referrer'] = Platform::active()->where('id',$data['id'])->first();
-
-            return view('subscription.partials._referrer_sub')->with($param);
-        } catch(Exception $e) {
-            return false;
-        }
-    }
-    
-
-    public function getInvestmentInfo(Request $request) {
-        try {
-            $data = $request->except('_token');
-            $params['investment'] = Platform::active()->where('id',$data['id'])->first();
-            $params['packages'] = Package::wherePlatformId($data['id'])->get();
-            return view('subscription.partials._investment_sub')->with($params);
-        } catch(Exception $e) {
-            return false;
-        }
-    }
-
-    public function getPackageType(Request $request) {
-        try {
-            $data = $request->except('_token');
-            $params['package'] = Package::whereId($data['id'])->first();
-            $params['package_types'] = PackageType::all();
-            return view('subscription.partials._select_packages')->with($params);
-        } catch(Exception $e) {
-            return false;
-        }
-    }
-
-    public function getInvestmentPaymentInfo(Request $request) {
-        try {
-            $data = $request->except('_token');
-            $params['investment'] = Platform::active()->where('id',$data['platform_id'])->first();
-            $params['package'] = Package::find($data['package_id']);
-            $params['type'] = PackageType::find($data['package_type_id']);
-
-            return view('subscription.partials._subscribe_investment')->with($params);
-        } catch(Exception $e) {
-            return false;
-        }
-    }
 
     public function package(Request $request){        
         try {
@@ -260,6 +191,7 @@ class HomeController extends Controller
         ];
     }
 
+
     public function reset_confirm(Request $request,$confirm)
     {
         $user = User::whereSlug($confirm)->first();
@@ -277,6 +209,7 @@ class HomeController extends Controller
             'type' => "true"
         ];
     }
+    
     
     protected function validator(array $data)
 	{		
@@ -402,8 +335,7 @@ class HomeController extends Controller
 
     protected function CreateNewWallet($id)
     {
-        $check_wallet = CheckMemberWallet(auth()->user()->id);
-        if (!$check_wallet) {
+        if ($id) {
             $wallet = UserWallet::insert([
                 'slug'          => bin2hex(random_bytes(16)),
                 'user_id'       => $id,

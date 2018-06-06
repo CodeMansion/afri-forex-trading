@@ -55,7 +55,8 @@ class WithdrawalController extends Controller
                 $ledger_balance = $member_wallet - 10.00;
                 $eligible_amount = $withdrawal_charge + (double)$data['amount'];
 
-                $old_withdrawal = Withdrawal::where(['user_id'=>auth()->user()->id,'status'=>0])->first();
+                $old_withdrawal = Withdrawal::where('user_id', auth()->user()->id)
+                        ->where('status',0)->orWhere('status',1)->first();
 
                 if($old_withdrawal) {
                     return response()->json([

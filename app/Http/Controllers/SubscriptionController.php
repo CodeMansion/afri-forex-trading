@@ -74,7 +74,6 @@ class SubscriptionController extends Controller
                 }
 
                 $this->CreateNewPaymentTransaction($data['platform'],$data['amount']);
-                // $this->CreateNewWallet();
                 $this->CreateDownline($data['platform'],$data['amount']);
                 $this->SendNotification($data);
 
@@ -108,11 +107,13 @@ class SubscriptionController extends Controller
             try {
                 $member_wallet = UserWallet::balance()->first()->amount;
                 $ledger_balance = $member_wallet - 10.00;
-                $old_withdrawal = Withdrawal::where(['user_id'=>auth()->user()->id,'status'=>0])->first();
+                $old_withdrawal = Withdrawal::where('user_id', auth()->user()->id)
+                        ->where('status',0)->orWhere('status',1)->first();
 
                 if($old_withdrawal) {
                     return response()->json([
                         "msg"   => "You have a pending withdrawal request. Please try again after request has been attended to.",
+                        "head"  => "Pending Withdrawal Request",
                         "type"  => "false"
                     ]);
                 }
@@ -146,7 +147,7 @@ class SubscriptionController extends Controller
                     activity_logs(
                         auth()->user()->id, 
                         $_SERVER['REMOTE_ADDR'], 
-                        "Subscribed for Daily Signal"
+                        "Subscribed for a service"
                     );
 
                     return response()->json([

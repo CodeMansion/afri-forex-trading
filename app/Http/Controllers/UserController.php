@@ -86,6 +86,8 @@ class UserController extends Controller
     {
         $data = $request->except('_token');
         $member_wallet = UserWallet::balance()->first()->amount;
+        $charge = (1 / 100) * (double)$data['amount'];
+        $eligible_amount = $charge + (double)$data['amount'];
         $ledger_balance = $member_wallet - 10.00;
         
         \DB::beginTransaction();
@@ -98,7 +100,9 @@ class UserController extends Controller
                 ]);
             }
 
-            $old_withdrawal = Withdrawal::where(['user_id'=>auth()->user()->id,'status'=>0])->first();
+            $old_withdrawal = Withdrawal::where('user_id', auth()->user()->id)
+                        ->where('status',0)->orWhere('status',1)->first();
+
             if($old_withdrawal) {
                 return response()->json([
                     "msg"   => "You have a pending withdrawal request. Please try again after request has been attended to.",
@@ -114,7 +118,7 @@ class UserController extends Controller
                 ]);
             }
 
-            if($ledger_balance >= (double)$data['amount']) {
+            if($ledger_balance >= $eligible_amount) {
                 // adding to reciever account
                 $add = UserWallet::where('user_id',$data['user_id'])->first();
                 $add->amount += (double)$data['amount'];
@@ -395,26 +399,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -436,16 +420,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
