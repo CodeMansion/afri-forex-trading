@@ -107,6 +107,8 @@ class SubscriptionController extends Controller
         if($data) {
             \DB::beginTransaction();
             try {
+                $subscription = Subscription::UserSubscriptions()->count();
+                $investment = Investment::UserInvestments()->count();
                 $member_wallet = UserWallet::balance()->first()->amount;
                 $ledger_balance = $member_wallet - 10.00;
                 $old_withdrawal = Withdrawal::where('user_id', auth()->user()->id)
@@ -120,28 +122,8 @@ class SubscriptionController extends Controller
                     ]);
                 }
 
-                if($member_wallet < 10.00) {
-                    return response()->json([
-                        "msg"   => "Payment cannot be completed",
-                        "head"  => "Insufficient Fund",
-                        "type"  => "false"
-                    ]);
-                }
-
-                if($ledger_balance >= (double)$data['amount']) {
-                    
-                    if($data['platform'] == 1) {
-                        $this->NewSubscription($data['amount']);
-                    } elseif($data['platform'] == 2) {
-                        $this->NewInvestment($data['package_id'],$data['package_type_id']);
-                    } else {
-                        $this->NewReferral();
-                    }
-
-                    $this->DebitWallet($data['amount']);
-                    $this->CreateNewPaymentTransaction($data['platform'],$data['amount']);
-                    $this->CreateDownline($data['platform'],$data['amount']);
-                    $this->SendNotification($data);
+                if($subscription < 1 && $investment < 1) {
+                    $this->InsertAll($data);
 
                     //\Mail::to(auth()->user()->email)->send(new NewSubscription($data));
                     \DB::commit();
@@ -156,19 +138,64 @@ class SubscriptionController extends Controller
                         'msg' => "Payment successfull",
                         'type' => "true"
                     ],200);
-                   
+                    
                 } else {
-                    return response()->json([
-                        "head"  => "Payment Failed",
-                        "msg"   => "You have insufficient fund.",
-                        "type"  => "false"
-                    ]);
+
+                    if($member_wallet < 10.00) {
+                        return response()->json([
+                            "msg"   => "Payment cannot be completed",
+                            "head"  => "Insufficient Fund",
+                            "type"  => "false"
+                        ]);
+                    }
+
+                    if($ledger_balance >= (double)$data['amount']) {
+                        $this->InsertAll($data);
+
+                        //\Mail::to(auth()->user()->email)->send(new NewSubscription($data));
+                        \DB::commit();
+
+                        activity_logs(
+                            auth()->user()->id, 
+                            $_SERVER['REMOTE_ADDR'], 
+                            "Subscribed for a service"
+                        );
+
+                        return response()->json([
+                            'msg' => "Payment successfull",
+                            'type' => "true"
+                        ],200);
+
+                    } else {
+                        return response()->json([
+                            "head"  => "Payment Failed",
+                            "msg"   => "You have insufficient fund.",
+                            "type"  => "false"
+                        ]);
+                    }
                 }
  
             } catch(Exception $e) {
                 \DB::rollback();
             }
         }
+    }
+
+
+    protected function InsertAll($data)
+    {
+        if($data['platform'] == 1) {
+            $this->NewSubscription($data['amount']);
+        } elseif($data['platform'] == 2) {
+            $this->NewInvestment($data['package_id'],$data['package_type_id']);
+        } else {
+            $this->NewReferral();
+        }
+
+        $this->DebitWallet($data['amount']);
+        $this->CreateNewPaymentTransaction($data['platform'],$data['amount']);
+        $this->CreateDownline($data['platform'],$data['amount']);
+        $this->SendNotification($data);
     }
 
 
