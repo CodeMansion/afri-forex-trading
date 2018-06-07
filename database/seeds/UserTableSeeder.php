@@ -27,5 +27,41 @@ class UserTableSeeder extends Seeder
                 'updated_at' => '2018-01-01 09:19:28',
             ],
         ]);
+
+        \App\User::insert([
+            [
+                'id' => 2,
+                'slug' => bin2hex(random_bytes(16)),
+                'username' => 'SystemReferral',
+                'email' => 'referral@marketsprofits.com',
+                'password' => bcrypt('admin1234'),
+                'is_admin' => false,
+                'is_active' => true,
+                'full_name' => "System Referral",
+                'created_at' => '2018-01-01 09:19:28',
+                'updated_at' => '2018-01-01 09:19:28',
+            ],
+        ]);
+
+        \App\UserDownline::insert([
+            'upline_id' => 1,
+            'downline_id'   => 2
+        ]);
+
+        \App\UserProfile::insert([
+            'user_id' => 2,
+            'slug'      => bin2hex(random_bytes(16)),
+            'full_name' => "System Referral",
+            'email'     => "referral@marketsprofits.com",
+            'country_id'    => 566,
+            'telephone' => '09010001000'
+        ]);
+
+         \App\UserWallet::insert([
+            'slug'          => bin2hex(random_bytes(16)),
+            'user_id'       => 2,
+            'amount'        => 0.00,
+            'status'        => 1,
+        ]);
     }
 }

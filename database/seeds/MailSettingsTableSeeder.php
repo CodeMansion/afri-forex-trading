@@ -17,8 +17,8 @@ class MailSettingsTableSeeder extends Seeder
             [
                 'id' => 1,
                 'from_name'     => 'Markets Profits',
-                'from_email'    => 'support@profitsmarkets.com',
-                'reply_to'      => 'noreply@profitsmarkets.com',
+                'from_email'    => 'support@marketsprofits.com',
+                'reply_to'      => 'noreply@marketsprofits.com',
                 'host'          => 'mail.marketsprofits.com',
                 'username'      => 'admin@marketsprofits.com',
                 'password'      => 'Welcome007!@#$',

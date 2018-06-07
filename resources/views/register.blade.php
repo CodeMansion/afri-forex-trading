@@ -44,7 +44,7 @@
                            
                             <h3>New Member Registration Form</h3><hr/>
                             <div class="col-md-12 form-group">   
-                                <input type="text" class="form-control" name="upline_id" id="upline_id" value="<?php if(isset($referral)): ?> {{ $referral->username }} <?php else: ?>MarketsProfits<?php endif ?>" disabled>
+                                <input type="text" class="form-control" name="upline_id" id="upline_id" value="<?php if(isset($referral)): ?> {{ $referral->username }} <?php else: ?>SystemReferral<?php endif ?>" disabled>
                             </div>
                             <div class="col-md-12 form-group">
                                 <input type="text" class="form-control" placeholder="FULL NAME" name="full_name" id="full_name">

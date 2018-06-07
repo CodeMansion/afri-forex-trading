@@ -16,6 +16,7 @@ use App\Notifications\MemberSubscription;
 use App\Notifications\ReferralEarning;
 use App\User;
 use App\Earning; 
+use App\EarningType;
 use App\Package;
 use App\PackageType;
 use App\Platform;
