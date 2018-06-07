@@ -61,6 +61,7 @@
         var view_withdrawal =  "{{ URL::route('WithdrawalDetails') }}";
         var approve_withdrawal = "{{ URL::route('ApproveWithdrawal') }}";
         var decline_withdrawal = "{{ URL::route('DeclineWithdrawal') }}";
+        var complete_withdrawal = "{{ URL::route('CompleteWithdrawal') }}";
     </script>
     <script src="{{ asset('js/pages/withdrawal.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>

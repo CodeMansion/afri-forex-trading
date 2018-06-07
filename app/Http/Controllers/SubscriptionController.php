@@ -13,6 +13,7 @@ use App\Referral;
 use App\UserWallet;
 use App\TransactionCategory;
 use App\Notifications\MemberSubscription;
+use App\Notifications\ReferralEarning;
 use App\User;
 use App\Earning; 
 use App\Package;
@@ -247,7 +248,12 @@ class SubscriptionController extends Controller
                 $upline->investment_amount = (double)$amount;
                 $upline->is_active = 1;
                 $upline->save();
-            }else{
+
+                if($platform == 2){
+                    $this->ReferralEarning($upline->upline_id,$amount);
+                }
+
+            } else {
                 $downline  = new UserDownline();
                 $downline->platform_id  = $platform;
                 $downline->upline_id = $upline->upline_id;
@@ -255,7 +261,50 @@ class SubscriptionController extends Controller
                 $downline->investment_amount = (double)$amount;
                 $downline->is_active = 1;
                 $downline->save();
+
+                if($platform == 2) {
+                    $this->ReferralEarning($upline->upline_id,$amount);
+                }
             }
+        }
+    }
+
+
+    protected function ReferralEarning($upline,$amount)
+    {
+        if(isset($upline)) {
+            $wallet = UserWallet::where('user_id',$upline)->first();
+            if(isset($wallet)) {
+                $referral_earning = (5 / 100) * (double)$amount;
+                $wallet->amount += $referral_earning;
+                $wallet->save();
+
+                $new_earning = DB::table("earnings")->insert([
+                    'slug'          => bin2hex(random_bytes(16)),
+                    'user_id'       => $upline,
+                    'platform_id'   => 2,
+                    'earning_type_id'   => EarningType::where('name','Referral')->first()->id,
+                    'amount'        => (double)$referral_earning,
+                    'status'        => 1,
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
+
+                $transaction = PaymentTransaction::insert([
+                    'slug'          => bin2hex(random_bytes(16)),
+                    'user_id'       => $upline,
+                    'platform_id'   => 2,
+                    'transaction_category_id'   => TransactionCategory::where('name','Credit')->first()->id,
+                    'amount'        => (double)$referral_earning,
+                    'is_paid'       => true,
+                    'reference_no'  => date('Ymdhis'),
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
+            }
+
+            $admin = User::find($upline);
+            Notification::send($admin, new ReferralEarning($transaction));
         }
     }
 

@@ -45,10 +45,12 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>INITIAL BALANCE</th>
+                                            <th>CHARGE</th>
                                             <th>AMOUNT</th>
+                                            <th>TOTAL</th>
                                             <th>STATUS</th>
-                                            <th>REMARKS</th>
-                                            <th>DATE</th>
+                                            <th>UPDATED</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -57,10 +59,12 @@
                                         @foreach($withdrawals as $withdrawal)
                                             <tr>
                                                 <td>#</td>
-                                                <td>${{ number_format($withdrawal->amount,'2') }}</td> 
+                                                <td>${{ number_format($withdrawal->initial_wallet_balance,'2') }}</td> 
+                                                <td>${{ number_format($withdrawal->withdrawal_charge,'2') }}</td> 
+                                                <td>${{ number_format($withdrawal->withdrawal_amount,'2') }}</td> 
+                                                <td>${{ number_format($withdrawal->deducted_amount,'2') }}</td> 
                                                 <td><span class="badge badge-{{ withdrawal_status($withdrawal->status,'class') }}">{{ withdrawal_status($withdrawal->status,'name') }}</span></td>
-                                                <td>{{ $withdrawal->remarks }}</td>
-                                                <td>{{ $withdrawal->created_at->diffForHumans() }}</td>                                                 
+                                                <td>{{ $withdrawal->updated_at->diffForHumans() }}</td>                                  
                                             </tr>
                                         @php($counter++)
                                         @php($index++)

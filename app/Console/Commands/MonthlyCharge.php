@@ -8,7 +8,11 @@ use App\Investment;
 use App\UserWallet;
 use App\PaymentTransaction;
 use App\TransactionCategory;
+use App\User;
+use App\Notifications\DeductMonthlyCharge;
+
 use Carbon\Carbon;
+use Notification;
 
 class MonthlyCharge extends Command
 {
@@ -68,6 +72,9 @@ class MonthlyCharge extends Command
                         'created_at'    => Carbon::now(),
                         'updated_at'    => Carbon::now()
                     ]);
+
+                    $admin = User::find($investor->user_id);
+                    Notification::send($admin, new DeductMonthlyCharge($investor));
                     
                     \DB::commit();
                     echo "success";

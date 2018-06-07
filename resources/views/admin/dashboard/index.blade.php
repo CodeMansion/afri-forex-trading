@@ -29,11 +29,8 @@
             @include('admin.dashboard.partials._transactions')
         </div>
         <div class="col-lg-4 col-xs-12 col-sm-12">
-            @include('admin.dashboard.partials._support')
+            @include('members.dashboard.partials._withdrawals')
         </div>
-        <!-- <div class="col-lg-4 col-xs-12 col-sm-12">
-            @include('admin.dashboard.partials._activity_logs')
-        </div> -->
     </div>
     <div class="clearfix"></div>
 @endsection
@@ -49,6 +46,7 @@
         var ACTIVITY = "{{ URL::route('loadActivityLogs') }}";
         var EARNINGS = "{{ URL::route('loadEarnings') }}";
         var WITHDRAW = "{{ URL::route('makeWithdrawal') }}";
+        var WITHDRAWAL = "{{ URL::route('loadWithdrawals') }}";
     </script>
     <script src="{{ asset('js/pages/dashboard.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/pages/scripts/charts-echarts.js') }}" type="text/javascript"></script>

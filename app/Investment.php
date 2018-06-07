@@ -38,7 +38,7 @@ class Investment extends Model
     public function scopeAllInvestors($query) {
         return $query->where([
             'status' => 1
-        ])->where('created_at', '<=', Carbon::now()->subDays(28)->toDateTimeString());
+        ])->where('created_at', '<=', Carbon::now()->subDays(25)->toDateTimeString());
     }
 
     public function scopeDailyInvestors($query) {

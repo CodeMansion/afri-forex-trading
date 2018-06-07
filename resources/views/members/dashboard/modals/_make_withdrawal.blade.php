@@ -20,7 +20,7 @@
                     <hr/>
                     <div class="margin-top-10">
                         <img src="{{ asset('images/loader.gif') }}" id="loader" /> 
-                        <a href="javascript:;" id="make_withdrawal_btn" class="btn green"> Withdraw</a>
+                        <a href="javascript:;" id="make_withdrawal_btn" class="btn green"> Make Withdrawal</a>
                     </div>
                 </form>
             </div>

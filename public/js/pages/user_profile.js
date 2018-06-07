@@ -8,6 +8,7 @@ var AppUserProfile = function() {
         $("#password_div").show();
         $("#wallet_div").hide();
         $("#wallet_loader").hide();
+        $("#account_loader").hide();
     } 
 
     var ChangePassword = function() {
@@ -58,7 +59,7 @@ var AppUserProfile = function() {
 
     var UpdateProfile = function(full_name, telephone) {
         $("#update_profile_btn").attr("disabled", true);
-        $("#update_profile_btn").html("<i class='fa fa-refresh fa-spin'></i> Processing...");
+        $("#update_profile_btn").html("<i class='fa fa-spinner fa-spin'></i> Processing...");
         $.ajax({
             url: UPDATE,
             method: "POST",
@@ -70,17 +71,11 @@ var AppUserProfile = function() {
             success: function(rst) {
                 if (rst.type == "true") {
                     $("#update_profile_btn").attr("disabled", false);
-                    $("#update_profile_btn").html(
-                        "<i class='fa fa-check'></i> Submit!"
-                    );
                     toastr.success(rst.msg);
                     location.reload();
                 } else if (rst.type == "false") {
                     $("#update_profile_btn").attr("disabled", false);
-                    $("#update_profile_btn").html(
-                        "<i class='fa fa-warning fa-spin'></i> Failed. Try Again!"
-                    );
-                    toastr.warning(rst.msg);
+                    toastr.error(rst.msg);
                 }
             },
             error: function(alaxB, HTTerror, errorMsg) {
@@ -89,36 +84,7 @@ var AppUserProfile = function() {
         });
     };
 
-    var SHAREFUND = function(user_id, amount) {
-        $("#share_fund_btn").attr("disabled", true);
-        $("#share_fund_btn").html("<i class='fa fa-spinner fa-spin'></i> Processing...");
-        $.ajax({
-            url: SHARE_FUND,
-            method: "POST",
-            data: {
-                '_token': TOKEN,
-                'user_id': user_id,
-                'amount': amount
-            },
-            success: function(rst) {
-                if (rst.type == "true") {
-                    $("#share_fund_btn").attr("disabled", false);
-                    $("#share_fund_btn").html(" Submit");
-                    toastr.success(rst.msg);
-                    location.reload();
-                } else if (rst.type == "false") {
-                    $("#share_fund_btn").attr("disabled", false);
-                    $("#share_fund_btn").html("Try Again");
-                    toastr.error(rst.msg);
-                }
-            },
-            error: function(alaxB, HTTerror, errorMsg) {
-                $("#share_fund_btn").attr("disabled", false);
-                $("#share_fund_btn").html("Try Again");
-                toastr.error(errorMsg);
-            }
-        });
-    };
+   
 
     var GETUSERTRANSFERDETAIL = function(detail) {
         $("#get_detail_btn").attr("disabled", true);
@@ -151,12 +117,42 @@ var AppUserProfile = function() {
         });
     };
 
-    var ChangePicture = function() {
-
-    }
-
+    
     var UpdateAccountInfo = function() {
+        $("#account_loader").show();
+        $("#update_account_btn").attr('disabled', true);
 
+        $.ajax({
+            url: update_account_info,
+            method: "POST",
+            data: {
+                'account_name': $("#account_name").val(),
+                'account_number': $("#account_number").val(),
+                'bank_name': $("#bank_name").val(),
+                'swift_code': $("#swift_code").val(),
+                'bank_code': $("#bank_code").val(),
+                'sort_code': $("#sort_code").val(),
+                'iban_number': $("#iban_number").val(),
+                '_token': TOKEN
+            },
+            success: function(rst) {
+                if(rst.type == "true") {
+                    $("#account_loader").hide();
+                    $("#update_account_btn").attr('disabled',false);
+                    swal("Updated Successfully", rst.msg, "success");
+                    location.reload();
+                } else if(rst.type == "false") {
+                    $("#account_loader").hide();
+                    $("#update_account_btn").attr('disabled',false);
+                    swal("Updated Failed", rst.msg, "error");
+                }
+            },
+            error: function(err, httpErr, ErrMsg) {
+                $("#account_loader").hide();
+                $("#update_account_btn").attr('disabled',false);
+                swal("Something Went Wrong", ErrMsg, "error");
+            }
+        });
     }
 
     var ActivateAccount = function() {
@@ -248,34 +244,14 @@ var AppUserProfile = function() {
                 var full_name = $("#full_name").val();
                 var telephone = $("#telephone").val();
                 if (full_name.length < 1) {
-                    toastr.warning("Please Fullname can not be empty!");
+                    toastr.error("Please Fullname can not be empty!");
                 } else if (telephone.length < 1) {
-                    toastr.warning("Please telephone number can not be empty!");
+                    toastr.error("Please telephone number can not be empty!");
                 } else {
                     UpdateProfile(full_name, telephone);
                 }
             });
 
-            $("#get_detail_btn").on("click", function() {
-                var detail = $("#detail_field").val();
-                if (detail.length < 1) {
-                    toastr.error("Please this text field can not be empty!");
-                } else {
-                    GETUSERTRANSFERDETAIL(detail);
-                }
-            });
-
-            $("#share_fund_btn").on("click", function() {
-                var user_id = $("#receiver_user_id").val();
-                var amount = $("#amount_to_transfer").val();
-                if (user_id.length < 1) {
-                    toastr.error("Please this text field can not be empty!");
-                } else if (amount.length < 1) {
-                    toastr.error("Please this text field can not be empty!");
-                } else {
-                    SHAREFUND(user_id, amount);
-                }
-            });
 
             $("#cancel_user_details").on("click", function() {
                 $(".username_detail_filed").fadeIn();
@@ -287,10 +263,7 @@ var AppUserProfile = function() {
 
             });
 
-            $("#update_account_btn").on("click", function() {
-                toastr.error("Sorry cannot perform this task at this time. Thank you!");
-            });
-
+        
             $("#change_picture_btn").on("click", function() {
                 toastr.error("Sorry cannot perform this task at this time. Thank you!");
             });
@@ -335,6 +308,11 @@ var AppUserProfile = function() {
                     RefundWallet(amount,user_id);
                 }
             }); 
+
+
+            $("#update_account_btn").on("click", function() {
+                UpdateAccountInfo();
+            });
         }
     }
 }();

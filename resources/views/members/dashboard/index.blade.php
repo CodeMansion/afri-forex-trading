@@ -19,6 +19,7 @@
         </ul>
         <div class="btn-group pull-right">
             <button type="button" class="btn btn-circle btn-sm red" data-target="#make_withdrawal" data-toggle="modal"><i class="icon-wallet"></i> Make Withdrawal</button>
+            <button type="button" class="btn btn-circle btn-sm yellow" data-target="#share_fund" data-toggle="modal"><i class="icon-handbag"></i> Share Fund</button>
             <a href="{{ URL::route('register') }}/{{ auth()->user()->username }}" target="_blank">
                 <button type="button" class="btn btn-sm btn-circle green"><i class="icon-plus"></i> New Downline</button>
             </a>
@@ -46,6 +47,7 @@
 @endsection
 @section('modals')
     @include('members.dashboard.modals._make_withdrawal')
+    @include('members.profile.modals._share_fund')
 @endsection
 @section('extra_script')
     <script>
@@ -60,6 +62,8 @@
         var TRANSACTION = "{{ URL::route('loadTransactions') }}";
         var WITHDRAW = "{{ URL::route('makeWithdrawal') }}";
         var WITHDRAWAL = "{{ URL::route('loadWithdrawals') }}";
+        var SHARE_FUND = "{{URL::route('users.sharefund')}}";
+        var USERDETAILS = "{{URL::route('users.FundInfo')}}";
     </script>
     <script src="{{ asset('js/pages/dashboard.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script>

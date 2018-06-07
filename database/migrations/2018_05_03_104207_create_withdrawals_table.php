@@ -17,7 +17,10 @@ class CreateWithdrawalsTable extends Migration
             $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('slug', 190)->unique();
-            $table->decimal('amount',10,2);
+            $table->decimal('initial_wallet_balance',10,2);
+            $table->decimal('withdrawal_charge',10,2);
+            $table->decimal('withdrawal_amount',10,2);
+            $table->decimal('deducted_amount',10,2);
             $table->integer('user_id')->unsigned()->index();
             $table->string('remarks')->nullable();
             $table->integer('status')->default(0);

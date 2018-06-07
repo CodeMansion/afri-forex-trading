@@ -17,10 +17,10 @@ class PlatformTableSeeder extends Seeder
         \App\Platform::insert([
             [
                 'id' => 1,
-                'slug' => bin2hex(random_bytes(64)),
+                'slug' => bin2hex(random_bytes(16)),
                 'name' => 'Daily Signal',
                 'is_multiple' => false,
-                'price' => 128.00,
+                'price' => 95.00,
                 'description' => null,
                 'is_active' => true,
                 'created_at' => Carbon::now(),
@@ -28,7 +28,7 @@ class PlatformTableSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'slug' => bin2hex(random_bytes(64)),
+                'slug' => bin2hex(random_bytes(16)),
                 'name' => 'Investment',
                 'price' => 0,
                 'is_multiple' => true,
@@ -39,7 +39,7 @@ class PlatformTableSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'slug' => bin2hex(random_bytes(64)),
+                'slug' => bin2hex(random_bytes(16)),
                 'name' => 'Referrer',
                 'price' => 0,
                 'is_multiple' => false,

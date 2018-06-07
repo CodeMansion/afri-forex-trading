@@ -6,6 +6,7 @@
                 <h4 class="modal-title"><span class="icon-layers font-green"></span>&nbsp;Share Fund</h4>
             </div>
             <div class="modal-body">
+                <div class="alert alert-info"> Please note that the minimum wallet balance is $10.00 and 2% charge for every fund transfer.</div><hr/>
                 <form action="#">
                     <div id="errors"></div>
                     <div class="form-group username_detail_filed">

@@ -2,6 +2,7 @@
 @section('extra_style')
     <link href="{{ asset('assets/pages/css/profile.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -36,10 +37,9 @@
                     <div class="profile-usermenu">
                         <ul class="nav">
                             <li><a href="#" data-target="#change_password" data-toggle="modal"><i class="icon-home"></i> Change Password </a></li>
-                            <li class="" data-target="#change_picture" data-toggle="modal"><a href="#"><i class="icon-settings"></i> Change Picture </a></li>
-                            <!-- <li><a href="#"><i class="icon-info"></i> View Upline Info </a></li> -->
-                            <li data-target="#share_fund" data-toggle="modal"><a href="#"><i class="icon-info"></i> Share Funds </a></li>
-                        </ul>
+                            <!-- <li class="" data-target="#change_picture" data-toggle="modal"><a href="#"><i class="icon-settings"></i> Change Picture </a></li> -->
+<!--                             <li data-target="#share_fund" data-toggle="modal"><a href="#"><i class="icon-info"></i> Share Funds </a></li>
+ -->                        </ul>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                                 </div>
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#tab_1_1" data-toggle="tab">Personal Info</a></li>
-                                    <!-- <li> <a href="#tab_1_3" data-toggle="tab">Payment Account Info</a></li> -->
+                                    <li> <a href="#tab_1_3" data-toggle="tab">Payment Account Info</a></li>
                                     <li><a href="#tab_1_4" data-toggle="tab">Activity Logs</a></li>
                                     <li><a href="#tab_1_5" data-toggle="tab">Earnings</a></li>
                                     <li><a href="#tab_1_6" data-toggle="tab">Transactions</a></li>
@@ -65,9 +65,9 @@
                                     <div class="tab-pane active" id="tab_1_1">
                                         @include('members.profile.partials._profile')
                                     </div>
-                                    <!-- <div class="tab-pane" id="tab_1_3">
+                                    <div class="tab-pane" id="tab_1_3">
                                         @include('members.profile.partials._account_info')
-                                    </div> -->
+                                    </div>
                                     <div class="tab-pane" id="tab_1_4">
                                         @include('members.profile.partials._activity_logs')
                                     </div>
@@ -101,6 +101,7 @@
         var UPDATE = "{{URL::route('users.update')}}";
         var USERDETAILS = "{{URL::route('users.FundInfo')}}";
         var SHARE_FUND = "{{URL::route('users.sharefund')}}";
+        var update_account_info = "{{ URL::route('UpdateAccount') }}";
     </script>
     <script src="{{ asset('js/pages/user_profile.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
@@ -108,8 +109,10 @@
     <script src="{{ asset('assets/global/scripts/datatable.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" ="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection
 @section('after_script')
     <script src="{{ asset('assets/pages/scripts/profile.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" ="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection

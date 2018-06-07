@@ -23,6 +23,7 @@ use App\Country;
 use App\Notifications\NewMember;
 use App\UserWallet;
 use App\Withdrawal;
+use App\UserAccount;
 
 use Gate;
 use Mail;
@@ -50,6 +51,7 @@ class HomeController extends Controller
             $data['transactions_count'] = PaymentTransaction::all()->count();
             $data['members_count'] = User::members()->count();
             $data['withdrawal'] = Withdrawal::all()->count();
+            $data['withdrawals'] = Withdrawal::orderBy('id','DESC')->get();
 
             return view('admin.dashboard.index')->with($data);
         }
@@ -275,6 +277,11 @@ class HomeController extends Controller
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ]);
+
+                $account = UserAccount::insertGetId([
+                    'user_id'   => $userId,
+                    'slug'      => bin2hex(random_bytes(16))
+                ]);
                 
                 $profile = new UserProfile();
                 $profile->user_id = $userId;
@@ -367,7 +374,11 @@ class HomeController extends Controller
     }
 
     public function loadWithdrawals() {
-        $data['withdrawals'] = Withdrawal::memberWithdrawal()->get();
+        if(auth()->user()->is_admin == 1) {
+            $data['withdrawals'] = Withdrawal::orderBy('id','DESC')->get();
+        } elseif(auth()->user()->is_admin == 0) {
+            $data['withdrawals'] = Withdrawal::memberWithdrawal()->get();
+        }
         return view('members.partials.util._latest_withdrawals')->with($data);
     }
 
@@ -436,6 +447,26 @@ class HomeController extends Controller
                 return redirect(url('/withdrawals'));
 
             case 'unsubscribe':
+                $this->mark_as_read($id);
+                return redirect(url('/transactions'));
+
+            case 'approve-withdrawal':
+                $this->mark_as_read($id);
+                return redirect(url('/withdrawals'));
+
+            case 'decline-withdrawal':
+                $this->mark_as_read($id);
+                return redirect(url('/withdrawals'));
+
+            case 'complete-withdrawal':
+                $this->mark_as_read($id);
+                return redirect(url('/withdrawals'));
+
+            case 'referral-earnings':
+                $this->mark_as_read($id);
+                return redirect(url('/earnings'));
+
+            case 'monthly-charge':
                 $this->mark_as_read($id);
                 return redirect(url('/transactions'));
             

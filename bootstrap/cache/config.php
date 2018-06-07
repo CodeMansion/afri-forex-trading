@@ -306,8 +306,8 @@
     'port' => 465,
     'from' => 
     array (
-      'address' => 'support@afromarketers.com',
-      'name' => 'Afro Marketers',
+      'address' => 'support@marketsprofits.com',
+      'name' => 'Markets Profits',
     ),
     'encryption' => 'TLS',
     'username' => '3d7504a2bedc3d',

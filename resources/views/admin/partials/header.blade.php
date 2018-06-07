@@ -2,7 +2,7 @@
     <div class="page-header-inner ">
         <div class="page-logo">
             <a href="http://marketsprofits.com" target="_blank"> 
-                <img src="{{ asset('images/logo.png') }}" style="width:100px !important;" alt="logo" /> 
+                <img src="{{ asset('images/logo.png') }}" class="hidden-sm hidden-xs" style="width:100px !important;" alt="logo" /> 
             </a>
             <div class="menu-toggler sidebar-toggler"></div>
         </div>     
@@ -16,7 +16,6 @@
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ URL::route('WithdrawalIndex') }}"><i class="icon-docs"></i> View Withdrawals </a> </li>
-                    <!-- <li><a href="javascript:;"><i class="icon-tag"></i> Post News </a></li> -->
                     <li><a href="{{ URL::route('msgIndex') }};"><i class="icon-share"></i> Send Messages </a></li>
                     <li><a href="{{ url('/registration') }}"><i class="icon-flag"></i> Register</a></li>
                     <li><a href="{{ URL::route('membersIndex') }}"><i class="icon-users"></i> Members</a></li>

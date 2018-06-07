@@ -8,11 +8,18 @@ use App\User;
 use App\UserWallet;
 use App\Platform;
 use App\Withdrawal;
+use App\PaymentTransaction;
+use App\TransactionCategory;
+use App\Notifications\CompletedWithdrawalRequest;
+use App\Notifications\ApproveWithdrawalRequest;
+use App\Notifications\DeclineWithdrawalRequest;
 use App\Notifications\WithdrawalRequest;
+use App\Mail\CompletedWithdrawal;
 
 use Notification;
 use DB;
 use Carbon\Carbon;
+use Mail;
 
 class WithdrawalController extends Controller
 {
@@ -74,12 +81,15 @@ class WithdrawalController extends Controller
                 
                 if($ledger_balance >= $eligible_amount) {
                     $withdrawal = Withdrawal::insert([
-                        'user_id'       => auth()->user()->id,
-                        'slug'          => bin2hex(random_bytes(64)),
-                        'status'        => 0,
-                        'amount'        => (double)$data['amount'],
-                        'created_at'    => Carbon::now(),
-                        'updated_at'    => Carbon::now()
+                        'user_id'           => auth()->user()->id,
+                        'slug'              => bin2hex(random_bytes(64)),
+                        'initial_wallet_balance' => $member_wallet,
+                        'withdrawal_charge' => $withdrawal_charge,
+                        'deducted_amount'   => $eligible_amount,
+                        'status'            => 0,
+                        'withdrawal_amount'        => (double)$data['amount'],
+                        'created_at'        => Carbon::now(),
+                        'updated_at'        => Carbon::now()
                     ]);
                 } else {
                     return response()->json([
@@ -136,7 +146,6 @@ class WithdrawalController extends Controller
 
                 $withdrawal = Withdrawal::find($data['withdrawal_id']);
                 $withdrawal->status = 1;
-                $withdrawal->created_at = Carbon::now();
                 $withdrawal->save();
 
                 activity_logs(
@@ -145,8 +154,8 @@ class WithdrawalController extends Controller
                     "Approved a withdrawal request"
                 );
 
-                // $admin = User::find(1);
-                // Notification::send($admin, new WithdrawalRequest($withdrawal));
+                $user = User::find($withdrawal->user_id);
+                Notification::send($user, new ApproveWithdrawalRequest($withdrawal));
 
                 return response()->json([
                     "msg"   => "Withdrawal request has been approved",
@@ -170,7 +179,6 @@ class WithdrawalController extends Controller
 
                 $withdrawal = Withdrawal::find($data['withdrawal_id']);
                 $withdrawal->status = 3;
-                $withdrawal->created_at = Carbon::now();
                 $withdrawal->save();
 
                 activity_logs(
@@ -179,8 +187,8 @@ class WithdrawalController extends Controller
                     "Declined a withdrawal request"
                 );
 
-                // $admin = User::find(1);
-                // Notification::send($admin, new WithdrawalRequest($withdrawal));
+                $user = User::find($withdrawal->user_id);
+                Notification::send($user, new DeclineWithdrawalRequest($withdrawal));
 
                 return response()->json([
                     "msg"   => "Withdrawal request has been declined",
@@ -188,6 +196,63 @@ class WithdrawalController extends Controller
                 ],200);
 
             } catch(Exception $e) {
+                return response()->json([
+                    "errors"   => $e->getMessage(),
+                ],422);
+            }
+        }
+    }
+
+
+    public function completed(Request $request)
+    {
+        $data = $request->except('_token');
+        if($data) {
+            DB::beginTransaction();
+            try {
+                $withdrawal = Withdrawal::find($data['withdrawal_id']);
+                $withdrawal->status = 2;
+                $withdrawal->save();
+
+                $wallet = UserWallet::where('user_id',$withdrawal->user_id)->first();
+                $wallet->amount -= $withdrawal->deducted_amount;
+                $wallet->save();
+
+                $transaction = PaymentTransaction::insert([
+                    'slug'          => bin2hex(random_bytes(16)),
+                    'user_id'       => $withdrawal->user_id,
+                    'platform_id'   => 2,
+                    'transaction_category_id'   => TransactionCategory::where('name','Debit')->first()->id,
+                    'amount'        => $withdrawal->deducted_amount,
+                    'is_paid'       => true,
+                    'reference_no'  => date('Ymdhis'),
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now()
+                ]);
+
+                activity_logs(
+                    auth()->user()->id, 
+                    $_SERVER['REMOTE_ADDR'], 
+                    "Marked a withdrawal request as complete"
+                );
+
+                $user = User::find($withdrawal->user_id);
+                Notification::send($user, new CompletedWithdrawalRequest($withdrawal));
+
+                $param['amount'] = $withdrawal->withdrawal_amount;
+                $param['charge'] = $withdrawal->withdrawal_charge;
+                $param['name'] = $user->full_name;
+                $param['total'] = $withdrawal->deducted_amount;
+                Mail::to($user->email)->send(new CompletedWithdrawal($param));
+
+                DB::commit();
+                return response()->json([
+                    "msg"   => "Withdrawal request has been marked completed",
+                    "type"  => "true"
+                ],200);
+
+            } catch(Exception $e) {
+                DB::rollback();
                 return response()->json([
                     "errors"   => $e->getMessage(),
                 ],422);

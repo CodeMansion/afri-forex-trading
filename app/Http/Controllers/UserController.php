@@ -8,6 +8,7 @@ use App\User;
 use App\Role;
 use App\UserProfile;
 use App\UserWallet;
+use App\UserAccount;
 use App\PaymentTransaction;
 use App\TransactionCategory;
 use App\ActivityLog;
@@ -86,7 +87,7 @@ class UserController extends Controller
     {
         $data = $request->except('_token');
         $member_wallet = UserWallet::balance()->first()->amount;
-        $charge = (1 / 100) * (double)$data['amount'];
+        $charge = (2 / 100) * (double)$data['amount'];
         $eligible_amount = $charge + (double)$data['amount'];
         $ledger_balance = $member_wallet - 10.00;
         
@@ -126,7 +127,7 @@ class UserController extends Controller
 
                 //deducting from giver account
                 $deduct = UserWallet::activeMember();
-                $deduct->amount -= (double)$data['amount'];
+                $deduct->amount -= $eligible_amount;
                 $deduct->save();
 
                 //debit transaction to giver
@@ -134,7 +135,7 @@ class UserController extends Controller
                 $debit->slug = bin2hex(random_bytes(64));
                 $debit->user_id = auth()->user()->id;
                 $debit->transaction_category_id = TransactionCategory::whereName('Debit')->first()->id;
-                $debit->amount = (double)$data['amount'];
+                $debit->amount = $eligible_amount;
                 $debit->is_paid = true;
                 $debit->reference_no = bin2hex(random_bytes(8));
                 $debit->save();
@@ -464,6 +465,40 @@ class UserController extends Controller
             return redirect()->back()->with("error", $e->getMessage());
         }
     }
+
+
+
+    public function UpdateAccount(Request $request)
+    {
+        $data = $request->except('_except');
+        \DB::beginTransaction();
+        try {
+            
+            $account = UserAccount::whereUserId(auth()->user()->id)->first();
+            $account->account_name = (isset($data['account_name'])) ? $data['account_name'] : null;
+            $account->account_number = (isset($data['account_number'])) ? $data['account_number'] : null;
+            $account->bank_name = (isset($data['bank_name'])) ? $data['bank_name'] : null;
+            $account->bank_code = (isset($data['bank_code'])) ? $data['bank_code'] : null;
+            $account->sort_code = (isset($data['sort_code'])) ? $data['sort_code'] : null;
+            $account->swift_code = (isset($data['swift_code'])) ? $data['swift_code'] : null;
+            $account->iban_number = (isset($data['iban_number'])) ? $data['iban_number'] :null;
+            $account->save();
+
+            $ip = $_SERVER['REMOTE_ADDR'];
+            activity_logs(auth()->user()->id, $ip, "Updated account information");
+
+            \DB::commit();
+            return response()->json([
+                'msg'   => "Updated Successfully.",
+                'type'  => "true"
+            ],200);
+
+        } catch (Exception $e) {
+            \DB::rollback();
+            return redirect()->back()->with("error", $e->getMessage());
+        }
+    }
+
 
     /**
      * Remove the specified resource from storage.

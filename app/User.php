@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->hasOne('App\UserProfile','user_id');
     }
 
+
+    public function account(){
+        return $this->hasOne('App\UserAccount','user_id');
+    }
+
     public function isA($field) {
         $roles = \DB::table("role_user")->where([
             'user_id' => $this->id,

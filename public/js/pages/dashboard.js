@@ -10,6 +10,8 @@ var AppDashboard = function() {
         $("#latest_earnings_loader").hide();
         $("#loader").hide();
         $("#withdrawal_loader").hide();
+        $("#user_details_for_fund").hide();
+        $("#share_fund_btn").hide();
     }
 
     var showDispute = function() {
@@ -152,6 +154,69 @@ var AppDashboard = function() {
     }
 
 
+    var GetDetails = function(detail) {
+        $("#get_detail_btn").attr("disabled", true);
+        $("#get_detail_btn").html("<i class='fa fa-spinner fa-spin'></i> Processing...");
+        $.ajax({
+            url: USERDETAILS,
+            method: "POST",
+            data: {
+                '_token': TOKEN,
+                'detail': detail
+            },
+            success: function(rst) {
+                if(rst =="false"){
+                    toastr.error("this user "+detail+" does not exist");
+                    $("#get_detail_btn").attr("disabled", false);
+                    $("#get_detail_btn").html("Continue");
+                }else{
+                    $("#get_detail_btn").attr("disabled", false);
+                    $("#get_detail_btn").html("<i class='fa fa-check'></i> Continue");
+                    $("#get_detail_btn").hide();
+                    $(".username_detail_filed").fadeOut();
+                    $("#user_details_for_fund").fadeIn();
+                    $("#user_details_for_fund").html(rst);
+                    $("#share_fund_btn").show();
+                }
+            },
+            error: function(alaxB, HTTerror, errorMsg) {
+                toastr.error(errorMsg);
+            }
+        });
+    };
+
+    const ShareFund = function(user_id, amount) {
+        $("#share_fund_btn").attr("disabled", true);
+        $("#share_fund_btn").html("<i class='fa fa-spinner fa-spin'></i> Processing...");
+        $.ajax({
+            url: SHARE_FUND,
+            method: "POST",
+            data: {
+                '_token': TOKEN,
+                'user_id': user_id,
+                'amount': amount
+            },
+            success: function(rst) {
+                if (rst.type == "true") {
+                    $("#share_fund_btn").attr("disabled", false);
+                    $("#share_fund_btn").html(" Submit");
+                    toastr.success(rst.msg);
+                    location.reload();
+                } else if (rst.type == "false") {
+                    $("#share_fund_btn").attr("disabled", false);
+                    $("#share_fund_btn").html("Try Again");
+                    toastr.error(rst.msg);
+                }
+            },
+            error: function(alaxB, HTTerror, errorMsg) {
+                $("#share_fund_btn").attr("disabled", false);
+                $("#share_fund_btn").html("Try Again");
+                toastr.error(errorMsg);
+            }
+        });
+    };
+
+
     setInterval(() => {
         showDispute();
         showNewMembers();
@@ -159,7 +224,7 @@ var AppDashboard = function() {
         showTransactions();
         showMembersEarnings();
         showLatestWithdrawals();
-    }, 10000)
+    }, 10000);
     
     return {    
         init: function() {
@@ -173,6 +238,36 @@ var AppDashboard = function() {
 
             $("#make_withdrawal_btn").on("click", function() {
                 MakeWithdrawal();
+            });
+
+            $("#cancel_user_details").on("click", function() {
+                $(".username_detail_filed").fadeIn();
+                $("#detail_field").val("");
+                $("#get_detail_btn").show();
+                $("#share_fund_btn").hide();
+                $("#user_details_for_fund").html("");
+                $("#user_details_for_fund").hide();
+            });
+
+            $("#share_fund_btn").on("click", function() {
+                var user_id = $("#receiver_user_id").val();
+                var amount = $("#amount_to_transfer").val();
+                if (user_id.length < 1) {
+                    toastr.error("Please this text field can not be empty!");
+                } else if (amount.length < 1) {
+                    toastr.error("Please this text field can not be empty!");
+                } else {
+                    ShareFund(user_id, amount);
+                }
+            });
+
+            $("#get_detail_btn").on("click", function() {
+                var detail = $("#detail_field").val();
+                if (detail.length < 1) {
+                    toastr.error("Please this text field can not be empty!");
+                } else {
+                    GetDetails(detail);
+                }
             });
         }
     }

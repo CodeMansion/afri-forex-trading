@@ -1,4 +1,6 @@
 @if(isset($withdrawal->status))
+    @if($withdrawal->status == 3 || $withdrawal->status == 2)
+    @else
     <div class="alert alert-warning" style="font-size:17px;">
         <p>
             @if($withdrawal->status == 0)
@@ -7,13 +9,11 @@
             @if($withdrawal->status == 1)
             Your withdrawal request has been approved and undergoing processing | 
             @endif
-            @if($withdrawal->status == 3)
-            Your withdrawal request was rejected | 
-            @endif
             <span class="badge badge-{{ withdrawal_status($withdrawal->status,'class') }}">{{ withdrawal_status($withdrawal->status,'name') }}</span> |
             {{ $withdrawal->created_at->diffForHumans() }}
         </p>
     </div>
+    @endif
 @endif
 
 @if(isset($userSub))  

@@ -46,6 +46,7 @@ Route::group(['middleware'=>['auth']], function(){
 	Route::post('/withdrawal-details', ["as"=>"WithdrawalDetails", "uses"=>"WithdrawalController@show"]);
 	Route::post('/approve-withdrawal', ["as"=>"ApproveWithdrawal", "uses"=>"WithdrawalController@approve"]);
 	Route::post('/decline-withdrawal', ["as"=>"DeclineWithdrawal", "uses"=>"WithdrawalController@decline"]);
+	Route::post('/complete-withdrawal', ["as"=>"CompleteWithdrawal", "uses"=>"WithdrawalController@completed"]);
 	
     //-- AUTHENTICATION MANAGEMENT --//
     Route::group(['prefix' => 'authentication'], function () {
@@ -145,6 +146,7 @@ Route::group(['middleware'=>['auth']], function(){
 		Route::post('/delete-member', ["as"=>"DeleteMember", "uses"=>"UserController@DeleteMember"]);
 		Route::post('/confirm-password', ["as"=>"ConfirmPassword", "uses"=>"UserController@ConfirmPassword"]);
 		Route::post('/refund-wallet', ["as"=>"RefundWallet", "uses"=>"UserController@RefundWallet"]);
+		Route::post('/update-account', ["as"=>"UpdateAccount", "uses"=>"UserController@UpdateAccount"]);
 	});	
 	
 	//-	---- TRANSACTION CATEGORY MANAGEMENT ----//	
