@@ -45,7 +45,7 @@
                             <table class="table table-striped table-bordered table-hover table-bordered testimonies_list" id="sample_2">
                                 <thead>
                                     <tr>
-                                        <th width="50"></th>
+                                        <th width="50">S/N</th>
                                         <th>Title</th>
                                         <th>Message</th>
                                         <th>Status</th>
@@ -59,7 +59,7 @@
                                     @php($counter = 1)
                                     @foreach($testimonies as $testimony)
                                         <tr>
-                                            <td>#</td>
+                                            <td>{{$counter}}</td>
                                             <td>{{ $testimony->title }}</td>
                                             <td>{{ strip_tags(word_counter($testimony->message, 8,'...')) }}</td>
                                             <td><span class="badge badge-{{ testimony_status($testimony->status,'class') }}">{{ testimony_status($testimony->status,'name') }}</span></td>

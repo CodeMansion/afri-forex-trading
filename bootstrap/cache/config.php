@@ -306,7 +306,7 @@
     'port' => 465,
     'from' => 
     array (
-      'address' => 'support@marketsprofits.com',
+      'address' => 'support@profitsmarkets.com',
       'name' => 'Markets Profits',
     ),
     'encryption' => 'TLS',

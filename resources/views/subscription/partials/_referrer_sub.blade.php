@@ -17,6 +17,6 @@
         <div class="col-md-7 value"> Downline Commission </div>
     </div><hr/>
     <center>
-        <button class="btn btn-bg green" type="button" id="ConfirmReferral">Proceed</button>
+        <button class="btn btn-lg green" type="button" id="ConfirmReferral">Proceed</button>
     </center>
 </div>

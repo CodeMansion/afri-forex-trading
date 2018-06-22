@@ -49,7 +49,7 @@
                             @php($counter=1)
                             @foreach($transactions as $transaction)
                             <tr>
-                                <td>#</td>
+                                <td>{{$counter}}</td>
                                 <td>{{ $transaction->reference_no }}</td>
                                 <td><span class="badge badge-success"> {{ $transaction->Category->name }} </span> </td>
                                 <td>
@@ -62,6 +62,7 @@
                                 <td>${{ number_format($transaction->amount,2) }}</td>
                                 <td>{{ $transaction->created_at->diffForHumans() }}</td>
                             </tr>
+                            @php($counter++)
                             @endforeach
                         </tbody>
                     </table>

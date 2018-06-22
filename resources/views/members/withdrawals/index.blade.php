@@ -44,7 +44,7 @@
                                 <table class="table table-bordered table-hover withdrawal" id="sample_2">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>S/N</th>
                                             <th>INITIAL BALANCE</th>
                                             <th>CHARGE</th>
                                             <th>AMOUNT</th>
@@ -58,7 +58,7 @@
                                         @php($index=0)
                                         @foreach($withdrawals as $withdrawal)
                                             <tr>
-                                                <td>#</td>
+                                                <td>{{$counter}}</td>
                                                 <td>${{ number_format($withdrawal->initial_wallet_balance,'2') }}</td> 
                                                 <td>${{ number_format($withdrawal->withdrawal_charge,'2') }}</td> 
                                                 <td>${{ number_format($withdrawal->withdrawal_amount,'2') }}</td> 

@@ -45,7 +45,7 @@
                             <table class="table table-striped table-hover table-bordered disputes_list" id="sample_2">
                                 <thead>
                                     <tr>
-                                        <th></th>
+                                        <th>S/N</th>
                                         <th>Member</th>
                                         <th>Title</th>
                                         <th>Message</th>
@@ -57,9 +57,10 @@
                                 </thead>
                                 <tbody>
                                     @php($index=0)
+                                    @php($counter=1)
                                     @foreach($disputes as $dispute)
                                         <tr>
-                                            <td></td>
+                                            <td>{{$counter}}</td>
                                             <td>{{ $dispute->user->Profile->full_name }}</td>
                                             <td>{{ $dispute->title }}</td>
                                             <td>{{ strip_tags(word_counter($dispute->message, 8,'...')) }}</td>
@@ -69,6 +70,7 @@
                                             <td><a href="{{ URL::route('viewDispute', $dispute->slug) }}"><i class="icon-note"></i> View </a></td>
                                         </tr>
                                     @php($index++)
+                                    @php($counter++)
                                     @endforeach
                                 </tbody>
                             </table>

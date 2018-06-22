@@ -52,15 +52,15 @@
                                     </thead>
                                     <tbody>
                                         @php($counter=1)
-                                        @forelse($activitylogs as $log)
+                                        @foreach($activitylogs as $log)
                                             <tr>
-                                                <td>#</td>
+                                                <td>{{ $counter }}</td>
                                                 <td>{{ $log->User->full_name }} </td>                                                    
                                                 <td>{{ $log->action }}</td>
                                                 <td>{{ $log->created_at }}</td>
                                             </tr>
-                                        @empty
-                                        @endforelse
+                                        @php($counter)
+                                        @endforeach
                                     </tbody>
                                 </table>
                             @endif

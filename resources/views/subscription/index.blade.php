@@ -38,6 +38,7 @@
                             <div class='col-md-2'></div>
                             <div class="col-md-8">
                                 <div id="service_page">
+                                    <p style="font-size: 30px;color:#7F8C8D;">Welcome to MARKETSPROFITS investment hub. Select an investment platform below to continue.</p><hr/>
                                     @php($counter=0)
                                     @php($index=0)
                                     @foreach($platforms as $platform)

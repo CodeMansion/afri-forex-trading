@@ -59,7 +59,7 @@
                                         @php($index=0)
                                         @foreach($platforms as $platform)
                                             <tr>
-                                                <td>{{ $counter++}}</td>
+                                                <td>{{ $counter}}</td>
                                                 <td>{{ $platform->name}} </td>
                                                 <td>
                                                     @if($platform->is_multiple == true)
@@ -87,6 +87,7 @@
                                                 </td>
                                             </tr>
                                             @php($index++)
+                                        @php($counter++)
                                         @endforeach
                                     </tbody>
                                 </table>

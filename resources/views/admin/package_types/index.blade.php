@@ -58,11 +58,11 @@
                                         <tbody>
                                             @php($counter=1)
                                             @php($index=0)
-                                            @forelse($packagetypes as $type)
+                                            @foreach($packagetypes as $type)
                                                 <tr>
-                                                    <td>#</td>
-                                                    <td>{{ $type->name}} </td>
-                                                    <td>{{ $type->percentage }}% </td>
+                                                    <td>{{$counter}}</td>
+                                                    <td>{{$type->name}} </td>
+                                                    <td>{{$type->percentage}}% </td>
                                                     <td>
                                                         <div class="btn-group">
                                                             <button class="btn btn-xs green dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-expanded="false"> Actions<i class="fa fa-angle-down"></i></button>
@@ -74,9 +74,9 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                @php($index++)
-                                            @empty
-                                            @endforelse
+                                            @php($index++)
+                                            @php($counter++)
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 @endif

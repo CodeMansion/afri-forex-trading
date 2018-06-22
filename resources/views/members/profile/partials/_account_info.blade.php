@@ -52,8 +52,11 @@
     </div>
     <div class="margiv-top-10">
         @if(auth()->user()->is_admin == 0)
-        <img src="{{ asset('images/loader.gif') }}" id="account_loader" /> 
-        <a href="javascript:;" id="update_account_btn" class="btn green" > Save Changes </a>
+	        @if(isset($profile->account->account_number) && isset($profile->account->account_name) && isset($profile->account->bank_name))
+	        @else
+	        <img src="{{ asset('images/loader.gif') }}" id="account_loader" /> 
+	        <a href="javascript:;" id="update_account_btn" class="btn green" > Save Changes </a>
+	        @endif
         @endif
     </div>
 </form>

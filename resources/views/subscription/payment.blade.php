@@ -45,6 +45,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
                         <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <p style="font-size: 30px;color:#7F8C8D;text-align: center;">Welcome to our payment page. Please contact your UPLINE or COUNTRY REP to fund your wallet.</p><hr/>
                             <div class="portlet green-meadow box">
                                 @if(isset($type) && $type == 1)
                                     @include('subscription.partials._daily_signal_sub')

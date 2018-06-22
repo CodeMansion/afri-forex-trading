@@ -4,7 +4,7 @@
     <table class="table table-bordered table-hover members" id="sample_2">
         <thead>
             <tr>
-                <th>#</th>
+                <th>S/N</th>
                 <th>NAME</th> 
                 <th>EMAIL</th>
                 <th>USERNAME</th>
@@ -14,10 +14,11 @@
         </thead>
         <tbody>
             @php($index=0)
+            @php($counter=1)
             @foreach($members as $member)
                 <tr>
-                    <td>#</td>
-                    <td>{{ $member->full_name}} </td>
+                    <td>{{$counter}}</td>
+                    <td>{{ $member->full_name }} </td>
                     <td>{{ $member->email}} </td>
                     <td>{{ $member->username}}</td>
                     <td><span class="badge badge-{{ member_status($member->is_active,'class') }}">{{ member_status($member->is_active,'name') }}</span></td>
@@ -28,6 +29,7 @@
                     </td>
                 </tr>
             @php($index++)
+            @php($counter++)
             @endforeach
         </tbody>
     </table>

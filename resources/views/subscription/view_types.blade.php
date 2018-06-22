@@ -49,6 +49,7 @@
                 </div>
                 <div class="portlet-body form">
                     <div class="pricing-content-1">
+                        <p style="font-size: 30px;color:#7F8C8D;text-align: center;">Please INVESTMENT earning type below to continue.</p><hr/>
                         <div class="row">
                             @php($index=0)
                             @foreach($types as $type)

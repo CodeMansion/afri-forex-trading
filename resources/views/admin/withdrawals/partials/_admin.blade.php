@@ -4,7 +4,7 @@
     <table class="table table-bordered table-hover withdrawal" id="sample_2">
         <thead>
             <tr>
-                <th>#</th>
+                <th>S/N</th>
                 <th>MEMBER</th>
                 <th>WITHDRAWAL AMOUNT</th>
                 <th>CHARGE</th>
@@ -18,7 +18,7 @@
             @php($index=0)
             @foreach($withdrawals as $withdrawal)
                 <tr>
-                    <td>#</td>
+                    <td>{{$counter}}</td>
                     <td>{{ strtoupper($withdrawal->user->full_name) }} </td>
                     <td>${{ number_format($withdrawal->withdrawal_amount,'2') }}</td> 
                     <td>${{ number_format($withdrawal->withdrawal_charge,'2') }}</td>

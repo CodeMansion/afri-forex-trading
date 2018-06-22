@@ -5,7 +5,7 @@
     <table class="table table-striped table-hover table-bordered" id="sample_2">
         <thead>
             <tr>
-                <th>#</th>
+                <th>S/N</th>
                 <th>NAME</th>
                 <th>EMAIL</th>
                 <th>USERNAME</th>
@@ -14,9 +14,10 @@
             </tr>
         </thead>
         <tbody>
+        	@php($counter=1)
             @foreach($downlines as $downline)
                 <tr>
-                    <td>#</td>
+                    <td>{{$counter}}</td>
                     <td>{{ $downline->User->username}} </td>   
                     <td>{{ $downline->User->email }}</td>                                                 
                     <td>{{ $downline->User->full_name}}</td>
@@ -29,6 +30,7 @@
                     </td>
                     <td>{{ $downline->created_at }}</td>
                 </tr>
+            @php($counter++)
             @endforeach
         </tbody>
     </table>

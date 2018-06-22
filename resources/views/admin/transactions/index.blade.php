@@ -44,7 +44,7 @@
                                 <table class="table table-bordered table-hover transaction" id="sample_2">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>S/N</th>
                                             <th>Name</th>
                                             <th>Amount</th>
                                             <th>Type</th>
@@ -57,13 +57,12 @@
                                         @php($index=0)
                                         @foreach($transactions as $transaction)
                                             <tr>
-                                                <td>#</td>
+                                                <td>{{$counter}}</td>
                                                 <td>{{ $transaction->user->full_name}} </td>
                                                 <td>{{ number_format($transaction->amount,'2') }}</td> 
                                                 <td><span class="badge badge-success">{{ $transaction->Category->name }}</span></td>
-                                                <td>{{ $transaction->created_at->diffForHumans() }}</td>                                                   
+                                                <td>{{ $transaction->created_at->diffForHumans() }}</td>                                    
                                                 <td><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i> View</a>&nbsp;<a href="javascript:;" id="btn_transaction_delete{{$index}}"><i class="fa fa-trash"></i> Delete</a></td>  
-                                                
                                             </tr>
                                         @php($counter++)
                                         @php($index++)

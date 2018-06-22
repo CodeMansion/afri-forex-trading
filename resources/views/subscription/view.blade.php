@@ -45,6 +45,7 @@
                     <div class="row">
                         <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12"></div>
                         <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                            <p style="font-size: 30px;color:#7F8C8D;">Welcome to the INVESTMENT platform. Select an investment package below to continue.</p><hr/>
                             <table class="table table-striped text-center table-bordered">
                                 <thead style="background-color:#1ABC9C;color:white;text-align: center;">
                                     <tr class="text-center" style="font-size:22px;">

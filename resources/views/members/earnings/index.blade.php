@@ -38,7 +38,6 @@
                         <thead>
                             <tr>
                                 <th width="30">S/N</th>
-                                <!-- <th>PACKAGE</th> -->
                                 <th width="50">TYPE</th>
                                 <th>SERVICE</th>
                                 <th width="90">AMOUNT</th>  
@@ -50,13 +49,14 @@
                             @php($counter=1)
                             @foreach($earnings as $earning)
                             <tr>
-                                <td>#</td>
+                                <td>{{$counter}}</td>
                                 <td>{{ $earning->type->name }}</td>
                                 <td><span class="badge badge-success"> {{ $earning->platform->name }} </span> </td>
                                 <td>${{ number_format($earning->amount,2) }}</td>
                                 <td><span class="badge badge-{{ earnings_status($earning->status,'class') }}">{{ earnings_status($earning->status,'name') }}</span></td>
                                 <td>{{ $earning->created_at->diffForHumans() }}</td>
                             </tr>
+                            @php($counter++)
                             @endforeach
                         </tbody>
                     </table>

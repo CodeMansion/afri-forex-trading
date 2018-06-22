@@ -58,9 +58,9 @@
                                     <tbody>
                                         @php($counter=1)
                                         @php($index=0)
-                                        @forelse($packages as $package)
+                                        @foreach($packages as $package)
                                             <tr>
-                                                <td>#</td>
+                                                <td>{{$counter}}</td>
                                                 <td>{{ strtoupper($package->name) }} </td>
                                                 <td>${{ number_format($package->investment_amount,2) }} </td>
                                                 <td>${{ number_format($package->monthly_charge,2) }} </td>
@@ -75,9 +75,9 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            @php($index++)
-                                        @empty
-                                        @endforelse
+                                        @php($index++)
+                                        @php($counter++)
+                                        @endforeach
                                     </tbody>
                                 </table>
                             @endif

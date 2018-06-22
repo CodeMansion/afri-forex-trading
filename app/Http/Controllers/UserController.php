@@ -14,6 +14,7 @@ use App\TransactionCategory;
 use App\ActivityLog;
 use App\Withdrawal;
 use App\Mail\NewAdministrator;
+use App\Investment;
 
 use Validator;
 use Gate;
@@ -43,6 +44,7 @@ class UserController extends Controller
 
             $data['menu_id'] = 2;
             $data['profile'] = User::userProfile();
+            $params['investments'] = Investment::UserInvestments()->get();
             $data['earnings'] = User::find(auth()->user()->slug,'slug')->UserEarnings()->orderBy('id','DESC')->get();
             $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','DESC')->get();
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->get();
