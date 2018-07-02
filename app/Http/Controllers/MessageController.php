@@ -107,7 +107,7 @@ class MessageController extends Controller
 
                 if($data['type'] == 'ds_members') {
                     $filter_email_address = [];
-                    $subscribers = User::subscriptionMembers();
+                    $subscribers = User::SubscriptionMembers();
 
                     foreach($subscribers as $recipient) {
                         if(filter_var($recipient->User->email, FILTER_VALIDATE_EMAIL)) {

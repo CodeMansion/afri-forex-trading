@@ -411,7 +411,7 @@ class UserController extends Controller
      */
     public function show($slug)
     {
-        if(\Auth::user()->is_admin) {
+        if(auth()->user()->is_admin) {
             $data['menu_id'] = 5;
             $data['profile'] = User::find($slug,'slug');
             $data['earnings'] = User::find($slug,'slug')->UserEarnings()->orderBy('id','DESC')->get();

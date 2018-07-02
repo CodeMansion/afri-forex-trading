@@ -111,8 +111,10 @@ class SubscriptionController extends Controller
                 $investment = Investment::UserInvestments()->count();
                 $member_wallet = UserWallet::balance()->first()->amount;
                 $ledger_balance = $member_wallet - 10.00;
-                $old_withdrawal = Withdrawal::where('user_id', auth()->user()->id)
-                        ->where('status',0)->orWhere('status',1)->first();
+                $old_withdrawal = Withdrawal::where([
+                    'user_id'   => auth()->user()->id,
+                    'status'    => 1
+                ])->first();
 
                 if($old_withdrawal) {
                     return response()->json([
