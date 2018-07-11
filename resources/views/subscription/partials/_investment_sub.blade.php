@@ -33,7 +33,7 @@
         <input type="hidden" id="invest_payment_description" value="Payment for investment" />
         <input type="hidden" id="package_id" value="{{ $package->id }}" />
         <input type="hidden" id="package_type_id" value="{{ $package_type->id }}" />
-        <!-- <input type='image' name="InvestWithVoguePay" src='https://voguepay.com/images/buttons/make_payment_blue.png' alt='Submit' /><br/> -->
+        <input type='image' name="InvestWithVoguePay" src='https://voguepay.com/images/buttons/make_payment_blue.png' alt='pay-with-voguepay' /><br/>
         <!-- @if(isset($balance->amount) && $balance->amount > 10.00) -->
         <button class="btn btn-lg green" type="button" id="PayWithWalletInvest"><i class="icon-wallet"></i> Pay With Wallet</button>
         <!-- @endif -->

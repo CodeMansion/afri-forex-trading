@@ -60,12 +60,24 @@ class SubscriptionController extends Controller
     }
 
 
-    public function processPayment(Request $request,$type)
+    public function processPayment(Request $request)
     {
         $data = $request->except('_token');
-        if(isset($type) && $type == 'ajax') {
+        if(isset($data)) {
             \DB::beginTransaction();
             try {
+                $old_withdrawal = Withdrawal::where([
+                    'user_id'   => auth()->user()->id,
+                    'status'    => 1
+                ])->first();
+
+                if($old_withdrawal) {
+                    return response()->json([
+                        "msg"   => "You have a pending withdrawal request. Please try again after request has been attended to.",
+                        "head"  => "Pending Withdrawal Request",
+                        "type"  => "false"
+                    ]);
+                }
 
                 if($data['platform'] == 1) {
                     $this->NewSubscription($data['amount']);
@@ -85,11 +97,11 @@ class SubscriptionController extends Controller
                 activity_logs(
                     auth()->user()->id, 
                     $_SERVER['REMOTE_ADDR'], 
-                    "Dubscribe for a new investment"
+                    "Subscribe for a new investment"
                 );
 
                 return response()->json([
-                    'msg' => "Payment successfull!",
+                    'msg' => "Payment Was Successfull",
                     'type' => "true"
                 ],200);
 
@@ -224,7 +236,7 @@ class SubscriptionController extends Controller
             'user_id'       => auth()->user()->id,
             'platform_id'   => 1,
             'amount'        => (double)$amount,
-            'is_first_time' => true,
+            'is_first_time' => ($subscription < 1) ? true : false,
             'status'        => 1,
             'expiry_date'   => ($subscription > 0) ? null : Carbon::now()->addDays(60),
             'created_at'    => Carbon::now(),

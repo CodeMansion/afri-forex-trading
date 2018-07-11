@@ -44,7 +44,7 @@ class UserController extends Controller
 
             $data['menu_id'] = 2;
             $data['profile'] = User::userProfile();
-            $params['investments'] = Investment::UserInvestments()->get();
+            $data['investments'] = Investment::userInvestments()->get();
             $data['earnings'] = User::find(auth()->user()->slug,'slug')->UserEarnings()->orderBy('id','DESC')->get();
             $data['transactions'] = PaymentTransaction::userTransactions()->orderBy('id','DESC')->get();
             $data['activities'] = ActivityLog::userActivities()->orderBy('id','desc')->get();
@@ -103,8 +103,10 @@ class UserController extends Controller
                 ]);
             }
 
-            $old_withdrawal = Withdrawal::where('user_id', auth()->user()->id)
-                        ->where('status',0)->orWhere('status',1)->first();
+            $old_withdrawal = Withdrawal::where([
+                'user_id'   => auth()->user()->id,
+                'status'    => 1
+            ])->first();
 
             if($old_withdrawal) {
                 return response()->json([
@@ -417,6 +419,7 @@ class UserController extends Controller
             $data['earnings'] = User::find($slug,'slug')->UserEarnings()->orderBy('id','DESC')->get();
             $data['transactions'] =  User::find($slug,'slug')->UserTransactions()->orderBy('id','DESC')->get();
             $data['activities'] = ActivityLog::where('user_id',$data['profile']->id)->orderBy('id','desc')->get();
+            $data['investments'] = User::find($slug, 'slug')->UserInvestments()->get();
             $data['balance'] = UserWallet::where('user_id',$data['profile']->id)->first();
 
             return view('admin.members.show')->with($data);

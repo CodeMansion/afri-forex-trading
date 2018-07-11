@@ -409,9 +409,8 @@ class HomeController extends Controller
     public function loadEarnings() {
         if(auth()->user()->is_admin == 0) {
             $data['earnings'] = User::find(auth()->user()->slug, 'slug')->UserEarnings()->orderBy('id','DESC')->limit(10)->get();
+            return view('members.partials.util._latest_earnings')->with($data);
         }
-        
-        return view('members.partials.util._latest_earnings')->with($data);
     }
 
 

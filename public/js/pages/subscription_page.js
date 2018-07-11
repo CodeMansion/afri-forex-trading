@@ -1,14 +1,17 @@
 const AppServiceSubscription = function() {
 
-    const ProcessPayment = function(platform, amount=null, package_id=null, package_type_id=null) {
+    let app_id = "d257b9a017904f8284e4452b6562eca2";
+    let uri = encodeURI("http://openexchangerates.org/latest.json?app_id=" + app_id);
+
+    const ProcessPayment = function() {
         $.ajax({
             url: PAYMENT,
             method: "POST",
             data: {
-                'platform': platform,
-                'amount': amount,
-                'package_id': package_id,
-                'package_type_id': package_type_id,
+                'platform': $('body').data('platform'),
+                'amount': $('body').data('amount'),
+                'package_id': $('body').data('package_id'),
+                'package_type_id': $('body').data('package_type_id'),
                 '_token': TOKEN
             },
             success: function(data) {
@@ -22,7 +25,7 @@ const AppServiceSubscription = function() {
                 }
             },
             error: function(alaxB, HTTerror, errorMsg) {
-                swal("Error", errorMsg, "error");
+                swal("Please try again", errorMsg, "error");
                 $("#payment_btn").attr('disabled', false);
             }
         });
@@ -33,26 +36,26 @@ const AppServiceSubscription = function() {
     }
 
     const successFunction = function(transaction_id) {
-        swal("Transaction completed",'success',"success");
+        // swal("Transaction completed",'success',"success");
+        ProcessPayment();
     }
 
     const closedFunction = function() {
-        swal("Closed",'Failed',"error");
+        swal("Connection Closed",'Failed',"error");
     }
 
     const PayWithVoguePay = function(amount,description) {
         Voguepay.init({
             v_merchant_id: '6162-0064824',
             total: amount,
-            // notify_url:'http://domain.com/notification.php',
-            cur: 'USD',
+            cur: 'NGN',
             memo: description,
             recurrent: false,
             frequency: 10,
             
-            closed:closedFunction,
-            success:successFunction,
-            failed:failedFunction
+            closed: closedFunction,
+            success: successFunction,
+            failed: failedFunction
        });
     }
 
@@ -136,6 +139,7 @@ const AppServiceSubscription = function() {
                 let amount = $("#invest_amount").val();
                 let package_id = $("#package_id").val();
                 let package_type_id = $("#package_type_id").val();
+                var converted_amount = 0;
 
                 swal({
                     title: "Are you sure?",
@@ -145,7 +149,19 @@ const AppServiceSubscription = function() {
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true
                 }, function() {
-                    PayWithVoguePay(amount,description);
+                    $('body').data('amount', amount);
+                    $('body').data('platform', 2);
+                    $('body').data('package_id', package_id);
+                    $('body').data('package_type_id', package_type_id);
+
+                    $.get(uri, function(json) {
+                        my_base = "USD";
+                        my_destination = "NGN";
+                        amount = amount;
+                        converted_amount = (amount / json.rates[my_base]) * json.rates[my_destination];
+                        PayWithVoguePay(Math.round(converted_amount),description);
+                        // ProcessPayment();
+                    }, "jsonp");
                 });   
             });
 
@@ -153,6 +169,7 @@ const AppServiceSubscription = function() {
             $("input[type=image][name=SubscribeWithVoguePay]").on("click", function() {
                 let description = $("#payment_description").val();
                 let amount = $("#amount").val();
+                var converted_amount = 0;
 
                 swal({
                     title: "Are you sure?",
@@ -162,10 +179,21 @@ const AppServiceSubscription = function() {
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true
                 }, function() {
-                    PayWithVoguePay(amount,description);
+                    $('body').data('amount', amount);
+                    $('body').data('platform', 1);
+                    $('body').data('package_id', null);
+                    $('body').data('package_type_id', null);
+
+                    $.get(uri, function(json) {
+                        my_base = "USD";
+                        my_destination = "NGN";
+                        amount = amount;
+                        converted_amount = (amount / json.rates[my_base]) * json.rates[my_destination];
+                        PayWithVoguePay(Math.round(converted_amount),description);
+                        // ProcessPayment()
+                    }, "jsonp");
                 });   
             });
-
         }
     }
 

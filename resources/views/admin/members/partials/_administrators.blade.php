@@ -29,7 +29,7 @@
                     </td>
                 </tr>
             @php($index++)
-            $php($counter++)
+            @php($counter++)
             @endforeach
         </tbody>
     </table>

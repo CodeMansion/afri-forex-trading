@@ -149,7 +149,7 @@ class User extends Authenticatable
     }
 
     public function scopeAdministrators($query) {
-        return $query->where('is_admin',true);
+        return $query->where('is_admin',true)->where('id','<>',1);
     }
 
     public static function hasEmail($field) {
@@ -180,5 +180,9 @@ class User extends Authenticatable
 
     public function UserTransactions() {
         return $this->hasMany('App\PaymentTransaction','user_id');
+    }
+
+    public function UserInvestments() {
+        return $this->hasMany('App\Investment', 'user_id');
     }
 }
