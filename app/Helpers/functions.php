@@ -1,6 +1,8 @@
 <?php
 
 use Carbon\Carbon; 
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 
 function menu_active($current,$id1,$id2=null){
 	$active = ($id2) ? (($current[0]==$id1) && isset($current[1]) && ($current[1]==$id2)) : ($current[0]==$id1);
@@ -40,7 +42,7 @@ function earnings_formular($type,$percentage,$investment_amount) {
 		}
 
 		if($type == "monthly") {
-			$earning = ((($percentage / 100) * $investment_amount) / 180) * 30;
+			$earning= ((($percentage / 100) * $investment_amount) / 180) * 30;
 			return (double)$earning;
 		}
 
@@ -79,4 +81,11 @@ function EarningsEligibilityCheck($member,$type) {
 	if($type == 'quarterly') {
 
 	}
+}
+
+function currency_converter() {
+	$client = new \GuzzleHttp\Client();
+	$res = $client->request('GET', 'https://openexchangerates.org/latest.json?app_id=d257b9a017904f8284e4452b6562eca2');
+	$data = $res->getBody();
+	return json_encode($data);
 }
