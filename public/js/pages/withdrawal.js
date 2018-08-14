@@ -24,7 +24,7 @@ const Withdrawal = function() {
             },
             error: function(jqXHR, textStatus, errorMessage){
                 $("#view-withdrawal").modal('hide');
-                swal("An Error Occur!", errorMessage, "error");
+                swal("Please try again", errorMessage, "error");
             }
         });
     }
@@ -44,7 +44,7 @@ const Withdrawal = function() {
                 }, 2000);
             },
             error: function(jqXHR, textStatus, errorMessage){
-                swal("An Error Occur!",errorMessage, "error");
+                swal("Please try again",errorMessage, "error");
             }
         });
     }
@@ -64,7 +64,7 @@ const Withdrawal = function() {
                 }, 2000);
             },
             error: function(jqXHR, textStatus, errorMessage){
-                swal("An Error Occur!",errorMessage, "error");
+                swal("Please try again",errorMessage, "error");
             }
         });
     }
@@ -79,13 +79,17 @@ const Withdrawal = function() {
                 '_token': TOKEN
             },
             success: function(rst){
-                swal("Completed Succecssful", rst.msg, "success");
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
+                if(rst.type == 'true') {
+                    swal("Completed Succecssful", rst.msg, "success");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else if(rst.type == "false") {
+                    swal(rst.head, rst.msg, "error");
+                } 
             },
             error: function(jqXHR, textStatus, errorMessage){
-                swal("An Error Occur!",errorMessage, "error");
+                swal("Please try again",errorMessage, "error");
             }
         });
     }

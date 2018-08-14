@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('DailySignalEarnings:shoot')->monthly();
+        $schedule->command('DailyChargesCheck:shoot')->daily();
         $schedule->command('DailyInvestment:shoot')->daily();
         $schedule->command('WeeklyInvestment:shoot')->weekly();
         $schedule->command('MonthlyInvestment:shoot')->monthly();

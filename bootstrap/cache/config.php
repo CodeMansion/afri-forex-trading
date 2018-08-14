@@ -41,6 +41,7 @@
       24 => 'App\\Providers\\AuthServiceProvider',
       25 => 'App\\Providers\\EventServiceProvider',
       26 => 'App\\Providers\\RouteServiceProvider',
+      27 => 'Swap\\Laravel\\SwapServiceProvider',
     ),
     'aliases' => 
     array (
@@ -77,6 +78,7 @@
       'URL' => 'Illuminate\\Support\\Facades\\URL',
       'Validator' => 'Illuminate\\Support\\Facades\\Validator',
       'View' => 'Illuminate\\Support\\Facades\\View',
+      'Swap' => 'Swap\\Laravel\\Facades\\Swap',
     ),
   ),
   'auth' => 
@@ -206,6 +208,36 @@
   'countries' => 
   array (
     'table_name' => 'countries',
+  ),
+  'currency' => 
+  array (
+    'default' => 'USD',
+    'api_key' => '',
+    'driver' => 'database',
+    'cache_driver' => NULL,
+    'drivers' => 
+    array (
+      'database' => 
+      array (
+        'class' => 'Torann\\Currency\\Drivers\\Database',
+        'connection' => NULL,
+        'table' => 'currencies',
+      ),
+      'filesystem' => 
+      array (
+        'class' => 'Torann\\Currency\\Drivers\\Filesystem',
+        'disk' => NULL,
+        'path' => 'currencies.json',
+      ),
+    ),
+    'formatter' => NULL,
+    'formatters' => 
+    array (
+      'php_intl' => 
+      array (
+        'class' => 'Torann\\Currency\\Formatters\\PHPIntl',
+      ),
+    ),
   ),
   'database' => 
   array (
@@ -413,6 +445,24 @@
     'secure' => false,
     'http_only' => true,
     'same_site' => NULL,
+  ),
+  'swap' => 
+  array (
+    'options' => 
+    array (
+    ),
+    'services' => 
+    array (
+      'open_exchange_rates' => 
+      array (
+        'app_id' => 'd257b9a017904f8284e4452b6562eca2',
+        'enterprise' => false,
+      ),
+    ),
+    'cache' => NULL,
+    'http_client' => NULL,
+    'request_factory' => NULL,
+    'cache_item_pool' => NULL,
   ),
   'view' => 
   array (

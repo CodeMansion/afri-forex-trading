@@ -102,20 +102,45 @@ class MessageController extends Controller
                         }
                     }
                     
-                    $this->SentMail($filter_email_address,$data,"Individuals");
+                    try {
+                        $this->SentMail($filter_email_address,$data,'Individuals');
+                    } catch(\Exception $e) {
+                        return response()->json([
+                            "msg"   => "Please check your internet connection",
+                            "type"  => "false",
+                            "head"  => "Cannot Send Message"
+                        ]);
+                    }
                 }
 
                 if($data['type'] == 'ds_members') {
                     $filter_email_address = [];
-                    $subscribers = Subscription::subscriptionMembers();
+                    $subscribers = Subscription::subscriptionMembers()->get();
 
-                    foreach($subscribers as $recipient) {
-                        if(filter_var($recipient->User->email, FILTER_VALIDATE_EMAIL)) {
-                            array_push($filter_email_address,$recipient->User->email);
+                    if(count($subscribers) > 0) {
+                        foreach($subscribers as $recipient) {
+                            if(filter_var($recipient->User->email, FILTER_VALIDATE_EMAIL)) {
+                                array_push($filter_email_address,$recipient->User->email);
+                            }
                         }
-                    }
 
-                    $this->SentMail($filter_email_address,$data,'Subscribers');
+                        try {
+                            $this->SentMail($filter_email_address,$data,'Subscribers');
+                        } catch(\Exception $e) {
+                            return response()->json([
+                                "msg"   => "Please check your internet connection",
+                                "type"  => "false",
+                                "head"  => "Cannot Send Message"
+                            ]);
+                        }
+
+                    } else {
+                        return response()->json([
+                            "msg"   => "We could not find any Daily Signal active member",
+                            "type"  => "false",
+                            "head"  => "No Subcribers Found"
+                        ]);
+                    }
                 }
 
                 if($data['type'] == 'all_members') {
@@ -128,7 +153,15 @@ class MessageController extends Controller
                         }
                     }
 
-                    $this->SentMail($filter_email_address,$data,'All Members');
+                    try {
+                        $this->SentMail($filter_email_address,$data,'All Members');
+                    } catch(\Exception $e) {
+                        return response()->json([
+                            "msg"   => "Please check your internet connection",
+                            "type"  => "false",
+                            "head"  => "Cannot Send Message"
+                        ]);
+                    }
                 }
 
                 DB::commit();
@@ -138,11 +171,12 @@ class MessageController extends Controller
                     "type"  => "true"
                 ],200);
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 DB::rollback();
                 return response()->json([
                     "msg"   => $e->getMessage(),
-                    "type"  => "false"
+                    "type"  => "false",
+                    "head"  => "Please try again"
                 ]);
             }
         }

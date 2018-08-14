@@ -1,13 +1,14 @@
 @if(count($transactions) < 1)
     <center><em>No transaction found</em></center>
 @else 
-    <table class="table table-bordered table-hover activitylogs" id="sample_2">
+    <table class="table table-bordered table-hover">
         <thead>
             <tr>
                 <th width="30">S/N</th>
                 <th>REFERENCE</th>
                 <th>SERVICE</th>
                 <th width="80">AMOUNT</th>
+                <th>DATE</th>
             </tr>
         </thead>
         <tbody>
@@ -17,12 +18,13 @@
                 <td>{{$counter}}</td>
                 <td>{{ $transaction->reference_no }}</td>
                 <td> @if(isset($transaction->Platform->name))
-                        {{ $transaction->Platform->name }}
+                        <span class="badge badge-success">{{ $transaction->Platform->name }}</span>
                     @else
-                        Transfer
+                        <span class="badge badge-warning">Transfer</span>
                     @endif
                 </td>
                 <td>${{ number_format($transaction->amount,2) }}</td>
+                <td>{{ $transaction->created_at }}</td>
             </tr>
             @php($counter++)
             @endforeach

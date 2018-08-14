@@ -2,7 +2,7 @@
     @if(count($investments) < 1)
         <center> <em>You have no investment</em></center>
     @else 
-    <table class="table table-striped table-hover table-bordered" id="sample_2">
+    <table class="table table-striped table-hover table-bordered">
         <thead>
             <tr>
                 <th width="50">S/N</th>
@@ -22,7 +22,7 @@
                     <td>{{ $investment->PackageType->name}}</td>
                     <td>${{ number_format($investment->Package->investment_amount,2) }}</td>
                     <td><span class="badge badge-{{ investment_status($investment->status,'class') }}">{{ investment_status($investment->status,'name') }}</span></td>
-                    <td>{{ $investment->created_at->diffForHumans() }}</td>
+                    <td>{{ $investment->created_at }}</td>
                 </tr>
             @php($counter++)
             @endforeach

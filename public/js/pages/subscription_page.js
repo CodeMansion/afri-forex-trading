@@ -1,7 +1,7 @@
 const AppServiceSubscription = function() {
 
-    let app_id = "d257b9a017904f8284e4452b6562eca2";
-    let uri = encodeURI("http://openexchangerates.org/latest.json?app_id=" + app_id);
+    var app_id = "d257b9a017904f8284e4452b6562eca2";
+    var uri = encodeURI("https://openexchangerates.org/latest.json?app_id=" + app_id);
 
     const ProcessPayment = function() {
         $.ajax({
@@ -160,7 +160,6 @@ const AppServiceSubscription = function() {
                         amount = amount;
                         converted_amount = (amount / json.rates[my_base]) * json.rates[my_destination];
                         PayWithVoguePay(Math.round(converted_amount),description);
-                        // ProcessPayment();
                     }, "jsonp");
                 });   
             });
@@ -190,7 +189,6 @@ const AppServiceSubscription = function() {
                         amount = amount;
                         converted_amount = (amount / json.rates[my_base]) * json.rates[my_destination];
                         PayWithVoguePay(Math.round(converted_amount),description);
-                        // ProcessPayment()
                     }, "jsonp");
                 });   
             });

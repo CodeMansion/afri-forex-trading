@@ -1,10 +1,10 @@
 @if(count($members) < 1)
     <center><em>There are no members</em></center> 
 @else 
-    <table class="table table-bordered table-hover members" id="sample_2">
+    <table class="table table-bordered table-hover members">
         <thead>
             <tr>
-                <th>S/N</th>
+                <th width="40">S/N</th>
                 <th>NAME</th> 
                 <th>EMAIL</th>
                 <th>USERNAME</th>

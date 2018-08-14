@@ -1,4 +1,4 @@
-<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+<!-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="dashboard-stat2 ">
         <div class="display">
             <div class="number">
@@ -13,8 +13,8 @@
             </div>
         </div>
     </div>
-</div>
-<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+</div> -->
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="dashboard-stat2 ">
         <div class="display">
             <div class="number">
@@ -29,7 +29,7 @@
         </div>
     </div>
 </div>
-<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="dashboard-stat2 ">
         <div class="display">
             <div class="number">
@@ -44,7 +44,7 @@
         </div>
     </div>
 </div>
-<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="dashboard-stat2 ">
         <div class="display">
             <div class="number">

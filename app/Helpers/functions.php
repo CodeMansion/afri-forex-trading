@@ -1,8 +1,7 @@
 <?php
 
 use Carbon\Carbon; 
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
+// use  Swap;
 
 function menu_active($current,$id1,$id2=null){
 	$active = ($id2) ? (($current[0]==$id1) && isset($current[1]) && ($current[1]==$id2)) : ($current[0]==$id1);
@@ -83,9 +82,12 @@ function EarningsEligibilityCheck($member,$type) {
 	}
 }
 
-function currency_converter() {
-	$client = new \GuzzleHttp\Client();
-	$res = $client->request('GET', 'https://openexchangerates.org/latest.json?app_id=d257b9a017904f8284e4452b6562eca2');
-	$data = $res->getBody();
-	return json_encode($data);
+function currencyConverter($amount) {
+	if(isset($amount)) {
+		$rate = Swap::latest('USD/NGN');
+		$rate = $rate->getValue();
+		$converted_amount = $rate * $amount;
+		
+		return round($converted_amount);
+	}
 }

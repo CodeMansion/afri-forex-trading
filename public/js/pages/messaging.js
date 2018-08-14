@@ -90,19 +90,19 @@ var AppMessaging = function() {
                     if(rst.type == "true") {
                         $("#send_message").attr('disabled',false);
                         $("#loader").hide();
-                        if(swal('Successful!', rst.msg, 'success')) {
+                        if(swal('Message Sent Successfully', rst.msg, 'success')) {
                             location.reload();
                         }
                     } else if(rst.type) {
                         $("#send_message").attr('disabled',false);
                         $("#loader").hide();
-                        swal('Error!', rst.msg, 'error');
+                        swal(rst.head, rst.msg, 'error');
                     }
                 },
                 error: function(rst, httpErr, errorMessage){
                     $("#send_message").attr('disabled',false);
                     $("#loader").hide();
-                    swal('Sorry Try Again!', errorMessage, 'warning');
+                    swal('Please try again', errorMessage, 'warning');
                 }
             });
         }

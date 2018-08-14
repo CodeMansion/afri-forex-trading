@@ -34,7 +34,7 @@
                     @if(count($transactions) < 1)
                         <center><em>No Transactions found</em></center>
                     @else 
-                    <table class="table table-bordered table-hover" id="sample_2">
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th width="30">S/N</th>
@@ -60,7 +60,7 @@
                                     @endif
                                 </td>
                                 <td>${{ number_format($transaction->amount,2) }}</td>
-                                <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                                <td>{{ $transaction->created_at }}</td>
                             </tr>
                             @php($counter++)
                             @endforeach

@@ -17,11 +17,33 @@
       'Countries' => 'Webpatser\\Countries\\CountriesFacade',
     ),
   ),
+  'torann/currency' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Torann\\Currency\\CurrencyServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Currency' => 'Torann\\Currency\\Facades\\Currency',
+    ),
+  ),
   'laravel/tinker' => 
   array (
     'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    ),
+  ),
+  'florianv/laravel-swap' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Swap\\Laravel\\SwapServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Swap' => 'Swap\\Laravel\\Facades\\Swap',
     ),
   ),
 );

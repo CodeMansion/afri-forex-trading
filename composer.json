@@ -10,6 +10,7 @@
         "guzzlehttp/guzzle": "~6.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
+        "torann/currency": "^1.0",
         "webpatser/laravel-countries": "dev-master"
     },
     "require-dev": {

@@ -26,7 +26,7 @@ class DisputeController extends Controller
     public function index()
     {
         if(\Auth::user()->is_admin) {
-            $data['menu_id'] = 5.0;
+            $data['menu_id'] = 4.0;
             $data['disputes'] = Dispute::all();
             $data['priorities'] = DisputePriority::all();
             $data['pending'] = Dispute::isPending();

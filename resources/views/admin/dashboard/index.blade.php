@@ -35,7 +35,7 @@
     <div class="clearfix"></div>
 @endsection
 @section('extra_script')
-    <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script>
+    <!-- <script src="{{ asset('assets/global/plugins/echarts/echarts.js') }}" type="text/javascript"></script> -->
 @endsection
 @section('after_script')
     <script>
@@ -47,8 +47,8 @@
         var EARNINGS = "{{ URL::route('loadEarnings') }}";
         var WITHDRAW = "{{ URL::route('makeWithdrawal') }}";
         var WITHDRAWAL = "{{ URL::route('loadWithdrawals') }}";
-        console.log(<?php echo currency_converter(); ?>);
+        
     </script>
     <script src="{{ asset('js/pages/dashboard.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/pages/scripts/charts-echarts.js') }}" type="text/javascript"></script>
+    <!-- <script src="{{ asset('assets/pages/scripts/charts-echarts.js') }}" type="text/javascript"></script> -->
 @endsection

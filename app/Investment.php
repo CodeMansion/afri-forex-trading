@@ -37,8 +37,23 @@ class Investment extends Model
 
     public function scopeAllInvestors($query) {
         return $query->where([
-            'status' => 1
+            'status'        => 1,
+            'is_eligible'   => false
         ])->where('created_at', '<=', Carbon::now()->subDays(25)->toDateTimeString());
+    }
+
+    public function scopeNotEligibleInvestors($query) {
+        return $query->where([
+            'status'        => 1,
+            'is_eligible'   => false
+        ])->where('created_at', '<=', Carbon::now()->subDays(25)->toDateTimeString());
+    }
+
+    public function scopeEligibleInvestors($query) {
+        return $query->where([
+            'status'        => 1,
+            'is_eligible'   => true
+        ]);
     }
 
     public function scopeDailyInvestors($query) {

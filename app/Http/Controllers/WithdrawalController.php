@@ -45,6 +45,20 @@ class WithdrawalController extends Controller
         }
     }
 
+    protected function check_withdrawal_count()
+    {
+        $withdrawal = Withdrawal::where('user_id',auth()->user()->id)
+        ->whereMonth('created_at', '=', date('m',strtotime(Carbon::now())))
+        ->whereYear('created_at', '=', date('Y', strtotime(Carbon::now())))
+        ->where('status',2)
+        ->get();
+
+        if(count($withdrawal) == 2)
+            return true;
+
+        return false;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -80,18 +94,25 @@ class WithdrawalController extends Controller
                         "type"  => "false"
                     ]);
                 }
+
+                if($this->check_withdrawal_count()) {
+                    return response()->json([
+                        "msg"   => "Maximum withdrawal reached, You cant make withdrawal again this month!",
+                        "type"  => "false"
+                    ]);
+                }
                 
                 if($ledger_balance >= $eligible_amount) {
                     $withdrawal = Withdrawal::insert([
-                        'user_id'           => auth()->user()->id,
-                        'slug'              => bin2hex(random_bytes(64)),
-                        'initial_wallet_balance' => $member_wallet,
-                        'withdrawal_charge' => $withdrawal_charge,
-                        'deducted_amount'   => $eligible_amount,
-                        'status'            => 0,
-                        'withdrawal_amount'        => (double)$data['amount'],
-                        'created_at'        => Carbon::now(),
-                        'updated_at'        => Carbon::now()
+                        'user_id'                   => auth()->user()->id,
+                        'slug'                      => bin2hex(random_bytes(64)),
+                        'initial_wallet_balance'    => $member_wallet,
+                        'withdrawal_charge'         => $withdrawal_charge,
+                        'deducted_amount'           => $eligible_amount,
+                        'status'                    => 0,
+                        'withdrawal_amount'         => (double)$data['amount'],
+                        'created_at'                => Carbon::now(),
+                        'updated_at'                => Carbon::now()
                     ]);
                 } else {
                     return response()->json([
@@ -111,11 +132,12 @@ class WithdrawalController extends Controller
                     "type"  => "true"
                 ],200);
 
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 DB::rollback();
                 return response()->json([
                     "msg"   => $e->getMessage(),
-                    "type"  => "false"
+                    "type"  => "false",
+                    'head'  => "Please try again"
                 ]);
             }
         }
@@ -245,7 +267,7 @@ class WithdrawalController extends Controller
                 $param['charge'] = $withdrawal->withdrawal_charge;
                 $param['name'] = $user->full_name;
                 $param['total'] = $withdrawal->deducted_amount;
-                Mail::to($user->email)->send(new CompletedWithdrawal($param));
+                // Mail::to($user->email)->send(new CompletedWithdrawal($param));
 
                 DB::commit();
                 return response()->json([
@@ -253,11 +275,13 @@ class WithdrawalController extends Controller
                     "type"  => "true"
                 ],200);
 
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 DB::rollback();
                 return response()->json([
-                    "errors"   => $e->getMessage(),
-                ],422);
+                    "msg"   => $e->getMessage(),
+                    'type'  => 'false',
+                    'head'  => 'Please try again'
+                ]);
             }
         }
     }

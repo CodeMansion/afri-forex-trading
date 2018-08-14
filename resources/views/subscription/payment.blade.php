@@ -76,7 +76,7 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection
 @section('after_script')
-    <script src="https://voguepay.com/js/voguepay.js"></script>
+    <script src="//voguepay.com/js/voguepay.js"></script>
     <script src="{{ asset('js/pages/subscription_page.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection

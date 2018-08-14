@@ -71,9 +71,9 @@
                                     <span class="caption-subject font-blue-madison bold uppercase">Profile Account</span>
                                 </div>
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab_1_1" data-toggle="tab">Personal Info</a></li>
+                                    <li class="active"><a href="#tab_1_1" data-toggle="tab">Personal Information</a></li>
                                     <li><a href="#tab_1_4" data-toggle="tab">Activity Logs</a></li>
-                                    <li> <a href="#tab_1_3" data-toggle="tab">Payment Account Info</a></li> 
+                                    <li> <a href="#tab_1_3" data-toggle="tab">Account Information</a></li> 
                                     <li><a href="#tab_1_5" data-toggle="tab">Earnings</a></li>
                                     <li><a href="#tab_1_6" data-toggle="tab">Transactions</a></li>
                                     <li><a href="#tab_1_7" data-toggle="tab">Investment</a></li>

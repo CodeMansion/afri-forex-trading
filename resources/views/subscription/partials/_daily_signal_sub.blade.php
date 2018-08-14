@@ -26,6 +26,7 @@
     </div><hr/>
     <center>
         <input type="hidden" id="amount" value="{{ $platform->price }}" />
+        <input type="hidden" id="converted_amount" value="{{ currencyConverter($platform->price) }}" />
         <input type="hidden" id="payment_description" value="Daily Signal Subscription" />
         <input type='image' name="SubscribeWithVoguePay" src='https://voguepay.com/images/buttons/make_payment_blue.png' alt='pay-with-voguepay' /><br/>
         <!-- @if(isset($balance->amount) && $balance->amount > 10.00) -->

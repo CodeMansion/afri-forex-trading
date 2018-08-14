@@ -54,7 +54,7 @@ class UserController extends Controller
             
         if(\Auth::user()->is_admin) {
             $data['menu_id'] = 5;
-            $data['members'] = User::members()->get();
+            $data['members'] = User::members()->orderBy('id','DESC')->get();
             $data['administrators'] = User::administrators()->get();
             $data['roles'] = Role::all();
 
@@ -106,7 +106,7 @@ class UserController extends Controller
             $old_withdrawal = Withdrawal::where([
                 'user_id'   => auth()->user()->id,
                 'status'    => 1
-            ])->first();
+            ])->orwhere('status',0)->first();
 
             if($old_withdrawal) {
                 return response()->json([
