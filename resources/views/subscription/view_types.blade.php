@@ -53,6 +53,7 @@
                         <div class="row">
                             @php($index=0)
                             @foreach($types as $type)
+                                <div class="col-lg-3 col-md-4 col-xs-12 col-sm-12"></div>
                                 <div class="col-lg-3 col-md-4 col-xs-12 col-sm-12">
                                     <div class="price-column-container border-active">
                                         <div class="price-table-head <?php if($index==0){ echo "bg-red"; }elseif($index==1){ echo "bg-green"; }else{echo "bg-blue";} ?> ">
@@ -69,6 +70,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-3 col-md-4 col-xs-12 col-sm-12"></div>
                             @php($index++)
                             @endforeach
                         </div>    

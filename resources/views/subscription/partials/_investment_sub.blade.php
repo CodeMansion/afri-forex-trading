@@ -25,8 +25,8 @@
         <div class="col-md-7 value"> {{ strtoupper($package_type->name) }} </div>
     </div>
     <div class="row static-info">
-        <div class="col-md-5 name"> Return On Investment: </div>
-        <div class="col-md-7 value"> {{ strtoupper($package_type->percentage) }}% </div>
+        <div class="col-md-5 name"> Earning Amount </div>
+        <div class="col-md-7 value"> ${{ number_format($package->earnings,2) }}</div>
     </div><hr/>
     <center>
         <input type="hidden" id="invest_amount" value="{{ $package->investment_amount }}" />

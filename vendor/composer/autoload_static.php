@@ -408,6 +408,7 @@ class ComposerStaticInit07a90e05008e5905d7ae0fb31ee7f5cc
 
     public static $classMap = array (
         'App\\ActivityLog' => __DIR__ . '/../..' . '/app/ActivityLog.php',
+        'App\\Console\\Commands\\DailyChargesCheck' => __DIR__ . '/../..' . '/app/Console/Commands/DailyChargesCheck.php',
         'App\\Console\\Commands\\DailyCleanUp' => __DIR__ . '/../..' . '/app/Console/Commands/DailyCleanUp.php',
         'App\\Console\\Commands\\DailyInvestmentMembers' => __DIR__ . '/../..' . '/app/Console/Commands/DailyInvestmentMembers.php',
         'App\\Console\\Commands\\DailySignalMembersEarning' => __DIR__ . '/../..' . '/app/Console/Commands/DailySignalMembersEarning.php',
@@ -468,6 +469,7 @@ class ComposerStaticInit07a90e05008e5905d7ae0fb31ee7f5cc
         'App\\Mail\\NewAdministrator' => __DIR__ . '/../..' . '/app/Mail/NewAdministrator.php',
         'App\\Mail\\NewSubscription' => __DIR__ . '/../..' . '/app/Mail/NewSubscription.php',
         'App\\MemberService' => __DIR__ . '/../..' . '/app/MemberService.php',
+        'App\\MonthlyCharge' => __DIR__ . '/../..' . '/app/MonthlyCharge.php',
         'App\\Notification' => __DIR__ . '/../..' . '/app/Notification.php',
         'App\\Notifications\\ApproveWithdrawalRequest' => __DIR__ . '/../..' . '/app/Notifications/ApproveWithdrawalRequest.php',
         'App\\Notifications\\CompletedWithdrawalRequest' => __DIR__ . '/../..' . '/app/Notifications/CompletedWithdrawalRequest.php',

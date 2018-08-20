@@ -60,8 +60,7 @@ class DailyInvestmentMembers extends Command
             if(count($investors) > 0) {
                 foreach($investors as $investor) {
                     $investment_amount = (double)$investor->Package->investment_amount;
-                    $percentage = (double)$investor->PackageType->percentage;
-                    $earning_amount = earnings_formular('daily',$percentage,$investment_amount);
+                    $earning_amount = (double)$investor->Package->earnings;
 
                     $new_earning = DB::table("earnings")->insert([
                         'slug'          => bin2hex(random_bytes(64)),
@@ -79,7 +78,7 @@ class DailyInvestmentMembers extends Command
                     $member_wallet->save();
 
                     $transaction = DB::table("payment_transactions")->insert([
-                        'slug'          => bin2hex(random_bytes(64)),
+                        'slug'          => bin2hex(random_bytes(16)),
                         'user_id'       => $investor->user_id,
                         'platform_id'   => 2,
                         'transaction_category_id'   => TransactionCategory::where('name','Credit')->first()->id,
@@ -99,7 +98,7 @@ class DailyInvestmentMembers extends Command
                 
             } else{echo "No members";}
 
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             DB::rollback();
             echo $e->getMessage();
         }

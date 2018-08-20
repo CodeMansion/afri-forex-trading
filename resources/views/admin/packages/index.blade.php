@@ -30,9 +30,9 @@
                 <span class="caption-helper">Displaying list of Packages </span>                        
             </div>
             <div class="actions">
-                <div class="btn-group">
+                <!-- <div class="btn-group">
                     <a class="font-white btn green pull btn-xs pull-left" data-toggle="modal" data-target="#new-package" title="Add"><i class="icon-plus"></i> Create Package</a>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="portlet-body util-btn-margin-bottom-5">
@@ -45,13 +45,14 @@
                                         <em>There are no package </em>
                                 </center>
                             @else 
-                                <table class="table table-bordered table-striped table-hover packages" id="sample_3">
+                                <table class="table table-bordered table-striped table-hover packages">
                                     <thead>
                                         <tr>
-                                            <th width="50">S/N</th>
+                                            <th width="30">S/N</th>
                                             <th>NAME</th>
                                             <th width="100">AMOUNT</th>
-                                            <th width="100">MONTHLY CHARGE</th>
+                                            <th>DAILY EARNING</th>
+                                            <th width="100">MONTHLY CHARGE(%)</th>
                                             <th width="100">ACTIONS</th>
                                         </tr>
                                     </thead>
@@ -63,7 +64,8 @@
                                                 <td>{{$counter}}</td>
                                                 <td>{{ strtoupper($package->name) }} </td>
                                                 <td>${{ number_format($package->investment_amount,2) }} </td>
-                                                <td>${{ number_format($package->monthly_charge,2) }} </td>
+                                                <td>${{ number_format($package->earnings,2) }}</td>
+                                                <td>{{ $package->monthly_charge }}% </td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button class="btn btn-xs green dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-expanded="false"> Actions<i class="fa fa-angle-down"></i></button>

@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\ActivityLog' => $baseDir . '/app/ActivityLog.php',
+    'App\\Console\\Commands\\DailyChargesCheck' => $baseDir . '/app/Console/Commands/DailyChargesCheck.php',
     'App\\Console\\Commands\\DailyCleanUp' => $baseDir . '/app/Console/Commands/DailyCleanUp.php',
     'App\\Console\\Commands\\DailyInvestmentMembers' => $baseDir . '/app/Console/Commands/DailyInvestmentMembers.php',
     'App\\Console\\Commands\\DailySignalMembersEarning' => $baseDir . '/app/Console/Commands/DailySignalMembersEarning.php',
@@ -67,6 +68,7 @@ return array(
     'App\\Mail\\NewAdministrator' => $baseDir . '/app/Mail/NewAdministrator.php',
     'App\\Mail\\NewSubscription' => $baseDir . '/app/Mail/NewSubscription.php',
     'App\\MemberService' => $baseDir . '/app/MemberService.php',
+    'App\\MonthlyCharge' => $baseDir . '/app/MonthlyCharge.php',
     'App\\Notification' => $baseDir . '/app/Notification.php',
     'App\\Notifications\\ApproveWithdrawalRequest' => $baseDir . '/app/Notifications/ApproveWithdrawalRequest.php',
     'App\\Notifications\\CompletedWithdrawalRequest' => $baseDir . '/app/Notifications/CompletedWithdrawalRequest.php',

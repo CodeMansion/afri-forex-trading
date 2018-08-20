@@ -82,6 +82,13 @@ function EarningsEligibilityCheck($member,$type) {
 	}
 }
 
+function CheckWithdrawalStatus() {
+	if(Carbon::today()->day == 25 || Carbon::today()->day == 26 || Carbon::today()->day == 27)
+		return true;
+
+	return false;
+}
+
 function currencyConverter($amount) {
 	if(isset($amount)) {
 		$rate = Swap::latest('USD/NGN');

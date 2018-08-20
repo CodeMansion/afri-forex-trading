@@ -51,6 +51,7 @@
                                     <tr class="text-center" style="font-size:22px;">
                                         <td width="200">PACKAGES</td>
                                         <td>AMOUNT</td>
+                                        <td>DAILY EARNING</td>
                                         <td>MONTHLY CHARGE</td>
                                         <td></td>
                                     </tr>
@@ -60,6 +61,7 @@
                                         <tr>
                                             <td style="background-color: #138D75;color:white;">{{ strtoupper($package->name) }}</td>
                                             <td>${{ number_format($package->investment_amount, 2) }}</td>
+                                            <td>${{ number_format($package->earnings,2) }}</td>
                                             <td>{{ $package->monthly_charge}}%</td>
                                             <td><a href="{{ URL::route('SelectPackageType', $package->slug) }}"><button type="button" class="btn green btn-md uppercase price-button">Select</button></a></td>
                                         </tr>

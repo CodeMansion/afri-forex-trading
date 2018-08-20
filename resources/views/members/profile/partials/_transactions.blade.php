@@ -6,7 +6,7 @@
             <tr>
                 <th width="30">S/N</th>
                 <th>REFERENCE</th>
-                <th>SERVICE</th>
+                <th>TYPE</th>
                 <th width="80">AMOUNT</th>
                 <th>DATE</th>
             </tr>
