@@ -26,7 +26,7 @@ const AllUsers = function() {
                     toastr.success(data.msg);
                     setTimeout(() => {
                         location.reload();
-                    }, 2000);
+                    }, 1000);
                 } else if (data.type == "false") {
                     $("#create_admin_btn").attr('disabled', false);
                     $("#loader").hide();
@@ -54,13 +54,13 @@ const AllUsers = function() {
                     swal("Deleted Successfully!", rst.msg, "success");
                     setTimeout(() => {
                         location.reload();
-                    }, 2000);
+                    }, 1000);
                 } else if(rst.type == "false") {
-                    swal("Unable to delete", rst.msg, "error");
+                    swal("Please try again", rst.msg, "error");
                 }
             },
             error: function(jqXHR, textStatus, errorMessage){
-                swal("An Error Occur!", errorMessage, "error");
+                swal("Please try again", errorMessage, "error");
             }
         });
     }

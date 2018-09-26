@@ -106,7 +106,7 @@ class MessageController extends Controller
                         $this->SentMail($filter_email_address,$data,'Individuals');
                     } catch(\Exception $e) {
                         return response()->json([
-                            "msg"   => "Please check your internet connection",
+                            "msg"   => "Please check your internet connection or mail settings",
                             "type"  => "false",
                             "head"  => "Cannot Send Message"
                         ]);

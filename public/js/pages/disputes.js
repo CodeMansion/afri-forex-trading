@@ -137,13 +137,13 @@ var AppDisputes = function() {
                     swal("Successful!", rst.msg, "success");
                     setTimeout(() => {
                         location.reload();
-                    }, 2000);
+                    }, 1000);
                 } else if (rst.type == "false") {
-                    swal("Error",rst.msg,"error");
+                    swal("Please try again",rst.msg,"error");
                 }
             },
             error: function(jqXHR, textStatus, errorMessage) {
-                swal("Error",errorMessage,"error");
+                swal("Please try again",errorMessage,"error");
                 $("#resolve_dispute_btn").attr('disabled', false);
             }
         });

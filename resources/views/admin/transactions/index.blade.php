@@ -44,11 +44,11 @@
                                 <table class="table table-bordered table-hover transaction" id="sample_2">
                                     <thead>
                                         <tr>
-                                            <th width="40">S/N</th>
+                                            <th width="30">S/N</th>
                                             <th>NAME</th>
-                                            <th>AMOUNT</th>
-                                            <th>TYPE</th>
-                                            <th>DATE</th>
+                                            <th style="text-align: center;">AMOUNT</th>
+                                            <th style="text-align: center;">TYPE</th>
+                                            <th style="text-align: center;">DATE</th>
                                             <!-- <th>Actions</th> -->
                                         </tr>
                                     </thead>
@@ -57,11 +57,11 @@
                                         @php($index=0)
                                         @foreach($transactions as $transaction)
                                             <tr>
-                                                <td>{{$counter}}</td>
+                                                <td style="text-align: center;">{{$counter}}</td>
                                                 <td>{{ $transaction->user->full_name}} </td>
-                                                <td>{{ number_format($transaction->amount,'2') }}</td> 
-                                                <td><span class="badge badge-success">{{ $transaction->Category->name }}</span></td>
-                                                <td>{{ $transaction->created_at->diffForHumans() }}</td>                                    
+                                                <td style="text-align: center;">{{ number_format($transaction->amount,'2') }}</td> 
+                                                <td style="text-align: center;"><span class="badge badge-success">{{ $transaction->Category->name }}</span></td>
+                                                <td style="text-align: center;">{{ $transaction->created_at->diffForHumans() }}</td>                                    
                                                 <!-- <td><a href="javascript:;" id="edit{{$index}}"><i class="icon-note"></i> View</a>&nbsp;<a href="javascript:;" id="btn_transaction_delete{{$index}}"><i class="fa fa-trash"></i> Delete</a></td>   -->
                                             </tr>
                                         @php($counter++)
@@ -85,8 +85,6 @@
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-    
-    
 @endsection
 @section('after_script')
     <script src="{{ asset('assets/pages/scripts/table-datatables-managed.min.js') }}" type="text/javascript"></script>

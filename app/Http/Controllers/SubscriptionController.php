@@ -105,9 +105,13 @@ class SubscriptionController extends Controller
                     'type' => "true"
                 ],200);
 
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 \DB::rollback();
-                return false;
+                return response()->json([
+                    "head"  => "Please try again",
+                    "msg"   => $e->getMessage(),
+                    "type"  => "false"
+                ]);
             }
         }
     }
@@ -191,6 +195,11 @@ class SubscriptionController extends Controller
  
             } catch(Exception $e) {
                 \DB::rollback();
+                return response()->json([
+                    "head"  => "Please try again",
+                    "msg"   => $e->getMessage(),
+                    "type"  => "false"
+                ]);
             }
         }
     }

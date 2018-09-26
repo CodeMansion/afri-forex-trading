@@ -58,16 +58,6 @@ class PlatformController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -126,47 +116,36 @@ class PlatformController extends Controller
     {
         \DB::beginTransaction();
             try {
-                    $platform = Platform::find($id);
-                    if($platform->is_active == 1){
-                        $platform->is_active = 0;
-                        $platform->save();
-                        $ip = $_SERVER['REMOTE_ADDR'];
-                        activity_logs(auth()->user()->id, $ip, "De-Activate Platform");
-                        \DB::commit();
-                        return $response = [
-                            'msg' => "Platform De-activated Successfully.",
-                            'type' => "true"
-                        ];
-                    }else{
-                        $platform->is_active = 1;
-                        $platform->save();
-                        $ip = $_SERVER['REMOTE_ADDR'];
-                        activity_logs(auth()->user()->id, $ip, "Activate Platform");
-                        \DB::commit();
-                        return $response = [
-                            'msg' => "Platform Activated Successfully.",
-                            'type' => "true"
-                        ];
-                    }
+                $platform = Platform::find($id);
+                if($platform->is_active == 1){
+                    $platform->is_active = 0;
+                    $platform->save();
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                    activity_logs(auth()->user()->id, $ip, "De-Activate Platform");
+                    \DB::commit();
+                    return $response = [
+                        'msg' => "Platform De-activated Successfully.",
+                        'type' => "true"
+                    ];
+                }else{
+                    $platform->is_active = 1;
+                    $platform->save();
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                    activity_logs(auth()->user()->id, $ip, "Activate Platform");
+                    \DB::commit();
+                    return $response = [
+                        'msg' => "Platform Activated Successfully.",
+                        'type' => "true"
+                    ];
+                }
 
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 \DB::rollback();
                 return $response = [
                     'msg' => "Internal Server Error",
                     'type' => "false"
                 ];
             }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -182,21 +161,23 @@ class PlatformController extends Controller
         if(isset($data) && $data['req'] == 'update_platform') {
             \DB::beginTransaction();
             try {
-                    $platform = Platform::find($data['platform_id'],'slug');
-                    $platform->name = $data['name'];
-                    $platform->is_multiple = $data['is_multiple'];
-                    $platform->price = ($data['price']) ? $data['price'] : "";
-                    $platform->recycle_price = ($data['recycle_price']) ? $data['recycle_price'] : "";
-                    $platform->save();
-                    $ip = $_SERVER['REMOTE_ADDR'];
-                    activity_logs(auth()->user()->id, $ip, "Update Platform");
+                $platform = Platform::find($data['platform_id'],'slug');
+                $platform->name = $data['name'];
+                $platform->is_multiple = $data['is_multiple'];
+                $platform->price = ($data['price']) ? $data['price'] : "";
+                $platform->recycle_price = ($data['recycle_price']) ? $data['recycle_price'] : "";
+                $platform->save();
+
+                $ip = $_SERVER['REMOTE_ADDR'];
+                activity_logs(auth()->user()->id, $ip, "Update Platform");
+
                 \DB::commit();
                 return $response = [
                     'msg' => "Platform Updated Successfully.",
                     'type' => "true"
                 ];
 
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 \DB::rollback();
                 return $response = [
                     'msg' => "Internal Server Error",
@@ -229,7 +210,7 @@ class PlatformController extends Controller
                         'type' => 'true'
                     ];
 
-                } catch(Exception $e) {
+                } catch(\Exception $e) {
                     return $response = [
                         'msg' => "Internal Server Error",
                         'type' => "false"

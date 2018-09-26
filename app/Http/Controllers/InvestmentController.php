@@ -133,12 +133,13 @@ class InvestmentController extends Controller
                     'type' => "true"
                 ],200);
 
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 \DB::rollback();
-                return $response = [
-                    'msg' => "Internal Server Error",
-                    'type' => "false"
-                ];
+                return response()->json([
+                    'msg'   => $e->getMessage(),
+                    'type'  => "false",
+                    "head"  => "Please try again"
+                ]);
             }
         }
     }

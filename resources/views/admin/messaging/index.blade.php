@@ -32,9 +32,9 @@
                     <a href="javascript:;" id="btn_compose" data-title="Compose" class="btn red compose-btn btn-block">
                         <i class="fa fa-edit"></i> Compose </a>
                     <ul class="inbox-nav">
-                        <li><a href="javascript:;" id="btn_sent" class="sbold uppercase" data-type="sent" data-title="Sent"> Sent </a> </li>
+                        <!-- <li><a href="javascript:;" id="btn_sent" class="sbold uppercase" data-type="sent" data-title="Sent"> Sent </a> </li>
                         <li><a href="javascript:;" id="btn_draft" class="sbold uppercase" data-type="draft" data-title="Draft"> Draft</a></li>
-                        <li><a href="javascript:;" id="btn_trash" class="sbold uppercase" data-title="Trash"> Trash</a></li>
+                        <li><a href="javascript:;" id="btn_trash" class="sbold uppercase" data-title="Trash"> Trash</a></li> -->
                     </ul>
                 </div>
             </div>

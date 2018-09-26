@@ -175,22 +175,30 @@ class HomeController extends Controller
    
     public function change_oldpassword(Request $request)
     {
-        $user = User::whereId(auth()->user()->id)->first();
-        if($user->password != bcrypt($request->old_password)){
+        try {
+            $user = User::whereId(auth()->user()->id)->first();
+            if($user->password != bcrypt($request->old_password)){
+                return $response = [
+                    'msg' => "your current password not correct.",
+                    'type' => "false"
+                ];
+            }
+
+            $user->is_active = 1;
+            $user->password = $request->password;
+            $user->save();
+
             return $response = [
-                'msg' => "your current password not correct.",
-                'type' => "false"
+                'msg' => "your password reset has been made successfully.",
+                'type' => "true"
             ];
+        } catch (\Exception $e) {
+            return response()->json([
+                "msg"   => $e->getMessage(),
+                "type"  => "false",
+                "head"  => "Please try again"
+            ]);
         }
-
-        $user->is_active = 1;
-        $user->password = $request->password;
-        $user->save();
-
-        return $response = [
-            'msg' => "your password reset has been made successfully.",
-            'type' => "true"
-        ];
     }
 
 
@@ -311,7 +319,7 @@ class HomeController extends Controller
                     'type'  => "true"
                 ],200);
 
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 \DB::rollback();
                 return redirect()->back()->with("error", $e->getMessage());
             }

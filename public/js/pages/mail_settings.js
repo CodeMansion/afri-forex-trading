@@ -41,13 +41,13 @@ var MailSettings = function() {
                 } else if(rst.type == "false") {
                     $("#update_mail_settings_btn").attr('disabled', false);
                     $("#loader").hide();
-                    swal("Something Went Wrong", rst.msg, "warning");
+                    swal("Please try again", rst.msg, "warning");
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 $("#update_mail_settings_btn").attr('disabled', false);
                 $("#loader").hide();
-                swal("Something Went Wrong", thrownError, "warning");
+                swal("Please try again", thrownError, "warning");
             }
         });
     }

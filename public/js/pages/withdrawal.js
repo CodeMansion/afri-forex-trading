@@ -41,7 +41,7 @@ const Withdrawal = function() {
                 swal("Approval Succecssful", rst.msg, "success");
                 setTimeout(() => {
                     location.reload();
-                }, 2000);
+                }, 1000);
             },
             error: function(jqXHR, textStatus, errorMessage){
                 swal("Please try again",errorMessage, "error");
@@ -61,7 +61,7 @@ const Withdrawal = function() {
                 swal("Declined Succecssful", rst.msg, "success");
                 setTimeout(() => {
                     location.reload();
-                }, 2000);
+                }, 1000);
             },
             error: function(jqXHR, textStatus, errorMessage){
                 swal("Please try again",errorMessage, "error");
@@ -83,7 +83,7 @@ const Withdrawal = function() {
                     swal("Completed Succecssful", rst.msg, "success");
                     setTimeout(() => {
                         location.reload();
-                    }, 2000);
+                    }, 1000);
                 } else if(rst.type == "false") {
                     swal(rst.head, rst.msg, "error");
                 } 

@@ -48,16 +48,7 @@ class PackageController extends Controller
             return false;
         }
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -70,6 +61,7 @@ class PackageController extends Controller
         if (isset($data) && $data['req'] == 'add_package') {
             \DB::beginTransaction();
             try {
+
                 Package::insert([
                     'slug' => bin2hex(random_bytes(64)),
                     'platform_id' => $data['platform_id'],
@@ -77,44 +69,25 @@ class PackageController extends Controller
                     'investment_amount' => $data['investment_amount'],
                     'monthly_charge' => $data['monthly_charge'],
                 ]);
+
                 $ip = $_SERVER['REMOTE_ADDR'];
                 activity_logs(auth()->user()->id, $ip, "Added Package");
+
                 \DB::commit();
                 return $response = [
                     'msg' => "Package Addedd Successfully.",
                     'type' => "true"
                 ];
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 \DB::rollback();
-                return $response = [
-                    'msg' => "Internal Server Error",
-                    'type' => "false"
-                ];
+                return response()->json([
+                    "msg"   => $e->getMessage(),
+                    "type"  => "false",
+                    "head"  => "Please try again"
+                ]);
             }
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-    
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -130,26 +103,30 @@ class PackageController extends Controller
         if (isset($data) && $data['req'] == 'update_package') {
             \DB::beginTransaction();
             try {
+
                 $package = Package::find($data['package_id'], 'slug');
                 $package->name = $data['name'];
                 $package->platform_id = $data['platform_id'];
                 $package->investment_amount = $data['investment_amount'];
                 $package->monthly_charge = $data['monthly_charge'];
                 $package->save();
+
                 $ip = $_SERVER['REMOTE_ADDR'];
                 activity_logs(auth()->user()->id, $ip, "Update Package");
+
                 \DB::commit();
                 return $response = [
                     'msg' => "Package Updated Successfully.",
                     'type' => "true"
                 ];
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 \DB::rollback();
-                return $response = [
-                    'msg' => "Internal Server Error",
-                    'type' => "false"
-                ];
+                return response()->json([
+                    "msg"   => $e->getMessage(),
+                    "type"  => "false",
+                    "head"  => "Please try again"
+                ]);
             }
         }
     }
@@ -177,11 +154,12 @@ class PackageController extends Controller
                         'type' => 'true'
                     ];
 
-                } catch (Exception $e) {
-                    return $response = [
-                        'msg' => "Internal Server Error",
-                        'type' => "false"
-                    ];
+                } catch (\Exception $e) {
+                    return response()->json([
+                        "msg"   => $e->getMessage(),
+                        "type"  => "false",
+                        "head"  => "Please try again"
+                    ]);
                 }
             }
         }

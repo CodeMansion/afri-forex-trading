@@ -101,10 +101,11 @@ class DisputeController extends Controller
                     "type"  => "true"
                 ]);
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 return response()->json([
                     "msg"  => $e->getMessage(),
-                    "type"  => "false"
+                    "type"  => "false",
+                    "head"  => "Please try again"
                 ]);
             } 
         }
@@ -139,11 +140,12 @@ class DisputeController extends Controller
                     "type"  => "true"
                 ]);
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 DB::rollback();
                 return response()->json([
-                    "msg"  => $e->getMessage(),
-                    "type"  => "false"
+                    "msg"   => $e->getMessage(),
+                    "type"  => "false",
+                    "head"  => "Please try again"
                 ]);
             }
         }
@@ -154,15 +156,25 @@ class DisputeController extends Controller
     {
         $data = $request->except('_token');
         if(isset($data)) {
+            try {
+                $dispute = Dispute::find($data['dispute_id']);
+                $dispute->status = 2;
+                $dispute->save();
 
-            $dispute = Dispute::find($data['dispute_id']);
-            $dispute->status = 2;
-            $dispute->save();
+                return response()->json([
+                    "msg"  => "Dispute resolved",
+                    "type"  => "true"
+                ]);
 
-            return response()->json([
-                "msg"  => "Dispute resolved",
-                "type"  => "true"
-            ]);
+            } catch (\Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    "msg"   => $e->getMessage(),
+                    "type"  => "false",
+                    "head"  => "Please try again"
+                ]);
+            }
+            
         }
     }
 
@@ -189,39 +201,5 @@ class DisputeController extends Controller
         $data['replies'] = $data['dispute']->reply()->get();
 
         return view('admin.disputes.view')->with($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

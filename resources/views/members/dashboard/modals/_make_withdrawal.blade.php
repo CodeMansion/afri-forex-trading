@@ -25,7 +25,7 @@
                         </div>
                     </form>
                 @else
-                    <center><span style="color:red;font-size: 15px;"><em>Withdrawal unavailable. You can only make withdrawal on the 25th - 27th day of the month. Thank You.</em></span></center>
+                    <center><span style="color:red;font-size: 15px;"><em>Withdrawal unavailable. You can only make withdrawal on the 28th - 30th day of the month except for February which will be open 26th - 29th. Thank You.</em></span></center>
                 @endif
             </div>
         </div>

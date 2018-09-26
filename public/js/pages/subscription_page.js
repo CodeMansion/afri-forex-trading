@@ -19,7 +19,7 @@ const AppServiceSubscription = function() {
                     swal("Payment Successful", data.msg, "success");
                     setTimeout(() => {
                         window.location.replace("/dashboard");
-                    }, 2000);
+                    }, 1000);
                 } else if (data.type == "false") {
                     swal(data.head, data.msg, "error");
                 }
@@ -76,7 +76,7 @@ const AppServiceSubscription = function() {
                     swal("Payment Successful", data.msg, "success");
                     setTimeout(() => {
                         window.location.replace("/dashboard");
-                    }, 2000);
+                    }, 1000);
                 } else if (data.type == "false") {
                     swal(data.head, data.msg, "error");
                 }
@@ -149,18 +149,21 @@ const AppServiceSubscription = function() {
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true
                 }, function() {
-                    $('body').data('amount', amount);
+                    let converted_amount = amount * 361.47;
+                    $('body').data('amount', converted_amount);
                     $('body').data('platform', 2);
                     $('body').data('package_id', package_id);
                     $('body').data('package_type_id', package_type_id);
 
-                    $.get(uri, function(json) {
-                        my_base = "USD";
-                        my_destination = "NGN";
-                        amount = amount;
-                        converted_amount = (amount / json.rates[my_base]) * json.rates[my_destination];
-                        PayWithVoguePay(Math.round(converted_amount),description);
-                    }, "jsonp");
+                    // $.get(uri, function(json) {
+                    //     my_base = "USD";
+                    //     my_destination = "NGN";
+                    //     amount = amount;
+                    //     converted_amount = (amount / json.rates[my_base]) * json.rates[my_destination];
+                    //     PayWithVoguePay(Math.round(converted_amount),description);
+                    // }, "jsonp");
+                    
+                    PayWithVoguePay(Math.round(converted_amount),description);
                 });   
             });
 
@@ -178,18 +181,20 @@ const AppServiceSubscription = function() {
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true
                 }, function() {
-                    $('body').data('amount', amount);
+                    let converted_amount = amount * 361.47;
+                    $('body').data('amount', converted_amount);
                     $('body').data('platform', 1);
                     $('body').data('package_id', null);
                     $('body').data('package_type_id', null);
 
-                    $.get(uri, function(json) {
-                        my_base = "USD";
-                        my_destination = "NGN";
-                        amount = amount;
-                        converted_amount = (amount / json.rates[my_base]) * json.rates[my_destination];
-                        PayWithVoguePay(Math.round(converted_amount),description);
-                    }, "jsonp");
+                    // $.get(uri, function(json) {
+                    //     my_base = "USD";
+                    //     my_destination = "NGN";
+                    //     amount = amount;
+                    //     converted_amount = (amount / json.rates[my_base]) * json.rates[my_destination];
+                    //     PayWithVoguePay(Math.round(converted_amount),description);
+                    // }, "jsonp");
+                    PayWithVoguePay(Math.round(converted_amount),description);
                 });   
             });
         }

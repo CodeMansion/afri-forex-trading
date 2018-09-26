@@ -186,10 +186,12 @@ class WithdrawalController extends Controller
                     "type"  => "true"
                 ],200);
 
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 return response()->json([
-                    "errors"   => $e->getMessage(),
-                ],422);
+                    "head"  => "Please try again",
+                    "msg"   => $e->getMessage(),
+                    "type"  => "false"
+                ]);
             }
         }
     }
@@ -219,10 +221,12 @@ class WithdrawalController extends Controller
                     "type"  => "true"
                 ],200);
 
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 return response()->json([
-                    "errors"   => $e->getMessage(),
-                ],422);
+                    "head"  => "Please try again",
+                    "msg"   => $e->getMessage(),
+                    "type"  => "false"
+                ]);
             }
         }
     }
